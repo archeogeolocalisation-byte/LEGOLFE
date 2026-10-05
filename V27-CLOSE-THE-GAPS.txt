@@ -1,0 +1,7 @@
+LE GOLFE V27 — CLOSE THE GAPS
+
+- Inventory of the current catalogue completed.
+- All 29 place records now resolve to an editorial/special page.
+- Final generic record upgraded: Master Ninja · La Palmeraie, Cogolin.
+- 2026 practical information refreshed from La Palmeraie Family and Destination Côte d’Azur.
+- No npm dependency changes.

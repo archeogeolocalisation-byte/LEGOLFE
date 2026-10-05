@@ -1,0 +1,17 @@
+LE GOLFE V10 COMMUNITY
+
+What changed
+- Community profile with public display name (email remains private)
+- Photo preview, file type and 8 MB validation
+- Comment 800-character limit
+- Visible pending contribution count for the signed-in author
+- Moderator-only review page: /fr/community/moderation and /en/community/moderation
+- Approve/reject flow with rejected photo cleanup
+- Hardened Supabase RLS and Storage policies
+- Account link added to desktop header
+
+Required Supabase step
+Run supabase/community.sql in the Supabase SQL Editor.
+Then add the first moderator using the SQL snippet at the bottom of that file.
+
+No new npm dependency was added.

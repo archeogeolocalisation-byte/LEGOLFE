@@ -1,0 +1,20 @@
+LE GOLFE V48 — PHOTOS DES ÉTABLISSEMENTS
+
+INSTALLATION
+Arrêter le serveur avec Ctrl+C. Extraire l’archive dans le dossier qui contient package.json et remplacer les fichiers. Conserver .env.local. Ne pas créer un second dossier le-golfe. Relancer npm run dev : la version doit être 0.48.0.
+
+CHANGEMENT
+Seules les photos du lieu sont affichées. Toutes les photos des environs ont été retirées des galeries des établissements, des cartes et des métadonnées. Les 19 établissements sans photo du lieu affichent leur nom avec la police du site, en blanc sur un fond bleu foncé dans la fiche, et sur fond noir dans les cartes. Les galeries des villages, de la place des Lices, de la citadelle et les autres photos du lieu sont conservées. La galerie du Club 55 conserve sa photo du lieu, sans les vues générales de Pampelonne.
+
+POUR VOIR LE RÉSULTAT
+http://localhost:3000/fr/place/monroes-pub
+http://localhost:3000/fr/place/bello-visto
+http://localhost:3000/fr/place/byblos-beach
+http://localhost:3000/fr/explore
+Pour l’anglais, remplacer /fr/ par /en/.
+
+VALIDATION
+Compilation de production et TypeScript réussis. 87 routes vérifiées, dont les 78 pages FR/EN des fiches. Les 19 couvertures portent le nom de l’établissement. Aucune photo de contexte ne subsiste dans les médias utilisés. Pas de test visuel dans un navigateur.
+
+SOURCES
+Les crédits et sources des photographies conservées sont détaillés dans SOURCES-V47.md. Sa description de la politique des photos de contexte est historique : depuis la V48, ces photos ne sont plus utilisées pour les établissements.

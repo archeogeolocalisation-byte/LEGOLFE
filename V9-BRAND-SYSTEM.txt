@@ -1,0 +1,7 @@
+LE GOLFE V9 — BRAND SYSTEM
+- New LE GOLFE wordmark component
+- LG monogram
+- New app icon.svg / favicon source
+- Header rebuilt around new brand lockup
+- Editorial footer added to Home + Explore
+- No new npm dependency

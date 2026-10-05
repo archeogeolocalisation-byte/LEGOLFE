@@ -1,0 +1,13 @@
+LE GOLFE V34 — HOST LISTING MANAGEMENT
+
+- Full owner/concierge listing CRUD prototype in Host Desk
+- Create / edit / duplicate / delete villas
+- Draft / published / paused listing status
+- Public / private / on-request visibility
+- Price per week + distance from Saint-Tropez
+- Guests / bedrooms / bathrooms
+- Description, amenities and photo URL gallery
+- Listing preview before publication
+- Existing localStorage Host Desk data is normalized/migrated automatically
+- No new npm dependency
+- Prototype remains localStorage-based; direct photo upload + persistent production data are intended for Supabase next

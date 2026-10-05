@@ -1,0 +1,7 @@
+LE GOLFE — V51
+
+Correction de la génération IA : les informations du formulaire sont lues avant de désactiver les champs et avant la vérification de connexion. Les erreurs de validation indiquent désormais le champ concerné.
+
+Installation : arrêtez le serveur avec Ctrl+C. Décompressez dans le dossier contenant votre package.json, acceptez le remplacement, puis npm install et npm run dev. Conservez votre fichier .env.local : il ne figure pas dans cette archive.
+
+Test : ouvrez http://localhost:3000/fr/host, ouvrez une annonce, remplissez commune/voyageurs/chambres/salles de bain, cochez le consentement et cliquez sur Rédiger avec l’IA. Cette correction résout le rejet 400 lié aux champs désactivés ; l’accès OpenAI et Supabase doit être configuré.

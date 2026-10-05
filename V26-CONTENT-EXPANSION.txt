@@ -1,0 +1,11 @@
+LE GOLFE V26 — CONTENT EXPANSION
+
+New editorial place pages:
+- Gigaro Beach
+- Maison des Papillons · Musée Dany Lartigue
+- Les Halles de Saint-Tropez
+- Le Spa du Bailli
+
+All practical facts were desk-checked against official tourism/operator sources on 2026-10-02.
+Gigaro hero image: dronepicr / Wikimedia Commons — CC BY 2.0.
+No new npm dependency.

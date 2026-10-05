@@ -1,0 +1,11 @@
+LE GOLFE V16 — VILLAGE PRACTICAL GUIDE
+
+Adds Practical info, If you have 3 hours, and Useful links to:
+- Le Plan-de-la-Tour
+- Ramatuelle
+- Saint-Tropez
+- Gassin
+- Grimaud
+
+Sources are official tourism/municipal resources checked 2026-10-02.
+No npm dependency added.

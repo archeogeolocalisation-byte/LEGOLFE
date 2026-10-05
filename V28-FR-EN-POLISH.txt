@@ -1,0 +1,10 @@
+LE GOLFE V28 — FR / EN POLISH
+
+- Harmonised French and English microcopy across My Stay, Planner, Agenda, Local and shared UI.
+- Fixed untranslated villa labels and French-only October/local-edition labels in EN.
+- French saved-place descriptions now use the existing French editorial copy.
+- Planner prompts now localise day-part names instead of leaking English into French Ask briefs.
+- Replaced stale V1/future-intelligence wording with current LE GOLFE product language.
+- Refined English tone to sound editorial rather than literal translation.
+- No dependency changes.
+- Legacy unlocalised /ask, /explore and /place routes now redirect to the current English experience instead of rendering the old V1 UI.

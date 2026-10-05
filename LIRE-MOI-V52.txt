@@ -1,0 +1,9 @@
+LE GOLFE — V52
+
+Filtres simples sur /fr/stay et /en/stay ainsi que les sélections par distance. Commune, capacité minimum, chambres minimum, budget maximum par semaine ou prix sur demande, équipements confirmés. Critères cumulables, compteur, retrait individuel et Tout effacer. Sur mobile : bouton Filtrer.
+
+Les tarifs non renseignés ne sont pas inclus dans un budget chiffré. Les équipements absents des informations de la maison ne sont pas supposés présents. Les disponibilités ne sont pas filtrées. Les filtres sont réinitialisés en quittant la page. Aucun changement SQL requis.
+
+Installation : Ctrl+C, décompresser dans le dossier contenant package.json en remplaçant les fichiers, conserver .env.local, npm install puis npm run dev.
+
+Test : http://localhost:3000/fr/stay — choisir Ramatuelle, 8 voyageurs, Piscine chauffée. Deux villas de démonstration doivent correspondre. Ajouter un budget maximum de 10 000 euros : aucun résultat. Tout effacer rétablit la sélection. Les annonces publiques Supabase utilisent les mêmes filtres.

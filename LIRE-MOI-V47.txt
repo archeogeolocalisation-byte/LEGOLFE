@@ -1,0 +1,17 @@
+LE GOLFE V47 — FICHES COMPLÉTÉES
+
+INSTALLATION
+Arrêter le serveur avec Ctrl+C. Extraire le contenu de cette archive dans le dossier qui contient votre package.json et remplacer les fichiers. Conserver votre .env.local. Ne pas créer un second dossier le-golfe dans le projet. Relancer npm run dev : la version affichée doit être 0.47.0.
+
+NOUVEAUTÉS
+Les 39 fiches ont une rubrique « Votre visite, en pratique », des liens utiles et deux questions adaptées au lieu, en français et en anglais. Les anciennes fiches bénéficient aussi de galeries plein écran. Les photos des environs sont identifiées ; Gigaro ne présente plus l’escalier du Rayol. Les photographies sont créditées avec leur source et leurs conditions d’utilisation. Trois fiches de services conservent une couverture typographique.
+
+POUR VOIR LES CHANGEMENTS
+http://localhost:3000/fr/place/grimaud-village
+http://localhost:3000/fr/place/gassin-village
+http://localhost:3000/fr/place/gigaro-beach
+http://localhost:3000/fr/place/la-voile
+Descendre à « Votre visite, en pratique » et ouvrir les questions. Cliquer sur une photo, utiliser les flèches et fermer avec Échap. Pour l’anglais, remplacer /fr/ par /en/. Internet est nécessaire pour charger les photos externes.
+
+VALIDATION
+Compilation de production et TypeScript réussis. Les 78 pages des fiches et 9 autres routes répondent correctement : 1 183 contrôles des contenus, métadonnées, liens, légendes et galeries. 12 contrôles des événements de la galerie. Pas de test visuel dans un navigateur. Supabase simulé uniquement pendant les tests, sans données personnelles. Sources et crédits détaillés dans SOURCES-V47.md.

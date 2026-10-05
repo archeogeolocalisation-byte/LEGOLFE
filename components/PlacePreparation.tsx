@@ -1,0 +1,26 @@
+import Link from 'next/link';
+import type {Place} from '../data/places';
+import {placeQuestions} from '../data/placeQuestions';
+import type {Locale} from '../lib/i18n';
+const preparation:Record<string,{fr:string;en:string}>={
+ places:{fr:'Choisir une promenade, une visite ou une pause, puis préparer les déplacements entre les secteurs.',en:'Choose a walk, visit or pause, then plan journeys between the different areas.'},
+ eat:{fr:'Préciser date, convives et demandes alimentaires. Confirmer menu, placement et prestations incluses.',en:'Specify the date, guest count and dietary requests. Confirm the menu, seating and included services.'},
+ beach:{fr:'Choisir l’accès et le type de journée ; confirmer séparément repas, transats ou autres prestations.',en:'Choose access and the type of day; confirm meals, sunbeds and other services separately.'},
+ party:{fr:'Choisir l’heure d’arrivée, confirmer le programme et prévoir le transport retour.',en:'Choose an arrival time, confirm the programme and plan return transport.'},
+ sea:{fr:'Confirmer le départ, la formule, la capacité et le retour. Consulter les informations météo de l’opérateur.',en:'Confirm departure, format, capacity and return. Check weather updates from the operator.'},
+ do:{fr:'Vérifier le programme, la réservation éventuelle et les conditions pour les personnes qui vous accompagnent.',en:'Check the programme, any booking requirement and conditions for your companions.'},
+ services:{fr:'Transmettre les dates et une demande précise ; demander un devis qui détaille les prestations.',en:'Send the dates and a precise request; ask for a quote detailing the services.'},
+ wellness:{fr:'Confirmer le soin, le créneau et les conditions d’accès aux équipements.',en:'Confirm the treatment, time slot and facility access conditions.'}
+};
+export default function PlacePreparation({place,locale}:{place:Place;locale:Locale}){
+ const fr=locale==='fr',questions=placeQuestions[place.id]?.[locale]??[],source=place.source,website=place.website;
+ const phone=place.phone?.replace(/[^+\d]/g,'');
+ const checked=place.lastVerifiedAt?new Intl.DateTimeFormat(fr?'fr-FR':'en-GB',{day:'numeric',month:'long',year:'numeric',timeZone:'UTC'}).format(new Date(place.lastVerifiedAt+'T12:00:00Z')):undefined;
+ return <section id="prepare-visit" className="border-y border-black bg-[#f7f7f4]" aria-label={fr?`Préparer la visite de ${place.name}`:`Plan your visit to ${place.name}`}><div className="lg-shell py-16 md:py-24">
+  <p className="lg-kicker">{fr?'POUR PASSER À L’ACTION':'MAKE IT HAPPEN'}</p><h2 className="mt-6 text-4xl font-black leading-[.95] tracking-[-.05em] md:text-6xl">{fr?'Votre visite, en pratique.':'Your visit, in practice.'}</h2>
+  <div className="mt-10 grid gap-8 md:grid-cols-3"><div className="border-t border-black pt-5"><p className="lg-kicker">{fr?'OÙ':'WHERE'}</p><p className="mt-4 font-bold">{place.location}</p><p className="mt-3 text-sm leading-6 text-black/55">{fr?'Consultez l’adresse et l’accès dans les informations du lieu avant de partir.':'Check the address and access in the venue information before setting out.'}</p></div><div className="border-t border-black pt-5"><p className="lg-kicker">{fr?'À PRÉVOIR':'TO PREPARE'}</p><p className="mt-4 text-sm leading-7 text-black/60">{preparation[place.category]?.[locale]}</p></div><div className="border-t border-black pt-5"><p className="lg-kicker">{fr?'POUR VOTRE DATE':'FOR YOUR DATE'}</p><p className="mt-4 text-sm leading-7 text-black/60">{fr?'Confirmez les horaires, les tarifs et les disponibilités auprès du lieu ou de son office de tourisme.':'Confirm hours, prices and availability with the venue or its tourist office.'}</p></div></div>
+  <div className="mt-10 flex flex-wrap gap-3">{website&&website!==source&&<a className="lg-btn" href={website} target="_blank" rel="noreferrer">{fr?'Consulter le site':'Visit the website'} ↗</a>}{source&&<a className="lg-btn" href={source} target="_blank" rel="noreferrer">{fr?'Informations et contact':'Information and contact'} ↗</a>}{place.bookingUrl&&place.bookingUrl!==website&&place.bookingUrl!==source&&<a className="lg-btn" href={place.bookingUrl} target="_blank" rel="noreferrer">{fr?'Voir les réservations':'Booking information'} ↗</a>}{phone&&<a className="lg-btn" href={`tel:${phone}`}>{fr?'Appeler':'Call'} {place.phone}</a>}<Link className="lg-btn" href={`/${locale}/ask?place=${encodeURIComponent(place.name)}&location=${encodeURIComponent(place.location)}`}>{fr?'Intégrer à mon séjour':'Add to my stay plan'} →</Link></div>
+  {questions.length>0&&<div className="mt-14"><h3 className="text-2xl font-black tracking-[-.03em]">{fr?'Les questions utiles avant de choisir.':'Useful questions before you choose.'}</h3><div className="mt-6 border-t border-black">{questions.map(([question,answer])=><details key={question} className="group border-b border-black/20 py-5"><summary className="cursor-pointer text-lg font-bold leading-7">{question}</summary><p className="mt-4 max-w-3xl text-base leading-7 text-black/60">{answer}</p></details>)}</div></div>}
+  <p className="mt-8 max-w-3xl text-xs leading-5 text-black/45">{fr?'Conseils de visite : LE GOLFE.':'Visit advice: LE GOLFE.'}{checked&&` ${fr?'Date des repères documentaires de la fiche':'Date of the guide’s reference information'} : ${checked}.`}</p>
+ </div></section>;
+}

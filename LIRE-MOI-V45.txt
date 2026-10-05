@@ -1,0 +1,14 @@
+LE GOLFE V45 — Sainte-Maxime, Cavalaire-sur-Mer, La Môle
+
+INSTALLATION
+Arrêter le serveur (Ctrl+C). Extraire les fichiers de cette archive directement dans le dossier qui contient votre package.json. Conserver votre .env.local. Ne pas créer un deuxième dossier le-golfe dans le projet.
+Relancer npm install puis npm run dev. La version affichée doit être 0.45.0.
+
+TESTER
+http://localhost:3000/fr/place/sainte-maxime-village
+http://localhost:3000/fr/place/cavalaire-village
+http://localhost:3000/fr/place/la-mole-village
+Cliquer une photo pour ouvrir la galerie. Flèches pour naviguer ; Fermer ou Échap pour quitter. Versions anglaises : remplacer /fr/ par /en/. Les photos sont hébergées par Wikimedia et nécessitent une connexion Internet.
+
+VALIDATION
+Compilation de production et TypeScript. Routes FR/EN, galeries, crédits, liens destinations, Explorer, accueil et sitemap. Vérifications des événements du composant galerie ; pas de test visuel dans un navigateur. Données Supabase simulées uniquement pour les tests, sans données personnelles.

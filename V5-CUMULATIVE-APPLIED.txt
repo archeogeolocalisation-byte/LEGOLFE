@@ -1,0 +1,3 @@
+LE GOLFE V5.1 CUMULATIVE UPDATE
+If this file exists in C:\Users\Moi\projets\azurkey after extraction, the update files were copied to the correct project root.
+Main visible check: /fr and /en must have a white background, black extra-bold headline and a large territory image.

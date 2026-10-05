@@ -1,0 +1,5 @@
+LE GOLFE V22
+- Agenda expanded with official sources from Sainte-Maxime / Le Carré, Le Plan-de-la-Tour, Grimaud, Gassin, Cogolin, La Croix-Valmer and Cavalaire.
+- Added visible "Sources suivies" section to WHAT'S ON.
+- Added location-specific licensed media for agenda entries.
+- Editorial upgrades: Casita, Cécile Golmard, Taxi Estelle, Maison Laurent.

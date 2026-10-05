@@ -1,0 +1,8 @@
+LE GOLFE V15 — SMART DISCOVERY
+
+- Homepage now starts discovery from traveller intent, not just site sections.
+- Five intent shortcuts: quiet, beach day, view, family, eat well.
+- Explore gets live intent filters and more editorial asymmetric cards.
+- MY STAY becomes a visual shortlist with collage, category summary and richer Ask LE GOLFE prompt.
+- Blue accent remains selective and editorial.
+- No npm dependency added.

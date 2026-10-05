@@ -1,0 +1,24 @@
+LE GOLFE — V57 — PHOTOS DES LIEUX ET GALERIE DES MAISONS
+
+INSTALLATION
+Arrêtez le serveur avec Ctrl+C. Décompressez ce ZIP directement dans le dossier contenant package.json (C:\Users\Moi\projets\azurkey), remplacez les fichiers et conservez .env.local. Lancez npm install puis npm run dev. Le terminal doit afficher le-golfe@0.57.0.
+Aucun nouveau SQL ni réglage Supabase pour cette version. La migration V56 reste incluse si vous ne l’avez pas encore activée.
+
+PHOTOS DES FICHES
+/fr/place/monroes-pub : les deux photos fournies, extérieur en couverture.
+/fr/place/la-vague-dor : les trois photos fournies, portrait du chef (dernière photo fournie) en couverture.
+/fr/place/caves-du-roy : les deux photos fournies, salle éclairée (dernière photo fournie) en couverture.
+Les mêmes galeries et couvertures sont utilisées en anglais et dans les cartes Explore et les aperçus de partage.
+Les images sont incluses dans public/media/places ; elles ne dépendent pas d’un lien externe. Aucun auteur ni licence libre n’est attribué aux images fournies sans information correspondante.
+
+GALERIE DES MAISONS
+Ouvrez une fiche /villa/... ou l’aperçu voyageur depuis Mes annonces.
+Sur ordinateur : mosaïque avec une grande couverture et jusqu’à quatre autres photos. La disposition s’adapte si seulement une, deux, trois ou quatre photos sont disponibles.
+Sur mobile : faites défiler horizontalement les photos. Le compteur indique votre position.
+Voir les photos ouvre la visionneuse plein écran : boutons précédent/suivant, flèches du clavier, miniatures et glissement tactile. Échap ou Fermer revient à la fiche.
+La première photo de l’annonce reste la couverture. Les photos locales, celles publiées dans Supabase et les images de démonstration utilisent la même galerie.
+Une maison sans photo affiche toujours son nom sur fond bleu foncé.
+
+VÉRIFICATIONS
+Compilation de production et TypeScript réussis. Contrôles des galeries, navigation, clavier, glissement tactile, retour du focus, absence de photo, une à sept photos, anglais et conservation de l’éditeur.
+Vérification du rendu serveur des fiches françaises/anglaises, des couvertures et de l’intégration des photos. Le navigateur de contrôle n’a pas répondu : le contrôle visuel interactif reste à faire en local.

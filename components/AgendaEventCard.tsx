@@ -1,0 +1,9 @@
+import Link from "next/link";
+import type { GolfeEvent } from "../data/events";
+import type { Locale } from "../lib/i18n";
+import { mediaForEvent } from "../lib/eventMedia";
+import { sessionsInWindow, formatCalendarDay, type DateWindow } from "../lib/agendaCalendar";
+export default function AgendaEventCard({event:e,locale,window,today}:{event:GolfeEvent;locale:Locale;window:DateWindow;today:string}){
+ const fr=locale==="fr";const sessions=sessionsInWindow(e,window);const image=mediaForEvent(e);const past=sessions.every(s=>(s.end||s.start)<today);
+ return <article className="border-t border-black py-7"><div className="lg-image aspect-[16/9]"><img src={image.src} alt={image.alt} loading="lazy"/></div><p className="lg-credit">{fr?"Photo de contexte":"Context photo"}: {image.credit} · {image.license}</p><p className="lg-kicker mt-4">{e.location}{past?fr?" · Terminé":" · Past event":""}</p><h2 className="mt-4 text-3xl font-black"><Link href={`/${locale}/event/${e.id}`}>{fr?e.titleFr||e.title:e.title} →</Link></h2><ul className="mt-4 space-y-2 text-sm font-bold">{sessions.map(s=><li key={s.start}><time dateTime={s.start}>{formatCalendarDay(s.start,locale,true)}</time>{s.end&&s.end!==s.start?` — ${formatCalendarDay(s.end,locale,true)}`:""}{s.time?` · ${s.time}`:""}</li>)}</ul><p className="mt-4 text-sm leading-6 text-black/60">{fr?e.summaryFr:e.summary}</p><p className="mt-4 border-l-2 border-[var(--lg-blue)] pl-4 text-sm leading-6">{fr?e.whyFr:e.why}</p><div className="mt-6 flex flex-wrap gap-4"><Link href={`/${locale}/event/${e.id}`} className="text-xs font-bold underline">{fr?"Fiche et adresses dans la commune":"Details and places in the commune"}</Link><a href={e.source} target="_blank" rel="noreferrer" className="text-xs font-bold underline">{fr?"Source officielle":"Official source"} ↗</a></div></article>;
+}

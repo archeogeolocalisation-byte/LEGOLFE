@@ -1,0 +1,10 @@
+LE GOLFE V23 — EDITORIAL DESK
+
+1. Run supabase/editorial.sql once in Supabase SQL Editor (after community.sql).
+2. Sign in with a moderator account.
+3. Open /fr/editorial or /en/editorial.
+4. Click “Actualiser les sources”.
+5. Review/edit each candidate, then Publish or Reject.
+6. Approved events appear in WHAT'S ON; approved news appears in LOCAL.
+
+No new npm dependency.

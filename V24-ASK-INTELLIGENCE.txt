@@ -1,0 +1,7 @@
+LE GOLFE V24 — ASK INTELLIGENCE
+
+- Ask Le Golfe now searches the structured local guide, agenda, villas and local news.
+- Results are ranked from the traveller's brief and shown as a concierge-style answer.
+- The page returns: LE GOLFE TAKE, places, agenda, stay and local context.
+- Shortlists and place links continue to prefill Ask.
+- No external AI dependency or API key added. This version is deterministic and based on LE GOLFE data, so the behaviour is transparent and deployable now.

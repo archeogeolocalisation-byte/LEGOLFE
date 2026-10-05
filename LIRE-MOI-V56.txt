@@ -1,0 +1,36 @@
+LE GOLFE — V56 — PROPOSITIONS ET SÉJOURS CONFIRMÉS
+
+INSTALLATION LOCALE
+1. Dans PowerShell, arrêtez npm run dev avec Ctrl+C.
+2. Décompressez ce ZIP dans C:\Users\Moi\projets\azurkey, directement dans le dossier contenant package.json. Remplacez les fichiers et conservez votre .env.local.
+3. Lancez npm install puis npm run dev. Le terminal doit afficher le-golfe@0.56.0.
+
+ACTIVATION SUPABASE
+Dans votre projet Supabase > SQL Editor > New query :
+- Si les disponibilités V54 sont déjà activées : collez tout supabase/villas-v56.sql et cliquez Run.
+- Sinon, exécutez d’abord supabase/villas-v54.sql, puis supabase/villas-v56.sql.
+- Pour une installation complète depuis zéro, supabase/villas.sql contient l’ensemble des tables, politiques et migrations. Exécutez ce fichier complet plutôt que les migrations séparées.
+Les scripts peuvent être exécutés à nouveau. Aucune clé supplémentaire n’est nécessaire.
+Les propositions (prix, conditions et références de demande) sont privées et lisibles uniquement par le compte propriétaire de l’annonce. Le calendrier public contient uniquement des dates.
+
+COMMENT TESTER
+1. Connectez-vous sur /fr/host au compte qui possède une maison en ligne.
+2. Mes annonces > Disponibilités : ajoutez vos périodes occupées, activez le calendrier et enregistrez-le.
+3. Envoyez une vraie demande depuis la fiche publique de cette maison, avec des dates futures libres. Les exemples de démonstration ne permettent pas de confirmer un séjour.
+4. Dans /fr/host > Demandes, chargez vos demandes. Sous la demande : saisissez le prix TOTAL en euros et vos conditions (10 à 3 000 caractères), puis Enregistrer la proposition.
+5. Préparer la réponse avec le prix ouvre un brouillon dans votre application de messagerie. Vous choisissez quand l’envoyer. Une proposition ne bloque pas les dates.
+6. Après accord réel du voyageur, cochez la confirmation de cet accord et cliquez Confirmer le séjour et bloquer les dates. Les dates sont revérifiées dans Supabase ; un chevauchement interdit la confirmation.
+7. Rechargez les disponibilités de la maison ou sa fiche publique : les nuits confirmées sont bloquées. Le jour du départ reste disponible pour une nouvelle arrivée.
+8. Pour annuler : ouvrez Annuler ce séjour, cochez la confirmation puis Annuler le séjour et libérer les dates. Seules les nuits de ce séjour sont libérées ; les blocages manuels et les autres séjours sont conservés.
+
+FONCTIONNEMENT
+Toute modification du prix ou des conditions doit être enregistrée avant confirmation. En cas de conflit, vos saisies restent affichées : rechargez le séjour enregistré avant de recommencer.
+Les confirmations concurrentes pour une même maison sont sérialisées côté base. La confirmation du séjour et le blocage du calendrier font partie d’une seule transaction.
+Désactiver le calendrier ne libère pas les séjours confirmés : annulez le séjour concerné.
+Le suivi de la demande (nouvelle, en cours, répondue, clôturée) reste indépendant de la confirmation du séjour. Les briefs locaux restent des outils de préparation.
+Aucun paiement, contrat signé, e-mail automatique ni synchronisation Airbnb/iCal n’est ajouté dans cette version.
+
+VÉRIFICATIONS
+Compilation de production, TypeScript et 228 contrôles automatisés sur les disponibilités, propositions, confirmations, annulations, demandes et filtres, avec services simulés.
+La migration n’a pas été exécutée sur votre Supabase depuis ici.
+Un contrôle SQL facultatif est fourni dans supabase/tests/villas-v56.sql : exécutez-le après activation, avec au moins un utilisateur Auth existant. Il crée des données de test puis les annule avec ROLLBACK. Ce contrôle SQL n’a pas été exécuté ici. En cas d’erreur, lancez ROLLBACK avant une nouvelle requête.

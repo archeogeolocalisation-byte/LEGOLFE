@@ -1,0 +1,27 @@
+LE GOLFE — V59 — ÉQUIPEMENTS DES MAISONS
+
+INSTALLATION
+Ctrl+C pour arrêter npm run dev. Décompressez ce ZIP directement dans C:\Users\Moi\projets\azurkey, dans le dossier contenant package.json, en remplaçant les fichiers. Conservez .env.local, puis lancez npm install et npm run dev. Le terminal doit afficher le-golfe@0.59.0.
+Aucun nouveau SQL ni réglage Supabase pour cette version.
+
+AJOUTER / MODIFIER UNE MAISON
+/fr/host > Annonces > Ajouter une annonce ou Modifier.
+Dans « 02. Les essentiels », les équipements confirmés sont regroupés :
+- Au quotidien : climatisation, parking, Wi-Fi, jardin, terrasse, repas en extérieur, animaux et accessibilité.
+- Piscine et vue : piscine, piscine chauffée, piscine sécurisée et vue mer.
+- Détente : jacuzzi, sauna, hammam.
+- Loisirs : billard, baby-foot, table de ping-pong, terrain de pétanque.
+- Cuisine extérieure : barbecue, plancha, four à pizza.
+Cochez uniquement les équipements présents. Aucune nouvelle case n’est cochée automatiquement. Les équipements existants sont conservés, y compris les anciens équipements qui ne font pas partie de la liste.
+Enregistrez l’annonce. L’aperçu voyageur affiche vos équipements. Pour une nouvelle annonce locale, mettez ensuite la fiche en ligne ; les annonces déjà en ligne sont mises à jour lors de l’enregistrement.
+Les équipements cochés sont également transmis à l’aide IA lorsque vous choisissez de générer la description. L’IA doit s’appuyer uniquement sur les faits confirmés ; relisez le texte généré.
+
+RECHERCHE VOYAGEUR
+/fr/stay ou /en/stay : les principaux filtres restent visibles. Ouvrez « Plus d’équipements » pour les nouveaux choix.
+Les critères se cumulent : jacuzzi + four à pizza affiche uniquement les maisons qui déclarent les deux. Les filtres choisis apparaissent en pastilles et peuvent être retirés individuellement ou avec Tout effacer.
+Sur mobile, ouvrez d’abord Filtrer, puis Plus d’équipements.
+Les maisons existantes et les maisons de démonstration ne reçoivent aucun équipement inventé pour remplir les résultats.
+
+VÉRIFICATIONS
+Compilation de production et TypeScript réussis. Contrôles du formulaire FR/EN, conservation des anciens équipements, transmission à l’aide IA, cumul des filtres, retrait d’un filtre, publication et affichage des équipements sur la fiche FR/EN.
+Tests réalisés avec services simulés ; aucune donnée de votre Supabase n’a été consultée ou modifiée à distance. Le contrôle visuel reste à faire sur votre navigateur local.

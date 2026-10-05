@@ -1,0 +1,8 @@
+LE GOLFE V11 — ACTIONS & CONVERSION
+- Action module on every place page
+- Official site / booking CTA when available
+- Save to MY STAY using localStorage
+- New /[locale]/saved shortlist page
+- Ask LE GOLFE prefill from a place or full shortlist
+- MY STAY entry in header
+- No new npm dependency

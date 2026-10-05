@@ -1,0 +1,10 @@
+LE GOLFE V25 — MY STAY PLANNER
+
+- Turns the existing My Stay shortlist into a 3-day itinerary.
+- Four moments per day: morning, lunch, afternoon, evening.
+- Generates a first rhythm from place categories.
+- Lets the traveller move an item to another day or time slot without new dependencies.
+- Warns when a day spans too many distinct locations.
+- Uses the saved villa as the stay base when available.
+- Persists the itinerary locally on the device.
+- Sends the full itinerary to Ask LE GOLFE for optimisation around pace, travel time and trade-offs.

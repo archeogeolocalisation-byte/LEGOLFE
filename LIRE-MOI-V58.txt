@@ -1,0 +1,28 @@
+LE GOLFE — V58 — TABLEAU DE BORD PROPRIÉTAIRE / AGENCE
+
+INSTALLATION
+Arrêtez npm run dev avec Ctrl+C. Décompressez le ZIP directement dans C:\Users\Moi\projets\azurkey, dans le dossier contenant package.json. Remplacez les fichiers et conservez .env.local. Lancez npm install puis npm run dev. Le terminal doit afficher le-golfe@0.58.0.
+Aucun nouveau SQL pour cette version. Les séjours confirmés nécessitent la migration V56 déjà fournie dans supabase/villas-v56.sql (après la V54 si elle n’est pas activée).
+
+UTILISATION
+Connectez-vous, puis ouvrez /fr/host ou /en/host et choisissez Propriétaire ou Conciergerie / Agence.
+Tableau de bord charge automatiquement l’activité du compte connecté :
+- Maisons du compte : maisons en ligne, brouillons et maisons en pause.
+- Demandes à traiter : nouvelles ou en cours, pour des dates à venir ou un séjour en cours. Une demande déjà proposée ou confirmée est suivie dans sa catégorie correspondante.
+- Propositions à suivre : prix et conditions enregistrés, accord à convenir avec le voyageur.
+- Séjours confirmés : séjours à venir ou déjà en cours, avec maison, voyageur, dates et prix total convenu.
+À faire propose les demandes à ouvrir, les propositions à suivre, les annonces à compléter et les calendriers à activer.
+Voir le séjour ouvre directement la demande correspondante, y compris si elle ne fait pas partie des 100 dernières demandes habituelles. Retrouvez-y les conditions enregistrées et la confirmation ou l’annulation.
+Séjours confirmés affiche tous les séjours confirmés de cette vue. Briefs rassemble les préparations conservées sur cet appareil ; les exemples fictifs sont signalés et ne comptent jamais comme réservations dans le tableau de bord.
+Actualiser recharge les informations après un changement. Revenir au tableau de bord depuis un autre onglet le recharge également.
+Les maisons du compte ouvrent Annonces et chargent les annonces en ligne. Un brouillon conservé sur cet appareil reste distinct d’une maison du compte Supabase.
+
+PÉRIMÈTRE DE LA VUE
+Le tableau de bord affiche jusqu’à 200 dernières maisons du compte, 200 dernières demandes pour ces maisons et 200 propositions/séjours à venir ou en cours, triés par arrivée. Les chiffres concernent cette vue, pas un historique illimité.
+Les périodes passées et les séjours annulés ne sont pas comptés parmi les prochains séjours.
+Si une catégorie ne peut pas être chargée, elle indique son indisponibilité plutôt qu’un faux zéro. Les autres catégories restent accessibles.
+Les informations Supabase sont masquées lors d’une déconnexion ou d’un changement de compte. Aucun nouvel envoi d’e-mail, paiement ni changement automatique des réservations.
+
+VÉRIFICATIONS
+Compilation de production et TypeScript. Tests avec services simulés sur le compte connecté, les maisons possédées, les propositions et confirmations, les périodes passées/annulées, l’ouverture d’une demande ciblée, les brouillons locaux, les erreurs partielles et le changement de compte. Vérification de l’éditeur et des galeries.
+Aucune donnée de votre Supabase n’a été consultée ou modifiée depuis ici. Le rendu visuel interactif reste à vérifier sur votre navigateur local.

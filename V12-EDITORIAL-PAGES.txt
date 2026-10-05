@@ -1,0 +1,9 @@
+LE GOLFE V12 — EDITORIAL PAGES
+
+Reworked to the editorial standard established by La Plan-de-la-Tour:
+- Ramatuelle: village rhythm, Pampelonne contrast, Paillas, stay fit
+- Saint-Tropez: timing-led city guide, harbour/Ponche/Citadelle, stay fit
+- Le Club 55: ritual-led restaurant page, Pampelonne day, practical 2026, match fit
+- Shared editorial components added inside the place page for consistency
+
+No new npm dependency.

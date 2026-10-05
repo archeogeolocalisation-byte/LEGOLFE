@@ -1,0 +1,31 @@
+LE GOLFE — V54 — DISPONIBILITÉS DES VILLAS
+
+INSTALLATION
+1. Ctrl+C pour arrêter le serveur.
+2. Décompressez dans le dossier contenant package.json et remplacez les fichiers.
+3. Conservez votre .env.local (absent de l’archive).
+4. npm install puis npm run dev.
+
+ACTIVATION SUPABASE (PROJET DÉJÀ ACTIVÉ EN V49/V50)
+Dans Supabase > SQL Editor > New query, collez tout le fichier supabase/villas-v54.sql puis cliquez Run. Une seule fois suffit ; le script peut être relancé.
+Pour une nouvelle installation des annonces, exécutez supabase/villas.sql complet : il inclut V50 et V54.
+
+TEST SIMPLE
+1. Connectez-vous à votre compte sur /fr/account.
+2. /fr/host > Mes annonces : votre annonce doit avoir été mise en ligne. Au besoin, Retrouver mes annonces en ligne.
+3. Cliquez Disponibilités à côté de votre propre annonce.
+4. Ajoutez vos périodes occupées, cochez Activer mon calendrier, puis Enregistrer le calendrier.
+5. Ouvrez la fiche publique /villa/property-... : calendrier avec nuits bloquées et nuits ouvertes à confirmer.
+6. Une demande qui chevauche une nuit bloquée est refusée. Une arrivée le jour du départ reste possible.
+7. Sur /fr/stay, renseignez arrivée et départ : seules les annonces avec calendrier activé, sans nuit bloquée sur la période, sont retenues.
+
+À SAVOIR
+Les six villas de démonstration n’ont pas de disponibilités réelles et ne ressortent pas avec le filtre par dates. Testez avec une annonce personnelle mise en ligne (id property-...). Un calendrier absent ou désactivé reste « à confirmer ».
+Une demande reçue ne bloque aucune date automatiquement. Après accord avec le voyageur, le propriétaire ajoute lui-même la période occupée.
+Pas de réservation, de paiement ou de synchronisation Airbnb/iCal automatique dans cette version.
+Le jour de départ est exclu du blocage (blocage du 10 au 17 = nuits du 10 au 16). Les périodes adjacentes ou superposées sont fusionnées.
+Un autre appareil a modifié le calendrier ? Le conflit est signalé et les nouvelles modifications ne l’écrasent pas ; rechargez avant de recommencer.
+
+VÉRIFICATIONS
+Tests automatisés sur les dates, chevauchements, filtrage, erreurs réseau, propriété et conflits avec service simulé ; compilation production et TypeScript.
+Le script SQL et ses règles sont fournis pour votre projet : aucun accès à votre base Supabase n’a été utilisé et aucune migration n’a été exécutée à distance par nous.

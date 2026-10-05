@@ -1,0 +1,28 @@
+LE GOLFE V49 — FICHE VILLA VOYAGEUR
+
+INSTALLATION
+Arrêter npm run dev avec Ctrl+C. Extraire l’archive dans le dossier qui contient package.json et remplacer les fichiers. Conserver .env.local. Ne pas créer un deuxième dossier le-golfe. Relancer npm run dev : la version doit être 0.49.0.
+
+TEST IMMÉDIAT, SANS CONNEXION
+1. Ouvrir http://localhost:3000/villa/villa-eden : fiche villa de démonstration remaniée.
+2. Ouvrir http://localhost:3000/fr/host et choisir Propriétaire ou Agence.
+3. Aller dans Annonces, ajouter une annonce ou modifier une annonce existante, ajouter vos photos et équipements, relire puis enregistrer.
+4. Cliquer Aperçu voyageur : la fiche utilise vos propres informations, photos et description. La galerie s’ouvre en plein écran ; les flèches naviguent et Échap ferme. Le bouton Retour à l’édition ferme l’aperçu.
+5. Sans photo, la couverture affiche le nom de la maison sur fond bleu foncé. Sans tarif, la fiche affiche Prix sur demande. Une distance non renseignée n’est pas affichée comme 0 km.
+
+CE QUI CHANGE
+La même présentation sert à l’aperçu propriétaire et à la fiche publique : grande galerie, capacité, chambres et salles de bain, description relue, points forts, équipements confirmés, commune, annonceur et demande de disponibilités. Les textes FR/EN saisis dans l’éditeur sont repris dans l’aperçu selon la langue. Aucun badge de vérification n’est ajouté.
+
+ACTIVER LA VRAIE PUBLICATION
+Les annonces locales ne sont pas en ligne automatiquement. La publication exige un compte Supabase connecté et le stockage activé.
+1. Dans votre projet Supabase, ouvrir SQL Editor.
+2. Copier le contenu de supabase/villas.sql et l’exécuter. Ce script crée les annonces, le stockage des photos et les demandes, avec leurs règles d’accès. Il ne modifie pas les tables existantes requests ou community.
+3. Sur LE GOLFE, se connecter avec le compte du propriétaire ou de l’agence.
+4. Dans Host Desk, mettre l’annonce en statut Publiée et visibilité Public, puis cliquer Mettre en ligne. Ce bouton transfère les photos locales et enregistre la fiche sur Supabase.
+5. Après confirmation, Voir la fiche publique ouvre /villa/property-…. Tester cette URL dans une fenêtre privée. La maison doit aussi apparaître dans /fr/stay.
+6. Pour les annonces de démonstration (comme Villa Eden), dupliquer l’annonce puis remplacer les photos par vos propres photos ou des URL HTTPS autorisées avant de la mettre en ligne.
+7. Les demandes reçues sont dans Host Desk > Demandes > Charger mes demandes. Elles sont enregistrées ; aucun e-mail automatique n’est envoyé par cette version. Répondre par e-mail ouvre votre application de messagerie.
+8. Retrouver mes annonces en ligne permet de charger le portefeuille du compte connecté sur un autre navigateur. Une mise en pause retire la fiche et bloque les nouvelles demandes. Les nouvelles publications et mises à jour sont confirmées par le serveur avant d’être présentées comme en ligne.
+
+VALIDATION
+Compilation de production et TypeScript réussis. 112 routes HTTP testées, dont les six villas de démonstration, deux annonces publiques simulées, leurs formulaires, le catalogue et le sitemap. Les annonces privées et en pause simulées répondent 404. Tests du composant galerie, du formulaire de demande et de la publication avec services simulés. Les 78 fiches de lieux conservent les corrections de la V48. Pas de test visuel dans un navigateur. Le script SQL et la publication n’ont pas été exécutés sur votre Supabase réel ; aucune configuration distante n’a été modifiée.

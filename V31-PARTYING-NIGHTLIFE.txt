@@ -1,0 +1,11 @@
+LE GOLFE V31 — PARTYING / NIGHTLIFE
+
+New Explore category: PARTYING
+New editorial nightlife profiles:
+- Monroe's Pub — Port Grimaud / Grimaud
+- Gaïo — Saint-Tropez
+- Les Caves du Roy — Saint-Tropez
+- L'Opera — Saint-Tropez
+
+FR/EN copy, practical data, official links and LE GOLFE nightlife positioning.
+No new npm dependencies.

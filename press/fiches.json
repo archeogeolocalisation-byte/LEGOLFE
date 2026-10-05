@@ -1,0 +1,204 @@
+{
+  "checkedAt": "2026-10-03",
+  "scope": "Recherche partielle ; statuts explicites, aucune autorisation implicite pour les dossiers.",
+  "fiches": [
+    {
+      "id": "monroes-pub",
+      "status": "recherche_a_faire",
+      "pressSource": null,
+      "note": "Aucune vérification presse spécifique effectuée dans cette passe."
+    },
+    {
+      "id": "gaio-club",
+      "status": "kit_non_identifie",
+      "pressSource": null,
+      "note": "Recherche ciblée sans kit public officiel réutilisable identifié ; cela ne prouve pas l’absence de kit."
+    },
+    {
+      "id": "caves-du-roy",
+      "status": "contact_presse",
+      "pressSource": "https://www.byblos.com/revue-de-presse-et-partenaires-du-byblos/",
+      "note": "Dossier des suites ne convient pas pour illustrer le club."
+    },
+    {
+      "id": "opera-saint-tropez",
+      "status": "kit_non_identifie",
+      "pressSource": null,
+      "note": "Recherche ciblée sans kit public officiel réutilisable identifié ; cela ne prouve pas l’absence de kit."
+    },
+    {
+      "id": "plan-de-la-tour-village",
+      "status": "recherche_a_faire",
+      "pressSource": null,
+      "note": "Aucune vérification presse spécifique effectuée dans cette passe."
+    },
+    {
+      "id": "la-vague-dor",
+      "status": "dossier_repere",
+      "pressSource": "https://www.chevalblanc.com/fr/maison/st-tropez/presse/",
+      "note": "PDF public ; droits des photos non confirmés."
+    },
+    {
+      "id": "la-voile",
+      "status": "photo_integree",
+      "pressSource": "https://www.michelreybierhospitality.com/fr/press-landing/",
+      "note": "Photo de terrasse issue de la photothèque officielle, crédit Grégoire Gardette, usage conditionnel lié à l’établissement. Dossiers repérés, fichiers non inclus."
+    },
+    {
+      "id": "bello-visto",
+      "status": "kit_non_identifie",
+      "pressSource": "https://bellovisto.eu/contact/",
+      "note": "Recherche ciblée sans dossier public identifié."
+    },
+    {
+      "id": "la-verdoyante",
+      "status": "kit_non_identifie",
+      "pressSource": null,
+      "note": "Recherche ciblée sans kit public officiel réutilisable identifié ; cela ne prouve pas l’absence de kit."
+    },
+    {
+      "id": "byblos-beach",
+      "status": "dossier_repere",
+      "pressSource": "https://www.byblos.com/revue-de-presse-et-partenaires-du-byblos/",
+      "note": "Dossier Byblos général repéré ; photos dédiées à la plage et autorisation à obtenir."
+    },
+    {
+      "id": "ramatuelle-village",
+      "status": "contact_phototheque",
+      "pressSource": "https://www.ramatuelle-tourisme.com/pro/contact-presse/",
+      "note": "Images disponibles sur demande ; droits des nouveaux visuels à obtenir. Photos Commons existantes conservées."
+    },
+    {
+      "id": "gassin-village",
+      "status": "recherche_a_faire",
+      "pressSource": null,
+      "note": "Aucune vérification presse spécifique effectuée dans cette passe."
+    },
+    {
+      "id": "grimaud-village",
+      "status": "autorisation_a_obtenir",
+      "pressSource": "https://www.grimaud-provence.com/espace-pro/actualites/droits-dauteur-et-droits-a-limage/",
+      "note": "L’office demande un contact avant utilisation de ses photos ; licence spécifique des images Commons existantes distincte."
+    },
+    {
+      "id": "pampelonne",
+      "status": "contact_phototheque",
+      "pressSource": "https://www.ramatuelle-tourisme.com/pro/contact-presse/",
+      "note": "Images disponibles sur demande ; droits des nouveaux visuels à obtenir. Photos Commons existantes conservées."
+    },
+    {
+      "id": "escalet",
+      "status": "contact_phototheque",
+      "pressSource": "https://www.ramatuelle-tourisme.com/pro/contact-presse/",
+      "note": "Images disponibles sur demande ; droits des nouveaux visuels à obtenir. Photos Commons existantes conservées."
+    },
+    {
+      "id": "place-des-lices",
+      "status": "recherche_a_faire",
+      "pressSource": null,
+      "note": "Aucune vérification presse spécifique effectuée dans cette passe."
+    },
+    {
+      "id": "chateau-minuty",
+      "status": "kit_non_identifie",
+      "pressSource": null,
+      "note": "Recherche ciblée sans kit photographique officiel réutilisable identifié ; cela ne prouve pas l’absence de kit."
+    },
+    {
+      "id": "citadelle-saint-tropez",
+      "status": "recherche_a_faire",
+      "pressSource": null,
+      "note": "Aucune vérification presse spécifique effectuée dans cette passe."
+    },
+    {
+      "id": "saint-tropez-village",
+      "status": "recherche_a_faire",
+      "pressSource": null,
+      "note": "Aucune vérification presse spécifique effectuée dans cette passe."
+    },
+    {
+      "id": "club-55",
+      "status": "recherche_a_faire",
+      "pressSource": null,
+      "note": "Aucune vérification presse spécifique effectuée dans cette passe."
+    },
+    {
+      "id": "indie-beach",
+      "status": "droits_non_confirmes",
+      "pressSource": "https://www.indiegroup.fr/indiebeach/",
+      "note": "Site officiel trouvé ; pas d’autorisation explicite identifiée."
+    },
+    {
+      "id": "casita-pampelonne",
+      "status": "kit_non_identifie",
+      "pressSource": null,
+      "note": "Recherche ciblée sans kit public officiel réutilisable identifié ; cela ne prouve pas l’absence de kit."
+    },
+    {
+      "id": "bateaux-verts-excursion",
+      "status": "kit_non_identifie",
+      "pressSource": null,
+      "note": "Recherche ciblée sans kit public officiel réutilisable identifié ; cela ne prouve pas l’absence de kit."
+    },
+    {
+      "id": "caseneuve-catamaran",
+      "status": "kit_non_identifie",
+      "pressSource": null,
+      "note": "Recherche ciblée sans kit public officiel réutilisable identifié ; cela ne prouve pas l’absence de kit."
+    },
+    {
+      "id": "domaine-rayol-kids",
+      "status": "espace_presse",
+      "pressSource": "https://www.domainedurayol.org/professionnels/espace-presse/",
+      "note": "Visuels de l’activité enfants et droits à confirmer."
+    },
+    {
+      "id": "master-ninja-cogolin",
+      "status": "kit_non_identifie",
+      "pressSource": null,
+      "note": "Recherche ciblée sans kit public officiel réutilisable identifié ; cela ne prouve pas l’absence de kit."
+    },
+    {
+      "id": "cecile-golmard-chef",
+      "status": "kit_non_identifie",
+      "pressSource": null,
+      "note": "Recherche ciblée sans kit photographique officiel réutilisable identifié ; cela ne prouve pas l’absence de kit."
+    },
+    {
+      "id": "taxi-estelle",
+      "status": "kit_non_identifie",
+      "pressSource": null,
+      "note": "Recherche ciblée sans kit photographique officiel réutilisable identifié ; cela ne prouve pas l’absence de kit."
+    },
+    {
+      "id": "maison-laurent-conciergerie",
+      "status": "kit_non_identifie",
+      "pressSource": null,
+      "note": "Recherche ciblée sans kit photographique officiel réutilisable identifié ; cela ne prouve pas l’absence de kit."
+    },
+    {
+      "id": "gigaro-beach",
+      "status": "recherche_a_faire",
+      "pressSource": null,
+      "note": "Aucune vérification presse spécifique effectuée dans cette passe."
+    },
+    {
+      "id": "maison-des-papillons",
+      "status": "recherche_a_faire",
+      "pressSource": null,
+      "note": "Aucune vérification presse spécifique effectuée dans cette passe."
+    },
+    {
+      "id": "les-halles-saint-tropez",
+      "status": "kit_non_identifie",
+      "pressSource": null,
+      "note": "Recherche ciblée sans kit photographique officiel réutilisable identifié ; cela ne prouve pas l’absence de kit."
+    },
+    {
+      "id": "spa-du-bailli",
+      "status": "revue_presse",
+      "pressSource": "https://www.lebaillidesuffren.com/home/revue-de-presse/",
+      "note": "Pas de kit photographique autorisé identifié."
+    }
+  ]
+}

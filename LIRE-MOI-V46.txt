@@ -1,0 +1,16 @@
+LE GOLFE V46 — COGOLIN, LA CROIX-VALMER, RAYOL-CANADEL
+
+INSTALLATION
+Arrêter le serveur avec Ctrl+C. Extraire le contenu de cette archive dans le dossier qui contient votre package.json. Conserver votre .env.local. Ne pas créer un second dossier le-golfe dans votre projet. Relancer npm run dev. La version affichée doit être 0.46.0.
+
+FICHES
+http://localhost:3000/fr/place/cogolin-village
+http://localhost:3000/fr/place/la-croix-valmer-village
+http://localhost:3000/fr/place/rayol-canadel-village
+Pour la version anglaise, remplacer /fr/ par /en/. Cliquer une photo pour ouvrir la galerie plein écran. Flèches pour naviguer, Fermer ou Échap pour quitter. Les 10 nouvelles photos sont hébergées sur Wikimedia et nécessitent Internet ; crédits, sources et licences accompagnent les photos.
+
+GASSIN
+La fiche village est /fr/place/gassin-village. La collection d’adresses /fr/destinations/gassin est titrée Autour de Gassin et propose un lien explicite vers la fiche. La carte du village n’y est plus répétée. Une seule entrée gassin-village dans le catalogue ; les anciennes URL restent disponibles.
+
+VALIDATION
+Compilation de production et TypeScript réussis. 24 routes HTTP, 96 contrôles des pages, liens et galeries ; 12 contrôles des événements du composant galerie. Pas de test visuel dans un navigateur. Supabase simulé uniquement lors des tests, sans données personnelles.

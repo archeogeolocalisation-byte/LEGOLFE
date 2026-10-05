@@ -1,0 +1,11 @@
+LE GOLFE V17 — MORE EDITORIAL PAGES
+
+Upgraded existing fiches:
+- Plage de l'Escalet
+- Place des Lices
+- Citadelle de Saint-Tropez
+- Château Minuty
+- La Vague d'Or
+
+Adds a reusable EditorialFeaturePlace component and bilingual editorial page data so future fiches can be upgraded without duplicating page layout code.
+Facts desk-checked on 2026-10-02 against official tourism/venue sources and Michelin where relevant.

@@ -1,0 +1,11 @@
+LE GOLFE V33 — HOST / PARTNER DESK
+
+- New localized /fr/host and /en/host prototype.
+- Entry choice: Private Owner or Concierge / Agency.
+- Dashboard: Today, Properties, Stays.
+- Add a property with Public / Private / On Request visibility.
+- Add a guest stay linked to a property.
+- Send stays directly into Ask Le Golfe.
+- Local persistence for prototype validation; no new database migration required.
+- Legacy /owner redirects to /en/host.
+- HOST added to navigation.

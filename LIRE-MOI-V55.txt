@@ -1,0 +1,22 @@
+LE GOLFE — V55 — LOCALISATION DES MAISONS
+
+INSTALLATION
+Ctrl+C, décompressez dans le dossier contenant package.json en remplaçant les fichiers, conservez .env.local, puis npm install et npm run dev.
+Aucun nouveau SQL nécessaire pour la localisation : les informations publiques sont incluses dans le payload existant de l’annonce. Si vous n’avez pas encore activé les disponibilités V54, le fichier supabase/villas-v54.sql reste inclus.
+
+UTILISATION
+/fr/host > Mes annonces > Modifier (ou Ajouter une annonce).
+Dans LA LOCALISATION : quartier facultatif, choix Approximative ou Exacte, cliquez sur la carte pour choisir votre secteur ou point. Les flèches déplacent la carte et +/− règlent le zoom. Au clavier, utilisez les flèches et Entrée sur la carte pour choisir le centre.
+Approximative est le choix par défaut : la carte affiche une zone d’environ 1 km, sans épingle exacte. Les coordonnées précises du clic sont écartées avant enregistrement ; seuls les deux décimales du centre de zone sont conservées, y compris dans Supabase.
+Exacte : repositionnez le point précisément et cochez l’autorisation explicite de publication. Si vous passez d’Exacte à Approximative, la précision est supprimée. Elle ne sera pas restaurée automatiquement.
+Retirer le repère : la fiche indique seulement la commune (et le quartier si renseigné). Aucune maison sans repère ne reçoit un faux emplacement.
+Enregistrez, consultez Aperçu voyageur, puis mettez l’annonce en ligne pour voir sa localisation sur la fiche publique, dans Le secteur. Une annonce déjà en ligne est mise à jour lors de l’enregistrement.
+La commune et le repère sont renseignés par le propriétaire : vérifiez leur cohérence. Le quartier doit être un nom de secteur ; évitez une adresse précise en mode approximatif.
+Cette version ne collecte pas d’adresse postale privée et ne l’envoie pas automatiquement au voyageur. La communication de l’adresse après accord reste à organiser avec le propriétaire.
+
+CARTE
+Fond OpenStreetMap, attribution visible. La carte nécessite Internet. Les images sont chargées directement par le navigateur, pour la vue affichée, sans téléchargement hors ligne ni préchargement de zones.
+Pour changer de fournisseur de tuiles : variable optionnelle NEXT_PUBLIC_MAP_TILE_URL=https://FOURNISSEUR/{z}/{x}/{y}.png (vérifier licence et attribution compatibles). Aucun réglage n’est nécessaire pour le fond par défaut.
+
+VÉRIFICATIONS
+Tests sur l’arrondi de confidentialité, publication, autorisation exacte, changement de mode, retrait du repère, projection et compilation production. Aucune donnée de votre Supabase n’a été consultée ou modifiée à distance.

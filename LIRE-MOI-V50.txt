@@ -1,0 +1,23 @@
+LE GOLFE V50 — DEMANDES ET BRIEFS DE SÉJOUR
+
+INSTALLATION
+Arrêter le serveur avec Ctrl+C. Extraire l’archive dans le dossier contenant package.json et remplacer les fichiers. Conserver .env.local. Relancer npm run dev : la version doit être 0.50.0.
+
+TESTER TOUT DE SUITE, SANS CONNEXION
+Ouvrir http://localhost:3000/fr/host, choisir Propriétaire ou Agence, puis l’onglet Demandes. Cliquer Tester avec des exemples.
+Deux demandes fictives apparaissent, clairement marquées Démonstration. Essayer les filtres, la recherche par voyageur ou maison, changer un statut et ajouter une note puis Enregistrer le suivi.
+Cliquer Créer le brief du séjour : le brief apparaît dans Séjours avec ses dates, sa capacité et les attentes du voyageur. Il est conservé sur cet appareil et marqué Exemple fictif. Le même exemple ne crée pas deux briefs.
+Dans Séjours, ouvrir les attentes, passer en organisation ou cliquer Organiser le séjour. Cela ouvre ASK avec la maison, les dates et le nombre de voyageurs ; le nom et les coordonnées du voyageur ne sont pas ajoutés au lien ASK.
+
+VRAIES DEMANDES
+Si la V49 est déjà activée dans Supabase : exécuter supabase/villas-v50.sql dans SQL Editor.
+Si le stockage des villas n’est pas encore activé : exécuter le script complet supabase/villas.sql, qui comprend la V50.
+Se connecter avec le compte annonceur, ouvrir Host Desk > Demandes et cliquer Charger mes demandes. Le site charge les 100 dernières demandes du compte, avec les noms des maisons même si le portefeuille n’a pas été chargé sur ce navigateur.
+
+LE SUIVI
+Nouvelle / À traiter / Réponse effectuée / Clôturée. Les notes internes sont enregistrées auprès du compte annonceur. L’enregistrement est confirmé avant d’afficher le succès. Si un autre appareil a modifié une demande, le site demande de la recharger ; les notes saisies restent visibles avant ce rechargement. Les données de demandes chargées sont effacées de l’affichage lors d’une déconnexion ou d’un changement de compte.
+Préparer un e-mail ouvre votre messagerie avec un début de réponse. Aucun e-mail n’est envoyé par le site. Marquer Réponse effectuée est une action manuelle après votre réponse. Aucun statut ne confirme une réservation ni ne bloque une date.
+Les briefs de séjour restent locaux à cet appareil. Une modification de la demande ne réécrit pas automatiquement un brief existant.
+
+VALIDATION
+Compilation de production et TypeScript réussis. 32 contrôles fonctionnels sur les filtres, les exemples sans réseau, les notes conservées après un échec, les conflits de modification, la déconnexion et les briefs sans doublon. 112 routes HTTP et les galeries/formulaires de villas ont aussi été vérifiés avec services simulés. Pas de test visuel dans un navigateur, ni d’application du SQL sur votre Supabase réel.

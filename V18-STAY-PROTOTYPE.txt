@@ -1,0 +1,10 @@
+LE GOLFE V18 — STAY PROTOTYPE
+
+Prototype villa: Villa Eden
+- New editorial black/white/blue stay page
+- Save villa to My Stay
+- Share interaction
+- Ask LE GOLFE contextual CTA
+- Availability request redesigned
+- Saved villas displayed in My Stay
+- No new npm dependency

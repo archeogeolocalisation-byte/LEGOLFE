@@ -1,0 +1,32 @@
+LE GOLFE — V60 — TROIS NOUVELLES FICHES NATURE ET PATRIMOINE
+
+INSTALLATION
+Arrêtez npm run dev avec Ctrl+C. Décompressez ce ZIP directement dans C:\Users\Moi\projets\azurkey, dans le dossier contenant package.json, en remplaçant les fichiers. Conservez .env.local, puis lancez npm install et npm run dev. Le terminal doit afficher le-golfe@0.60.0.
+Aucun nouveau SQL ni réglage Supabase pour cette version.
+
+LES NOUVELLES FICHES
+http://localhost:3000/fr/place/moulin-de-paillas
+http://localhost:3000/fr/place/cap-taillat
+http://localhost:3000/fr/place/pont-des-fees
+Versions anglaises : remplacer /fr/ par /en/.
+Les trois lieux figurent dans Explorer > À faire. Les pages destinations concernées les reprennent automatiquement : Ramatuelle, Grimaud et La Croix-Valmer.
+
+CONTENU ET PHOTOS
+Chaque fiche comprend une présentation originale, trois sections de visite, des questions pratiques, le lien de l’office de tourisme et des liens vers les autres fiches du secteur.
+Paillas : deux photos du moulin. Cap Taillat : deux vues du cap. Pont des Fées : une photo de l’aqueduc, ouvrable en grand.
+Photos hébergées sur Wikimedia Commons : une connexion Internet est nécessaire à leur affichage. Elles ne sont pas incluses localement dans le ZIP. Les URLs d’images ont été accessibles via l’outil de recherche ; le téléchargement depuis l’environnement de travail n’a pas abouti. L’affichage réel doit être vérifié sur votre navigateur local.
+Les photographies représentent les lieux nommés ; aucune image d’un autre établissement n’est ajoutée. Crédits, source, licence et indication du recadrage d’affichage sont visibles sous les images et dans la galerie. Les photographies restent soumises à leur licence propre, y compris CC BY-SA pour les adaptations concernées.
+Le détail des cinq sources photographiques est dans data/discoveryMedia.ts.
+
+SEO
+Titres et descriptions propres à chaque fiche, contenu FR/EN, H1 unique, maillage entre fiches et destinations. Intégration automatique au sitemap avec images et liens de langues. Données structurées Place et fil d’Ariane dans les pages publiques.
+Sur localhost, le site reste non indexable. Le domaine public doit être renseigné dans NEXT_PUBLIC_SITE_URL pour activer les liens canoniques et le sitemap public. Ces ajouts ne garantissent pas un classement Google.
+
+SOURCES DOCUMENTAIRES
+Ramatuelle Tourisme : Moulin de Paillas, Cap Taillat et itinéraire Escalet–Cap Taillat.
+Grimaud Tourisme : sentier du vallon du Pont des Fées.
+Repères consultés le 5 octobre 2026 ; horaires et accès à confirmer pour votre date. Pas de visite physique revendiquée.
+
+VÉRIFICATIONS
+Compilation de production et TypeScript. Contrôles des six pages FR/EN, titres, descriptions, crédits, licences, liens internes, données structurées et sitemap ; contrôle des pages destinations et catégorie.
+Services distants simulés pour ces contrôles ; aucune donnée de votre Supabase n’a été consultée ou modifiée à distance. Contrôle visuel à réaliser sur votre navigateur local.

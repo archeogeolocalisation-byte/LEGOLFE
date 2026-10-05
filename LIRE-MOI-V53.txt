@@ -1,0 +1,7 @@
+LE GOLFE — V53
+
+Signatures éditoriales discrètes sous le nom des 11 villages disposant déjà de fiches. Cavalaire : L’Échappée. Adaptation en anglais sur les fiches anglaises. Les titres officiels, contenus et galeries sont conservés. La Garde-Freinet a une signature préparée, mais ne possède pas encore de fiche dans le catalogue actuel.
+
+Installation : Ctrl+C, décompresser dans le dossier contenant package.json et remplacer les fichiers, conserver .env.local, npm install puis npm run dev. Aucun SQL requis.
+
+Test : http://localhost:3000/fr/place/ramatuelle-village affiche La Muse sous RAMATUELLE ; http://localhost:3000/fr/place/cavalaire-village affiche L’Échappée. Les filtres de maisons V52 sont inclus.

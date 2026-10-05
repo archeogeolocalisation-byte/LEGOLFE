@@ -1,0 +1,8 @@
+import Link from "next/link";
+
+import { villaDescriptionEn } from "../data/staySelections";
+import type { Locale } from "../lib/i18n";
+export default function VillaCard({villa,locale}:{villa:{id:string;name:string;location:string;image:string;saintTropezDistance?:number;description:string;descriptionEn?:string;guests:number;bedrooms:number;pool:boolean;price:number};locale:Locale}){
+ const fr=locale==="fr";
+ return <article className="border-t border-black py-6"><Link href={`/villa/${villa.id}`} className="group block"><div className="lg-image aspect-[4/3]">{villa.image?<img src={villa.image} alt={`${villa.name} · ${villa.location}`} loading="lazy"/>:<div className="flex h-full items-end bg-[#071D2B] p-6 text-4xl font-black uppercase text-white">{villa.name}</div>}</div><p className="lg-kicker mt-4">{villa.location}{villa.saintTropezDistance!==undefined&&` · ${villa.saintTropezDistance} km ${fr?"de Saint-Tropez":"from Saint-Tropez"}`}</p><h3 className="mt-3 text-4xl font-black">{villa.name}</h3><p className="mt-3 text-sm leading-6 text-black/60">{fr?villa.description:villa.descriptionEn||villaDescriptionEn[villa.id]||villa.description}</p><p className="mt-4 text-sm font-bold">{villa.guests} {fr?"personnes":"guests"} · {villa.bedrooms} {fr?"chambres":"bedrooms"}{villa.pool&&` · ${fr?"Piscine":"Pool"}`}</p><p className="mt-4 text-xl font-black">{villa.price?new Intl.NumberFormat(fr?"fr-FR":"en-GB",{style:"currency",currency:"EUR",maximumFractionDigits:0}).format(villa.price):(fr?"Prix sur demande":"Price on request")} <span className="text-xs font-normal">{villa.price?`/ ${fr?"semaine":"week"}`:""}</span></p><p className="mt-4 text-xs font-bold underline">{fr?"Voir la villa":"View villa · French details"} →</p></Link></article>;
+}

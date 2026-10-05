@@ -1,0 +1,7 @@
+LE GOLFE V35 — EXPLORE PHOTOS
+
+- Explore now reuses approved editorial hero images from featureMedia.
+- All 33 current place cards have visual coverage.
+- Added open-license visuals for PARTYING and SERVICES gaps.
+- Contextual imagery is explicitly labelled "Photo de contexte" / "Context photo".
+- No new npm dependency.

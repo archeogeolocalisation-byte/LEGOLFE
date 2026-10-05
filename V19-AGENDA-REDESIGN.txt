@@ -1,0 +1,8 @@
+LE GOLFE V19 — AGENDA REDESIGN
+- Editorial live agenda
+- Today / Tomorrow / This weekend / 7 days / October filters
+- Category and location filters
+- Happening now hero
+- Build around event -> Ask Le Golfe
+- Added current Oct 2–4 official events
+- No new npm dependencies

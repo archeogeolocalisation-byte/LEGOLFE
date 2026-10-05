@@ -1,0 +1,5 @@
+LE GOLFE — Plan-de-la-Tour editorial update
+- New CC BY 3.0 panoramic hero image from Wikimedia Commons
+- Reworked second half into an editorial stay narrative
+- FR + EN copy updated
+- No new dependency

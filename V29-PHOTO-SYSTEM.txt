@@ -1,0 +1,10 @@
+LE GOLFE V29 — PHOTO SYSTEM
+
+- New editorial photo fallback system for feature pages.
+- Photo-less editorial features now receive curated, licensed territory imagery when appropriate.
+- Context photographs are explicitly labelled as context; they do not pretend to show a venue.
+- Beach-club cards no longer recycle the same Pampelonne aerial image.
+- New magazine-style photo treatment: image index, wide hero, asymmetric spreads, portrait secondary image.
+- Exact Domaine du Rayol and Rayol-Canadel imagery added from Wikimedia Commons with clear licensing.
+- Service pages can remain graphic rather than receive misleading stock/context photography.
+- No npm dependency added.
