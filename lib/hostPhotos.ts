@@ -1,10 +1,13 @@
 const PREFIX='local-photo:';
 function database():Promise<IDBDatabase>{return new Promise((resolve,reject)=>{const r=indexedDB.open('legolfe-host-photos',1);r.onupgradeneeded=()=>r.result.createObjectStore('photos');r.onsuccess=()=>resolve(r.result);r.onerror=()=>reject(new Error('Photo storage unavailable'));});}
-export async function storePhoto(file:File):Promise<string>{
+export async function compressPhoto(file:File):Promise<Blob>{
  if(!['image/jpeg','image/png','image/webp'].includes(file.type)||file.size>12*1024*1024)throw new Error('Use JPEG, PNG or WebP, up to 12 MB.');
- const bitmap=await createImageBitmap(file);const scale=Math.min(1,1280/Math.max(bitmap.width,bitmap.height));const canvas=document.createElement('canvas');canvas.width=Math.max(1,Math.round(bitmap.width*scale));canvas.height=Math.max(1,Math.round(bitmap.height*scale));const ctx=canvas.getContext('2d')!;ctx.fillStyle='#fff';ctx.fillRect(0,0,canvas.width,canvas.height);ctx.drawImage(bitmap,0,0,canvas.width,canvas.height);bitmap.close();
+ const bitmap=await createImageBitmap(file);if(bitmap.width*bitmap.height>40000000){bitmap.close();throw new Error('Image dimensions too large');}const scale=Math.min(1,1280/Math.max(bitmap.width,bitmap.height));const canvas=document.createElement('canvas');canvas.width=Math.max(1,Math.round(bitmap.width*scale));canvas.height=Math.max(1,Math.round(bitmap.height*scale));const ctx=canvas.getContext('2d')!;ctx.fillStyle='#fff';ctx.fillRect(0,0,canvas.width,canvas.height);ctx.drawImage(bitmap,0,0,canvas.width,canvas.height);bitmap.close();
  const encode=(quality:number)=>new Promise<Blob>((resolve,reject)=>canvas.toBlob(b=>b?resolve(b):reject(new Error('Invalid image')),'image/jpeg',quality));let blob=await encode(.8);if(blob.size>550000)blob=await encode(.55);if(blob.size>550000)throw new Error('Image too large after compression');
- const db=await database(),id=PREFIX+crypto.randomUUID();await new Promise<void>((resolve,reject)=>{const tx=db.transaction('photos','readwrite');tx.objectStore('photos').put(blob,id);tx.oncomplete=()=>resolve();tx.onerror=()=>reject(new Error('Photo could not be saved'));tx.onabort=()=>reject(new Error('Photo could not be saved'));});db.close();return id;
+ return blob;
+}
+export async function storePhoto(file:File):Promise<string>{
+ const blob=await compressPhoto(file);const db=await database(),id=PREFIX+crypto.randomUUID();await new Promise<void>((resolve,reject)=>{const tx=db.transaction('photos','readwrite');tx.objectStore('photos').put(blob,id);tx.oncomplete=()=>resolve();tx.onerror=()=>reject(new Error('Photo could not be saved'));tx.onabort=()=>reject(new Error('Photo could not be saved'));});db.close();return id;
 }
 export async function photoBlob(id:string):Promise<Blob|undefined>{if(!id.startsWith(PREFIX))return;const db=await database();try{return await new Promise((resolve,reject)=>{const r=db.transaction('photos').objectStore('photos').get(id);r.onsuccess=()=>resolve(r.result);r.onerror=()=>reject(new Error('Photo unavailable'));});}finally{db.close();}}
 export async function photoData(id:string):Promise<string|undefined>{const blob=await photoBlob(id);if(!blob)return;return new Promise((resolve,reject)=>{const r=new FileReader();r.onload=()=>resolve(String(r.result));r.onerror=()=>reject(new Error('Photo unavailable'));r.readAsDataURL(blob);});}

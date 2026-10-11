@@ -86,19 +86,46 @@ export default function HostDesk({locale}:{locale:Locale}) {
   const [briefNotice,setBriefNotice]=useState("");
   const [hydrated,setHydrated] = useState(false);
 
+  const scope = useRef('');
+  const [storageScope,setStorageScope] = useState('');
+  const [scopeReady,setScopeReady] = useState(false);
+  const propertyKey = `legolfe_host_properties:${storageScope}`;
+  const stayKey = `legolfe_host_stays:${storageScope}`;
   useEffect(()=>{
-    try {
-    const savedRole = localStorage.getItem("legolfe_host_role") as Role|null;
-    const parsedProperties = JSON.parse(localStorage.getItem("legolfe_host_properties") || "null") as Partial<Property>[]|null;
-    const savedStays = JSON.parse(localStorage.getItem("legolfe_host_stays") || "null");
-    setRole(savedRole);
-    setProperties((parsedProperties || seedProperties).map(p=>({...normalizeProperty(p),announcerType:p.announcerType||(savedRole==='concierge'?'agency':'owner')})));
-    setStays(savedStays || seedStays);
-    setHydrated(true);
-    }catch{setStorageError(fr?"Impossible de lire les annonces enregistrées sur ce navigateur.":"Unable to read listings saved in this browser.");}
+    let active=true;
+    function apply(userId:string|null){
+      if(!active)return;
+      const next=userId||'anonymous';
+      if(scope.current===next)return;
+      scope.current=next;
+      setHydrated(false);setStorageScope(next);setScopeReady(true);
+      setProperties([]);setStays([]);setShowProperty(false);setShowStay(false);
+      setEditingProperty(null);setPreviewProperty(null);setCalendarProperty(null);setView('today');
+    }
+    let changed=false;
+    void supabase.auth.getUser().then(({data})=>{if(!changed)apply(data.user?.id||null);});
+    const {data:{subscription}}=supabase.auth.onAuthStateChange((_event,session)=>{changed=true;apply(session?.user.id||null);});
+    return()=>{active=false;subscription.unsubscribe();};
   },[]);
-  useEffect(()=>{ if(hydrated)try{localStorage.setItem("legolfe_host_properties",JSON.stringify(properties));}catch{setStorageError(fr?"Enregistrement impossible : libérez de l’espace sur cet appareil.":"Unable to save: free up storage on this device.");} },[properties,hydrated]);
-  useEffect(()=>{if(hydrated)try{localStorage.setItem("legolfe_host_stays",JSON.stringify(stays));}catch{setStorageError(fr?"Impossible de conserver les séjours sur cet appareil.":"Unable to save stays on this device.");}},[stays,hydrated]);
+  useEffect(()=>{
+    if(!scopeReady)return;
+    try {
+      const savedRole=localStorage.getItem('legolfe_host_role');
+      setRole(savedRole==='owner'||savedRole==='concierge'?savedRole:null);
+      let saved=JSON.parse(localStorage.getItem(propertyKey)||'null');
+      if(!saved){
+        // Preserve old local drafts, never import online listings from another account.
+        const legacy=JSON.parse(localStorage.getItem('legolfe_host_properties')||'null');
+        saved=Array.isArray(legacy)?legacy.filter(p=>p&&p.online!==true):seedProperties;
+      }
+      setProperties((Array.isArray(saved)?saved:seedProperties).map(normalizeProperty));
+      const savedStays=JSON.parse(localStorage.getItem(stayKey)||'null');
+      setStays(Array.isArray(savedStays)?savedStays:seedStays);
+      setHydrated(true);
+    }catch{setStorageError(fr?'Impossible de lire les annonces de ce compte sur cet appareil.':'Unable to read this account’s listings on this device.');}
+  },[storageScope,scopeReady]);
+  useEffect(()=>{if(hydrated&&scope.current===storageScope)try{localStorage.setItem(propertyKey,JSON.stringify(properties));}catch{setStorageError(fr?'Enregistrement impossible sur cet appareil.':'Unable to save on this device.');}},[properties,hydrated,storageScope]);
+  useEffect(()=>{if(hydrated&&scope.current===storageScope)try{localStorage.setItem(stayKey,JSON.stringify(stays));}catch{setStorageError(fr?'Impossible de conserver les séjours.':'Unable to save stays.');}},[stays,hydrated,storageScope]);
 
   function chooseRole(next:Role){ setRole(next); localStorage.setItem("legolfe_host_role",next); }
   function openCreateProperty(){ setEditingProperty(null); setShowProperty(true); }
@@ -107,6 +134,7 @@ export default function HostDesk({locale}:{locale:Locale}) {
 
   async function saveProperty(e:FormEvent<HTMLFormElement>){
     e.preventDefault();
+    const actor=scope.current;
     const fd=new FormData(e.currentTarget);
     const amenities=String(fd.get("amenities")||"").split(",").map(x=>x.trim()).filter(Boolean);
     const images=JSON.parse(String(fd.get("images")||"[]")) as string[];
@@ -124,8 +152,9 @@ export default function HostDesk({locale}:{locale:Locale}) {
       titleFr:String(fd.get("titleFr")||""),titleEn:String(fd.get("titleEn")||""),descriptionFr:String(fd.get("descriptionFr")||""),descriptionEn:String(fd.get("descriptionEn")||""),highlightsFr:JSON.parse(String(fd.get("highlightsFr")||"[]")),highlightsEn:JSON.parse(String(fd.get("highlightsEn")||"[]")),
     };
     if(editingProperty?.online){setPublishing(true);try{if(item.status==='published'&&item.visibility==='public'){const result=await publishVilla(item);Object.assign(item,result);}else {await pauseVilla(item.id);item.online=true;}}catch{setStorageError(fr?'La mise à jour en ligne a échoué. Le formulaire reste ouvert ; réessayez.':'Online update failed. The form stays open; please retry.');return;}finally{setPublishing(false);}}
+    if(scope.current!==actor)return;
     const next=editingProperty&&properties.some(p=>p.id===item.id)?properties.map(p=>p.id===item.id?item:p):[item,...properties];
-    try{localStorage.setItem("legolfe_host_properties",JSON.stringify(next));}catch{setStorageError(fr?"Enregistrement impossible : libérez de l’espace sur cet appareil.":"Unable to save: free up storage on this device.");return;}
+    try{localStorage.setItem(propertyKey,JSON.stringify(next));}catch{setStorageError(fr?"Enregistrement impossible : libérez de l’espace sur cet appareil.":"Unable to save: free up storage on this device.");return;}
     setStorageError("");setProperties(next);
     closeProperty();
   }
@@ -144,11 +173,11 @@ export default function HostDesk({locale}:{locale:Locale}) {
     if(property.online){try{if(next==='published'&&property.visibility==='public')await publishVilla({...property,status:next});else await pauseVilla(property.id);}catch{setStorageError(fr?'Impossible de mettre en pause la fiche publique. Réessayez.':'Unable to pause the public listing. Please retry.');return;}}
     setProperties(list=>list.map(p=>p.id===property.id?{...p,status:next}:p));
   }
-  async function putOnline(property:Property){if(publishing)return;setPublishing(true);setStorageError('');try{const result=await publishVilla(property);const next=properties.map(p=>p.id===property.id?result:p);localStorage.setItem('legolfe_host_properties',JSON.stringify(next));setProperties(next);}catch(e){setStorageError(e instanceof Error&&e.message.includes('Connectez')?e.message:(fr?'Mise en ligne non confirmée. Vérifiez votre connexion et l’activation du stockage des annonces. Votre annonce locale est conservée.':'Publishing not confirmed. Check sign-in and listing storage setup. Your local listing is preserved.'));}finally{setPublishing(false);}}
-  async function syncListings(){setStorageError('');try{const {data:{user},error:authError}=await supabase.auth.getUser();if(authError||!user)throw new Error('SIGN_IN_REQUIRED');const {data,error}=await supabase.from('villa_listings').select('id,payload,status,visibility').eq('owner_id',user.id).order('created_at',{ascending:false}).limit(200).abortSignal(AbortSignal.timeout(15000));if(error)throw error;const remote=(data||[]).flatMap(row=>{const p=remoteProperty(row);return p?[p]:[];});const {data:{user:current}}=await supabase.auth.getUser();if(current?.id!==user.id)throw new Error('SIGN_IN_REQUIRED');setProperties(previous=>[...remote,...previous.filter(p=>!p.online&&!remote.some(r=>r.id===p.id))]);}catch(e){setStorageError(e instanceof Error&&e.message==='SIGN_IN_REQUIRED'?(fr?'Connectez-vous pour retrouver vos annonces en ligne.':'Sign in to load your online listings.'):(fr?'Impossible de charger les annonces en ligne.':'Unable to load online listings.'));}}
+  async function putOnline(property:Property){if(publishing)return;const actor=scope.current;setPublishing(true);setStorageError('');try{const result=await publishVilla(property);if(scope.current!==actor)throw new Error('SESSION_CHANGED');const next=properties.map(p=>p.id===property.id?result:p);localStorage.setItem(propertyKey,JSON.stringify(next));setProperties(next);}catch(e){setStorageError(e instanceof Error&&e.message.includes('Connectez')?e.message:(fr?'Mise en ligne non confirmée. Vérifiez votre connexion et l’activation du stockage des annonces. Votre annonce locale est conservée.':'Publishing not confirmed. Check sign-in and listing storage setup. Your local listing is preserved.'));}finally{setPublishing(false);}}
+  async function syncListings(){const actor=scope.current;setStorageError('');try{const {data:{user},error:authError}=await supabase.auth.getUser();if(authError||!user)throw new Error('SIGN_IN_REQUIRED');const {data,error}=await supabase.from('villa_listings').select('id,payload,status,visibility').eq('owner_id',user.id).order('created_at',{ascending:false}).limit(200).abortSignal(AbortSignal.timeout(15000));if(error)throw error;const remote=(data||[]).flatMap(row=>{const p=remoteProperty(row);return p?[p]:[];});const {data:{user:current}}=await supabase.auth.getUser();if(current?.id!==user.id||scope.current!==actor)throw new Error('SIGN_IN_REQUIRED');setProperties(previous=>[...remote,...previous.filter(p=>!p.online&&!remote.some(r=>r.id===p.id))]);}catch(e){setStorageError(e instanceof Error&&e.message==='SIGN_IN_REQUIRED'?(fr?'Connectez-vous pour retrouver vos annonces en ligne.':'Sign in to load your online listings.'):(fr?'Impossible de charger les annonces en ligne.':'Unable to load online listings.'));}}
   function showInquiry(id?:string){setOpenInquiry(previous=>({id,token:(previous?.token||0)+1}));setView('inquiries');}
   function createInquiryBrief(stay:HostStay){
-    try{const items=JSON.parse(localStorage.getItem('legolfe_host_stays')||'[]') as Stay[];if(!Array.isArray(items))throw new Error('Invalid stays');const next=items.some(s=>s.sourceInquiryId===stay.sourceInquiryId)?items:[stay,...items];localStorage.setItem('legolfe_host_stays',JSON.stringify(next));setStays(next);setBriefNotice(fr?'Brief conservé sur cet appareil. Aucune réservation n’est confirmée.':'Brief saved on this device. No booking has been confirmed.');setView('stays');return true;}catch{setStorageError(fr?'Impossible de conserver le brief sur cet appareil.':'Unable to save the brief on this device.');return false;}
+    try{const items=JSON.parse(localStorage.getItem(stayKey)||'[]') as Stay[];if(!Array.isArray(items))throw new Error('Invalid stays');const next=items.some(s=>s.sourceInquiryId===stay.sourceInquiryId)?items:[stay,...items];localStorage.setItem(stayKey,JSON.stringify(next));setStays(next);setBriefNotice(fr?'Brief conservé sur cet appareil. Aucune réservation n’est confirmée.':'Brief saved on this device. No booking has been confirmed.');setView('stays');return true;}catch{setStorageError(fr?'Impossible de conserver le brief sur cet appareil.':'Unable to save the brief on this device.');return false;}
   }
 
   function addStay(e:FormEvent<HTMLFormElement>){
@@ -157,6 +186,7 @@ export default function HostDesk({locale}:{locale:Locale}) {
     setStays(s=>[item,...s]); setShowStay(false); e.currentTarget.reset();
   }
 
+  if(!hydrated)return <section className="lg-shell py-16"><p>{fr?'Chargement de votre espace…':'Loading your workspace…'}</p></section>;
   if(!role) return <section className="lg-shell py-16 md:py-24">
     <p className="lg-kicker lg-accent">HOST / PARTNER DESK</p>
     <h1 className="lg-display mt-6 text-[16vw] md:text-[118px]">{fr?<>QUI<br/>ÊTES-VOUS?</>:<>WHO<br/>ARE YOU?</>}</h1>

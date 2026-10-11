@@ -1,7 +1,8 @@
 "use client";
 
+import { safeReturnPath } from "../../../lib/security";
 import Link from "next/link";
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useEffect, useRef, useState } from "react";
 import { useParams } from "next/navigation";
 import SiteHeader from "../../../components/SiteHeader";
 import SiteFooter from "../../../components/SiteFooter";
@@ -21,8 +22,11 @@ export default function AccountPage() {
   const [moderator, setModerator] = useState(false);
   const [ready, setReady] = useState(false);
 
+  const generation=useRef(0);
   async function hydrate() {
+    const ticket=++generation.current;
     const { data } = await supabase.auth.getUser();
+    if(ticket!==generation.current)return;
     const user = data.user;
     setUserId(user?.id ?? null);
     setUserEmail(user?.email ?? "");
@@ -32,8 +36,10 @@ export default function AccountPage() {
         .select("display_name")
         .eq("user_id", user.id)
         .maybeSingle();
+      if(ticket!==generation.current)return;
       setDisplayName(profile?.display_name ?? (user.email?.split("@")[0] || ""));
       const { data: isModerator } = await supabase.rpc("is_community_moderator");
+      if(ticket!==generation.current)return;
       setModerator(Boolean(isModerator));
     } else {
       setDisplayName("");
@@ -43,10 +49,11 @@ export default function AccountPage() {
   }
 
   useEffect(() => {
-    setNext(new URLSearchParams(window.location.search).get("next") || "");
+    let active=true;
+    setNext(safeReturnPath(new URLSearchParams(window.location.search).get("next")));
     hydrate();
-    const { data: listener } = supabase.auth.onAuthStateChange(() => hydrate());
-    return () => listener.subscription.unsubscribe();
+    const { data: listener } = supabase.auth.onAuthStateChange(() => { generation.current++;setUserId(null);setUserEmail('');setDisplayName('');setModerator(false);setReady(false);queueMicrotask(() => {if(active)void hydrate();}); });
+    return () => {active=false;generation.current++;listener.subscription.unsubscribe();};
   }, []);
 
   async function login(event: FormEvent) {

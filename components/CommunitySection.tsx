@@ -1,7 +1,9 @@
 "use client";
 
+import CommunityPhoto from "./CommunityPhoto";
+import { compressPhoto } from "../lib/hostPhotos";
 import Link from "next/link";
-import { FormEvent, useEffect, useMemo, useState } from "react";
+import { FormEvent, useEffect, useMemo, useRef, useState } from "react";
 import { supabase } from "../lib/supabase";
 import type { Locale } from "../lib/i18n";
 
@@ -32,14 +34,22 @@ export default function CommunitySection({ placeId, locale }: { placeId: string;
   const [sending, setSending] = useState(false);
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(true);
+  const generation = useRef(0);
+  const mounted = useRef(true);
 
   async function loadCommunity(currentUserId?: string | null) {
+    const ticket = ++generation.current;
+    setPosts([]);
+    setProfiles({});
+    if (currentUserId !== undefined) setUserId(currentUserId);
     setLoading(true);
     const { data, error } = await supabase
       .from("community_posts")
       .select("id,place_id,user_id,type,image_path,comment,status,created_at")
       .eq("place_id", placeId)
-      .order("created_at", { ascending: false });
+      .order("created_at", { ascending: false }).limit(100);
+
+    if (!mounted.current || ticket !== generation.current) return;
 
     if (!error) {
       const rows = (data as CommunityPost[] | null) ?? [];
@@ -50,6 +60,7 @@ export default function CommunitySection({ placeId, locale }: { placeId: string;
           .from("community_profiles")
           .select("user_id,display_name")
           .in("user_id", ids);
+        if (!mounted.current || ticket !== generation.current) return;
         const map: ProfileMap = {};
         for (const row of profileRows ?? []) map[row.user_id] = row.display_name;
         setProfiles(map);
@@ -61,6 +72,7 @@ export default function CommunitySection({ placeId, locale }: { placeId: string;
 
   useEffect(() => {
     let active = true;
+    mounted.current = true;
     supabase.auth.getUser().then(({ data }) => {
       if (!active) return;
       loadCommunity(data.user?.id ?? null);
@@ -70,6 +82,8 @@ export default function CommunitySection({ placeId, locale }: { placeId: string;
     });
     return () => {
       active = false;
+      mounted.current = false;
+      generation.current++;
       listener.subscription.unsubscribe();
     };
   }, [placeId]);
@@ -115,11 +129,11 @@ export default function CommunitySection({ placeId, locale }: { placeId: string;
     let imagePath: string | null = null;
     try {
       if (file) {
-        const ext = (file.name.split(".").pop() || "jpg").toLowerCase();
-        imagePath = `${userId}/${placeId}/${crypto.randomUUID()}.${ext}`;
+        const image = await compressPhoto(file);
+        imagePath = `${userId}/${placeId}/${crypto.randomUUID()}.jpg`;
         const { error: uploadError } = await supabase.storage
           .from("community-photos")
-          .upload(imagePath, file, { upsert: false, contentType: file.type });
+          .upload(imagePath, image, { upsert: false, contentType: 'image/jpeg' });
         if (uploadError) throw uploadError;
       }
 
@@ -177,10 +191,10 @@ export default function CommunitySection({ placeId, locale }: { placeId: string;
         ) : photos.length > 0 ? (
           <div className="mt-12 grid grid-cols-2 gap-2 md:grid-cols-4 md:gap-3">
             {photos.slice(0, 8).map((post, index) => {
-              const src = supabase.storage.from("community-photos").getPublicUrl(post.image_path!).data.publicUrl;
+
               return (
                 <figure key={post.id} className={`${index === 0 ? "col-span-2 row-span-2" : ""} group overflow-hidden bg-neutral-100`}>
-                  <img src={src} alt={post.comment || "Community"} className="h-full min-h-52 w-full object-cover transition duration-500 group-hover:scale-[1.02]" />
+                  <CommunityPhoto path={post.image_path!} alt={post.comment || "Community"} className="h-full min-h-52 w-full object-cover transition duration-500 group-hover:scale-[1.02]" />
                   <figcaption className="sr-only">{author(post)}</figcaption>
                 </figure>
               );
