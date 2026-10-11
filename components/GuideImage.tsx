@@ -3,10 +3,16 @@ import pampelonne from "../public/media/guides/pampelonne.webp";
 import ramatuelle from "../public/media/guides/ramatuelle.webp";
 import saintTropez from "../public/media/guides/saint-tropez.webp";
 import sainteMaxime from "../public/media/guides/sainte-maxime.webp";
+import planDeLaTour from "../public/media/guides/plan-de-la-tour.webp";
+import capLardier from "../public/media/guides/cap-lardier.webp";
+import pontDesFees from "../public/media/guides/pont-des-fees.webp";
 import type { Guide } from "../data/guides";
 import type { Locale } from "../lib/i18n";
 
 export const guideMedia = {
+  "plan-de-la-tour": { photo: planDeLaTour, credit: "Patricia.fidi", license: "Public domain", licenseUrl: "https://commons.wikimedia.org/wiki/File:Plan-de-la-tour-01.jpg", source: "https://commons.wikimedia.org/wiki/File:Plan-de-la-tour-01.jpg" },
+  "cap-lardier": { photo: capLardier, credit: "Gnrc", license: "CC BY 4.0", licenseUrl: "https://creativecommons.org/licenses/by/4.0/", source: "https://commons.wikimedia.org/wiki/File:Cap_Taillat,_depuis_cap_Lardier,_La_Croix-Valmer,_France.jpg" },
+  "pont-des-fees": { photo: pontDesFees, credit: "Grimaud Tourisme", license: "CC BY-SA 4.0", licenseUrl: "https://creativecommons.org/licenses/by-sa/4.0/", source: "https://commons.wikimedia.org/wiki/File:Pont_des_F%C3%A9es_Grimaud.jpg" },
   pampelonne: { photo: pampelonne, credit: "dronepicr", license: "CC BY 2.0", licenseUrl: "https://creativecommons.org/licenses/by/2.0/", source: "https://commons.wikimedia.org/wiki/File:Aerial_view_of_Pampelonne_Beach,_Saint-Tropez,_France_(52723263302).jpg" },
   "ramatuelle-village": { photo: ramatuelle, credit: "En-bateau", license: "CC BY-SA 3.0", licenseUrl: "https://creativecommons.org/licenses/by-sa/3.0/", source: "https://commons.wikimedia.org/wiki/File:Ramatuelle_Panorama.jpg" },
   "saint-tropez-village": { photo: saintTropez, credit: "Starus", license: "CC BY-SA 3.0", licenseUrl: "https://creativecommons.org/licenses/by-sa/3.0/", source: "https://commons.wikimedia.org/wiki/File:Saint-Tropez_-_Vue_a%C3%A9rienne_(3).jpg" },

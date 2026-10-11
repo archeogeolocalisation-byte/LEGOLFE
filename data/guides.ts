@@ -1,3 +1,4 @@
+import { hikingGuides } from "./hikingGuides";
 import type { Locale } from "../lib/i18n";
 
 export type GuideSource = { id: string; label: string; url: string };
@@ -249,6 +250,7 @@ export const guides: Guide[] = [
       },
     },
   },
+  ...hikingGuides,
 ];
 
 export function getGuide(slug: string) { return guides.find(guide => guide.slug === slug); }
