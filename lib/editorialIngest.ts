@@ -92,9 +92,12 @@ function fp(source:string,url:string,title:string,date:string|null){
 }
 
 export async function fetchSourceCandidates(source:EditorialSource):Promise<Candidate[]>{
-  const res=await fetch(source.url,{headers:{"user-agent":"LE-GOLFE/1.0 (+editorial-monitor)","accept":"text/html,application/xhtml+xml"},cache:"no-store"});
+  const res=await fetch(source.url,{headers:{"user-agent":"LE-GOLFE/1.0 (+editorial-monitor)","accept":"text/html,application/xhtml+xml"},cache:"no-store",signal:AbortSignal.timeout(10000)});
   if(!res.ok)throw new Error(`${source.label}: HTTP ${res.status}`);
-  const html=await res.text();
+  const reader=res.body?.getReader();if(!reader)throw new Error("Empty source");
+  const chunks:Uint8Array[]=[];let size=0;
+  for(;;){const {done,value}=await reader.read();if(done)break;size+=value.length;if(size>2*1024*1024){await reader.cancel();throw new Error("Source too large");}chunks.push(value);}
+  const html=Buffer.concat(chunks).toString("utf8");
   const nodes=jsonLd(html);
   const out:Candidate[]=[];
   for(const item of nodes){
@@ -127,6 +130,6 @@ export async function fetchSourceCandidates(source:EditorialSource):Promise<Cand
     }
   }
   const normalized=[...new Map(out.map(x=>[x.fingerprint,x])).values()];
-  if(normalized.length>0)return normalized;
+  if(normalized.length>0)return normalized.slice(0,80);
   return fallbackAnchors(html,source);
 }

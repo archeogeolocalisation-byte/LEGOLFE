@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import SiteHeader from "../../../components/SiteHeader";
 import SiteFooter from "../../../components/SiteFooter";
 import { supabase } from "../../../lib/supabase";
@@ -20,14 +20,18 @@ export default function EditorialDesk(){
   const [busy,setBusy]=useState<string|null>(null); const [syncing,setSyncing]=useState(false); const [report,setReport]=useState<any>(null);
   const [type,setType]=useState<"all"|"event"|"news">("all");
 
+  const generation=useRef(0);
   async function load(){
+    const ticket=++generation.current;
     const {data:moderator}=await supabase.rpc("is_community_moderator");
+    if(ticket!==generation.current)return;
     if(!moderator){setAllowed(false);return}
     setAllowed(true);
     const {data}=await supabase.from("editorial_inbox").select("*").eq("status","pending").order("start_date",{ascending:true});
+    if(ticket!==generation.current)return;
     setItems((data as Item[]|null)??[]);
   }
-  useEffect(()=>{load()},[]);
+  useEffect(()=>{let active=true;void load();const {data:{subscription}}=supabase.auth.onAuthStateChange(()=>{generation.current++;setAllowed(null);setItems([]);setReport(null);queueMicrotask(()=>{if(active)void load();});});return()=>{active=false;generation.current++;subscription.unsubscribe();};},[]);
   const shown=useMemo(()=>type==="all"?items:items.filter(i=>i.content_type===type),[items,type]);
 
   function patch(id:string,key:keyof Item,value:any){setItems(cur=>cur.map(x=>x.id===id?{...x,[key]:value}:x))}

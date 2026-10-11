@@ -1,8 +1,9 @@
 "use client";
 
+import CommunityPhoto from "../../../../components/CommunityPhoto";
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import SiteHeader from "../../../../components/SiteHeader";
 import SiteFooter from "../../../../components/SiteFooter";
 import { supabase } from "../../../../lib/supabase";
@@ -24,8 +25,11 @@ export default function ModerationPage() {
   const [posts, setPosts] = useState<Post[]>([]);
   const [busy, setBusy] = useState<string | null>(null);
 
+  const generation=useRef(0);
   async function load() {
+    const ticket=++generation.current;
     const { data: moderator } = await supabase.rpc("is_community_moderator");
+    if(ticket!==generation.current)return;
     if (!moderator) {
       setAllowed(false);
       return;
@@ -36,11 +40,14 @@ export default function ModerationPage() {
       .select("id,place_id,user_id,image_path,comment,created_at")
       .eq("status", "pending")
       .order("created_at", { ascending: true });
+    if(ticket!==generation.current)return;
     setPosts((data as Post[] | null) ?? []);
   }
 
   useEffect(() => {
-    load();
+    let active=true;void load();
+    const {data:{subscription}}=supabase.auth.onAuthStateChange(()=>{generation.current++;setAllowed(null);setPosts([]);queueMicrotask(()=>{if(active)void load();});});
+    return()=>{active=false;generation.current++;subscription.unsubscribe();};
   }, []);
 
   async function moderate(post: Post, status: "approved" | "rejected") {
@@ -80,11 +87,11 @@ export default function ModerationPage() {
         {allowed && posts.length > 0 && (
           <div className="mt-12 border-t border-black">
             {posts.map((post) => {
-              const src = post.image_path ? supabase.storage.from("community-photos").getPublicUrl(post.image_path).data.publicUrl : null;
+
               return (
                 <article key={post.id} className="grid gap-8 border-b border-black py-8 md:grid-cols-[240px_1fr_auto] md:items-start">
                   <div className="bg-neutral-100">
-                    {src ? <img src={src} alt="Pending community upload" className="aspect-square h-full w-full object-cover" /> : <div className="flex aspect-square items-center justify-center text-[10px] font-black uppercase tracking-[.12em] text-black/35">Comment</div>}
+                    {post.image_path ? <CommunityPhoto path={post.image_path} alt="Pending community upload" className="aspect-square h-full w-full object-cover" /> : <div className="flex aspect-square items-center justify-center text-[10px] font-black uppercase tracking-[.12em] text-black/35">Comment</div>}
                   </div>
                   <div>
                     <p className="lg-kicker">{post.place_id}</p>
