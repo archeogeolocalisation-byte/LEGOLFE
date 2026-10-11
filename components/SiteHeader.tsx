@@ -9,8 +9,9 @@ export default function SiteHeader({light=true,locale="en",path=""}:{light?:bool
     <nav className="mx-auto max-w-[1500px] px-5 pt-5 md:px-8 md:pt-7">
       <div className="flex items-center justify-between border-b border-current pb-5">
         <BrandLogo locale={locale} light={light}/>
-        <div className="hidden items-center gap-8 text-[10px] font-black uppercase tracking-[.14em] md:flex">
+        <div className="hidden items-center gap-6 text-[10px] font-black uppercase tracking-[.14em] lg:flex xl:gap-8">
           <Link href={`${base}/explore`} className="lg-link-accent">{fr?"Explorer":"Explore"}</Link>
+          <Link href={`${base}/guides`} className="lg-link-accent">Guides</Link>
           <Link href={`${base}/whats-on`} className="lg-link-accent">What&apos;s on</Link>
           <Link href={`${base}/local`} className="lg-link-accent">Local</Link>
           <Link href={`${base}/stay`} className="lg-link-accent">Stay</Link>
@@ -23,8 +24,9 @@ export default function SiteHeader({light=true,locale="en",path=""}:{light?:bool
           <Link href={`${base}/ask`} className={`border px-3 py-2 text-[10px] font-black uppercase tracking-[.12em] transition-colors ${light?"border-[var(--lg-blue)] bg-[var(--lg-blue)] text-white":"border-white bg-white text-black"}`}>Ask ↗</Link>
         </div>
       </div>
-      <div className="flex gap-6 overflow-x-auto border-b border-current py-3 text-[9px] font-black uppercase tracking-[.13em] md:hidden">
+      <div className="flex gap-6 overflow-x-auto border-b border-current py-3 text-[9px] font-black uppercase tracking-[.13em] lg:hidden">
         <Link href={`${base}/explore`} className="lg-link-accent shrink-0">{fr?"Explorer":"Explore"}</Link>
+        <Link href={`${base}/guides`} className="lg-link-accent shrink-0">Guides</Link>
         <Link href={`${base}/whats-on`} className="lg-link-accent shrink-0">What&apos;s on</Link>
         <Link href={`${base}/local`} className="lg-link-accent shrink-0">Local</Link>
         <Link href={`${base}/stay`} className="lg-link-accent shrink-0">Stay</Link>
