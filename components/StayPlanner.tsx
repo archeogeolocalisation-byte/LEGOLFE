@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import type { Place } from "../data/places";
 import { getCategory } from "../data/places";
-import type { Locale } from "../lib/i18n";
+import { categoryFR, type Locale } from "../lib/i18n";
 
 const PLAN_KEY = "le-golfe-stay-plan-v1";
 const PERIODS = ["morning", "lunch", "afternoon", "evening"] as const;
@@ -104,7 +104,7 @@ export default function StayPlanner({ places, villas, locale }: { places: Place[
     <section className="mt-24 border-t border-black pt-8">
       <div className="grid gap-8 md:grid-cols-[1fr_auto] md:items-end">
         <div>
-          <p className="lg-kicker text-[var(--lg-blue)]">MY STAY / PLANNER</p>
+          <p className="lg-kicker text-[var(--lg-blue)]">{fr ? "MON SÉJOUR / PROGRAMME" : "MY STAY / PLANNER"}</p>
           <h2 className="mt-4 text-6xl font-black uppercase leading-[.84] tracking-[-.065em] md:text-8xl">
             {fr ? <>3 JOURS.<br/><span className="lg-accent">UN RYTHME.</span></> : <>3 DAYS.<br/><span className="lg-accent">ONE RHYTHM.</span></>}
           </h2>
@@ -146,7 +146,7 @@ export default function StayPlanner({ places, villas, locale }: { places: Place[
                     {items.length === 0 ? <p className="mt-4 text-sm font-semibold text-black/25">{fr ? "Libre." : "Open."}</p> : items.map((item) => {
                       const place = placeMap.get(item.id)!;
                       return <div key={item.id} className="mt-4 border-t border-black pt-4">
-                        <p className="lg-kicker text-black/35">{getCategory(place.category)?.label} · {place.location}</p>
+                        <p className="lg-kicker text-black/35">{fr ? categoryFR[place.category].name : getCategory(place.category)?.label} · {place.location}</p>
                         <Link href={`/${locale}/place/${place.id}`} className="mt-1 block text-2xl font-black uppercase tracking-[-.04em] lg-link-accent">{place.name}</Link>
                         <div className="mt-3 flex flex-wrap gap-x-4 gap-y-2 text-[9px] font-black uppercase tracking-[.11em]">
                           <button onClick={() => move(item.id, { day: day === 1 ? 3 : day - 1 })} className="lg-link-accent">← {fr ? "Jour" : "Day"}</button>
@@ -165,8 +165,8 @@ export default function StayPlanner({ places, villas, locale }: { places: Place[
       )}
 
       {activePlan.length > 0 && <div className="mt-12 grid gap-6 border-y border-black bg-black p-6 text-white md:grid-cols-[1fr_auto] md:items-center md:p-10">
-        <div><p className="lg-kicker text-[var(--lg-blue)]">ASK LE GOLFE / OPTIMISE</p><p className="mt-3 max-w-3xl text-3xl font-black uppercase leading-[.95] tracking-[-.045em] md:text-5xl">{fr ? "LE PLANNING EST POSÉ. MAINTENANT, FAISONS-LE RESPIRER." : "THE PLAN IS SET. NOW LET'S MAKE IT BREATHE."}</p></div>
-        <Link href={`/${locale}/ask?shortlist=${encodeURIComponent(planPrompt)}`} className="lg-btn border-[var(--lg-blue)] bg-[var(--lg-blue)] text-white">{fr ? "Optimiser avec Ask" : "Refine with Ask"} →</Link>
+        <div><p className="lg-kicker text-[var(--lg-blue)]">{fr ? "LE GOLFE / AFFINER MON SÉJOUR" : "ASK LE GOLFE / OPTIMISE"}</p><p className="mt-3 max-w-3xl text-3xl font-black uppercase leading-[.95] tracking-[-.045em] md:text-5xl">{fr ? "LE PLANNING EST POSÉ. MAINTENANT, FAISONS-LE RESPIRER." : "THE PLAN IS SET. NOW LET'S MAKE IT BREATHE."}</p></div>
+        <Link href={`/${locale}/ask?shortlist=${encodeURIComponent(planPrompt)}`} className="lg-btn border-[var(--lg-blue)] bg-[var(--lg-blue)] text-white">{fr ? "Affiner avec LE GOLFE" : "Refine with Ask"} →</Link>
       </div>}
     </section>
   );

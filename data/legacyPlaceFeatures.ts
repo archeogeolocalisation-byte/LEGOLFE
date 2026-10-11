@@ -7,7 +7,7 @@ export const legacyPlaceFeatures:Record<string,Record<Locale,LegacyPlaceCopy>> =
       "title": "RAMATUELLE",
       "sub": "LE VILLAGE AU-DESSUS DE PAMPELONNE.",
       "intro": "Un village perché, minéral et méditerranéen. À quelques minutes des plages, mais avec un rythme qui n'a rien à voir avec celui de Pampelonne.",
-      "local": "LE GOLFE VIEW",
+      "local": "LE REGARD LE GOLFE",
       "quote": "Dormir ici, c'est garder Pampelonne à portée de main sans vivre dans son agitation.",
       "body": "Ramatuelle fonctionne très bien comme base de séjour : on prend un café au village, on descend à la plage quand on en a envie, puis on retrouve le soir une atmosphère beaucoup plus posée. C'est ce contraste qui fait sa force.",
       "moments": [
@@ -147,7 +147,7 @@ export const legacyPlaceFeatures:Record<string,Record<Locale,LegacyPlaceCopy>> =
       "title": "SAINT-TROPEZ",
       "sub": "LA SCÈNE EST CONNUE. LE BON MOMENT L'EST MOINS.",
       "intro": "Port, Ponche, marché, Citadelle, terrasses : tout tient dans un petit périmètre. La vraie différence vient de l'heure à laquelle on y entre.",
-      "local": "LE GOLFE VIEW",
+      "local": "LE REGARD LE GOLFE",
       "quote": "Ne pas confondre Saint-Tropez avec son image.",
       "body": "Le port est la scène la plus visible. Mais la ville devient beaucoup plus intéressante quand on passe par les ruelles, la Ponche, les hauteurs de la Citadelle et les matinées de marché. Saint-Tropez est compact : bien timé, il se marche très bien.",
       "moments": [
@@ -283,11 +283,11 @@ export const legacyPlaceFeatures:Record<string,Record<Locale,LegacyPlaceCopy>> =
   },
   "club-55": {
     "fr": {
-      "kicker": "EAT · PAMPELONNE · RAMATUELLE",
+      "kicker": "RESTAURANT · PAMPELONNE · RAMATUELLE",
       "title": "LE CLUB 55",
       "sub": "LE DÉJEUNER EST LE RITUEL.",
       "intro": "Une institution de Pampelonne depuis 1955. On n'y vient pas seulement manger : on vient prendre part à une certaine idée de la journée tropézienne.",
-      "local": "LE GOLFE TAKE",
+      "local": "LE REGARD LE GOLFE",
       "quote": "Venez pour le mythe. Restez pour le rythme du déjeuner.",
       "body": "Le Club 55 fonctionne mieux quand on l'intègre à une vraie journée Pampelonne. Plage, arrivée tranquille, déjeuner long, retour au sable. Ce n'est ni l'adresse la plus discrète ni la plus économique — et ce n'est pas ce qu'elle essaie d'être.",
       "moments": [
@@ -348,7 +348,7 @@ export const legacyPlaceFeatures:Record<string,Record<Locale,LegacyPlaceCopy>> =
       "dark": "PRATIQUE",
       "darkTitle": "Iconique ne veut pas dire improvisé.",
       "darkBody": "Pour la saison 2026, l'office de tourisme indique une ouverture du 27 mars au 1er novembre, tous les jours de 10 h à 17 h. Parking privé, voiturier et navette bateau au mouillage font partie des services listés. Toujours reconfirmer au moment de réserver.",
-      "close": "LE BON MATCH",
+      "close": "POUR QUI ?",
       "closeTitle": "Pour une journée Pampelonne classique — pas pour un secret bien gardé.",
       "closeBody": "Le Club 55 est cohérent si vous cherchez une expérience emblématique, une grande tablée, une arrivée en bateau ou une première journée très 'Golfe'. Si vous voulez une petite adresse confidentielle ou un déjeuner économique, il y a de meilleurs matchs."
     },
@@ -569,7 +569,7 @@ export const legacyPlaceFeatures:Record<string,Record<Locale,LegacyPlaceCopy>> =
       "title": "GASSIN",
       "sub": "LE GOLFE VU D'EN HAUT.",
       "intro": "Un village médiéval perché à environ 200 mètres, assez compact pour se parcourir à pied et assez haut pour lire presque tout le territoire d'un seul regard.",
-      "local": "LE GOLFE VIEW",
+      "local": "LE REGARD LE GOLFE",
       "quote": "On vient pour la vue. On reste pour le village.",
       "body": "Gassin est l'une des meilleures portes d'entrée pour comprendre la géographie du Golfe : Saint-Tropez, Sainte-Maxime, les vignobles, la baie de Cavalaire et les massifs s'alignent autour du village. Mais la vraie surprise est dans les ruelles, les passages et les petites tables du centre ancien.",
       "moments": [
@@ -629,7 +629,7 @@ export const legacyPlaceFeatures:Record<string,Record<Locale,LegacyPlaceCopy>> =
       "dark": "POURQUOI ICI",
       "darkTitle": "Le calme sans sortir du cœur du Golfe.",
       "darkBody": "Gassin est intéressant pour ceux qui veulent rester proches de Saint-Tropez, Ramatuelle et Cogolin sans dormir dans l'agitation. C'est aussi une base cohérente pour alterner plage, vignobles et soirées plus tranquilles.",
-      "close": "LE BON MATCH",
+      "close": "POUR QUI ?",
       "closeTitle": "Pour voir loin sans s'éloigner.",
       "closeBody": "Choisissez Gassin si la vue, le charme du village et un rythme plus calme comptent autant que la proximité des plages. Pour sortir à pied chaque soir à Saint-Tropez, ce n'est pas le même usage."
     },
@@ -709,7 +709,7 @@ export const legacyPlaceFeatures:Record<string,Record<Locale,LegacyPlaceCopy>> =
       "title": "GRIMAUD",
       "sub": "LE VILLAGE AVANT LA MER.",
       "intro": "Un village médiéval accroché à la colline, dominé par les ruines de son château. Ici, le Golfe se raconte d'abord par les pierres, les ruelles et le relief.",
-      "local": "LE GOLFE VIEW",
+      "local": "LE REGARD LE GOLFE",
       "quote": "Grimaud mérite d'être choisi pour lui-même, pas comme détour vers Port Grimaud.",
       "body": "Le vieux village et la cité lacustre sont deux expériences différentes. Pour LE GOLFE, Grimaud commence dans les ruelles, monte au château et redescend lentement vers les places, les jardins et les terrasses.",
       "moments": [
@@ -845,11 +845,11 @@ export const legacyPlaceFeatures:Record<string,Record<Locale,LegacyPlaceCopy>> =
   },
   "pampelonne": {
     "fr": {
-      "kicker": "BEACH · RAMATUELLE",
+      "kicker": "PLAGE · RAMATUELLE",
       "title": "PAMPELONNE",
       "sub": "UNE PLAGE. PLUSIEURS JOURNÉES POSSIBLES.",
       "intro": "4,5 kilomètres de sable sur la commune de Ramatuelle. Pampelonne n'est pas une seule ambiance : le secteur, l'heure et le type de journée changent tout.",
-      "local": "LE GOLFE VIEW",
+      "local": "LE REGARD LE GOLFE",
       "quote": "La bonne question n'est pas “Pampelonne ou pas ?” mais “quelle Pampelonne ?”",
       "body": "On peut y venir pour une plage publique simple, un déjeuner iconique, une journée en famille, un beach club ou une arrivée en bateau. LE GOLFE doit aider à choisir le bon secteur plutôt que recommander la plage comme un bloc unique.",
       "moments": [
@@ -909,7 +909,7 @@ export const legacyPlaceFeatures:Record<string,Record<Locale,LegacyPlaceCopy>> =
       "dark": "ACCÈS",
       "darkTitle": "En été, penser trajet avant de penser plage.",
       "darkBody": "En 2026, Ramatuelle indique une navette gratuite depuis le village toutes les 20 minutes du 15 juin au 22 septembre, ainsi que la ligne 875, les accès vélo/deux-roues et plusieurs parkings. En haute saison, partir tôt reste la meilleure optimisation.",
-      "close": "LE BON MATCH",
+      "close": "POUR QUI ?",
       "closeTitle": "Iconique, oui. Uniforme, jamais.",
       "closeBody": "Pampelonne est incontournable si vous voulez comprendre la culture plage du Golfe. Mais elle n'est pas automatiquement le meilleur choix pour tout le monde : l'Escalet, les criques ou d'autres plages peuvent mieux convenir à une journée plus naturelle ou plus calme."
     },

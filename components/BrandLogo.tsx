@@ -4,7 +4,7 @@ import type { Locale } from "../lib/i18n";
 export function BrandLogo({locale="en",light=true,compact=false}:{locale?:Locale;light?:boolean;compact?:boolean}){
   return <Link href={`/${locale}`} aria-label="LE GOLFE" className={`inline-flex items-end gap-3 ${light?"text-black":"text-white"}`}>
     <span className={`${compact?"text-[24px] md:text-[30px]":"text-[30px] md:text-[38px]"} font-black uppercase leading-[.78] tracking-[-.075em]`}>LE GOLFE</span>
-    {!compact&&<span className="hidden pb-[2px] text-[7px] font-black uppercase leading-none tracking-[.22em] opacity-55 lg:block">Saint-Tropez<br/>Villages · Plages</span>}
+    {!compact&&<span className="hidden pb-[2px] text-[7px] font-black uppercase leading-none tracking-[.22em] opacity-55 lg:block">Saint-Tropez<br/>{locale === "fr" ? "Villages · Plages" : "Villages · Beaches"}</span>}
   </Link>
 }
 

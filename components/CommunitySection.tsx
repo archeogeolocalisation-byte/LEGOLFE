@@ -174,7 +174,7 @@ export default function CommunitySection({ placeId, locale }: { placeId: string;
       <div className="lg-shell py-20 md:py-28">
         <div className="grid gap-8 md:grid-cols-[1.15fr_.85fr] md:items-end">
           <div>
-            <p className="lg-kicker">COMMUNITY / {fr ? "VU PAR VOUS" : "SEEN BY YOU"}</p>
+            <p className="lg-kicker">{fr ? "COMMUNAUTÉ" : "COMMUNITY"} / {fr ? "VU PAR VOUS" : "SEEN BY YOU"}</p>
             <h2 className="lg-title mt-5 text-[15vw] uppercase md:text-[88px]">
               {fr ? <>VOS PHOTOS.<br />VOS MOTS.</> : <>YOUR PHOTOS.<br />YOUR WORDS.</>}
             </h2>

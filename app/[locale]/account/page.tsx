@@ -97,15 +97,15 @@ export default function AccountPage() {
   }
 
   if (!ready) {
-    return <main className="min-h-screen bg-white"><SiteHeader locale={locale} /><div className="lg-shell py-24"><div className="h-48 animate-pulse bg-neutral-100" /></div></main>;
+    return <main className="min-h-screen bg-white"><SiteHeader locale={locale} path="/account" /><div className="lg-shell py-24"><div className="h-48 animate-pulse bg-neutral-100" /></div></main>;
   }
 
   if (!userId) {
     return (
       <main className="min-h-screen bg-white text-black">
-        <SiteHeader locale={locale} />
+        <SiteHeader locale={locale} path="/account" />
         <section className="lg-shell py-20 md:py-28">
-          <p className="lg-kicker">COMMUNITY / ACCOUNT</p>
+          <p className="lg-kicker">{fr ? "COMMUNAUTÉ / COMPTE" : "COMMUNITY / ACCOUNT"}</p>
           <h1 className="lg-display mt-6 text-[17vw] md:text-[130px]">{fr ? <>REJOINDRE<br />LE GOLFE.</> : <>JOIN<br />LE GOLFE.</>}</h1>
           <div className="mt-12 grid gap-10 border-t border-black pt-8 md:grid-cols-2">
             <p className="max-w-lg text-xl font-bold leading-8">
@@ -123,9 +123,9 @@ export default function AccountPage() {
 
   return (
     <main className="min-h-screen bg-white text-black">
-      <SiteHeader locale={locale} />
+      <SiteHeader locale={locale} path="/account" />
       <section className="lg-shell py-20 md:py-28">
-        <p className="lg-kicker">COMMUNITY / ACCOUNT</p>
+        <p className="lg-kicker">{fr ? "COMMUNAUTÉ / COMPTE" : "COMMUNITY / ACCOUNT"}</p>
         <h1 className="lg-title mt-5 text-[15vw] uppercase md:text-[104px]">{fr ? "MON PROFIL." : "MY PROFILE."}</h1>
         <div className="mt-12 grid gap-14 border-t border-black pt-8 md:grid-cols-[.8fr_1.2fr]">
           <div>
@@ -134,7 +134,7 @@ export default function AccountPage() {
             <p className="mt-3 text-sm font-bold">{accountTypeLabel(profileType,fr)}</p>
             <div className="mt-6 flex flex-wrap gap-3">
               <Link className="lg-btn" href={"/"+locale+"/saved"}>{fr ? "Mon séjour" : "My stay"} ↗</Link>
-              {profileType !== "traveler" && <Link className="lg-btn lg-btn--dark" href={"/"+locale+"/host"}>{fr ? "Mes annonces / Host" : "My listings / Host"} ↗</Link>}
+              {profileType !== "traveler" && <Link className="lg-btn lg-btn--dark" href={"/"+locale+"/host"}>{fr ? "Mes annonces" : "My listings / Host"} ↗</Link>}
             </div>
             <button type="button" onClick={() => setShowPassword(value => !value)} className="mt-7 block text-sm font-bold underline underline-offset-4">{fr ? "Définir / modifier mon mot de passe" : "Set / change my password"}</button>
             {showPassword && <AccountPasswordForm key={userId} userId={userId} fr={fr} recovery={recovery} onSaved={() => {setShowPassword(false);setRecovery(false);setMessage(fr ? "Mot de passe enregistré." : "Password saved.");}} />}

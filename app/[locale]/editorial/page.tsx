@@ -60,7 +60,7 @@ export default function EditorialDesk(){
   return <main className="min-h-screen bg-white text-black">
     <SiteHeader locale={locale}/>
     <section className="lg-shell py-16 md:py-24">
-      <p className="lg-kicker text-[var(--lg-blue)]">LE GOLFE / EDITORIAL DESK</p>
+      <p className="lg-kicker text-[var(--lg-blue)]">LE GOLFE / {fr?"ESPACE ÉDITORIAL":"EDITORIAL DESK"}</p>
       <div className="mt-5 grid gap-8 border-b-4 border-black pb-10 lg:grid-cols-[1fr_auto] lg:items-end">
         <h1 className="lg-title text-[17vw] uppercase leading-[.78] md:text-[120px]">{fr?<>À<br/><span className="lg-accent">VALIDER.</span></>:<>TO<br/><span className="lg-accent">REVIEW.</span></>}</h1>
         <button onClick={sync} disabled={syncing||allowed!==true} className="lg-btn lg-btn--dark">{syncing?(fr?"Synchronisation…":"Syncing…"):(fr?"Actualiser les sources":"Refresh sources")}</button>

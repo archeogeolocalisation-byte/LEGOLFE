@@ -1,7 +1,7 @@
 import Link from "next/link";
 import type { Place } from "../data/places";
 import { getCategory, placeDescriptionFr } from "../data/places";
-import type { Locale } from "../lib/i18n";
+import {categoryFR, type Locale} from "../lib/i18n";
 import { mediaForPlace } from "../lib/placeMedia";
 
 export default function PlaceCard({place,locale="en"}:{place:Place;locale?:Locale}){
@@ -14,7 +14,7 @@ export default function PlaceCard({place,locale="en"}:{place:Place;locale?:Local
     </div>
     <div className="mt-4 flex items-start justify-between gap-6">
       <div className="min-w-0">
-        <p className="lg-kicker text-black/45">{c?.label} · {place.location}</p>
+        <p className="lg-kicker text-black/45">{locale === "fr" ? categoryFR[place.category].name : c?.label} · {place.location}</p>
         <h3 className="mt-2 text-[32px] font-black uppercase leading-[.88] tracking-[-.055em] md:text-[46px]">{place.name}</h3>
       </div>
       <span className="shrink-0 text-2xl font-black transition-transform duration-200 group-hover:translate-x-1">↗</span>
