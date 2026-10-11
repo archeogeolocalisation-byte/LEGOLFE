@@ -69,7 +69,7 @@ export default function ModerationPage() {
     <main className="min-h-screen bg-white text-black">
       <SiteHeader locale={locale} />
       <section className="lg-shell py-20 md:py-28">
-        <p className="lg-kicker">COMMUNITY / MODERATION</p>
+        <p className="lg-kicker">{fr?"COMMUNAUTÉ / MODÉRATION":"COMMUNITY / MODERATION"}</p>
         <h1 className="lg-title mt-5 text-[15vw] uppercase md:text-[104px]">{fr ? "À VALIDER." : "TO REVIEW."}</h1>
 
         {allowed === null && <div className="mt-12 h-48 animate-pulse bg-neutral-100" />}
@@ -91,7 +91,7 @@ export default function ModerationPage() {
               return (
                 <article key={post.id} className="grid gap-8 border-b border-black py-8 md:grid-cols-[240px_1fr_auto] md:items-start">
                   <div className="bg-neutral-100">
-                    {post.image_path ? <CommunityPhoto path={post.image_path} alt="Pending community upload" className="aspect-square h-full w-full object-cover" /> : <div className="flex aspect-square items-center justify-center text-[10px] font-black uppercase tracking-[.12em] text-black/35">Comment</div>}
+                    {post.image_path ? <CommunityPhoto path={post.image_path} alt="Pending community upload" className="aspect-square h-full w-full object-cover" /> : <div className="flex aspect-square items-center justify-center text-[10px] font-black uppercase tracking-[.12em] text-black/35">{fr?"Commentaire":"Comment"}</div>}
                   </div>
                   <div>
                     <p className="lg-kicker">{post.place_id}</p>

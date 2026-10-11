@@ -93,7 +93,7 @@ export default function AgendaClient({ locale, events, initialDay }: Props) {
               <div className="lg-image aspect-[16/8] border-b border-white/15"><img src={mediaForEvent(featured).src} alt={mediaForEvent(featured).alt}/></div>
               <div className="p-6 md:p-10 lg:p-14">
               <div className="flex flex-wrap items-center gap-3">
-                <span className="border border-white/25 px-3 py-1.5 text-[9px] font-black uppercase tracking-[.18em]">LE GOLFE PICK</span>
+                <span className="border border-white/25 px-3 py-1.5 text-[9px] font-black uppercase tracking-[.18em]">{fr?"LA SÉLECTION LE GOLFE":"LE GOLFE PICK"}</span>
                 <span className="text-xs text-white/45">{eventDateLabel(displayEvent(featured), locale)}{featured.time ? ` · ${featured.time}` : ""}</span>
               </div>
               <h2 className="mt-6 max-w-4xl text-4xl font-black leading-[.94] tracking-[-.035em] md:text-6xl">{fr ? (featured.titleFr || featured.title) : featured.title}</h2>
@@ -174,7 +174,7 @@ export default function AgendaClient({ locale, events, initialDay }: Props) {
                     <span style={{ color: accent }}>{fr ? categoryLabels[e.category].fr : categoryLabels[e.category].en}</span>
                     <span className="text-black/20">/</span>
                     <span className="text-black/45">{e.location}</span>
-                    {e.featured && <span className="bg-black px-2 py-1 text-[8px] text-white">LE GOLFE PICK</span>}
+                    {e.featured && <span className="bg-black px-2 py-1 text-[8px] text-white">{fr?"LA SÉLECTION LE GOLFE":"LE GOLFE PICK"}</span>}
                   </div>
                   <h3 className="mt-3 max-w-3xl text-2xl font-black leading-[1.02] tracking-[-.025em] transition group-hover:text-[#0B4F6C] md:text-4xl"><Link href={`/${locale}/event/${e.id}`}>{fr ? (e.titleFr || e.title) : e.title}</Link></h3><p className="mt-3 text-xs font-bold">{sessionsInWindow(e,dateWindow(range,todayIso)).map(session=>`${formatCalendarDay(session.start,locale,true)}${session.end&&session.end!==session.start?` — ${formatCalendarDay(session.end,locale,true)}`:""}${session.time?` · ${session.time}`:""}`).join(" · ")}</p>
                   <p className="mt-3 max-w-2xl text-sm leading-6 text-black/55">{fr ? e.summaryFr : e.summary}</p>
@@ -210,7 +210,7 @@ export default function AgendaClient({ locale, events, initialDay }: Props) {
       <section className="border-t border-black bg-[#0B4F6C] text-white">
         <div className="mx-auto max-w-7xl px-6 py-14 md:flex md:items-end md:justify-between md:px-10 md:py-20">
           <div>
-            <p className="text-[10px] font-black uppercase tracking-[.22em] text-white/55">ASK LE GOLFE</p>
+            <p className="text-[10px] font-black uppercase tracking-[.22em] text-white/55">{fr?"DEMANDER À LE GOLFE":"ASK LE GOLFE"}</p>
             <h2 className="mt-4 max-w-3xl text-4xl font-black leading-[.95] tracking-[-.035em] md:text-6xl">{fr ? "VOUS AVEZ UNE SOIRÉE. ON VOUS FAIT LE PLAN." : "YOU HAVE ONE EVENING. WE'LL MAKE THE PLAN."}</h2>
           </div>
           <Link href={`/${locale}/ask?prompt=${encodeURIComponent(fr ? "Que faire ce soir dans le Golfe ? Propose-moi un programme cohérent avec un événement, un dîner et le bon endroit pour finir la soirée." : "What should we do tonight in the Golfe? Build a coherent plan with an event, dinner and the right place to end the evening.")}`} className="mt-8 inline-block bg-white px-6 py-4 text-xs font-black uppercase tracking-[.15em] text-black md:mt-0">{fr ? "FAIRE MON PLAN" : "BUILD MY PLAN"} →</Link>

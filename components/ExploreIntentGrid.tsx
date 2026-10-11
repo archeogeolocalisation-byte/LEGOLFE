@@ -4,13 +4,13 @@ import Link from "next/link";
 import { useMemo, useState } from "react";
 import type { Place } from "../data/places";
 import { getCategory, placeDescriptionFr } from "../data/places";
-import type { Locale } from "../lib/i18n";
+import { categoryFR, type Locale } from "../lib/i18n";
 import { mediaForPlace } from "../lib/placeMedia";
 
 type Mood = "all" | "quiet" | "beach" | "view" | "family" | "eat" | "party";
 
 const labels: Record<Locale, Record<Mood, string>> = {
-  fr: { all: "Tout", quiet: "Au calme", beach: "Journée plage", view: "Belle vue", family: "En famille", eat: "Bien manger", party: "Partying" },
+  fr: { all: "Tout", quiet: "Au calme", beach: "Journée plage", view: "Belle vue", family: "En famille", eat: "Bien manger", party: "Sortir" },
   en: { all: "All", quiet: "Quiet", beach: "Beach day", view: "Great view", family: "Family", eat: "Eat well", party: "Partying" },
 };
 
@@ -48,7 +48,7 @@ export default function ExploreIntentGrid({ places, locale, initialMood = "all" 
             {media ? <img src={media.src} alt={media.alt}/> : <div className="flex h-full items-end bg-black p-6 text-white"><span className="max-w-[90%] text-5xl font-black uppercase leading-[.84] tracking-[-.06em] md:text-7xl">{place.name}</span></div>}
           </div>
           <div className="mt-4 flex items-start justify-between gap-6">
-            <div><p className="lg-kicker text-black/45">{c?.label} · {place.location}</p><h3 className={`${index % 5 === 0 ? "text-[12vw] md:text-[76px]" : "text-[34px] md:text-[48px]"} mt-2 font-black uppercase leading-[.86] tracking-[-.06em]`}>{place.name}</h3></div>
+            <div><p className="lg-kicker text-black/45">{locale === "fr" ? categoryFR[place.category].name : c?.label} · {place.location}</p><h3 className={`${index % 5 === 0 ? "text-[12vw] md:text-[76px]" : "text-[34px] md:text-[48px]"} mt-2 font-black uppercase leading-[.86] tracking-[-.06em]`}>{place.name}</h3></div>
             <span className="shrink-0 text-3xl font-black transition-transform group-hover:translate-x-1">↗</span>
           </div>
           <p className="mt-4 max-w-2xl text-sm font-semibold leading-6 text-black/55">{desc}</p>

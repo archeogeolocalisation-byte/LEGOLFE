@@ -24,7 +24,7 @@ export default function HomeUpdates({ locale, events, news, window }: {
       <section aria-labelledby="home-agenda-title" className="flex min-w-0 flex-col">
         <header className="border-t-4 border-[var(--lg-blue)] pt-5">
           <div className="flex flex-wrap items-center justify-between gap-3">
-            <p className="lg-kicker text-[var(--lg-blue)]">WHAT’S ON / {fr ? "LES 7 PROCHAINS JOURS" : "NEXT 7 DAYS"}</p>
+            <p className="lg-kicker text-[var(--lg-blue)]">{fr ? "AGENDA" : "WHAT’S ON"} / {fr ? "LES 7 PROCHAINS JOURS" : "NEXT 7 DAYS"}</p>
             <span aria-hidden="true" className="text-xs font-black text-black/45">01 / AGENDA</span>
           </div>
           <h2 id="home-agenda-title" className="lg-title mt-6 text-[clamp(2.75rem,9vw,4.25rem)] uppercase">{fr ? <>CE QUI<br />SE PASSE.</> : <>WHAT’S<br />HAPPENING.</>}</h2>
@@ -66,8 +66,8 @@ export default function HomeUpdates({ locale, events, news, window }: {
       <section aria-labelledby="home-local-title" className="flex min-w-0 flex-col">
         <header className="border-t-4 border-black pt-5">
           <div className="flex flex-wrap items-center justify-between gap-3">
-            <p className="lg-kicker">LOCAL / {fr ? "LES INFOS UTILES" : "NEED TO KNOW"}</p>
-            <span aria-hidden="true" className="text-xs font-black text-black/45">02 / LOCAL</span>
+            <p className="lg-kicker">{fr ? "VIE LOCALE" : "LOCAL"} / {fr ? "LES INFOS UTILES" : "NEED TO KNOW"}</p>
+            <span aria-hidden="true" className="text-xs font-black text-black/45">02 / {fr ? "VIE LOCALE" : "LOCAL"}</span>
           </div>
           <h2 id="home-local-title" className="lg-title mt-6 text-[clamp(2.75rem,9vw,4.25rem)] uppercase">{fr ? <>À SAVOIR<br />MAINTENANT.</> : <>KNOW IT<br />NOW.</>}</h2>
           <p className="mt-5 max-w-md text-sm font-semibold leading-6 text-black/65">{fr ? "Accès, nouveaux lieux, vie locale. Les nouvelles qui vous aident à préparer votre séjour." : "Access, new places, local life. Updates to help you plan your stay."}</p>

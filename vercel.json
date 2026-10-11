@@ -8,7 +8,8 @@
       "content/hiking-guides": false,
       "design/home-updates": false,
       "content/guide-covers": false,
-      "seo/pre-search-console": false
+      "seo/pre-search-console": false,
+      "content/french-translations": false
     }
   }
 }

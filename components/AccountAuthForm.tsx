@@ -69,7 +69,7 @@ export default function AccountAuthForm({ locale, onAuthenticated }: {
       {mode === "signup" && <label className="block text-sm font-bold">{fr ? "Nom public" : "Public name"}
         <input required minLength={2} maxLength={40} autoComplete="nickname" value={name} onChange={event => setName(event.target.value)} className="mb-6 mt-2 h-12 w-full border-b border-black bg-transparent text-lg outline-none" />
       </label>}
-      <label className="block text-sm font-bold">Email
+      <label className="block text-sm font-bold">{fr?"E-mail":"Email"}
         <input required type="email" autoComplete="email" value={email} onChange={event => setEmail(event.target.value)} className="mt-2 h-12 w-full border-b border-black bg-transparent text-lg outline-none" />
       </label>
       {mode !== "reset" && <label className="mt-6 block text-sm font-bold">{fr ? "Mot de passe" : "Password"}
