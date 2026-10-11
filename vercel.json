@@ -7,7 +7,8 @@
       "content/local-guides": false,
       "content/hiking-guides": false,
       "design/home-updates": false,
-      "content/guide-covers": false
+      "content/guide-covers": false,
+      "seo/pre-search-console": false
     }
   }
 }

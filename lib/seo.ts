@@ -1,9 +1,12 @@
 import type { Metadata } from "next";
 import type { Locale } from "./i18n";
 
-// An explicit origin avoids publishing canonicals on a preview or spoofed host.
+// The public origin never comes from request headers or a preview hostname.
+// This project’s production domain is a public configuration value, not a secret.
 export function siteOrigin(): string | undefined {
-  const value = process.env.NEXT_PUBLIC_SITE_URL;
+  if (process.env.VERCEL_ENV === "preview") return undefined;
+  const value = process.env.NEXT_PUBLIC_SITE_URL?.trim() ||
+    (process.env.VERCEL_ENV === "production" ? "https://www.legolfe.com" : undefined);
   if (!value) return undefined;
   const url = new URL(value);
   if (url.protocol !== "https:" || url.username || url.password || url.pathname !== "/" || url.search || url.hash || ["localhost", "127.0.0.1"].includes(url.hostname)) {

@@ -8,17 +8,20 @@ import { villas } from "../../data/villas";
 import { getPublicEvents } from "../../lib/publicEvents";
 import { siteOrigin } from "../../lib/seo";
 import { mediaForPlace } from "../../lib/placeMedia";
-import { guidePaths } from "../../data/guides";
+import { guides, guidePaths } from "../../data/guides";
+import { mediaForGuide } from "../../lib/guideMedia";
 export const dynamic = "force-dynamic";
 const xml = (s:string) => s.replace(/[<>&"']/g, c => ({"<":"&lt;",">":"&gt;","&":"&amp;",'"':"&quot;","'":"&apos;"}[c]!));
 export async function GET() {
  const origin=siteOrigin();if(!origin)return new Response("Configure NEXT_PUBLIC_SITE_URL before enabling indexing.",{status:503,headers:{"Retry-After":"3600"}});
  const catalog=await getPublicEvents();
  const paths=["","/explore","/whats-on","/local",...guidePaths(),...destinationPaths(),...stayPaths(),...agendaPaths(catalog,parisIsoDay()),...placeCategories.map(x=>`/explore/${x.id}`),...places.map(x=>`/place/${x.id}`),...catalog.map(x=>`/event/${x.id}`)];
- const rows=paths.flatMap(path=>["fr","en"].map(locale=>{
+ const rows=[...new Set(paths)].flatMap(path=>["fr","en"].map(locale=>{
+ const guide=path.startsWith("/guides/") ? guides.find(g=>g.slug===path.split("/").pop()) : undefined;
  const media=path.startsWith("/place/") ? mediaForPlace(path.split("/").pop()!) : undefined;
- const image=media && !media.contextual ? `<image:image><image:loc>${xml(new URL(media.src,origin).href)}</image:loc></image:image>` : "";
- return `<url><loc>${xml(origin+"/"+locale+path)}</loc>${["fr","en","x-default"].map(lang=>`<xhtml:link rel="alternate" hreflang="${lang}" href="${xml(origin+"/"+(lang==="x-default"?"en":lang)+path)}"/>`).join("")}${image}</url>`;
+ const lastmod=guide ? `<lastmod>${xml(guide.verified)}</lastmod>` : "";
+ const image=guide ? `<image:image><image:loc>${xml(new URL(mediaForGuide(guide).photo.src,origin).href)}</image:loc></image:image>` : media && !media.contextual ? `<image:image><image:loc>${xml(new URL(media.src,origin).href)}</image:loc></image:image>` : "";
+ return `<url><loc>${xml(origin+"/"+locale+path)}</loc>${lastmod}${["fr","en","x-default"].map(lang=>`<xhtml:link rel="alternate" hreflang="${lang}" href="${xml(origin+"/"+(lang==="x-default"?"en":lang)+path)}"/>`).join("")}${image}</url>`;
  }));
  rows.push(`<url><loc>${xml(origin+"/match")}</loc></url>`);
  for(const villa of await getPublishedVillas())rows.push(`<url><loc>${xml(origin+'/villa/'+villa.id)}</loc>${villa.photos[0]?`<image:image><image:loc>${xml(villa.photos[0].src)}</image:loc></image:image>`:''}</url>`);
