@@ -7,14 +7,14 @@ export const hikingGuides: Guide[] = [
       "fr": "Randonnée / Le Plan-de-la-Tour",
       "en": "Hiking / Le Plan-de-la-Tour"
     },
-    "image": "plan-de-la-tour",
+    "image": "san-peire-cover",
     "imageAlt": {
-      "fr": "Maison du village du Plan-de-la-Tour",
-      "en": "House in Le Plan-de-la-Tour village"
+      "fr": "Illustration de randonnée au San Peïre : granite, chênes-lièges et Golfe au loin",
+      "en": "Illustration of hiking at San Peïre: granite, cork oaks and distant Golfe"
     },
     "imageCaption": {
-      "fr": "Le Plan-de-la-Tour, village de départ · Cette photographie montre le village, pas le sommet du San Peïre",
-      "en": "Le Plan-de-la-Tour, the starting village · This photograph shows the village, not the San Peïre summit"
+      "fr": "Illustration éditoriale · LE GOLFE · Générée par IA",
+      "en": "Editorial illustration · LE GOLFE · AI-generated"
     },
     "destinations": [
       "le-plan-de-la-tour"
@@ -279,14 +279,14 @@ export const hikingGuides: Guide[] = [
       "fr": "Randonnée / La Croix-Valmer",
       "en": "Hiking / La Croix-Valmer"
     },
-    "image": "cap-lardier",
+    "image": "cap-lardier-cover",
     "imageAlt": {
-      "fr": "Vue vers le Cap Taillat depuis le Cap Lardier",
-      "en": "View towards Cap Taillat from Cap Lardier"
+      "fr": "Illustration de randonnée au Cap Lardier : sentier côtier, pins et crique",
+      "en": "Illustration of hiking at Cap Lardier: coastal path, pines and cove"
     },
     "imageCaption": {
-      "fr": "Depuis le Cap Lardier, regard vers le Cap Taillat · Le parcours décrit s’arrête au Cap Lardier",
-      "en": "Looking towards Cap Taillat from Cap Lardier · The described route turns back at Cap Lardier"
+      "fr": "Illustration éditoriale · LE GOLFE · Générée par IA",
+      "en": "Editorial illustration · LE GOLFE · AI-generated"
     },
     "destinations": [
       "la-croix-valmer"
