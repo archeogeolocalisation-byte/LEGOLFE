@@ -1,7 +1,6 @@
 "use client";
-import AgendaLinks from "../../../components/AgendaLinks";
 import { parisIsoDay } from "../../../lib/localCalendar";
-import { dateWindow, eventsInWindow, eventOverlaps, catalogMonths, formatCalendarMonth, sessionsInWindow, formatCalendarDay } from "../../../lib/agendaCalendar";
+import { dateWindow, monthWindow, eventsInWindow, eventOverlaps, catalogMonths, formatCalendarMonth, sessionsInWindow, formatCalendarDay } from "../../../lib/agendaCalendar";
 
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
@@ -43,14 +42,17 @@ export default function AgendaClient({ locale, events, initialDay }: Props) {
   const [todayIso,setTodayIso]=useState(initialDay);
   useEffect(()=>{const timer=setInterval(()=>setTodayIso(parisIsoDay()),60_000);return ()=>clearInterval(timer);},[]);
   const [range, setRange] = useState<Range>("7days");
+  const [month, setMonth] = useState("");
+  const selectedWindow = monthWindow(month) ?? dateWindow(range, todayIso);
+  const months = useMemo(() => catalogMonths(events), [events]);
   const [category, setCategory] = useState<"all" | EventCategory>("all");
   const [location, setLocation] = useState("all");
   const locations = useMemo(() => Array.from(new Set(events.map((e) => e.location))).sort(), [events]);
-  const filtered=useMemo(()=>eventsInWindow(events,dateWindow(range,todayIso)).filter(e=>(category==="all"||e.category===category)&&(location==="all"||e.location===location)),[events,range,todayIso,category,location]);
-  const upcoming=filtered.filter(e=>eventOverlaps(e,todayIso,dateWindow(range,todayIso).to));
+  const filtered=useMemo(()=>eventsInWindow(events,{from:selectedWindow.from,to:selectedWindow.to}).filter(e=>(category==="all"||e.category===category)&&(location==="all"||e.location===location)),[events,selectedWindow.from,selectedWindow.to,category,location]);
+  const upcoming=filtered.filter(e=>eventOverlaps(e,todayIso,selectedWindow.to));
   const featured=upcoming.find(e=>e.featured)||upcoming[0];
-  const displayEvent=(event:GolfeEvent)=>{const session=sessionsInWindow(event,dateWindow(range,todayIso))[0];return session?{...event,start:session.start,end:session.end,time:session.time}:event;};
-  const monthText=formatCalendarMonth(todayIso.slice(0,7),locale);
+  const displayEvent=(event:GolfeEvent)=>{const session=sessionsInWindow(event,selectedWindow)[0];return session?{...event,start:session.start,end:session.end,time:session.time}:event;};
+  const periodText = month ? formatCalendarMonth(month, locale) : `${formatCalendarDay(selectedWindow.from,locale,true)}${selectedWindow.to !== selectedWindow.from ? ` — ${formatCalendarDay(selectedWindow.to,locale,true)}` : ""}`;
 
   const rangeButtons: { key: Range; fr: string; en: string }[] = [
     { key: "today", fr: "Aujourd’hui", en: "Today" },
@@ -68,12 +70,32 @@ export default function AgendaClient({ locale, events, initialDay }: Props) {
             <div>
               <p className="text-[11px] font-bold uppercase tracking-[.24em]" style={{ color: accent }}>LE GOLFE / AGENDA</p>
               <h1 className="mt-4 max-w-5xl text-6xl font-black leading-[.84] tracking-[-.055em] sm:text-7xl md:text-8xl lg:text-[7.4rem]">
-                {fr ? <>CE QUI SE PASSE<br/><span style={{ color: accent }}>ICI. MAINTENANT.</span></> : <>WHAT'S HAPPENING<br/><span style={{ color: accent }}>HERE. NOW.</span></>}
+                {fr ? <>CE QUI SE PASSE<br/><span style={{ color: accent }}>ICI. MAINTENANT.</span></> : <>WHAT&apos;S HAPPENING<br/><span style={{ color: accent }}>HERE. NOW.</span></>}
               </h1>
             </div>
             <p className="max-w-md text-base leading-7 text-black/55 lg:pb-2">
               {fr ? "Une sélection vivante du Golfe : culture, mer, musique, sport et rendez-vous locaux. On filtre le bruit, vous choisissez le moment." : "A living edit of the Golfe: culture, sea, music, sport and local life. We filter the noise; you choose the moment."}
             </p>
+          </div>
+        </div>
+      </section>
+
+      <section className="sticky top-0 z-30 border-b border-black/15 bg-white/95 backdrop-blur" aria-label={fr ? "Filtrer l’agenda" : "Filter the agenda"}>
+        <div className="mx-auto flex max-w-7xl flex-wrap items-center gap-4 px-6 py-4 md:px-10">
+          <div className="flex max-w-full gap-2 overflow-x-auto pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+            {rangeButtons.map((item) => {
+              const selected = !month && range === item.key;
+              return <button key={item.key} type="button" aria-pressed={selected} onClick={() => { setMonth(""); setRange(item.key); }} className={`shrink-0 border px-4 py-2 text-[11px] font-black uppercase tracking-[.13em] transition ${selected ? "border-transparent text-white" : "border-black/15 text-black hover:border-black"}`} style={selected ? { backgroundColor: accent } : undefined}>
+                {fr ? item.fr : item.en}
+              </button>;
+            })}
+          </div>
+          <div className="flex items-center gap-3">
+            <label htmlFor="agenda-month" className="text-[10px] font-black uppercase tracking-[.13em]">{fr ? "Choisir un mois" : "Choose a month"}</label>
+            <select id="agenda-month" value={month} onChange={event => setMonth(event.target.value)} className="max-w-full border border-black/20 bg-white px-3 py-2 text-xs font-bold">
+              <option value="">{fr ? "Période rapide" : "Quick dates"}</option>
+              {months.map(value => <option key={value} value={value}>{formatCalendarMonth(value, locale)}</option>)}
+            </select>
           </div>
         </div>
       </section>
@@ -94,7 +116,7 @@ export default function AgendaClient({ locale, events, initialDay }: Props) {
               <div className="p-6 md:p-10 lg:p-14">
               <div className="flex flex-wrap items-center gap-3">
                 <span className="border border-white/25 px-3 py-1.5 text-[9px] font-black uppercase tracking-[.18em]">{fr?"LA SÉLECTION LE GOLFE":"LE GOLFE PICK"}</span>
-                <span className="text-xs text-white/45">{eventDateLabel(displayEvent(featured), locale)}{featured.time ? ` · ${featured.time}` : ""}</span>
+                <span className="text-xs text-white/45">{eventDateLabel(displayEvent(featured), locale)}{displayEvent(featured).time ? ` · ${displayEvent(featured).time}` : ""}</span>
               </div>
               <h2 className="mt-6 max-w-4xl text-4xl font-black leading-[.94] tracking-[-.035em] md:text-6xl">{fr ? (featured.titleFr || featured.title) : featured.title}</h2>
               <p className="mt-6 max-w-2xl text-base leading-7 text-white/65">{fr ? featured.summaryFr : featured.summary}</p>
@@ -113,30 +135,18 @@ export default function AgendaClient({ locale, events, initialDay }: Props) {
         </section>
       )}
 
-      <section className="sticky top-0 z-30 border-b border-black/15 bg-white/95 backdrop-blur">
-        <div className="mx-auto max-w-7xl px-6 py-4 md:px-10">
-          <div className="mb-4"><AgendaLinks locale={locale} months={catalogMonths(events)} current="all"/></div><div className="flex gap-2 overflow-x-auto pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-            {rangeButtons.map((item) => (
-              <button key={item.key} onClick={() => setRange(item.key)} className={`shrink-0 px-4 py-2 text-[11px] font-black uppercase tracking-[.13em] transition ${range === item.key ? "text-white" : "border border-black/15 text-black hover:border-black"}`} style={range === item.key ? { backgroundColor: accent } : undefined}>
-                {fr ? item.fr : item.en}
-              </button>
-            ))}
-          </div>
-        </div>
-      </section>
-
       <section className="mx-auto max-w-7xl px-6 py-10 md:px-10 md:py-14">
         <div className="grid gap-8 border-b border-black/15 pb-10 lg:grid-cols-[1fr_auto] lg:items-end">
           <div>
             <p className="text-[10px] font-black uppercase tracking-[.22em] text-black/35">{fr ? "AFFINER" : "REFINE"}</p>
             <div className="mt-4 flex flex-wrap gap-2">
-              <button onClick={() => setCategory("all")} className={`px-3 py-2 text-[10px] font-black uppercase tracking-[.14em] ${category === "all" ? "bg-black text-white" : "border border-black/15"}`}>{fr ? "Tout" : "All"}</button>
-              {(Object.keys(categoryLabels) as EventCategory[]).map((key) => <button key={key} onClick={() => setCategory(key)} className={`px-3 py-2 text-[10px] font-black uppercase tracking-[.14em] ${category === key ? "bg-black text-white" : "border border-black/15"}`}>{fr ? categoryLabels[key].fr : categoryLabels[key].en}</button>)}
+              <button aria-pressed={category === "all"} onClick={() => setCategory("all")} className={`px-3 py-2 text-[10px] font-black uppercase tracking-[.14em] ${category === "all" ? "bg-black text-white" : "border border-black/15"}`}>{fr ? "Tout" : "All"}</button>
+              {(Object.keys(categoryLabels) as EventCategory[]).map((key) => <button key={key} aria-pressed={category === key} onClick={() => setCategory(key)} className={`px-3 py-2 text-[10px] font-black uppercase tracking-[.14em] ${category === key ? "bg-black text-white" : "border border-black/15"}`}>{fr ? categoryLabels[key].fr : categoryLabels[key].en}</button>)}
             </div>
           </div>
           <div>
-            <label className="block text-[10px] font-black uppercase tracking-[.18em] text-black/35">{fr ? "OÙ ?" : "WHERE?"}</label>
-            <select value={location} onChange={(e) => setLocation(e.target.value)} className="mt-3 min-w-52 border-0 border-b-2 border-black bg-white px-0 py-2 text-sm font-bold outline-none">
+            <label htmlFor="agenda-location" className="block text-[10px] font-black uppercase tracking-[.18em] text-black/35">{fr ? "OÙ ?" : "WHERE?"}</label>
+            <select id="agenda-location" value={location} onChange={(e) => setLocation(e.target.value)} className="mt-3 min-w-52 border-0 border-b-2 border-black bg-white px-0 py-2 text-sm font-bold outline-none">
               <option value="all">{fr ? "Tout le Golfe" : "Across the Golfe"}</option>
               {locations.map((loc) => <option key={loc} value={loc}>{loc}</option>)}
             </select>
@@ -145,10 +155,10 @@ export default function AgendaClient({ locale, events, initialDay }: Props) {
 
         <div className="mt-12 flex items-end justify-between gap-5">
           <div>
-            <p className="text-[10px] font-black uppercase tracking-[.22em]" style={{ color: accent }}>{monthText}</p>
-            <h2 className="mt-2 text-4xl font-black tracking-[-.035em] md:text-5xl">{filtered.length} {fr ? "rendez-vous" : "events"}</h2>
+            <p className="text-[10px] font-black uppercase tracking-[.22em]" style={{ color: accent }}>{periodText}</p>
+            <h2 aria-live="polite" aria-atomic="true" className="mt-2 text-4xl font-black tracking-[-.035em] md:text-5xl">{filtered.length} {fr ? "rendez-vous" : "events"}</h2>
           </div>
-          {(category !== "all" || location !== "all" || range !== "month") && <button onClick={() => { setRange("month"); setCategory("all"); setLocation("all"); }} className="text-[10px] font-black uppercase tracking-[.15em] underline underline-offset-4">{fr ? "Tout afficher" : "Show all"}</button>}
+          {(category !== "all" || location !== "all" || month || range !== "month") && <button onClick={() => { setMonth(""); setRange("month"); setCategory("all"); setLocation("all"); }} className="text-[10px] font-black uppercase tracking-[.15em] underline underline-offset-4">{fr ? "Réinitialiser ce mois" : "Reset to this month"}</button>}
         </div>
 
         {filtered.length === 0 ? (
@@ -158,12 +168,12 @@ export default function AgendaClient({ locale, events, initialDay }: Props) {
           </div>
         ) : (
           <div className="mt-8 border-t border-black">
-            {filtered.map((e, index) => (
+            {filtered.map((e) => (
               <article key={e.id} className="group grid border-b border-black/15 py-7 transition hover:bg-black/[.025] md:grid-cols-[110px_220px_1fr_auto] md:gap-7 md:py-9">
                 <div className="flex items-baseline gap-3 md:block">
                   <span className="text-5xl font-black leading-none tracking-[-.05em] md:text-6xl">{dayNumber(displayEvent(e))}</span>
                   <span className="text-[10px] font-black uppercase tracking-[.18em] text-black/40 md:mt-2 md:block">{monthLabel(displayEvent(e), locale)}</span>
-                  {e.time && <span className="text-xs font-bold text-black/45 md:mt-3 md:block">{e.time}</span>}
+                  {displayEvent(e).time && <span className="text-xs font-bold text-black/45 md:mt-3 md:block">{displayEvent(e).time}</span>}
                 </div>
                 <div className="mt-5 md:mt-0">
                   <div className="lg-image aspect-[4/3]"><img src={mediaForEvent(e).src} alt={mediaForEvent(e).alt}/></div>
@@ -176,7 +186,7 @@ export default function AgendaClient({ locale, events, initialDay }: Props) {
                     <span className="text-black/45">{e.location}</span>
                     {e.featured && <span className="bg-black px-2 py-1 text-[8px] text-white">{fr?"LA SÉLECTION LE GOLFE":"LE GOLFE PICK"}</span>}
                   </div>
-                  <h3 className="mt-3 max-w-3xl text-2xl font-black leading-[1.02] tracking-[-.025em] transition group-hover:text-[#0B4F6C] md:text-4xl"><Link href={`/${locale}/event/${e.id}`}>{fr ? (e.titleFr || e.title) : e.title}</Link></h3><p className="mt-3 text-xs font-bold">{sessionsInWindow(e,dateWindow(range,todayIso)).map(session=>`${formatCalendarDay(session.start,locale,true)}${session.end&&session.end!==session.start?` — ${formatCalendarDay(session.end,locale,true)}`:""}${session.time?` · ${session.time}`:""}`).join(" · ")}</p>
+                  <h3 className="mt-3 max-w-3xl text-2xl font-black leading-[1.02] tracking-[-.025em] transition group-hover:text-[#0B4F6C] md:text-4xl"><Link href={`/${locale}/event/${e.id}`}>{fr ? (e.titleFr || e.title) : e.title}</Link></h3><p className="mt-3 text-xs font-bold">{sessionsInWindow(e,selectedWindow).map(session=>`${formatCalendarDay(session.start,locale,true)}${session.end&&session.end!==session.start?` — ${formatCalendarDay(session.end,locale,true)}`:""}${session.time?` · ${session.time}`:""}`).join(" · ")}</p>
                   <p className="mt-3 max-w-2xl text-sm leading-6 text-black/55">{fr ? e.summaryFr : e.summary}</p>
                   <p className="mt-4 max-w-2xl border-l-2 pl-4 text-sm font-semibold leading-6" style={{ borderColor: accent }}>{fr ? e.whyFr : e.why}</p>
                 </div>

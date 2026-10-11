@@ -10,7 +10,8 @@
       "content/guide-covers": false,
       "seo/pre-search-console": false,
       "content/french-translations": false,
-      "design/explore-filters": false
+      "design/explore-filters": false,
+      "feature/profile-agenda": false
     }
   }
 }

@@ -9,6 +9,7 @@ import SiteFooter from "../../../components/SiteFooter";
 import { supabase } from "../../../lib/supabase";
 import AccountAuthForm from "../../../components/AccountAuthForm";
 import AccountPasswordForm from "../../../components/AccountPasswordForm";
+import ProfileDetails from "../../../components/ProfileDetails";
 import AccountTypeFields from "../../../components/AccountTypeFields";
 import { accountType, accountTypeLabel, type AccountType } from "../../../lib/accountTypes";
 
@@ -60,13 +61,18 @@ export default function AccountPage() {
 
   useEffect(() => {
     let active=true;
-    if(window.location.pathname.endsWith("/account/password")) {setRecovery(true);setShowPassword(true);}
-    setNext(safeReturnPath(new URLSearchParams(window.location.search).get("next")));
-    hydrate();
+    queueMicrotask(() => {
+      if (!active) return;
+      if(window.location.pathname.endsWith("/account/password")) {setRecovery(true);setShowPassword(true);}
+      setNext(safeReturnPath(new URLSearchParams(window.location.search).get("next")));
+      void hydrate();
+    });
     const { data: listener } = supabase.auth.onAuthStateChange((event, session) => {
       if(event === "PASSWORD_RECOVERY") {setRecovery(true);setShowPassword(true);}
       if(event === "SIGNED_OUT") {setRecovery(false);setShowPassword(false);}
-      activeUser.current = session?.user.id ?? null;
+      const nextUser = session?.user.id ?? null;
+      if (nextUser === activeUser.current && event !== "SIGNED_OUT") return;
+      activeUser.current = nextUser;
       generation.current++;setUserId(null);setUserEmail("");setDisplayName("");setModerator(false);setReady(false);
       queueMicrotask(() => {if(active)void hydrate();});
     });
@@ -149,6 +155,8 @@ export default function AccountPage() {
             </button>
           </div>
 
+          <div>
+            <ProfileDetails key={userId} userId={userId} fr={fr} />
           <form onSubmit={saveProfile}>
             <p className="lg-kicker">{fr ? "NOM PUBLIC" : "PUBLIC NAME"}</p>
             <p className="mt-4 max-w-xl text-sm font-semibold leading-6 text-black/50">
@@ -175,6 +183,7 @@ export default function AccountPage() {
             </div>
             {message && <p role="status" aria-live="polite" className="mt-4 text-sm font-bold text-black/55">{message}</p>}
           </form>
+          </div>
         </div>
       </section>
       <SiteFooter locale={locale} />
