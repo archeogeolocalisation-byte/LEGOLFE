@@ -8,12 +8,13 @@ import { villas } from "../../data/villas";
 import { getPublicEvents } from "../../lib/publicEvents";
 import { siteOrigin } from "../../lib/seo";
 import { mediaForPlace } from "../../lib/placeMedia";
+import { guidePaths } from "../../data/guides";
 export const dynamic = "force-dynamic";
 const xml = (s:string) => s.replace(/[<>&"']/g, c => ({"<":"&lt;",">":"&gt;","&":"&amp;",'"':"&quot;","'":"&apos;"}[c]!));
 export async function GET() {
  const origin=siteOrigin();if(!origin)return new Response("Configure NEXT_PUBLIC_SITE_URL before enabling indexing.",{status:503,headers:{"Retry-After":"3600"}});
  const catalog=await getPublicEvents();
- const paths=["","/explore","/whats-on","/local",...destinationPaths(),...stayPaths(),...agendaPaths(catalog,parisIsoDay()),...placeCategories.map(x=>`/explore/${x.id}`),...places.map(x=>`/place/${x.id}`),...catalog.map(x=>`/event/${x.id}`)];
+ const paths=["","/explore","/whats-on","/local",...guidePaths(),...destinationPaths(),...stayPaths(),...agendaPaths(catalog,parisIsoDay()),...placeCategories.map(x=>`/explore/${x.id}`),...places.map(x=>`/place/${x.id}`),...catalog.map(x=>`/event/${x.id}`)];
  const rows=paths.flatMap(path=>["fr","en"].map(locale=>{
  const media=path.startsWith("/place/") ? mediaForPlace(path.split("/").pop()!) : undefined;
  const image=media && !media.contextual ? `<image:image><image:loc>${xml(new URL(media.src,origin).href)}</image:loc></image:image>` : "";

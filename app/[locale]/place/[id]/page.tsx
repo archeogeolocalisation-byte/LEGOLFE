@@ -1,3 +1,5 @@
+import GuideLinks from "../../../../components/GuideLinks";
+import { guidesForPlace } from "../../../../data/guides";
 import DiscoveryFeaturePlace from '../../../../components/DiscoveryFeaturePlace';
 import {discoveryFeatures} from '../../../../data/discoveryFeatures';
 import VillageSignature from "../../../../components/VillageSignature";
@@ -167,5 +169,5 @@ export default async function Page({params}:{params:Promise<{locale:string;id:st
  const schemaType=p.category === "eat" ? "Restaurant" : id === "monroes-pub" ? "BarOrPub" : ["caves-du-roy", "gaio-club"].includes(id) ? "NightClub" : "Place";
  return <><Breadcrumbs locale={locale} items={[{name:"LE GOLFE",path:`/${locale}`},{name,path:`/${locale}/explore/${p.category}`},{name:p.name,path:`/${locale}/place/${id}`}]} />
  {siteOrigin() && <JsonLd data={{"@context":"https://schema.org","@type":schemaType,name:p.name,url:absoluteUrl(`/${locale}/place/${id}`),description:locale === "fr" ? placeDescriptionFr[id] || p.description : p.description,image:media && !media.contextual ? media.src : undefined,address:{"@type":"PostalAddress",addressLocality:p.location,addressCountry:"FR"},geo:typeof p.latitude === "number" && typeof p.longitude === "number" ? {"@type":"GeoCoordinates",latitude:p.latitude,longitude:p.longitude}:undefined,telephone:p.phone,sameAs:p.website ? [p.website] : undefined}} />}
- <PlaceContent params={params}/><PlacePreparation place={p} locale={locale}/>{town && <div className="lg-shell py-6"><Link className="lg-btn" href={`/${locale}/destinations/${town.slug}`}>{locale==="fr"?"Adresses et séjour à":"Places and stays in"} {town.name} →</Link></div>}<section className="lg-shell py-12"><h2 className="text-2xl font-black">{locale === "fr" ? "À découvrir aussi" : "Explore nearby and similar places"}</h2><div className="mt-6 grid gap-6 md:grid-cols-3">{related.map(x=><PlaceCard key={x.id} place={x} locale={locale}/>)}</div></section></>;
+ <PlaceContent params={params}/><GuideLinks items={guidesForPlace(id)} locale={locale}/><PlacePreparation place={p} locale={locale}/>{town && <div className="lg-shell py-6"><Link className="lg-btn" href={`/${locale}/destinations/${town.slug}`}>{locale==="fr"?"Adresses et séjour à":"Places and stays in"} {town.name} →</Link></div>}<section className="lg-shell py-12"><h2 className="text-2xl font-black">{locale === "fr" ? "À découvrir aussi" : "Explore nearby and similar places"}</h2><div className="mt-6 grid gap-6 md:grid-cols-3">{related.map(x=><PlaceCard key={x.id} place={x} locale={locale}/>)}</div></section></>;
 }

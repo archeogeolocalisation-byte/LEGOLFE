@@ -12,7 +12,7 @@ export default function SiteFooter({locale="en"}:{locale?:Locale}){
           <p className="mt-6 max-w-xl text-sm font-bold leading-6 text-black/50">{fr?"Le guide local du Golfe de Saint-Tropez — villages, plages, tables, séjours et ce qui se passe maintenant.":"The local guide to the Golfe de Saint-Tropez — villages, beaches, tables, stays and what is happening now."}</p>
         </div>
         <div className="grid grid-cols-2 gap-6 text-[10px] font-black uppercase tracking-[.14em] md:justify-self-end">
-          <div className="space-y-3"><Link className="block" href={`${base}/destinations`}>{fr?"Communes":"Destinations"}</Link><Link className="block" href={`${base}/explore`}>{fr?"Explorer":"Explore"}</Link><Link className="block" href={`${base}/whats-on`}>What&apos;s on</Link><Link className="block" href={`${base}/local`}>Local</Link></div>
+          <div className="space-y-3"><Link className="block" href={`${base}/destinations`}>{fr?"Communes":"Destinations"}</Link><Link className="block" href={`${base}/guides`}>Guides</Link><Link className="block" href={`${base}/explore`}>{fr?"Explorer":"Explore"}</Link><Link className="block" href={`${base}/whats-on`}>What&apos;s on</Link><Link className="block" href={`${base}/local`}>Local</Link></div>
           <div className="space-y-3"><Link className="block" href={`${base}/stay`}>Stay</Link><Link className="block" href={`${base}/ask`}>Ask Le Golfe</Link><Link className="block" href={`${base}/account`}>{fr?"Compte":"Account"}</Link></div>
         </div>
       </div>

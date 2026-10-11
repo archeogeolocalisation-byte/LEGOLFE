@@ -3,7 +3,8 @@
   "git": {
     "deploymentEnabled": {
       "security/phase-1-hardening": false,
-      "feature/password-accounts": false
+      "feature/password-accounts": false,
+      "content/local-guides": false
     }
   }
 }

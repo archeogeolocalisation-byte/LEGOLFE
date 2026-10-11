@@ -9,6 +9,8 @@ import SiteFooter from "../../components/SiteFooter";
 import {localNews} from "../../data/localNews";
 import {isLocale} from "../../lib/i18n";
 import {mediaForPlace} from "../../lib/placeMedia";
+import {guides} from "../../data/guides";
+import GuideCards from "../../components/GuideCards";
 
 export default async function Home({params}:{params:Promise<{locale:string}>}){
  const {locale:l}=await params;if(!isLocale(l))notFound();const fr=l==="fr";
@@ -67,6 +69,10 @@ export default async function Home({params}:{params:Promise<{locale:string}>}){
    <div><p className="lg-kicker">WHAT'S ON / NOW</p><h2 className="lg-title mt-4 text-[13vw] uppercase md:text-[68px]">{fr?"CE QUI SE PASSE.":"WHAT'S HAPPENING."}</h2>{now.map(e=><Link key={e.id} href={`/${l}/event/${e.id}`} className="group block border-t border-black py-5 first:mt-8"><p className="lg-kicker text-black/45">{formatCalendarDay(firstSessionInWindow(e,window)!.start,l,true)} · {e.location}</p><div className="mt-2 flex justify-between gap-4"><p className="text-xl font-black uppercase tracking-[-.03em] md:text-2xl">{fr?(e.titleFr||e.title):e.title}</p><span>↗</span></div></Link>)}</div>
    <div><p className="lg-kicker">LOCAL / NEED TO KNOW</p><h2 className="lg-title mt-4 text-[13vw] uppercase md:text-[68px]">{fr?"À SAVOIR MAINTENANT.":"KNOW IT NOW."}</h2>{news.map(n=><Link key={n.id} href={`/${l}/local`} className="group block border-t border-black py-5 first:mt-8"><p className="lg-kicker text-black/45">{n.location} · {n.date}</p><div className="mt-2 flex justify-between gap-4"><p className="text-xl font-black uppercase tracking-[-.03em] md:text-2xl">{fr?n.titleFr:n.title}</p><span>↗</span></div></Link>)}</div>
   </div></section>
+  <section className="lg-shell py-16 md:py-24">
+    <div className="mb-10 flex flex-wrap items-end justify-between gap-6 border-b border-black pb-6"><div><p className="lg-kicker text-[var(--lg-blue)]">LE GOLFE / GUIDES</p><h2 className="lg-title mt-4 text-[12vw] uppercase md:text-[72px]">{fr?"PRÉPAREZ LE TERRAIN.":"MAKE YOUR PLAN."}</h2></div><Link href={`/${l}/guides`} className="lg-btn">{fr?"Tous les guides":"All guides"} ↗</Link></div>
+    <GuideCards items={guides.slice(0,2)} locale={l}/>
+  </section>
   <SiteFooter locale={l}/>
  </main>
 }
