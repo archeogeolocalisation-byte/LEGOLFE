@@ -109,5 +109,10 @@ await db.exec('reset role');
 ok((await db.query("select public from storage.buckets where id='community-photos'")).rows[0].public === false, 'Community bucket private');
 // Verify the read-only follow-up runs against actual PostgreSQL catalogs.
 await db.query(await readFile(new URL('../supabase/security-audit-followup.sql', import.meta.url), 'utf8'));
+const checks = (await db.query(await readFile(new URL('../supabase/security-verify-phase1.sql', import.meta.url), 'utf8'))).rows[0].verification;
+for (const [key, value] of Object.entries(checks)) {
+  assert.equal(value, key === 'inquiry_guard_tables' ? 2 : key === 'existing_listings_needing_correction' ? 0 : true, key);
+  assertions++;
+}
 console.log(`Database security: ${assertions} assertions passed; existing V56 reservation suite passed; migration applied twice.`);
 await db.close();
