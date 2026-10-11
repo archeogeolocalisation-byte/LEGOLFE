@@ -22,13 +22,13 @@ export default async function LocalPage({params}:{params:Promise<{locale:string}
  return <main className="min-h-screen bg-[#f7f6f2] text-black"><SiteHeader locale={l} path="/local"/>
   <section className="lg-shell pb-10 pt-10 md:pb-14 md:pt-16">
    <div className="grid gap-8 border-b-4 border-black pb-8 lg:grid-cols-[1fr_auto] lg:items-end">
-    <div><p className="lg-kicker text-[var(--lg-blue)]">LE GOLFE / LOCAL EDITION</p><h1 className="mt-5 max-w-5xl text-[18vw] font-black uppercase leading-[.76] tracking-[-.075em] md:text-[128px]">{fr?<>LE GOLFE.<br/><span className="lg-accent">AUJOURD'HUI.</span></>:<>THE GOLFE.<br/><span className="lg-accent">TODAY.</span></>}</h1></div>
+    <div><p className="lg-kicker text-[var(--lg-blue)]">LE GOLFE / LOCAL EDITION</p><h1 className="mt-5 max-w-5xl text-[18vw] font-black uppercase leading-[.76] tracking-[-.075em] md:text-[128px]">{fr?<>LE GOLFE.<br/><span className="lg-accent">AUJOURD’HUI.</span></>:<>THE GOLFE.<br/><span className="lg-accent">TODAY.</span></>}</h1></div>
     <div className="max-w-sm border-t border-black pt-4 lg:border-t-0 lg:pb-2"><p className="text-[10px] font-black uppercase tracking-[.18em] text-black/45">02.10.2026 · {fr ? "ÉDITION LOCALE" : "LOCAL EDITION"}</p><p className="mt-3 text-sm font-bold leading-6 text-black/60">{fr?"Ce qui change vraiment votre séjour : accès, mobilité, nouveaux lieux, littoral et vie locale. Pas tout. Juste l'utile.":"What can genuinely change your stay: access, mobility, new openings, the coast and local life. Not everything. Only what matters."}</p></div>
    </div>
   </section>
 
   <section className="lg-shell pb-16 md:pb-24">
-   <article className="grid gap-0 border-b-4 border-black lg:grid-cols-[1.35fr_.65fr]">
+   <article id={lead.id} className="scroll-mt-28 grid gap-0 border-b-4 border-black lg:grid-cols-[1.35fr_.65fr]">
     <div className="lg-image min-h-[420px] md:min-h-[620px]"><img src={mediaForLocal(lead.id).src} alt={mediaForLocal(lead.id).alt}/></div>
     <div className="flex flex-col justify-between border-t-4 border-black bg-white p-6 md:p-10 lg:border-l-4 lg:border-t-0">
       <div><p className="lg-kicker text-[var(--lg-blue)]">{fr?labels[lead.kind].fr:labels[lead.kind].en} · {lead.location}</p><h2 className="mt-5 text-5xl font-black uppercase leading-[.87] tracking-[-.06em] md:text-7xl">{title(lead,fr)}</h2><p className="mt-6 text-base font-semibold leading-7 text-black/60">{summary(lead,fr)}</p></div>
@@ -40,7 +40,7 @@ export default async function LocalPage({params}:{params:Promise<{locale:string}
 
   <section className="lg-shell pb-20 md:pb-28">
    <div className="grid gap-x-8 gap-y-14 md:grid-cols-2 lg:grid-cols-3">
-    {rest.map((n,i)=>{const m=mediaForLocal(n.id);return <article key={n.id} className={`${i===0?"md:col-span-2 lg:col-span-2":""} border-t-4 border-black pt-4`}>
+    {rest.map((n,i)=>{const m=mediaForLocal(n.id);return <article key={n.id} id={n.id} className={`scroll-mt-28 ${i===0?"md:col-span-2 lg:col-span-2":""} border-t-4 border-black pt-4`}>
       <div className={`lg-image ${i===0?"aspect-[16/8]":"aspect-[4/3]"}`}><img src={m.src} alt={m.alt}/></div>
       <div className="mt-4 flex items-center justify-between gap-4"><p className="lg-kicker text-[var(--lg-blue)]">{fr?labels[n.kind].fr:labels[n.kind].en}</p><p className="text-[9px] font-black uppercase tracking-[.12em] text-black/35">{d(n.date,fr)}</p></div>
       <h2 className={`mt-4 font-black uppercase leading-[.9] tracking-[-.055em] ${i===0?"text-5xl md:text-7xl":"text-3xl md:text-4xl"}`}>{title(n,fr)}</h2>
@@ -51,7 +51,7 @@ export default async function LocalPage({params}:{params:Promise<{locale:string}
    </div>
   </section>
 
-  <section className="bg-black text-white"><div className="lg-shell py-16 md:py-24"><div className="grid gap-8 md:grid-cols-[1fr_auto] md:items-end"><div><p className="lg-kicker text-[#7fc4df]">LOCAL INTELLIGENCE</p><h2 className="lg-title mt-4 max-w-5xl text-5xl md:text-8xl">{fr?<>L'INFO N'EST UTILE QUE SI ELLE <span className="text-[#7fc4df]">CHANGE VOTRE PLAN.</span></>:<>NEWS MATTERS WHEN IT <span className="text-[#7fc4df]">CHANGES YOUR PLAN.</span></>}</h2></div><Link href={`/${l}/ask`} className="lg-btn border-white bg-white text-black">Ask Le Golfe →</Link></div></div></section>
+  <section className="bg-black text-white"><div className="lg-shell py-16 md:py-24"><div className="grid gap-8 md:grid-cols-[1fr_auto] md:items-end"><div><p className="lg-kicker text-[#7fc4df]">LOCAL INTELLIGENCE</p><h2 className="lg-title mt-4 max-w-5xl text-5xl md:text-8xl">{fr?<>L’INFO N’EST UTILE QUE SI ELLE <span className="text-[#7fc4df]">CHANGE VOTRE PLAN.</span></>:<>NEWS MATTERS WHEN IT <span className="text-[#7fc4df]">CHANGES YOUR PLAN.</span></>}</h2></div><Link href={`/${l}/ask`} className="lg-btn border-white bg-white text-black">Ask Le Golfe →</Link></div></div></section>
   <SiteFooter locale={l}/>
  </main>
 }

@@ -1,6 +1,7 @@
+import HomeUpdates from "../../components/HomeUpdates";
 import { getPublicEvents } from "../../lib/publicEvents";
 import { parisIsoDay } from "../../lib/localCalendar";
-import { eventsInWindow, dateWindow, firstSessionInWindow, formatCalendarDay } from "../../lib/agendaCalendar";
+import { eventsInWindow, dateWindow } from "../../lib/agendaCalendar";
 import { pageMetadata } from "../../lib/seo";
 import Link from "next/link";
 import {notFound} from "next/navigation";
@@ -21,7 +22,7 @@ export default async function Home({params}:{params:Promise<{locale:string}>}){
  ];
  const window=dateWindow("7days",parisIsoDay());
  const upcoming=eventsInWindow(await getPublicEvents(),window);
- const now=[...upcoming.filter(e=>e.featured),...upcoming.filter(e=>!e.featured)].slice(0,3),news=localNews.filter(n=>n.featured).slice(0,3);
+ const now=[...upcoming.filter(e=>e.featured),...upcoming.filter(e=>!e.featured)].slice(0,3),news=localNews.filter(n=>n.featured).sort((a,b)=>b.date.localeCompare(a.date)).slice(0,3);
  const intents=[
   {label:fr?"AU CALME":"QUIET",sub:fr?"Villages, collines, rythme lent":"Villages, hills, slower rhythm",mood:"quiet"},
   {label:fr?"PLAGE":"BEACH DAY",sub:fr?"Choisir la bonne plage, pas juste la plus connue":"The right beach, not just the famous one",mood:"beach"},
@@ -65,10 +66,7 @@ export default async function Home({params}:{params:Promise<{locale:string}>}){
    <p className="lg-credit"><a href="https://commons.wikimedia.org/wiki/File:Sainte-Maxime_port_tour_carr%C3%A9_%C3%A9glise.jpg" target="_blank" rel="noreferrer">Sainte-Maxime : Jibi44 / Wikimedia Commons</a> · <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noreferrer">CC BY-SA 4.0</a> · {fr?"Recadrage d’affichage":"Display crop"}</p>
   </section>
 
-  <section className="bg-neutral-100"><div className="lg-shell grid gap-16 py-20 md:grid-cols-2 md:py-28">
-   <div><p className="lg-kicker">WHAT'S ON / NOW</p><h2 className="lg-title mt-4 text-[13vw] uppercase md:text-[68px]">{fr?"CE QUI SE PASSE.":"WHAT'S HAPPENING."}</h2>{now.map(e=><Link key={e.id} href={`/${l}/event/${e.id}`} className="group block border-t border-black py-5 first:mt-8"><p className="lg-kicker text-black/45">{formatCalendarDay(firstSessionInWindow(e,window)!.start,l,true)} · {e.location}</p><div className="mt-2 flex justify-between gap-4"><p className="text-xl font-black uppercase tracking-[-.03em] md:text-2xl">{fr?(e.titleFr||e.title):e.title}</p><span>↗</span></div></Link>)}</div>
-   <div><p className="lg-kicker">LOCAL / NEED TO KNOW</p><h2 className="lg-title mt-4 text-[13vw] uppercase md:text-[68px]">{fr?"À SAVOIR MAINTENANT.":"KNOW IT NOW."}</h2>{news.map(n=><Link key={n.id} href={`/${l}/local`} className="group block border-t border-black py-5 first:mt-8"><p className="lg-kicker text-black/45">{n.location} · {n.date}</p><div className="mt-2 flex justify-between gap-4"><p className="text-xl font-black uppercase tracking-[-.03em] md:text-2xl">{fr?n.titleFr:n.title}</p><span>↗</span></div></Link>)}</div>
-  </div></section>
+  <HomeUpdates locale={l} events={now} news={news} window={window}/>
   <section className="lg-shell py-16 md:py-24">
     <div className="mb-10 flex flex-wrap items-end justify-between gap-6 border-b border-black pb-6"><div><p className="lg-kicker text-[var(--lg-blue)]">LE GOLFE / GUIDES</p><h2 className="lg-title mt-4 text-[12vw] uppercase md:text-[72px]">{fr?"PRÉPAREZ LE TERRAIN.":"MAKE YOUR PLAN."}</h2></div><Link href={`/${l}/guides`} className="lg-btn">{fr?"Tous les guides":"All guides"} ↗</Link></div>
     <GuideCards items={guides.slice(0,2)} locale={l}/>
