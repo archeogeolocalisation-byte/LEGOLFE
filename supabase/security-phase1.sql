@@ -176,7 +176,8 @@ revoke execute on function legolfe_private.listing_guard() from public,anon,auth
 drop trigger if exists security_listing_guard on public.villa_listings;
 create trigger security_listing_guard before insert or update on public.villa_listings for each row execute function legolfe_private.listing_guard();
 
--- Legacy enquiry schema was absent from Git. No public SELECT/UPDATE/DELETE.
+-- Live audit confirmed this legacy schema and an existing moderator-only reader.
+-- No anonymous SELECT and no browser UPDATE/DELETE/TRUNCATE.
 create table if not exists public.requests (
   id uuid primary key default gen_random_uuid(),villa_id text not null,villa_name text not null,
   name text not null,email text not null,phone text not null default '',
@@ -190,14 +191,17 @@ do $$ declare cols text;begin
   execute format('revoke all (%s) on table public.requests from public,anon,authenticated',cols);
 end $$;
 grant insert(villa_id,villa_name,name,email,phone,arrival,departure,guests,message) on public.requests to anon,authenticated;
+grant select on public.requests to authenticated;
 -- Replace only the known schema's policies: unknown requests policies are removed
--- because all reads of guest contact information must be administrative only.
+-- because reads of guest contact information must remain moderator-only.
 do $$ declare p record;begin
   for p in select policyname from pg_policies where schemaname='public' and tablename='requests' loop
     execute format('drop policy %I on public.requests',p.policyname);
   end loop;
 end $$;
 create policy "legacy enquiry insert" on public.requests for insert to anon,authenticated with check(true);
+create policy "legacy moderator enquiry read" on public.requests for select to authenticated using(public.is_community_moderator());
+create policy "security legacy enquiry visibility" on public.requests as restrictive for select to authenticated using(public.is_community_moderator());
 
 create or replace function legolfe_private.inquiry_guard()
 returns trigger language plpgsql security definer set search_path='' as $$

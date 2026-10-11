@@ -26,6 +26,15 @@ await db.exec(`insert into auth.users(id) values('${owner}'),('${stranger}');`);
 // Existing reservation suite before applying stricter payload constraints.
 await db.exec(await readFile(new URL('../supabase/tests/villas-v56.sql', import.meta.url), 'utf8'));
 const migration = await readFile(new URL('../supabase/security-phase1.sql', import.meta.url), 'utf8');
+// Live database has a legacy moderator reader and INSERT column grants.
+await db.exec(`create table public.requests (
+  id uuid primary key default gen_random_uuid(),villa_id text not null,villa_name text not null,
+  name text not null,email text not null,phone text not null default '',arrival date not null,
+  departure date not null,guests integer not null,message text not null,created_at timestamptz not null default now()
+);alter table public.requests enable row level security;
+grant select on public.requests to authenticated;
+grant insert(villa_id,villa_name,name,email,phone,arrival,departure,guests,message) on public.requests to anon,authenticated;
+create policy "golfe moderators read demonstration requests" on public.requests for select to authenticated using(public.is_community_moderator());`);
 await db.exec(migration);
 await db.exec(migration); // re-application must be safe
 await db.exec(await readFile(new URL('../supabase/security-community-private.sql', import.meta.url), 'utf8'));
@@ -65,6 +74,13 @@ await denied("insert into requests(villa_id,villa_name,name,email,phone,arrival,
 await db.query("insert into requests(villa_id,villa_name,name,email,phone,arrival,departure,guests,message) values('villa-eden','Villa Eden','Test','good@example.invalid','','2090-06-01','2090-06-08',2,'Test')");ok(true, 'Legacy enquiry accepted');
 await role('authenticated', stranger);
 ok((await db.query('select * from villa_inquiries')).rows.length === 0, 'Stranger cannot read guest contacts');
+ok((await db.query('select * from requests')).rows.length === 0, 'Non-moderator cannot read legacy guest contacts');
+await denied('update requests set message=\'Changed\'', [], /permission denied/);
+await denied('truncate requests', [], /permission denied/);
+await db.exec('reset role');
+await db.exec('create policy unsafe_legacy_reader on requests for select to authenticated using(true)');
+await role('authenticated', stranger);
+ok((await db.query('select * from requests')).rows.length === 0, 'Restrictive policy prevents an extra permissive reader exposing legacy contacts');
 await denied('insert into community_moderators(user_id) values($1)', [stranger], /permission denied/);
 ok((await db.query("select consume_api_quota('editorial-refresh') as allowed")).rows[0].allowed === false, 'Moderator quota denied');
 ok((await db.query("select consume_api_quota('listing-ai') as allowed")).rows[0].allowed === true, 'AI first request allowed');
@@ -85,10 +101,13 @@ ok((await db.query("update community_posts set status='approved' where image_pat
 await db.exec('reset role');
 await db.query('insert into community_moderators(user_id) values($1)', [owner]);
 await role('authenticated', owner);
+ok((await db.query('select * from requests')).rows.length === 1, 'Existing moderator retains access to legacy enquiries');
 await db.query("update community_posts set status='approved',moderated_at=now(),moderated_by=$1 where image_path=$2", [owner, photo]);
 await role('anon');
 ok((await db.query('select * from storage.objects')).rows.length === 1, 'Approved photo readable anonymously');
 await db.exec('reset role');
 ok((await db.query("select public from storage.buckets where id='community-photos'")).rows[0].public === false, 'Community bucket private');
+// Verify the read-only follow-up runs against actual PostgreSQL catalogs.
+await db.query(await readFile(new URL('../supabase/security-audit-followup.sql', import.meta.url), 'utf8'));
 console.log(`Database security: ${assertions} assertions passed; existing V56 reservation suite passed; migration applied twice.`);
 await db.close();

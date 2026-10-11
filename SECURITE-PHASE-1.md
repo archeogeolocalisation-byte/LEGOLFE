@@ -11,7 +11,7 @@ Audit du 11 octobre 2026. Base GitHub : `6c9ba7fa1b4cef5a8b5db2d92239f0dd65eac2f
 | Next.js | Version 16.3.3 concernée par plusieurs avis de sécurité | Passage à 16.3.8, avec eslint-config-next aligné et lockfile actualisé |
 | Annonces | RLS propriétaire déjà présente ; champs JSON absents pouvaient laisser certaines contraintes SQL produire NULL | Validation stricte de la structure JSON, des types, tailles, photos et coordonnées ; contrôle de l'identité et du propriétaire |
 | Anciennes politiques | Une politique permissive supplémentaire peut élargir l'accès malgré une politique correcte | Politiques restrictives supplémentaires sur les accès sensibles ; inventaire des politiques à vérifier en production |
-| Coordonnées voyageurs | Les demandes récentes ont une RLS propriétaire ; le schéma de `requests` manque dans Git | Schéma de référence, fermeture des lectures et modifications de `requests` aux rôles publics, validation des insertions ; schéma réel à comparer avant application |
+| Coordonnées voyageurs | Le schéma réel de `requests` est confirmé ; ses demandes sont lisibles par les modérateurs | Conservation de la lecture modérateur, refus des autres lecteurs et des modifications publiques, validation des insertions et quota |
 | Spam | Insertions directes possibles sans quota depuis l'API Supabase | Validation et quotas en base couvrant aussi les appels directs ; nouvelle route serveur de demandes avec limite de corps et champ piège |
 | IA | Limite en mémoire propre à chaque instance Vercel | Quotas atomiques persistants en base, par utilisateur et globaux ; erreur 503 si le système de quotas est indisponible |
 | Photos communautaires | Bucket public même pour des contributions en attente | Lecture par liens temporaires, règles limitées aux publications approuvées/propriétaire/modérateur, activation d'un bucket privé après déploiement |
@@ -24,9 +24,19 @@ Audit du 11 octobre 2026. Base GitHub : `6c9ba7fa1b4cef5a8b5db2d92239f0dd65eac2f
 
 Les annonces de conciergeries utilisent la même propriété de compte que les annonces propriétaires. Le choix « conciergerie » dans l'interface est une préférence, pas une permission supplémentaire. Le dépôt ne contient pas de délégation sécurisée de plusieurs comptes sur une même villa : aucun droit de ce type n'a été inventé.
 
+## Inventaire Supabase transmis le 11 octobre 2026
+
+Les exports de métadonnées confirment 17 tables publiques avec RLS activée. Les colonnes des tables villas, communauté, éditorial et `requests` correspondent aux migrations préparées. Les droits d'insertion des demandes et des calendriers sont principalement accordés par colonne : ils ne doivent pas être déduits des seuls grants de table.
+
+Le bucket `community-photos` est public, avec une limite de 8 Mio et JPEG/PNG/WebP autorisés. Sa politique de lecture ne distingue pas les contributions approuvées de celles en attente. Le bucket `villa-photos` est public, limité à 550 000 octets et au JPEG. La migration conserve la lecture des anciennes demandes par les modérateurs, confirmée dans l'inventaire, et la couvre par une politique restrictive.
+
+Huit tables `presence_*` existent dans cette même base mais ne sont référencées par aucun fichier du dépôt LE GOLFE. Elles possèdent des grants très larges, dont TRUNCATE, qui ne bénéficie pas de la protection RLS. Deux politiques permissives de création de `presence_audits` se cumulent : la plus large ne vérifie pas la propriété de l'entreprise. `presence_profiles.role` est modifiable par son propriétaire avec les droits actuels ; la portée de ce rôle dans l'application associée n'est pas connue. La fonction SECURITY DEFINER `presence_create_profile` est exécutable par `anon` et `authenticated`, avec `search_path=public`. **Ces objets restent à auditer séparément avant de modifier un éventuel autre module ou projet. La migration LE GOLFE ne les corrige pas.**
+
+Les définitions réelles des fonctions, triggers et contraintes doivent encore être comparées au dépôt, via `supabase/security-audit-followup.sql`. Les exports ne vérifient pas la configuration Auth ni les données existantes. Aucun SQL de modification n'a été exécuté en production.
+
 ## Limites et vérifications restantes
 
-- **Supabase réel non inspecté** : tables supplémentaires, vues, fonctions exposées, grants par colonne, anciennes politiques, buckets et configuration Auth sont inconnus. Le fichier d'inventaire couvre ces objets sans exporter les données des voyageurs.
+- **Inventaire Supabase partiel** : tables, colonnes, politiques, permissions et buckets inspectés via les exports transmis. Définitions réelles des fonctions, triggers, contraintes, éventuelles vues, configuration Auth et validité des données existantes encore à vérifier.
 - **Secrets Vercel non inspectés** : seuls les renseignements généraux du projet `legolfe` ont été lus. Les valeurs des variables de production n'ont pas été récupérées. Le scan de motifs n'est pas une garantie d'absence de tout secret.
 - **Uploads directs** : les limites Storage portent sur taille, MIME déclaré, chemin et fréquence. Le réencodage vérifie les images dans les formulaires, mais peut être contourné par un appel direct. Une vérification du contenu binaire côté serveur à la réception et une éventuelle analyse antivirus restent à concevoir si nécessaire. Pas de stockage de SVG autorisé par ces buckets.
 - **Anti-bot** : quotas et champ piège limitent les abus ; ils ne remplacent pas un CAPTCHA. Un attaquant peut changer d'adresse email et épuiser les quotas globaux. Activer la protection Auth/CAPTCHA et ajuster les budgets selon le trafic réel.
@@ -38,11 +48,11 @@ Les annonces de conciergeries utilisent la même propriété de compte que les a
 
 ## Validation réalisée
 
-- `npm run test:security` : 28 assertions de validation/API, 32 assertions PostgreSQL ; règles SQL réellement exécutées dans PGlite avec Auth/Storage simulés. Les services Supabase Auth, Storage HTTP et PostgREST réels ne sont pas simulés intégralement.
+- `npm run test:security` : 28 assertions de validation/API, 37 assertions PostgreSQL ; règles SQL réellement exécutées dans PGlite avec Auth/Storage simulés. Le test reproduit les anciennes permissions de lecture modérateur et vérifie leur conservation sans accès pour les autres comptes. Les services Supabase Auth, Storage HTTP et PostgREST réels ne sont pas simulés intégralement.
 - Suite SQL V56 existante : réservation, conflits de dates, annulation et confidentialité des devis validés avant application des nouvelles contraintes de payload. Le vieux fixture V56 n'inclut pas tous les champs désormais obligatoires ; ne pas l'exécuter tel quel après le durcissement.
 - Migration exécutée deux fois dans la base isolée ; activation de la confidentialité également testée.
 - `npx tsc --noEmit` : réussi.
-- Build Webpack de production : réussi avec variables fictives. Cet environnement bloque la lecture système de la mémoire RSS ; un préchargement local remplace seulement cette mesure pour permettre la compilation. Ce contournement n'est pas ajouté au dépôt ni au déploiement. Le build standard doit encore être confirmé par GitHub Actions/Vercel.
+- Build Webpack local de production : réussi avec variables fictives et un contournement local de lecture RSS, absent du dépôt. Le build standard, TypeScript, les tests et l'audit des dépendances de production ont également réussi dans GitHub Actions pour le commit initial de la PR ; chaque nouveau commit relance ces contrôles.
 - `npm audit --omit=dev` : zéro vulnérabilité connue au moment du contrôle. Audit complet : cinq alertes élevées dans la chaîne de lint de développement, avec `braces` sans version corrigée disponible au moment du contrôle ; aucun downgrade forcé de Next.js pour les contourner.
 - Lint global : en échec sur des problèmes préexistants, principalement `any`, effets React et scripts CommonJS. Aucun nouvel échec dans les fichiers nouvellement ajoutés ; un avertissement `img` subsiste. Les fichiers modifiés totalisent 21 erreurs de lint avant et après les changements.
 - `git diff --check` : réussi.
@@ -53,7 +63,7 @@ Le workflow GitHub Actions préparé exécutera les tests, l'audit production, T
 
 1. Vérifier une sauvegarde récente et la possibilité de restauration. Exécuter **`supabase/security-audit.sql`** dans Supabase SQL Editor. Comparer l'inventaire avec le dépôt ; en particulier les colonnes/defaults de `requests`, les politiques supplémentaires, les tables sans RLS et les fonctions SECURITY DEFINER exposées. Ne partager ni clés ni lignes contenant des coordonnées voyageurs.
 2. Corriger les éventuels écarts. La migration attend `community.sql`, `editorial.sql` et le schéma villas jusqu'à V56. **Ne pas relancer aveuglément les anciens scripts** : ils pourraient rétablir des accès publics ou des privilèges.
-3. Appliquer **`supabase/security-phase1.sql`**. La transaction ne supprime pas de données. `requests` devient un dépôt de demandes accessible en écriture limitée, réservé à l'administration pour les lectures. Les annonces existantes malformées sont conservées, mais doivent être corrigées avant leur prochaine modification.
+3. Appliquer **`supabase/security-phase1.sql`** après comparaison des définitions réelles. La transaction ne supprime pas de données. `requests` reste lisible uniquement par les modérateurs, avec une écriture publique limitée aux champs du formulaire. Les annonces existantes malformées sont conservées, mais doivent être corrigées avant leur prochaine modification. Les tables `presence_*` nécessitent un traitement séparé, après identification de leur application.
 4. Après tests CI réussis et comparaison de l'inventaire, fusionner la PR vers `main` pour le projet Vercel **`legolfe`**. Vérifier le commit exact et le succès du build de production sur `legolfe.com`.
 5. Vérifier que les photos publiques/modération s'affichent avec les nouveaux liens signés, puis appliquer **`supabase/security-community-private.sql`**. Cela retire l'accès aux anciennes URL publiques des photos communautaires sans les effacer.
 6. Avec deux comptes de test, vérifier les refus de lecture/modification entre propriétaires via l'API directe, les demandes sans compte, l'authentification par email, un upload valide/invalide, l'approbation/rejet d'une contribution et les limites de l'IA. Supprimer uniquement les données de test identifiées après validation.
@@ -70,6 +80,7 @@ L'application peut revenir au commit précédent via Vercel. Si l'ancienne appli
 
 ## Sources officielles
 
+- [PostgreSQL RLS : politiques et opérations hors RLS](https://www.postgresql.org/docs/current/ddl-rowsecurity.html)
 - [Supabase RLS](https://supabase.com/docs/guides/database/postgres/row-level-security)
 - [Fonctions et SECURITY DEFINER](https://supabase.com/docs/guides/database/functions)
 - [Buckets publics et privés](https://supabase.com/docs/guides/storage/buckets/fundamentals)
