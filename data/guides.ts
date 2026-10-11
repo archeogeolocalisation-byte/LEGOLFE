@@ -29,9 +29,9 @@ const butterflyMuseum = { id: "butterflies", label: "Saint-Tropez Tourisme · Ma
 export const guides: Guide[] = [
   {
     slug: "pampelonne-acces-parking-plage", category: { fr: "Plage / Ramatuelle", en: "Beach / Ramatuelle" },
-    image: "pampelonne",
-    imageAlt: { fr: "Vue aérienne de la plage de Pampelonne à Ramatuelle", en: "Aerial view of Pampelonne beach in Ramatuelle" },
-    imageCaption: { fr: "Pampelonne, vue aérienne · Photographie de 2022", en: "Pampelonne from above · Photograph taken in 2022" },
+    image: "pampelonne-cover",
+    imageAlt: {"fr": "Illustration de Pampelonne : plage, dunes et accès à pied", "en": "Illustration of Pampelonne: beach, dunes and pedestrian access"},
+    imageCaption: {"fr": "Illustration éditoriale · LE GOLFE · Générée par IA", "en": "Editorial illustration · LE GOLFE · AI-generated"},
     destinations: ["ramatuelle"], placeIds: ["pampelonne", "club-55", "byblos-beach", "indie-beach"],
     related: ["ramatuelle-a-pied", "ou-dormir-golfe-saint-tropez"], published: "2026-10-11", verified: "2026-10-11",
     sources: [
@@ -77,9 +77,9 @@ export const guides: Guide[] = [
     },
   },
   {
-    slug: "ramatuelle-a-pied", category: { fr: "Village / À pied", en: "Village / On foot" }, image: "ramatuelle-village",
-    imageAlt: { fr: "Le village perché de Ramatuelle", en: "Ramatuelle hilltop village" },
-    imageCaption: { fr: "Ramatuelle, vue du village · Photographie de 2010", en: "Ramatuelle village panorama · Photograph taken in 2010" },
+    slug: "ramatuelle-a-pied", category: { fr: "Village / À pied", en: "Village / On foot" }, image: "ramatuelle-cover",
+    imageAlt: {"fr": "Illustration de Ramatuelle : ruelle provençale et promeneurs", "en": "Illustration of Ramatuelle: Provençal lane and walkers"},
+    imageCaption: {"fr": "Illustration éditoriale · LE GOLFE · Générée par IA", "en": "Editorial illustration · LE GOLFE · AI-generated"},
     destinations: ["ramatuelle"], placeIds: ["ramatuelle-village"], related: ["pampelonne-acces-parking-plage", "ou-dormir-golfe-saint-tropez"],
     published: "2026-10-11", verified: "2026-10-11", sources: [ramatuelleVillage, ramatuelleFaq, ramatuellePractical],
     copy: {
@@ -118,9 +118,9 @@ export const guides: Guide[] = [
     },
   },
   {
-    slug: "saint-tropez-sans-voiture", category: { fr: "Mobilité / Une journée", en: "Transport / A day out" }, image: "saint-tropez-village",
-    imageAlt: { fr: "Le port et le centre de Saint-Tropez vus du ciel", en: "Aerial view of Saint-Tropez harbour and town centre" },
-    imageCaption: { fr: "Saint-Tropez, le port et le village · Photographie de 2011", en: "Saint-Tropez harbour and village · Photograph taken in 2011" },
+    slug: "saint-tropez-sans-voiture", category: { fr: "Mobilité / Une journée", en: "Transport / A day out" }, image: "saint-tropez-car-free-cover",
+    imageAlt: {"fr": "Illustration de Saint-Tropez sans voiture : bateau de passagers et marche sur le port", "en": "Illustration of car-free Saint-Tropez: passenger boat and harbour walk"},
+    imageCaption: {"fr": "Illustration éditoriale · LE GOLFE · Générée par IA", "en": "Editorial illustration · LE GOLFE · AI-generated"},
     destinations: ["saint-tropez", "sainte-maxime", "grimaud"], placeIds: ["saint-tropez-village", "place-des-lices", "citadelle-saint-tropez", "bateaux-verts-excursion"],
     related: ["golfe-saint-tropez-quand-il-pleut", "ou-dormir-golfe-saint-tropez"], published: "2026-10-11", verified: "2026-10-11",
     sources: [boats, { id: "mobility", label: "Saint-Tropez Tourisme · Mobilité sans voiture", url: "https://www.sainttropeztourisme.com/fr/une-destination-eco-responsable/mobilite-durable-saint-tropez/se-deplacer-saint-tropez-sans-voiture/" }, maritimeMuseum, cinemaMuseum],
@@ -160,9 +160,9 @@ export const guides: Guide[] = [
     },
   },
   {
-    slug: "golfe-saint-tropez-quand-il-pleut", category: { fr: "Culture / Plan de repli", en: "Culture / A change of plan" }, image: "saint-tropez-village",
-    imageAlt: { fr: "Vue de Saint-Tropez, point de départ des visites culturelles de ce guide", en: "View of Saint-Tropez, a starting point for the cultural visits in this guide" },
-    imageCaption: { fr: "Saint-Tropez · Vue du village par beau temps, photographie de 2011", en: "Saint-Tropez · Village view in fair weather, photograph taken in 2011" },
+    slug: "golfe-saint-tropez-quand-il-pleut", category: { fr: "Culture / Plan de repli", en: "Culture / A change of plan" }, image: "rainy-day-cover",
+    imageAlt: {"fr": "Illustration du port de Saint-Tropez sous la pluie", "en": "Illustration of Saint-Tropez harbour in the rain"},
+    imageCaption: {"fr": "Illustration éditoriale · LE GOLFE · Générée par IA", "en": "Editorial illustration · LE GOLFE · AI-generated"},
     destinations: ["saint-tropez", "ramatuelle", "sainte-maxime", "cogolin"], placeIds: ["maison-des-papillons", "citadelle-saint-tropez"],
     related: ["saint-tropez-sans-voiture", "ramatuelle-a-pied"], published: "2026-10-11", verified: "2026-10-11",
     sources: [cinemaMuseum, butterflyMuseum, maritimeMuseum, { id: "rain", label: "Office de tourisme de Ramatuelle · Sorties par temps de pluie", url: "https://www.ramatuelle-tourisme.com/fr/faq/" }],
@@ -202,9 +202,9 @@ export const guides: Guide[] = [
     },
   },
   {
-    slug: "ou-dormir-golfe-saint-tropez", category: { fr: "Séjour / Choisir sa base", en: "Stay / Choose your base" }, image: "sainte-maxime-village",
-    imageAlt: { fr: "Le port, la Tour Carrée et l’église de Sainte-Maxime", en: "Sainte-Maxime harbour, Tour Carrée and church" },
-    imageCaption: { fr: "Sainte-Maxime, l’une des bases possibles dans le Golfe · Photographie de 2019", en: "Sainte-Maxime, one possible base in the Golfe · Photograph taken in 2019" },
+    slug: "ou-dormir-golfe-saint-tropez", category: { fr: "Séjour / Choisir sa base", en: "Stay / Choose your base" }, image: "where-to-stay-cover",
+    imageAlt: {"fr": "Illustration d’une terrasse provençale face au Golfe pour choisir où séjourner", "en": "Illustration of a Provençal terrace overlooking the Golfe, for choosing a holiday base"},
+    imageCaption: {"fr": "Illustration éditoriale · LE GOLFE · Générée par IA", "en": "Editorial illustration · LE GOLFE · AI-generated"},
     destinations: ["saint-tropez", "ramatuelle", "gassin", "grimaud", "sainte-maxime", "la-croix-valmer"], placeIds: [],
     related: ["pampelonne-acces-parking-plage", "saint-tropez-sans-voiture"], published: "2026-10-11", verified: "2026-10-11",
     sources: [

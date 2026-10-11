@@ -6,7 +6,8 @@
       "feature/password-accounts": false,
       "content/local-guides": false,
       "content/hiking-guides": false,
-      "design/home-updates": false
+      "design/home-updates": false,
+      "content/guide-covers": false
     }
   }
 }
