@@ -1,41 +1,31 @@
-"use client";
-
 import Link from "next/link";
-import { useMemo, useState } from "react";
 import type { Place } from "../data/places";
 import { getCategory, placeDescriptionFr } from "../data/places";
 import { categoryFR, type Locale } from "../lib/i18n";
 import { mediaForPlace } from "../lib/placeMedia";
 
-type Mood = "all" | "quiet" | "beach" | "view" | "family" | "eat" | "party";
+import { exploreFilterIds, exploreFilterLabels, exploreFilterHref, exploreFilterCategory, matchesExploreFilter, type ExploreFilter } from "../lib/exploreFilters";
 
-const labels: Record<Locale, Record<Mood, string>> = {
-  fr: { all: "Tout", quiet: "Au calme", beach: "Journée plage", view: "Belle vue", family: "En famille", eat: "Bien manger", party: "Sortir" },
-  en: { all: "All", quiet: "Quiet", beach: "Beach day", view: "Great view", family: "Family", eat: "Eat well", party: "Partying" },
-};
-
-function matches(place: Place, mood: Mood) {
-  if (mood === "all") return true;
-  const hay = [...place.tags, ...place.bestFor].join(" ").toLowerCase();
-  if (mood === "quiet") return /quiet|calm|village|countryside|slow/.test(hay);
-  if (mood === "beach") return place.category === "beach" || /beach|pampelonne|swim|sea/.test(hay);
-  if (mood === "view") return /view|panorama|hilltop|aerial/.test(hay);
-  if (mood === "family") return /family|families|kids|children/.test(hay);
-  if (mood === "eat") return place.category === "eat";
-  if (mood === "party") return place.category === "party";
-  return true;
-}
-
-export default function ExploreIntentGrid({ places, locale, initialMood = "all" }: { places: Place[]; locale: Locale; initialMood?: Mood }) {
-  const [mood, setMood] = useState<Mood>(initialMood);
-  const list = useMemo(() => places.filter((p) => matches(p, mood)), [places, mood]);
+export default function ExploreIntentGrid({ places, locale, filter = "all" }: { places: Place[]; locale: Locale; filter?: ExploreFilter }) {
+  const fr = locale === "fr";
+  const labels = exploreFilterLabels[locale];
+  const list = places.filter(place => matchesExploreFilter(place, filter));
+  const counts = Object.fromEntries(exploreFilterIds.map(id => [id, places.filter(place => matchesExploreFilter(place, id)).length]));
+  const category = exploreFilterCategory(filter);
 
   return <>
-    <div className="mt-12 border-y border-black py-4">
-      <p className="lg-kicker mb-4 text-black/45">{locale === "fr" ? "COMMENCEZ PAR UNE ENVIE" : "START WITH A FEELING"}</p>
-      <div className="flex gap-2 overflow-x-auto pb-1">
-        {(Object.keys(labels[locale]) as Mood[]).map((key) => <button key={key} onClick={() => setMood(key)} className={`shrink-0 px-4 py-3 text-[10px] font-black uppercase tracking-[.12em] transition ${mood === key ? "bg-[var(--lg-blue)] text-white" : "border border-black hover:border-[var(--lg-blue)] hover:text-[var(--lg-blue)]"}`}>{labels[locale][key]}</button>)}
+    <nav aria-label={fr ? "Filtrer les adresses" : "Filter places"} className="mt-10 border-y border-black py-5">
+      <p className="lg-kicker text-black/45">{fr ? "UN THÈME. UNE ENVIE." : "A THEME. A MOOD."}</p>
+      <p className="mt-3 max-w-2xl text-sm leading-6 text-black/55">{fr ? "Choisissez ce que vous cherchez. Une adresse peut correspondre à plusieurs envies." : "Choose what you’re looking for. A place can suit more than one mood."}</p>
+      <div className="mt-5 flex flex-wrap gap-2">
+        {exploreFilterIds.map(id => <Link key={id} href={exploreFilterHref(locale, id)} scroll={false} prefetch={false} aria-current={filter === id ? "page" : undefined} className={`inline-flex items-center gap-3 border px-4 py-3 text-[10px] font-black uppercase tracking-[.1em] transition focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--lg-blue)] ${filter === id ? "border-[var(--lg-blue)] bg-[var(--lg-blue)] text-white" : "border-black/25 hover:border-[var(--lg-blue)] hover:text-[var(--lg-blue)]"}`}>
+          {labels[id]} <span className="text-[9px] opacity-60">{counts[id]}</span>
+        </Link>)}
       </div>
+    </nav>
+    <div className="mt-6 flex flex-wrap items-center justify-between gap-4">
+      <p role="status" className="text-xs font-bold text-black/55">{list.length} {fr ? (list.length === 1 ? "adresse" : "adresses") : (list.length === 1 ? "place" : "places")} · {labels[filter]}</p>
+      {category && <Link href={`/${locale}/explore/${category}`} className="text-xs font-bold underline underline-offset-4">{fr ? "Le guide" : "The guide"} · {fr ? categoryFR[category].name : getCategory(category)?.name} →</Link>}
     </div>
 
     <div className="mt-10 grid gap-x-8 md:grid-cols-2">

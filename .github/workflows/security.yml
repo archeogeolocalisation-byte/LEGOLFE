@@ -21,6 +21,7 @@ jobs:
       - run: npm run test:security
       - run: npm audit --omit=dev --audit-level=high
       - run: node scripts/test-seo.cjs
+      - run: node scripts/test-explore-filters.cjs
       - run: npx tsc --noEmit
       - run: npm run build
         env:
