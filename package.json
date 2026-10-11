@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "eslint",
     "press:download": "node scripts/download-press.cjs",
-    "test:security": "node scripts/test-security.cjs && node scripts/test-security-db.mjs"
+    "test:security": "node scripts/test-security.cjs && node scripts/test-security-db.mjs && node scripts/test-accounts.cjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.112.4",

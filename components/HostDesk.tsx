@@ -14,6 +14,7 @@ import {propertyVilla} from "../lib/villaListing";
 import {parisIsoDay} from "../lib/localCalendar";
 import {publishVilla,pauseVilla,removeVilla} from "../lib/publishVilla";
 import {supabase} from "../lib/supabase";
+import {accountType} from "../lib/accountTypes";
 import { FormEvent, ReactNode, useEffect, useRef, useState } from "react";
 import type { Locale } from "../lib/i18n";
 
@@ -87,31 +88,34 @@ export default function HostDesk({locale}:{locale:Locale}) {
   const [hydrated,setHydrated] = useState(false);
 
   const scope = useRef('');
+  const declaredRole = useRef<Role | null | undefined>(undefined);
   const [storageScope,setStorageScope] = useState('');
   const [scopeReady,setScopeReady] = useState(false);
   const propertyKey = `legolfe_host_properties:${storageScope}`;
   const stayKey = `legolfe_host_stays:${storageScope}`;
   useEffect(()=>{
     let active=true;
-    function apply(userId:string|null){
+    function apply(userId:string|null, rawType:unknown){
       if(!active)return;
+      const type=accountType(rawType);
+      declaredRole.current=type==="owner"||type==="concierge"?type:type==="traveler"?null:undefined;
       const next=userId||'anonymous';
-      if(scope.current===next)return;
+      if(scope.current===next){if(declaredRole.current!==undefined)setRole(declaredRole.current);return;}
       scope.current=next;
       setHydrated(false);setStorageScope(next);setScopeReady(true);
       setProperties([]);setStays([]);setShowProperty(false);setShowStay(false);
       setEditingProperty(null);setPreviewProperty(null);setCalendarProperty(null);setView('today');
     }
     let changed=false;
-    void supabase.auth.getUser().then(({data})=>{if(!changed)apply(data.user?.id||null);});
-    const {data:{subscription}}=supabase.auth.onAuthStateChange((_event,session)=>{changed=true;apply(session?.user.id||null);});
+    void supabase.auth.getUser().then(({data})=>{if(!changed)apply(data.user?.id||null,data.user?.user_metadata?.legolfe_account_type);});
+    const {data:{subscription}}=supabase.auth.onAuthStateChange((_event,session)=>{changed=true;apply(session?.user.id||null,session?.user.user_metadata?.legolfe_account_type);});
     return()=>{active=false;subscription.unsubscribe();};
   },[]);
   useEffect(()=>{
     if(!scopeReady)return;
     try {
-      const savedRole=localStorage.getItem('legolfe_host_role');
-      setRole(savedRole==='owner'||savedRole==='concierge'?savedRole:null);
+      const savedRole=localStorage.getItem('legolfe_host_role:'+storageScope) || (storageScope==='anonymous'?localStorage.getItem('legolfe_host_role'):null);
+      setRole(declaredRole.current!==undefined?declaredRole.current:savedRole==='owner'||savedRole==='concierge'?savedRole:null);
       let saved=JSON.parse(localStorage.getItem(propertyKey)||'null');
       if(!saved){
         // Preserve old local drafts, never import online listings from another account.
@@ -127,7 +131,17 @@ export default function HostDesk({locale}:{locale:Locale}) {
   useEffect(()=>{if(hydrated&&scope.current===storageScope)try{localStorage.setItem(propertyKey,JSON.stringify(properties));}catch{setStorageError(fr?'Enregistrement impossible sur cet appareil.':'Unable to save on this device.');}},[properties,hydrated,storageScope]);
   useEffect(()=>{if(hydrated&&scope.current===storageScope)try{localStorage.setItem(stayKey,JSON.stringify(stays));}catch{setStorageError(fr?'Impossible de conserver les séjours.':'Unable to save stays.');}},[stays,hydrated,storageScope]);
 
-  function chooseRole(next:Role){ setRole(next); localStorage.setItem("legolfe_host_role",next); }
+  async function chooseRole(next:Role){
+    const actor=scope.current;
+    setRole(next);
+    try{localStorage.setItem("legolfe_host_role:"+actor,next);}catch{setStorageError(fr?"Impossible de conserver ce choix sur cet appareil.":"Unable to save this choice on this device.");}
+    if(actor==='anonymous')return;
+    const {data:{user}}=await supabase.auth.getUser();
+    if(user?.id!==actor||scope.current!==actor)return;
+    // Preference only: does not change the permission to publish or manage a house.
+    const {error}=await supabase.auth.updateUser({data:{legolfe_account_type:next}});
+    if(error&&scope.current===actor)setStorageError(fr?"Votre choix local est conservé, mais le profil n'a pas pu être synchronisé.":"Your local choice is saved, but the profile could not be synchronized.");
+  }
   function openCreateProperty(){ setEditingProperty(null); setShowProperty(true); }
   function openEditProperty(property:Property){ setEditingProperty(property); setShowProperty(true); }
   function closeProperty(){ setEditingProperty(null); setShowProperty(false); }

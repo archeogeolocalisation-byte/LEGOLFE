@@ -7,13 +7,16 @@ import { useParams } from "next/navigation";
 import SiteHeader from "../../../components/SiteHeader";
 import SiteFooter from "../../../components/SiteFooter";
 import { supabase } from "../../../lib/supabase";
+import AccountAuthForm from "../../../components/AccountAuthForm";
+import AccountPasswordForm from "../../../components/AccountPasswordForm";
+import AccountTypeFields from "../../../components/AccountTypeFields";
+import { accountType, accountTypeLabel, type AccountType } from "../../../lib/accountTypes";
 
 export default function AccountPage() {
   const params = useParams<{ locale: string }>();
   const locale = params.locale === "fr" ? "fr" : "en";
   const fr = locale === "fr";
   const [next, setNext] = useState("");
-  const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [userId, setUserId] = useState<string | null>(null);
   const [userEmail, setUserEmail] = useState("");
@@ -21,6 +24,10 @@ export default function AccountPage() {
   const [saving, setSaving] = useState(false);
   const [moderator, setModerator] = useState(false);
   const [ready, setReady] = useState(false);
+  const [profileType, setProfileType] = useState<AccountType>("traveler");
+  const [showPassword, setShowPassword] = useState(false);
+  const [recovery, setRecovery] = useState(false);
+  const activeUser = useRef<string | null>(null);
 
   const generation=useRef(0);
   async function hydrate() {
@@ -28,17 +35,20 @@ export default function AccountPage() {
     const { data } = await supabase.auth.getUser();
     if(ticket!==generation.current)return;
     const user = data.user;
+    activeUser.current = user?.id ?? null;
     setUserId(user?.id ?? null);
     setUserEmail(user?.email ?? "");
     if (user) {
-      const { data: profile } = await supabase
-        .from("community_profiles")
-        .select("display_name")
-        .eq("user_id", user.id)
-        .maybeSingle();
+      const [profileResult, moderatorResult] = await Promise.all([
+        supabase.from("community_profiles").select("display_name").eq("user_id", user.id).maybeSingle(),
+        supabase.rpc("is_community_moderator"),
+      ]);
+      const profile = profileResult.data;
+      const isModerator = moderatorResult.data;
       if(ticket!==generation.current)return;
-      setDisplayName(profile?.display_name ?? (user.email?.split("@")[0] || ""));
-      const { data: isModerator } = await supabase.rpc("is_community_moderator");
+      const savedName = user.user_metadata?.legolfe_display_name;
+      setDisplayName(profile?.display_name ?? (typeof savedName === "string" ? savedName.slice(0,40) : ""));
+      setProfileType(accountType(user.user_metadata?.legolfe_account_type) ?? "traveler");
       if(ticket!==generation.current)return;
       setModerator(Boolean(isModerator));
     } else {
@@ -50,30 +60,18 @@ export default function AccountPage() {
 
   useEffect(() => {
     let active=true;
+    if(window.location.pathname.endsWith("/account/password")) {setRecovery(true);setShowPassword(true);}
     setNext(safeReturnPath(new URLSearchParams(window.location.search).get("next")));
     hydrate();
-    const { data: listener } = supabase.auth.onAuthStateChange(() => { generation.current++;setUserId(null);setUserEmail('');setDisplayName('');setModerator(false);setReady(false);queueMicrotask(() => {if(active)void hydrate();}); });
+    const { data: listener } = supabase.auth.onAuthStateChange((event, session) => {
+      if(event === "PASSWORD_RECOVERY") {setRecovery(true);setShowPassword(true);}
+      if(event === "SIGNED_OUT") {setRecovery(false);setShowPassword(false);}
+      activeUser.current = session?.user.id ?? null;
+      generation.current++;setUserId(null);setUserEmail("");setDisplayName("");setModerator(false);setReady(false);
+      queueMicrotask(() => {if(active)void hydrate();});
+    });
     return () => {active=false;generation.current++;listener.subscription.unsubscribe();};
   }, []);
-
-  async function login(event: FormEvent) {
-    event.preventDefault();
-    setMessage("");
-    const redirectTo = `${window.location.origin}/${locale}/account${next ? `?next=${encodeURIComponent(next)}` : ""}`;
-    const { error } = await supabase.auth.signInWithOtp({
-      email,
-      options: { emailRedirectTo: redirectTo },
-    });
-    setMessage(
-      error
-        ? fr
-          ? "Impossible d'envoyer le lien."
-          : "Could not send the link."
-        : fr
-          ? "Lien de connexion envoyé par email."
-          : "Sign-in link sent by email.",
-    );
-  }
 
   async function saveProfile(event: FormEvent) {
     event.preventDefault();
@@ -83,23 +81,19 @@ export default function AccountPage() {
       setMessage(fr ? "Choisissez un nom entre 2 et 40 caractères." : "Choose a name between 2 and 40 characters.");
       return;
     }
-    setSaving(true);
-    setMessage("");
-    const { error } = await supabase.from("community_profiles").upsert({
-      user_id: userId,
-      display_name: cleanName,
-      updated_at: new Date().toISOString(),
-    });
-    setSaving(false);
-    setMessage(
-      error
-        ? fr
-          ? "Impossible d'enregistrer le profil. Vérifiez le SQL V10."
-          : "Could not save the profile. Check the V10 SQL."
-        : fr
-          ? "Profil enregistré."
-          : "Profile saved.",
-    );
+    const actor = userId;
+    setSaving(true); setMessage("");
+    try {
+      const { error: profileError } = await supabase.from("community_profiles").upsert({
+        user_id: actor, display_name: cleanName, updated_at: new Date().toISOString(),
+      });
+      if(activeUser.current !== actor)return;
+      if(profileError) {setMessage(fr ? "Impossible d'enregistrer le nom public. Réessayez." : "Unable to save your public name. Please try again.");return;}
+      const { error } = await supabase.auth.updateUser({data:{legolfe_account_type:profileType,legolfe_display_name:cleanName}});
+      if(activeUser.current !== actor)return;
+      setMessage(error ? (fr ? "Nom enregistré, mais le type de profil n'a pas pu être mis à jour. Réessayez." : "Name saved, but profile type could not be updated. Please try again.") : (fr ? "Profil enregistré." : "Profile saved."));
+    } catch { if(activeUser.current === actor)setMessage(fr ? "Service indisponible. Réessayez." : "Service unavailable. Please try again."); }
+    finally {setSaving(false);}
   }
 
   if (!ready) {
@@ -116,21 +110,10 @@ export default function AccountPage() {
           <div className="mt-12 grid gap-10 border-t border-black pt-8 md:grid-cols-2">
             <p className="max-w-lg text-xl font-bold leading-8">
               {fr
-                ? "Un compte gratuit suffit pour partager vos photos et commentaires sur les fiches."
-                : "A free account lets you share photos and comments on place pages."}
+                ? "Créez votre compte avec un email et un mot de passe. Voyageur, propriétaire ou conciergerie : choisissez le profil qui vous correspond."
+                : "Create your account with an email and password. Choose the profile that fits you: traveler, owner or concierge."}
             </p>
-            <form onSubmit={login}>
-              <input
-                required
-                type="email"
-                value={email}
-                onChange={(event) => setEmail(event.target.value)}
-                placeholder="you@email.com"
-                className="h-14 w-full border-b border-black bg-transparent text-xl font-bold outline-none"
-              />
-              <button className="lg-btn lg-btn--dark mt-5">{fr ? "Recevoir mon lien" : "Email me a sign-in link"} ↗</button>
-              {message && <p className="mt-4 text-sm font-bold text-black/55">{message}</p>}
-            </form>
+            <AccountAuthForm locale={locale} onAuthenticated={() => {void hydrate();}} />
           </div>
         </section>
         <SiteFooter locale={locale} />
@@ -147,7 +130,14 @@ export default function AccountPage() {
         <div className="mt-12 grid gap-14 border-t border-black pt-8 md:grid-cols-[.8fr_1.2fr]">
           <div>
             <p className="lg-kicker">{fr ? "COMPTE" : "ACCOUNT"}</p>
-            <p className="mt-5 text-xl font-black">{userEmail}</p>
+            <p className="mt-5 break-all text-xl font-black">{userEmail}</p>
+            <p className="mt-3 text-sm font-bold">{accountTypeLabel(profileType,fr)}</p>
+            <div className="mt-6 flex flex-wrap gap-3">
+              <Link className="lg-btn" href={"/"+locale+"/saved"}>{fr ? "Mon séjour" : "My stay"} ↗</Link>
+              {profileType !== "traveler" && <Link className="lg-btn lg-btn--dark" href={"/"+locale+"/host"}>{fr ? "Mes annonces / Host" : "My listings / Host"} ↗</Link>}
+            </div>
+            <button type="button" onClick={() => setShowPassword(value => !value)} className="mt-7 block text-sm font-bold underline underline-offset-4">{fr ? "Définir / modifier mon mot de passe" : "Set / change my password"}</button>
+            {showPassword && <AccountPasswordForm key={userId} userId={userId} fr={fr} recovery={recovery} onSaved={() => {setShowPassword(false);setRecovery(false);setMessage(fr ? "Mot de passe enregistré." : "Password saved.");}} />}
             <button
               className="mt-7 text-[10px] font-black uppercase tracking-[.14em] underline underline-offset-4"
               onClick={async () => {
@@ -166,19 +156,24 @@ export default function AccountPage() {
                 ? "C'est ce nom qui apparaîtra sous vos commentaires. Votre email n'est jamais affiché publiquement."
                 : "This name appears under your comments. Your email is never shown publicly."}
             </p>
+            <label htmlFor="public-name" className="sr-only">{fr ? "Nom public" : "Public name"}</label>
             <input
+              id="public-name"
+              required
               minLength={2}
               maxLength={40}
               value={displayName}
               onChange={(event) => setDisplayName(event.target.value)}
               className="mt-7 h-14 w-full border-b border-black bg-transparent text-3xl font-black tracking-[-.04em] outline-none"
             />
+            <AccountTypeFields value={profileType} onChange={setProfileType} fr={fr} />
+            <p className="mt-3 text-sm text-black/55">{fr ? "Votre type de profil personnalise votre espace. Vous pouvez le modifier ici." : "Your profile type personalizes your space. You can change it here."}</p>
             <div className="mt-6 flex flex-wrap gap-3">
               <button disabled={saving} className="lg-btn lg-btn--dark disabled:opacity-40">{saving ? (fr ? "Enregistrement…" : "Saving…") : fr ? "Enregistrer" : "Save"}</button>
               {next && <Link className="lg-btn" href={`/${locale}${next}`}>{fr ? "Retour à la fiche" : "Back to place"} ↗</Link>}
               {moderator && <Link className="lg-btn" href={`/${locale}/community/moderation`}>{fr ? "Modération" : "Moderation"} ↗</Link>}
             </div>
-            {message && <p className="mt-4 text-sm font-bold text-black/55">{message}</p>}
+            {message && <p role="status" aria-live="polite" className="mt-4 text-sm font-bold text-black/55">{message}</p>}
           </form>
         </div>
       </section>
