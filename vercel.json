@@ -9,7 +9,8 @@
       "design/home-updates": false,
       "content/guide-covers": false,
       "seo/pre-search-console": false,
-      "content/french-translations": false
+      "content/french-translations": false,
+      "design/explore-filters": false
     }
   }
 }
