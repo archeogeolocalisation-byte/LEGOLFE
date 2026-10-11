@@ -15,7 +15,6 @@ export default function SiteHeader({light=true,locale="en",path=""}:{light?:bool
           <Link href={`${base}/whats-on`} className="lg-link-accent">{labels.agenda}</Link>
           <Link href={`${base}/local`} className="lg-link-accent">{labels.local}</Link>
           <Link href={`${base}/stay`} className="lg-link-accent">{labels.stay}</Link>
-          <Link href={`${base}/host`} className="lg-link-accent">{labels.host}</Link>
         </div>
         <div className="flex items-center gap-3">
           <Link href={`/${other}${path}`} hrefLang={other} lang={other} aria-label={locale === "fr" ? "Passer en anglais" : "Switch to French"} className="text-[10px] font-black uppercase tracking-[.15em]">{other}</Link>
@@ -30,8 +29,8 @@ export default function SiteHeader({light=true,locale="en",path=""}:{light?:bool
         <Link href={`${base}/whats-on`} className="lg-link-accent shrink-0">{labels.agenda}</Link>
         <Link href={`${base}/local`} className="lg-link-accent shrink-0">{labels.local}</Link>
         <Link href={`${base}/stay`} className="lg-link-accent shrink-0">{labels.stay}</Link>
-        <Link href={`${base}/host`} className="lg-link-accent shrink-0">{labels.host}</Link>
         <Link href={`${base}/saved`} className="lg-link-accent shrink-0">{labels.saved}</Link>
+        <Link href={`${base}/account`} className="lg-link-accent shrink-0 sm:hidden">{labels.account}</Link>
       </div>
     </nav>
   </header>
