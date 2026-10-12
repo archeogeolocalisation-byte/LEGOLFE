@@ -13,7 +13,8 @@
       "design/explore-filters": false,
       "feature/profile-agenda": false,
       "fix/villa-languages-explore": false,
-      "design/explore-gallery": false
+      "design/explore-gallery": false,
+      "fix/admin-contrast": false
     }
   }
 }
