@@ -6,6 +6,7 @@ import { places, placeCategories } from "../../data/places";
 import {getPublishedVillas} from "../../lib/publicVillas";
 import { villas } from "../../data/villas";
 import { getPublicEvents } from "../../lib/publicEvents";
+import { villaHref } from "../../lib/villaPaths";
 import { siteOrigin } from "../../lib/seo";
 import { mediaForPlace } from "../../lib/placeMedia";
 import { guides, guidePaths } from "../../data/guides";
@@ -24,7 +25,12 @@ export async function GET() {
  return `<url><loc>${xml(origin+"/"+locale+path)}</loc>${lastmod}${["fr","en","x-default"].map(lang=>`<xhtml:link rel="alternate" hreflang="${lang}" href="${xml(origin+"/"+(lang==="x-default"?"en":lang)+path)}"/>`).join("")}${image}</url>`;
  }));
  rows.push(`<url><loc>${xml(origin+"/match")}</loc></url>`);
- for(const villa of await getPublishedVillas())rows.push(`<url><loc>${xml(origin+'/villa/'+villa.id)}</loc>${villa.photos[0]?`<image:image><image:loc>${xml(villa.photos[0].src)}</image:loc></image:image>`:''}</url>`);
- for(const villa of villas) rows.push(`<url><loc>${xml(origin+"/villa/"+villa.id)}</loc><image:image><image:loc>${xml(origin+villa.image)}</image:loc></image:image></url>`);
+ const houses=[...(await getPublishedVillas()).map(v=>({id:v.id,image:v.photos[0]?.src})),...villas.map(v=>({id:v.id,image:v.image}))];
+ for(const villa of houses)for(const locale of ["fr","en"] as const){
+  const image=villa.image?`<image:image><image:loc>${xml(new URL(villa.image,origin).href)}</image:loc></image:image>`:"";
+  const alternates=(["fr","en","x-default"] as const).map(lang=>`<xhtml:link rel="alternate" hreflang="${lang}" href="${xml(origin+villaHref(villa.id,lang==="fr"?"fr":"en"))}"/>`).join("");
+  rows.push(`<url><loc>${xml(origin+villaHref(villa.id,locale))}</loc>${alternates}${image}</url>`);
+ }
+
  return new Response(`<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">${rows.join("")}</urlset>`,{headers:{"Content-Type":"application/xml; charset=utf-8","Cache-Control":"public, max-age=300"}});
 }

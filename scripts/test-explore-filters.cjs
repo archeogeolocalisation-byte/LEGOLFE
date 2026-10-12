@@ -24,3 +24,18 @@ assert.equal(resolve(undefined, 'party'), 'party');
 assert.equal(resolve('sea', 'party'), 'sea');
 for (const invalid of ['javascript:alert(1)', 'missing', ['party']]) assert.equal(resolve(invalid), 'all');
 console.log(`Explore: ${places.length} places classified; nightlife, beaches, boats, family, views and legacy links passed.`);
+
+const { matchesExploreSearch: search, resolveExploreSearch, exploreFilterHref } = require('../lib/exploreFilters.ts');
+assert.ok(search(place('place-des-lices'), 'marché', 'saint-tropez'));
+assert.ok(search(place('place-des-lices'), 'marche', 'saint-tropez'));
+assert.ok(search(place('cap-taillat'), 'taillat', 'ramatuelle'));
+assert.ok(search(place('cap-taillat'), 'taillat', 'la-croix-valmer'));
+assert.equal(search(place('caves-du-roy'), '', 'ramatuelle'), false);
+assert.equal(search(place('taxi-estelle'), 'xyz-missing', ''), false);
+assert.deepEqual(resolveExploreSearch(['x'], 'missing'), {query:'',town:''});
+const href=exploreFilterHref('en','party','roy & café','saint-tropez');
+const parsed=new URL(href,'https://example.com');
+assert.equal(parsed.searchParams.get('q'),'roy & café');
+assert.equal(parsed.searchParams.get('filter'),'party');
+assert.equal(parsed.searchParams.get('town'),'saint-tropez');
+console.log('Explore combined search, accents, multi-town places and query preservation passed.');
