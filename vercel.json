@@ -12,7 +12,8 @@
       "content/french-translations": false,
       "design/explore-filters": false,
       "feature/profile-agenda": false,
-      "fix/villa-languages-explore": false
+      "fix/villa-languages-explore": false,
+      "design/explore-gallery": false
     }
   }
 }

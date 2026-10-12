@@ -59,3 +59,43 @@ button,textarea,input { font:inherit; }
 
 /* V34 — host listing editor */
 .editor-input { height:56px; width:100%; border-bottom:1px solid #000; background:#fff; outline:none; }
+
+/* Explorer — a compact editorial address book, scoped to this page. */
+.explore-page{padding-top:44px;padding-bottom:80px;}
+.explore-intro{display:grid;gap:24px;align-items:end;padding-bottom:32px;}
+.explore-title{margin-top:22px;font-size:clamp(48px,7.2vw,96px);line-height:.88;max-width:1050px;}
+.explore-deck{max-width:630px;margin-top:20px;font-size:16px;font-weight:500;line-height:1.6;color:#555;}
+.explore-edition{display:none;}
+.explore-controls{border-top:1px solid #000;border-bottom:1px solid #000;background:#f7f7f4;padding:20px;}
+.explore-search{display:grid;gap:14px;align-items:end;margin-top:18px;}
+.explore-search input,.explore-search select{border-color:#bdbdb6;min-height:44px;border-radius:0;}
+.explore-search .lg-btn{min-height:44px;background:var(--lg-blue);border-color:var(--lg-blue);}
+.explore-themes{display:flex;flex-wrap:wrap;gap:6px;margin-top:18px;}
+.explore-themes a{min-height:38px;background:#fff;}
+.explore-themes a[aria-current="page"]{background:var(--lg-blue);}
+.explore-results-bar{display:flex;flex-wrap:wrap;align-items:center;gap:14px;justify-content:space-between;padding:24px 0 20px;}
+.explore-gallery{display:grid;grid-template-columns:minmax(0,1fr);gap:32px 24px;}
+.explore-card{min-width:0;display:flex;flex-direction:column;border-bottom:1px solid #d4d4ce;padding-bottom:16px;}
+.explore-card-link{display:block;flex:1;min-width:0;}
+.explore-card-link:focus-visible{outline:2px solid var(--lg-blue);outline-offset:5px;}
+.explore-card-image{position:relative;aspect-ratio:3/2;}
+.explore-card-image img{position:absolute;inset:0;}
+.explore-card-number{position:absolute;left:12px;top:12px;background:#fff;padding:5px 7px;color:#000;font-size:10px;font-weight:800;letter-spacing:.08em;}
+.explore-card-arrow{position:absolute;right:12px;bottom:12px;display:grid;place-items:center;width:32px;height:32px;background:#fff;color:#000;font-size:22px;transition:background .2s,color .2s;}
+.explore-card-link:hover .explore-card-arrow{background:var(--lg-blue);color:#fff;}
+.explore-card-copy{padding-top:17px;}
+.explore-card-category{font-size:9px;line-height:1.45;letter-spacing:.13em;text-transform:uppercase;color:var(--lg-blue);font-weight:800;}
+.explore-card-title{margin-top:8px;font-size:27px;line-height:1.05;font-weight:900;letter-spacing:-.04em;text-transform:uppercase;overflow-wrap:anywhere;transition:color .2s;}
+.explore-card-link:hover .explore-card-title{color:var(--lg-blue);}
+.explore-card-location{margin-top:10px;font-size:11px;line-height:1.4;color:#555;font-weight:700;}
+.explore-card-description{margin-top:10px;font-size:13px;line-height:1.65;font-weight:400;color:#555;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;}
+.explore-card-credit{margin-top:14px;font-size:9px;line-height:1.5;color:#666;}
+.explore-card-placeholder{display:flex;align-items:end;position:absolute;inset:0;overflow:hidden;padding:20px;background:#0b2534;color:#fff;}
+.explore-placeholder-monogram{position:absolute;right:12px;top:0;font-size:140px;line-height:1.15;font-weight:900;letter-spacing:-.1em;color:#254556;}
+.explore-card-placeholder .lg-kicker{position:relative;font-size:9px;}
+.explore-about{margin-top:36px;padding:16px 0;border-bottom:1px solid #d4d4ce;font-size:12px;line-height:1.7;color:#555;}
+.explore-about summary{cursor:pointer;font-weight:700;}
+.explore-about p{max-width:700px;margin-top:12px;}
+@media(min-width:640px){.explore-gallery{grid-template-columns:repeat(2,minmax(0,1fr));}.explore-search{grid-template-columns:minmax(0,1.25fr) minmax(0,1fr) auto;}}
+@media(min-width:1024px){.explore-gallery{grid-template-columns:repeat(3,minmax(0,1fr));gap:36px 28px;}.explore-intro{grid-template-columns:minmax(0,1fr) 195px;gap:40px;}.explore-edition{display:block;border-left:1px solid #d4d4ce;padding-left:24px;}.explore-edition-count{display:block;font-size:54px;font-weight:900;line-height:1;letter-spacing:-.065em;color:var(--lg-blue);}.explore-edition .lg-kicker{font-size:8px;line-height:1.5;margin-top:9px;}.explore-edition>p:last-child{margin-top:8px;font-size:12px;color:#555;}.explore-controls{padding:20px 24px;}}
+@media(prefers-reduced-motion:reduce){.explore-card *{transition:none!important;}.explore-card-link:hover img{transform:none;}}
