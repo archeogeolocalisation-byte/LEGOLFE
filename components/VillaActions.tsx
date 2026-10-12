@@ -1,4 +1,5 @@
 "use client";
+import type { Locale } from "../lib/i18n";
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -11,9 +12,11 @@ type Props = {
   contactHref: string;
   askHref: string;
   hideContact?:boolean;
+  locale?:Locale;
 };
 
-export default function VillaActions({ id, name, contactHref, askHref, hideContact }: Props) {
+export default function VillaActions({ id, name, contactHref, askHref, hideContact, locale="fr" }: Props) {
+ const fr=locale==="fr",t=(a:string,b:string)=>fr?a:b;
   const [saved, setSaved] = useState(false);
   const [shared, setShared] = useState(false);
 

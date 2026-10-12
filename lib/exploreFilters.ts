@@ -1,3 +1,6 @@
+import { placeName } from "./placeNames";
+import { destinations, destinationsForLocation } from "../data/destinations";
+import { placeDescriptionFr } from "../data/places";
 import type { Place, PlaceCategory } from "../data/places";
 import type { Locale } from "./i18n";
 
@@ -14,8 +17,12 @@ export function resolveExploreFilter(filter: unknown, legacyMood?: unknown): Exp
   if (isExploreFilter(filter)) return filter;
   return isExploreFilter(legacyMood) ? legacyMood : "all";
 }
-export function exploreFilterHref(locale: Locale, filter: ExploreFilter) {
-  return `/${locale}/explore${filter === "all" ? "" : `?filter=${filter}`}`;
+export function exploreFilterHref(locale: Locale, filter: ExploreFilter, query = "", town = "") {
+  const params = new URLSearchParams();
+  if (filter !== "all") params.set("filter",filter);
+  if (query) params.set("q",query);
+  if (town) params.set("town",town);
+  return `/${locale}/explore${params.size ? `?${params}` : ""}`;
 }
 export function exploreFilterCategory(filter: ExploreFilter): PlaceCategory | undefined {
   return ["places", "eat", "beach", "sea", "do", "party", "wellness", "services"].includes(filter) ? filter as PlaceCategory : undefined;
@@ -42,4 +49,15 @@ export function matchesExploreFilter(place: Place, filter: ExploreFilter): boole
   if (filter === "family") return place.category !== "party" &&
     (["family", "kids", "children"].some(tag => tags.has(tag)) || /\bfamil(?:y|ies)\b|\bchildren\b|\bkids\b/.test(best));
   return false;
+}
+
+export function resolveExploreSearch(query: unknown, town: unknown) {
+  return { query: typeof query === "string" ? query.trim().slice(0,100) : "", town: typeof town === "string" && destinations.some(d=>d.slug===town) ? town : "" };
+}
+const normalizeSearch = (value: string) => value.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+export function matchesExploreSearch(place: Place, query: string, town: string) {
+  if (town && !destinationsForLocation(place.location).some(d=>d.slug===town)) return false;
+  const terms = normalizeSearch(query).split(/\s+/).filter(Boolean);
+  const text = normalizeSearch([place.name,placeName(place,"fr"),place.location,place.description,placeDescriptionFr[place.id]||""].join(" "));
+  return terms.every(term=>text.includes(term));
 }

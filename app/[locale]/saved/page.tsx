@@ -1,4 +1,5 @@
 "use client";
+import { villaHref } from "../../../lib/villaPaths";
 
 import Link from "next/link";
 import { use, useEffect, useMemo, useState } from "react";
@@ -66,8 +67,8 @@ export default function SavedPage({ params }: { params: Promise<{ locale: string
         <div className="flex items-end justify-between border-b border-black pb-4"><div><p className="lg-kicker text-[var(--lg-blue)]">{fr?"MAISONS / MA SÉLECTION":"STAY / SAVED"}</p><h2 className="mt-3 text-5xl font-black uppercase tracking-[-.055em] md:text-7xl">{fr ? "VOTRE MAISON." : "YOUR HOME."}</h2></div><span className="text-[10px] font-black uppercase tracking-[.12em] text-black/40">{String(savedVillas.length).padStart(2,"0")}</span></div>
         <div className="mt-6 grid gap-6 md:grid-cols-2">
           {savedVillas.map((villa)=><article key={villa.id} className="grid gap-5 border-b border-black pb-6 sm:grid-cols-[180px_1fr]">
-            <Link href={`/villa/${villa.id}`} className="block aspect-[4/3] overflow-hidden bg-neutral-100"><img src={villa.image} alt={villa.name} className="h-full w-full object-cover"/></Link>
-            <div className="flex flex-col justify-between"><div><p className="lg-kicker text-black/40">{fr?"SÉJOUR":"STAY"} · {villa.location}</p><Link href={`/villa/${villa.id}`} className="mt-2 block text-4xl font-black uppercase tracking-[-.05em]">{villa.name}</Link><p className="mt-3 text-sm font-bold text-black/50">€{villa.price.toLocaleString(fr ? "fr-FR" : "en-GB")} / {fr ? "semaine" : "week"} · {villa.guests} {fr ? "voyageurs" : "guests"}</p></div><button onClick={()=>removeVilla(villa.id)} className="mt-5 self-start text-[10px] font-black uppercase tracking-[.12em] underline decoration-[var(--lg-blue)] decoration-2 underline-offset-4">{fr?"Retirer":"Remove"}</button></div>
+            <Link href={villaHref(villa.id,locale)} className="block aspect-[4/3] overflow-hidden bg-neutral-100"><img src={villa.image} alt={villa.name} className="h-full w-full object-cover"/></Link>
+            <div className="flex flex-col justify-between"><div><p className="lg-kicker text-black/40">{fr?"SÉJOUR":"STAY"} · {villa.location}</p><Link href={villaHref(villa.id,locale)} className="mt-2 block text-4xl font-black uppercase tracking-[-.05em]">{villa.name}</Link><p className="mt-3 text-sm font-bold text-black/50">€{villa.price.toLocaleString(fr ? "fr-FR" : "en-GB")} / {fr ? "semaine" : "week"} · {villa.guests} {fr ? "voyageurs" : "guests"}</p></div><button onClick={()=>removeVilla(villa.id)} className="mt-5 self-start text-[10px] font-black uppercase tracking-[.12em] underline decoration-[var(--lg-blue)] decoration-2 underline-offset-4">{fr?"Retirer":"Remove"}</button></div>
           </article>)}
         </div>
       <VillaComparison items={savedVillas} locale={locale}/>
