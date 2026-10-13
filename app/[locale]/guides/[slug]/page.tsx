@@ -6,9 +6,10 @@ import Breadcrumbs from "../../../../components/Breadcrumbs";
 import JsonLd from "../../../../components/JsonLd";
 import GuideImage, { mediaForGuide } from "../../../../components/GuideImage";
 import GuideLinks from "../../../../components/GuideLinks";
-import { getGuide, guides } from "../../../../data/guides";
+import { getGuide, guides, relatedGuidesFor } from "../../../../data/guides";
 import { isLocale, type Locale } from "../../../../lib/i18n";
-import { absoluteUrl, pageMetadata, siteOrigin } from "../../../../lib/seo";
+import { guideArticleSchema } from "../../../../lib/guideSeo";
+import { pageMetadata } from "../../../../lib/seo";
 
 type Props = { params: Promise<{ locale: string; slug: string }> };
 async function resolve(params: Props["params"]) {
@@ -29,11 +30,12 @@ export async function generateMetadata({ params }: Props) {
 export default async function Page({ params }: Props) {
   const { locale, guide } = await resolve(params);
   const fr = locale === "fr", copy = guide.copy[locale], path = `/guides/${guide.slug}`;
-  const related = guide.related.map(getGuide).filter((item): item is NonNullable<typeof item> => !!item);
+  const related = relatedGuidesFor(guide);
+  const schema = guideArticleSchema(guide, locale);
   return <main className="min-h-screen bg-white text-black">
     <SiteHeader locale={locale} path={path} />
     <Breadcrumbs locale={locale} items={[{ name: "LE GOLFE", path: `/${locale}` }, { name: "Guides", path: `/${locale}/guides` }, { name: copy.seoTitle, path: `/${locale}${path}` }]} />
-    {siteOrigin() && <JsonLd data={{ "@context": "https://schema.org", "@type": "Article", headline: copy.seoTitle, description: copy.description, inLanguage: fr ? "fr-FR" : "en-GB", datePublished: `${guide.published}T12:00:00+02:00`, dateModified: `${guide.verified}T12:00:00+02:00`, mainEntityOfPage: absoluteUrl(`/${locale}${path}`), image: absoluteUrl(mediaForGuide(guide).photo.src), author: { "@type": "Organization", name: "LE GOLFE", url: absoluteUrl(`/${locale}`) }, publisher: { "@type": "Organization", name: "LE GOLFE", url: absoluteUrl(`/${locale}`) }, citation: guide.sources.map(source => source.url) }} />}
+    {schema && <JsonLd data={schema} />}
     <article>
       <header className="lg-shell pb-10 pt-10 md:pt-14">
         <p className="lg-kicker">LE GOLFE / {guide.category[locale]}</p>
@@ -58,6 +60,7 @@ export default async function Page({ params }: Props) {
           {copy.sections.map(section => <section id={section.id} key={section.id} className="scroll-mt-8 border-t border-black/25 pt-7 mt-12">
             <h2 className="text-3xl font-black leading-tight tracking-[-.04em] md:text-4xl">{section.title}</h2>
             {section.paragraphs.map((paragraph, index) => <p key={index} className="mt-5 text-base leading-8 text-black/80 md:text-lg">{paragraph}</p>)}
+            {section.table && <div className="mt-6 overflow-x-auto"><table className="w-full min-w-[560px] border-collapse text-left text-sm leading-6"><caption className="mb-3 text-left text-xs font-bold text-black/65">{section.table.caption}</caption><thead className="bg-[#0b2534] text-white"><tr>{section.table.headers.map(label => <th key={label} scope="col" className="px-4 py-3">{label}</th>)}</tr></thead><tbody>{section.table.rows.map((row, index) => <tr key={index} className="border-b border-black/20 odd:bg-neutral-100">{row.map((cell, column) => column === 0 ? <th key={column} scope="row" className="px-4 py-3">{cell}</th> : <td key={column} className="px-4 py-3">{cell || "—"}</td>)}</tr>)}</tbody></table></div>}
             {section.sourceIds && <p className="mt-4 text-xs leading-6 text-black/60">{fr ? "Repères : " : "References: "}{section.sourceIds.map((id, index) => { const source = guide.sources.find(item => item.id === id)!; return <span key={id}>{index > 0 && " · "}<a className="underline underline-offset-2" href={`#source-${id}`}>{source.label}</a></span>; })}</p>}
           </section>)}
           <section className="mt-12 border-t border-black pt-7" aria-labelledby="questions-title">

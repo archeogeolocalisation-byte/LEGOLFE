@@ -13,6 +13,7 @@ type GuideMedia = { photo: StaticImageData; kind: "illustration" } | {
   photo: StaticImageData; kind: "photograph"; credit: string; license: string; licenseUrl: string; source: string;
 };
 export const guideMedia: Record<string, GuideMedia> = {
+  ...Object.fromEntries(["marches-golfe-saint-tropez-jours", "activites-gratuites-golfe-saint-tropez", "golfe-saint-tropez-avec-enfants", "week-end-automne-golfe-saint-tropez"].map(slug => [slug + "-cover", { photo: { src: `/media/guides/${slug}-cover.webp`, width: 1200, height: 800 }, kind: "illustration" as const }])),
   "pampelonne-cover": { photo: pampelonne, kind: "illustration" },
   "ramatuelle-cover": { photo: ramatuelle, kind: "illustration" },
   "saint-tropez-car-free-cover": { photo: saintTropez, kind: "illustration" },

@@ -1,8 +1,9 @@
+import { practicalGuides } from "./practicalGuides";
 import { hikingGuides } from "./hikingGuides";
 import type { Locale } from "../lib/i18n";
 
 export type GuideSource = { id: string; label: string; url: string };
-export type GuideSection = { id: string; title: string; paragraphs: string[]; sourceIds?: string[] };
+export type GuideSection = { id: string; title: string; paragraphs: string[]; sourceIds?: string[]; table?: { caption: string; headers: string[]; rows: string[][] } };
 export type GuideCopy = {
   title: string; accent: string; seoTitle: string; description: string; intro: string; verdict: string;
   facts: { label: string; value: string }[];
@@ -27,6 +28,7 @@ const cinemaMuseum = { id: "cinema", label: "Saint-Tropez Tourisme · Musée de 
 const butterflyMuseum = { id: "butterflies", label: "Saint-Tropez Tourisme · Maison des Papillons", url: "https://www.sainttropeztourisme.com/fr/fiche/maison-des-papillons-musee-dany-lartigue-4165778/" };
 
 export const guides: Guide[] = [
+  ...practicalGuides,
   {
     slug: "pampelonne-acces-parking-plage", category: { fr: "Plage / Ramatuelle", en: "Beach / Ramatuelle" },
     image: "pampelonne-cover",
@@ -257,3 +259,8 @@ export function getGuide(slug: string) { return guides.find(guide => guide.slug 
 export function guidePaths() { return ["/guides", ...guides.map(guide => `/guides/${guide.slug}`)]; }
 export function guidesForDestination(slug: string) { return guides.filter(guide => guide.destinations.includes(slug)); }
 export function guidesForPlace(id: string) { return guides.filter(guide => guide.placeIds.includes(id)); }
+
+export function relatedGuidesFor(guide: Guide, limit = 4) {
+  const ids = [...guide.related, ...guides.filter(other => other.slug !== guide.slug && other.related.includes(guide.slug)).map(other => other.slug)];
+  return [...new Set(ids)].flatMap(slug => { const item = getGuide(slug); return item ? [item] : []; }).slice(0, limit);
+}
