@@ -28,6 +28,7 @@ async function nodes(element){if(!element||typeof element!=='object')return [];i
   else{assert.ok(html.includes('google.com/maps/search/'));assert.equal(place.latitude,undefined);}
   const element=await Page({params:Promise.resolve({locale,id:place.id})});const children=await nodes(element);const blocks=children.filter(e=>e.type===Block);assert.equal(blocks.length,1);assert.equal(blocks[0].props.points.length,points.length);
   const community=children.filter(e=>typeof e.type==='function'&&e.type.name==='CommunitySection');assert.equal(community.length,1);const locationAt=children.indexOf(blocks[0]),communityAt=children.indexOf(community[0]);assert.ok(locationAt<communityAt);
+  const factsAt=children.findIndex(e=>e.type==='dl');if(factsAt>=0)assert.ok(locationAt<factsAt,place.id+' map before facts');
   const preparationAt=children.findIndex(e=>typeof e.type==='function'&&e.type.name==='PlacePreparation');if(preparationAt>=0)assert.ok(locationAt<preparationAt&&preparationAt<communityAt);
   if(place.id==='caves-du-roy'){const practicalAt=children.findIndex(e=>e.type==='h2'&&e.props.children===require('../data/editorialFeatures.ts').editorialFeatures['caves-du-roy'][locale].practicalTitle);assert.ok(locationAt<practicalAt);}
   const siblings=require('react').Children.toArray(element.props.children),communityIndex=siblings.findIndex(e=>typeof e.type==='function'&&e.type.name==='CommunitySection');assert.ok(['lg-shell py-6','lg-shell py-12'].includes(siblings[communityIndex+1].props.className));
