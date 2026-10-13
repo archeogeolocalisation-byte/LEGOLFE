@@ -47,7 +47,8 @@ export const touristMapPlaces:TouristMapPlace[] = [
         "description": "A village above the Golfe, with views and restaurants around its centre."
       }
     },
-    "path": "/destinations/gassin"
+    "path": "/destinations/gassin",
+    "illustration": "/media/tourist-map/gassin-illustration.webp"
   },
   {
     "id": "ramatuelle",
@@ -119,7 +120,8 @@ export const touristMapPlaces:TouristMapPlace[] = [
         "description": "The harbour and main beach, with Bonporteau for a different setting."
       }
     },
-    "path": "/destinations/cavalaire-sur-mer"
+    "path": "/destinations/cavalaire-sur-mer",
+    "illustration": "/media/tourist-map/cavalaire-sur-mer-illustration.webp"
   },
   {
     "id": "rayol-canadel",
@@ -167,7 +169,8 @@ export const touristMapPlaces:TouristMapPlace[] = [
         "description": "A village and wooded landscapes in the inland part of the territory."
       }
     },
-    "path": "/destinations/la-mole"
+    "path": "/destinations/la-mole",
+    "illustration": "/media/tourist-map/la-mole-illustration.webp"
   },
   {
     "id": "le-plan-de-la-tour",
@@ -191,7 +194,8 @@ export const touristMapPlaces:TouristMapPlace[] = [
         "description": "A village among hills and hamlets, set back from the coast."
       }
     },
-    "path": "/destinations/le-plan-de-la-tour"
+    "path": "/destinations/le-plan-de-la-tour",
+    "illustration": "/media/tourist-map/le-plan-de-la-tour-illustration.webp"
   },
   {
     "id": "la-garde-freinet",
@@ -215,7 +219,8 @@ export const touristMapPlaces:TouristMapPlace[] = [
         "description": "An inland village within the wooded Maures landscape."
       }
     },
-    "externalUrl": "https://www.golfe-saint-tropez-information.com/fr/villages-stations/la-garde-freinet"
+    "externalUrl": "https://www.golfe-saint-tropez-information.com/fr/villages-stations/la-garde-freinet",
+    "illustration": "/media/tourist-map/la-garde-freinet-illustration.webp"
   },
   {
     "id": "grimaud",
@@ -264,7 +269,8 @@ export const touristMapPlaces:TouristMapPlace[] = [
         "description": "The harbour, old centre and beaches on the northern shore of the Golfe."
       }
     },
-    "path": "/destinations/sainte-maxime"
+    "path": "/destinations/sainte-maxime",
+    "illustration": "/media/tourist-map/sainte-maxime-illustration.webp"
   },
   {
     "id": "saint-tropez",
@@ -288,7 +294,8 @@ export const touristMapPlaces:TouristMapPlace[] = [
         "description": "Explore the old harbour, village lanes and Citadelle on foot."
       }
     },
-    "path": "/destinations/saint-tropez"
+    "path": "/destinations/saint-tropez",
+    "illustration": "/media/tourist-map/saint-tropez-illustration.webp"
   },
   {
     "id": "port-grimaud",

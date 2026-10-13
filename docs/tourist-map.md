@@ -25,3 +25,13 @@ Titres/descriptions FR/EN, canonicals/alternates, couverture sociale aplatie sur
 `node scripts/test-tourist-map.cjs` vérifie les 14 repères, sources/liens, projection, limites de déplacement, médias et empreintes ; rendus SSR FR/EN, navigation, métadonnées/sitemap et noindex de preview. Les vrais handlers du composant sont aussi exercés avec un état de hooks isolé : sélection, zoom, déplacement par pointeur/clavier et remise à zéro. Il ne s'agit pas d'un test navigateur. Les suites existantes sont exécutées en CI avec TypeScript et compilation. Le fond de carte et la couverture ont été contrôlés visuellement.
 
 Pas de contrôle navigateur de la branche depuis cet environnement. Après publication : vérifier les deux langues, les 14 sélections, Grimaud/Port Grimaud/Nartelle, le lien officiel de La Garde-Freinet, le zoom/déplacement au clavier et sur téléphone, puis la couverture sociale et le sitemap.
+
+## Visuels des villages et routes — 13 octobre 2026
+
+Ajout des illustrations approuvées pour Le Plan-de-la-Tour, Gassin, Sainte-Maxime, La Môle (avion au loin), Cavalaire, La Garde-Freinet et Saint-Tropez. WebP 600 × 400 de 51–71 Ko avec empreintes dans le manifeste. Les signatures fournies sont conservées ; les visuels entiers sont visibles sur mobile, sans recadrage vertical. Les images de Grimaud et Port Grimaud restent en place. Les photos et galeries des fiches ne changent pas.
+
+La page propose deux liens externes Routes / Trafic en direct et un itinéraire Google Maps pour chaque lieu. URL Maps officielles `api=1`, carte `basemap=roadmap`, trafic `layer=traffic`. Le trajet recherche le lieu par son nom dans le Var ; aucune coordonnée de centroïde communal utilisée comme arrivée et aucun départ imposé. Google Maps demande ou choisit le départ. Les conditions de trafic sont fournies par Google selon la couverture ; ce ne sont pas des mesures affichées sur notre relief.
+
+Pas de script ou iframe Google, pas de requête tierce avant clic, aucune nouvelle clé ni facturation API. Documentation vérifiée : https://developers.google.com/maps/documentation/urls/get-started . Une future carte de trafic intégrée nécessiterait Maps JavaScript API / TrafficLayer, clé restreinte et projet Google avec facturation activée ; elle n'est pas activée ici.
+
+Validation : suite tourist-map étendue aux nouveaux visuels, liens routes/trafic et itinéraires de chaque sélection en FR/EN ; TypeScript, ESLint et compilation CI. Contrôle navigateur à effectuer après publication : ouverture Google Maps sur téléphone et bureau, activation du calque trafic selon la couverture et images sans recadrage. Branche feature/village-visuals sans preview publique.
