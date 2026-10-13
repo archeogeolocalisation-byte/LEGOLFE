@@ -2,7 +2,6 @@ import Link from 'next/link';
 import SiteHeader from './SiteHeader';
 import PlaceMediaGallery from './PlaceMediaGallery';
 import PlaceActions from './PlaceActions';
-import CommunitySection from './CommunitySection';
 import {discoveryFeatures} from '../data/discoveryFeatures';
 import {places} from '../data/places';
 import {photosForPlace} from '../lib/curatedPlaceGallery';
@@ -23,6 +22,6 @@ export default function DiscoveryFeaturePlace({id,locale}:{id:string;locale:Loca
    {id==='cap-taillat'&&<a className="mt-8 inline-block border-b border-black text-sm font-bold" href="https://www.ramatuelle-tourisme.com/fr/loisirs/loisirs-sportifs/ramatuelle/plage-de-l-escalet-isthme-du-cap-taillat-sentier-du-littoral-ramatuelle-4757939/" target="_blank" rel="noreferrer">{locale==='fr'?'Consulter l’itinéraire officiel':'View the official route'} ↗</a>}
    <div className="mt-14 border-t border-black pt-7"><h2 className="text-2xl font-black">{locale==='fr'?'Composer votre journée':'Plan the rest of your day'}</h2><div className="mt-5 flex flex-wrap gap-3">{guide.nearby.map(([target,label])=><Link className="lg-btn" key={target} href={`/${locale}/place/${target}`}>{label} →</Link>)}</div></div>
   </section>
-  <PlaceActions place={place} locale={locale}/><CommunitySection placeId={id} locale={locale}/>
+  <PlaceActions place={place} locale={locale}/>
  </main>;
 }

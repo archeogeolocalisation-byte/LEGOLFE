@@ -6,6 +6,8 @@ const {places}=require('../data/places.ts'),{placeMapPoints}=require('../data/pl
 const {osmMapUrl,pointDirectionsUrl,placeSearchUrl}=require('../lib/placeMapLinks.ts');
 const {validMapPoint}=require('../lib/villaMapLocation.ts');
 const Block=require('../components/PlaceMapBlock.tsx').default,Page=require('../app/[locale]/place/[id]/page.tsx').default,{renderToStaticMarkup}=require('react-dom/server');
+const expandNames=new Set(['PlaceContent','PlaceStoryPhotos','LegacyPlacePage','EditorialFeaturePlace','VillageFeaturePlace','PlaceFactSheet','DiscoveryFeaturePlace']);
+async function nodes(element){if(!element||typeof element!=='object')return [];if(typeof element.type==='function'&&expandNames.has(element.type.name))return nodes(await element.type(element.props));return [element,...(await Promise.all(require('react').Children.toArray(element.props?.children).map(nodes))).flat()];}
 (async()=>{
  let count=0;
  for(const [id,points] of Object.entries(placeMapPoints)){
@@ -24,7 +26,11 @@ const Block=require('../components/PlaceMapBlock.tsx').default,Page=require('../
   assert.equal(html.includes('<iframe'),false);assert.equal(html.includes('navigator.geolocation'),false);
   if(points.length){assert.ok(html.includes('openstreetmap.org/copyright'));assert.ok(html.includes('google.com/maps/dir/'));assert.ok(html.includes(locale==='fr'?'Afficher le plan':'Show map'));}
   else{assert.ok(html.includes('google.com/maps/search/'));assert.equal(place.latitude,undefined);}
-  const element=await Page({params:Promise.resolve({locale,id:place.id})});const children=require('react').Children.toArray(element.props.children);const blocks=children.filter(e=>e.type===Block);assert.equal(blocks.length,1);assert.equal(blocks[0].props.points.length,points.length);
+  const element=await Page({params:Promise.resolve({locale,id:place.id})});const children=await nodes(element);const blocks=children.filter(e=>e.type===Block);assert.equal(blocks.length,1);assert.equal(blocks[0].props.points.length,points.length);
+  const community=children.filter(e=>typeof e.type==='function'&&e.type.name==='CommunitySection');assert.equal(community.length,1);const locationAt=children.indexOf(blocks[0]),communityAt=children.indexOf(community[0]);assert.ok(locationAt<communityAt);
+  const preparationAt=children.findIndex(e=>typeof e.type==='function'&&e.type.name==='PlacePreparation');if(preparationAt>=0)assert.ok(locationAt<preparationAt&&preparationAt<communityAt);
+  if(place.id==='caves-du-roy'){const practicalAt=children.findIndex(e=>e.type==='h2'&&e.props.children===require('../data/editorialFeatures.ts').editorialFeatures['caves-du-roy'][locale].practicalTitle);assert.ok(locationAt<practicalAt);}
+  const siblings=require('react').Children.toArray(element.props.children),communityIndex=siblings.findIndex(e=>typeof e.type==='function'&&e.type.name==='CommunitySection');assert.ok(['lg-shell py-6','lg-shell py-12'].includes(siblings[communityIndex+1].props.className));
  }
  console.log(`Maps: ${count} sourced public references; ${places.length*2} FR/EN route integrations and unloaded renders, road destination, bounds, fallbacks and service privacy passed.`);
 })().catch(e=>{console.error(e);process.exitCode=1;});
