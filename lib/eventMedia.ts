@@ -1,6 +1,6 @@
 import type { GolfeEvent } from "../data/events";
 
-export type EventMedia = { src:string; alt:string; credit:string; license:string; source:string };
+export type EventMedia = { kind?:"illustration"; src:string; alt:string; credit:string; license:string; source:string };
 const commons=(name:string)=>`https://commons.wikimedia.org/wiki/Special:Redirect/file/${encodeURIComponent(name)}`;
 
 const media = {
@@ -20,6 +20,8 @@ const media = {
 
 export function mediaForEvent(event:GolfeEvent):EventMedia{
   if(event.id==="voiles-2026" || event.category==="sailing") return media.voiles;
+  if(event.location==="La Garde-Freinet")return {src:"/media/tourist-map/la-garde-freinet-illustration.webp",alt:"Illustration de La Garde-Freinet",credit:"LE GOLFE",license:"Illustration originale",source:"/media/tourist-map/sources.json",kind:"illustration"};
+  if(event.location==="Rayol-Canadel-sur-Mer")return {src:"/media/tourist-map/rayol-canadel-illustration.webp",alt:"Illustration de Rayol-Canadel",credit:"LE GOLFE",license:"Illustration originale",source:"/media/tourist-map/sources.json",kind:"illustration"};
   if(event.location==="Ramatuelle") return media.ramatuelle;
   if(event.location==="Sainte-Maxime") return media.sainteMaxime;
   if(event.location==="Grimaud") return media.grimaud;

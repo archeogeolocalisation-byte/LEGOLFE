@@ -40,10 +40,14 @@ export const events:GolfeEvent[]=[
 
 export type AgendaSource = { name:string; area:string; type:"tourism"|"municipal"|"venue"; url:string };
 export const agendaSources:AgendaSource[] = [
+  {name:"Cinéma Le Pagnol · Carré Léon Gaumont",area:"Sainte-Maxime",type:"venue",url:"https://cinemapagnol-stemaxime.com/"},
+  {name:"Domaine du Rayol",area:"Rayol-Canadel-sur-Mer",type:"venue",url:"https://www.domainedurayol.org/agenda-domaine-rayol/"},
+  {name:"La Garde-Freinet · programme officiel",area:"La Garde-Freinet",type:"tourism",url:"https://www.golfe-saint-tropez-information.com/fr/villages-stations/la-garde-freinet"},
+  {name:"Ville de Sainte-Maxime",area:"Sainte-Maxime",type:"municipal",url:"https://www.sainte-maxime.fr/agenda/"},
   {name:"Saint-Tropez Tourisme",area:"Saint-Tropez",type:"tourism",url:"https://www.sainttropeztourisme.com/fr/evenements-saint-tropez/agenda-evenements-saint-tropez/"},
   {name:"Ramatuelle Tourisme",area:"Ramatuelle",type:"tourism",url:"https://www.ramatuelle-tourisme.com/fr/animation/"},
   {name:"Sainte-Maxime Tourisme",area:"Sainte-Maxime",type:"tourism",url:"https://www.sainte-maxime.com/"},
-  {name:"Le Carré Sainte-Maxime",area:"Sainte-Maxime",type:"venue",url:"https://www.carre-sainte-maxime.fr/"},
+  {name:"Le Carré Léon Gaumont",area:"Sainte-Maxime",type:"venue",url:"https://billetterie-carresaintemaxime.mapado.com/"},
   {name:"Grimaud Tourisme",area:"Grimaud",type:"tourism",url:"https://www.grimaud-provence.com/preparez/agenda/"},
   {name:"Gassin Tourisme",area:"Gassin",type:"tourism",url:"https://gassin.eu/fr/animations/"},
   {name:"Ville de Cogolin",area:"Cogolin",type:"municipal",url:"https://www.cogolin.fr/agenda/"},

@@ -113,7 +113,7 @@ export default function AccountPage() {
         <SiteHeader locale={locale} path="/account" />
         <section className="lg-shell py-20 md:py-28">
           <p className="lg-kicker">{fr ? "COMMUNAUTÉ / COMPTE" : "COMMUNITY / ACCOUNT"}</p>
-          <h1 className="lg-display mt-6 text-[17vw] md:text-[130px]">{fr ? <>REJOINDRE<br />LE GOLFE.</> : <>JOIN<br />LE GOLFE.</>}</h1>
+          <h1 className="lg-menu-title mt-6">{fr ? <>REJOINDRE<br />LE GOLFE.</> : <>JOIN<br />LE GOLFE.</>}</h1>
           <div className="mt-12 grid gap-10 border-t border-black pt-8 md:grid-cols-2">
             <p className="max-w-lg text-xl font-bold leading-8">
               {fr
@@ -133,7 +133,7 @@ export default function AccountPage() {
       <SiteHeader locale={locale} path="/account" />
       <section className="lg-shell py-20 md:py-28">
         <p className="lg-kicker">{fr ? "COMMUNAUTÉ / COMPTE" : "COMMUNITY / ACCOUNT"}</p>
-        <h1 className="lg-title mt-5 text-[15vw] uppercase md:text-[104px]">{fr ? "MON PROFIL." : "MY PROFILE."}</h1>
+        <h1 className="lg-menu-title mt-5">{fr ? "MON PROFIL." : "MY PROFILE."}</h1>
         <div className="mt-12 grid gap-14 border-t border-black pt-8 md:grid-cols-[.8fr_1.2fr]">
           <div>
             <p className="lg-kicker">{fr ? "COMPTE" : "ACCOUNT"}</p>
