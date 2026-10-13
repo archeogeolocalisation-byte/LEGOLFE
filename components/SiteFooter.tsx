@@ -13,7 +13,7 @@ export default function SiteFooter({locale="en"}:{locale?:Locale}){
         </div>
         <div className="grid grid-cols-2 gap-6 text-[10px] font-black uppercase tracking-[.14em] md:justify-self-end">
           <div className="space-y-3"><Link className="block" href={`${base}/destinations`}>{fr?"Communes":"Destinations"}</Link><Link className="block" href={`${base}/guides`}>{labels.guides}</Link><Link className="block" href={`${base}/explore`}>{labels.explore}</Link><Link className="block" href={`${base}/whats-on`}>{labels.agenda}</Link><Link className="block" href={`${base}/local`}>{labels.local}</Link></div>
-          <div className="space-y-3"><Link className="block" href={`${base}/stay`}>{labels.stay}</Link><Link className="block" href={`${base}/ask`}>{labels.askFull}</Link><Link className="block" href={`${base}/account`}>{labels.account}</Link></div>
+          <div className="space-y-3"><Link className="block" href={`${base}/stay`}>{labels.stay}</Link><Link className="block" href={`${base}/ask`}>{labels.askFull}</Link><Link className="block" href={`${base}/account`}>{labels.account}</Link><Link className="block" href={`${base}/how-it-works`}>{fr?"Fonctionnement & pilote":"How it works & pilot"}</Link></div>
         </div>
       </div>
       <div className="mt-14 flex items-end justify-between border-t border-black pt-5">

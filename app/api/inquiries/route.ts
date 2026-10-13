@@ -1,5 +1,4 @@
 import { createClient } from '@supabase/supabase-js';
-import { villas } from '../../../data/villas';
 import { validateInquiry } from '../../../lib/inquiryValidation';
 import { checkOrigin, readJson, RequestError } from '../../../lib/security';
 
@@ -17,9 +16,8 @@ export async function POST(request: Request) {
     const db = createClient(url, key, { auth: { persistSession: false, autoRefreshToken: false } });
     const { villaId, ...fields } = inquiry;
     const live = villaId.startsWith('property-');
-    const demo = villas.find(v => v.id === villaId);
-    if (!live && (!demo || inquiry.guests > demo.guests)) return response({ error: 'INVALID_INQUIRY' }, 400);
-    const { error } = await db.from(live ? 'villa_inquiries' : 'requests').insert({ ...fields, ...(live ? { listing_id: villaId } : { villa_id: villaId, villa_name: demo!.name }) }).abortSignal(AbortSignal.timeout(10000));
+    if (!live || !/^property-[a-zA-Z0-9-]{1,100}$/.test(villaId)) return response({ error: 'INVALID_INQUIRY' }, 400);
+    const { error } = await db.from('villa_inquiries').insert({ ...fields, listing_id: villaId }).abortSignal(AbortSignal.timeout(10000));
     if (error) {
       if (error.message.includes('RATE_LIMITED')) return response({ error: 'PLEASE_WAIT' }, 429);
       if (error.message.includes('VILLA_DATES_BLOCKED')) return response({ error: 'VILLA_DATES_BLOCKED' }, 409);

@@ -34,5 +34,5 @@ export async function readJson(request: Request, limit: number): Promise<unknown
 }
 
 export function safeReturnPath(value: string | null): string {
-  return value && /^\/place\/[a-zA-Z0-9-]+$/.test(value) ? value : '';
+  return value && /^\/(?:place|villa)\/[a-zA-Z0-9-]+$/.test(value) ? value : '';
 }
