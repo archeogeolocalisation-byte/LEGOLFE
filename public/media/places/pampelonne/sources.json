@@ -1,0 +1,71 @@
+{
+  "checked": "2026-10-13",
+  "changes": "User supplied photographs, resized without upscaling and encoded WebP; no retouching. Original aspect ratios retained; gallery display crops and full-screen originals available.",
+  "files": [
+    {
+      "file": "/media/places/pampelonne/photo-1.webp",
+      "uploadedName": "Pampelonne_beach_-_panoramio_(4).jpg",
+      "width": 1280,
+      "height": 851,
+      "bytes": 227894,
+      "inputSha256": "fc1c7897640579ebbae7790be621e8efa2a5f46cfd09757ec87825ee34357cf4",
+      "sha256": "bb310a2c9d8cf14591b9b352ef26f661d818a513fed090bde1e187c7bb7ea6f4",
+      "credit": "avu-edm / Wikimedia Commons",
+      "license": "CC BY 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/3.0/",
+      "source": "https://commons.wikimedia.org/wiki/File:Pampelonne_beach_-_panoramio_(4).jpg"
+    },
+    {
+      "file": "/media/places/pampelonne/photo-2.webp",
+      "uploadedName": "Pampelonne_beach_-_panoramio_(6).jpg",
+      "width": 1280,
+      "height": 851,
+      "bytes": 155694,
+      "inputSha256": "06a8469938f5fdb352b97b219c9b6d5664e6363093afcb1b525aa63d39f91fca",
+      "sha256": "434e7987c02f5e24d4fd2306af632e045d83e16d61bfc3be7ad0cdc499c86779",
+      "credit": "avu-edm / Wikimedia Commons",
+      "license": "CC BY 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/3.0/",
+      "source": "https://commons.wikimedia.org/wiki/File:Pampelonne_beach_-_panoramio_(6).jpg"
+    },
+    {
+      "file": "/media/places/pampelonne/photo-3.webp",
+      "uploadedName": "Presqu'île_de_Saint-Tropez_-_Vue_aérienne.jpg",
+      "width": 1280,
+      "height": 853,
+      "bytes": 302266,
+      "inputSha256": "98a5577090866957146b3f037d186eea5305a8aff0f2838fc36501e13d1f44c9",
+      "sha256": "6c56dc374513441f055116e6d3fbb71e160c88fa508ae2e8147e9dc112057395",
+      "credit": "Starus / Wikimedia Commons",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+      "source": "https://commons.wikimedia.org/wiki/File:Presqu'île_de_Saint-Tropez_-_Vue_aérienne.jpg"
+    },
+    {
+      "file": "/media/places/pampelonne/photo-4.webp",
+      "uploadedName": "Pampelone_Saint_Tropez_4.jpg",
+      "width": 800,
+      "height": 1225,
+      "bytes": 231620,
+      "inputSha256": "0942e24e8c383667d297d7ff88b1b5dda7d923a07ed4da9274e64bdd9b17b678",
+      "sha256": "c623c5b90382fd7891519fe1af796e28a9aa5939ba82a06ca7f6534bca0bce90",
+      "credit": "Arnaud 25 / Wikimedia Commons",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "source": "https://commons.wikimedia.org/wiki/File:Pampelone_Saint_Tropez_4.jpg"
+    },
+    {
+      "file": "/media/places/pampelonne/photo-5.webp",
+      "uploadedName": "Pampelonne_beach_-_panoramio_(2).jpg",
+      "width": 1280,
+      "height": 851,
+      "bytes": 187820,
+      "inputSha256": "2c963ec8b470d294cad4e316c2eef2629fae502be661db21f1e0b7272d280b0f",
+      "sha256": "8ebb42ce182203d3480fe30916cb9f2823a504693ed1b1f110a3877264a3fa71",
+      "credit": "avu-edm / Wikimedia Commons",
+      "license": "CC BY 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/3.0/",
+      "source": "https://commons.wikimedia.org/wiki/File:Pampelonne_beach_-_panoramio_(2).jpg"
+    }
+  ]
+}

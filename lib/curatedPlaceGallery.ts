@@ -1,3 +1,4 @@
+import {pampelonneMedia} from '../data/pampelonneMedia';
 import {placeFactsMedia} from '../data/placeFactsMedia';
 import {discoveryPlaceMedia} from '../data/discoveryMedia';
 import {suppliedPlaceMedia} from '../data/suppliedPlaceMedia';
@@ -5,8 +6,9 @@ import {legacyPlaceMedia} from '../data/legacyPlaceMedia';
 import {villageMedia,type VillagePhoto} from '../data/villageMedia';
 import {pressMedia} from './pressMedia';
 
-// Only photographs of the named place are eligible, never pictures of its surroundings.
+// Named-place photographs; contextual peninsula view only where explicitly supplied and labelled.
 export function photosForPlace(id:string):VillagePhoto[]{
+ if(id==='pampelonne')return pampelonneMedia;
  if(placeFactsMedia[id])return [placeFactsMedia[id]];
  if(discoveryPlaceMedia[id])return discoveryPlaceMedia[id];
  if(suppliedPlaceMedia[id])return suppliedPlaceMedia[id];
