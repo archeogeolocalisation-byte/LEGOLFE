@@ -1,0 +1,7 @@
+# Agenda — 13 octobre 2026
+
+Titre réduit : 38–80 px au lieu des 60–118 px précédents. Introduction ivoire, affichage bleu LE GOLFE, cartes ivoire et bleu clair, filtres actifs bleus avec texte blanc. La liste utilise deux colonnes dès 768 px et une sur téléphone. À l’affiche utilise un grand événement à gauche et deux compacts à droite dès 960 px ; empilement sur petits écrans.
+
+La mise en avant reste liée à la période, catégorie et commune sélectionnées. Jusqu’à trois événements à venir dans cette sélection, priorité aux événements éditorialement marqués featured, puis ordre chronologique existant. Aucun événement inventé pour remplir trois cartes si la sélection est plus courte. Les événements à l’affiche ne sont pas répétés dans la liste ; le compteur indique le total de la sélection. S’il ne reste aucun autre événement, un texte précise que tous sont affichés au-dessus. Les événements passés d’un mois sélectionné restent dans la liste. Sessions récurrentes, liens fiche/source/demande et crédits des photos de contexte sont conservés.
+
+Validation : suite profile-agenda conserve les interactions date/mois et récurrences ; sept événements de test FR/EN, priorité featured, trois mises en avant/quatre restants sans doublon, catégorie et commune, sélection d’un seul événement et vide. TypeScript, ESLint ciblé, compilation et suites complètes CI. Contrôle navigateur du 1+2 et de la grille responsive après publication. Aucun SQL ou environnement requis. Branche design/agenda-layout sans preview publique.
