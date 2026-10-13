@@ -1,3 +1,3 @@
-import { pageMetadata } from "../../lib/seo";
-export const metadata=pageMetadata({title:"Maisons et villas dans le Golfe de Saint-Tropez",description:"Trouvez une villa à Ramatuelle, Gassin ou dans le Golfe de Saint-Tropez selon vos envies, vos invités et la distance aux plages.",path:"/match",locale:"fr",bilingual:false});
+import {pageMetadata} from "../../lib/seo";
+export const metadata={...pageMetadata({title:"Simulation de sélection de maisons — exemples",description:"Simulation sur des fiches de présentation, sans maison proposée à la location.",path:"/match",locale:"fr",bilingual:false}),robots:{index:false,follow:true}};
 export default function Layout({children}:{children:React.ReactNode}){return children;}

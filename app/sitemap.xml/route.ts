@@ -23,7 +23,6 @@ export async function GET() {
  const image=guide ? `<image:image><image:loc>${xml(new URL(mediaForGuide(guide).photo.src,origin).href)}</image:loc></image:image>` : media && !media.contextual ? `<image:image><image:loc>${xml(new URL(media.src,origin).href)}</image:loc></image:image>` : "";
  return `<url><loc>${xml(origin+"/"+locale+path)}</loc>${lastmod}${["fr","en","x-default"].map(lang=>`<xhtml:link rel="alternate" hreflang="${lang}" href="${xml(origin+"/"+(lang==="x-default"?"en":lang)+path)}"/>`).join("")}${image}</url>`;
  }));
- rows.push(`<url><loc>${xml(origin+"/match")}</loc></url>`);
  const houses=(await getPublishedVillas()).map(v=>({id:v.id,image:v.photos[0]?.src}));
  for(const villa of houses)for(const locale of ["fr","en"] as const){
   const image=villa.image?`<image:image><image:loc>${xml(new URL(villa.image,origin).href)}</image:loc></image:image>`:"";
