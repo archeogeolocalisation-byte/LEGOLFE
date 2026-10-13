@@ -1,3 +1,6 @@
+import PlaceFactSheet from '../../../../components/PlaceFactSheet';
+import {placeFacts} from '../../../../data/placeFacts';
+import {placeFactsMedia} from '../../../../data/placeFactsMedia';
 import GuideLinks from "../../../../components/GuideLinks";
 import { guidesForPlace } from "../../../../data/guides";
 import DiscoveryFeaturePlace from '../../../../components/DiscoveryFeaturePlace';
@@ -31,6 +34,7 @@ async function PlaceContent({ params }: { params: Promise<{ locale: string; id: 
   const p = places.find((x) => x.id === id);
   if (!p) notFound();
 
+  if (placeFacts[id]) return <PlaceFactSheet id={id} locale={l} />;
   if (discoveryFeatures[id]) return <DiscoveryFeaturePlace id={id} locale={l} />;
   if (legacyPlaceFeatures[id]) return <LegacyPlacePage id={id} locale={l} />;
   if (villageFeatures[id]) return <VillageFeaturePlace id={id} locale={l} />;
@@ -158,7 +162,7 @@ function Info({title,items}:{title:string;items:string[]}){return <div><p classN
 export async function generateMetadata({params}:{params:Promise<{locale:string;id:string}>}) {
  const {locale,id}=await params;if(!isLocale(locale))notFound();const p=places.find(x=>x.id===id);if(!p)notFound();
  const c=getCategory(p.category)!;
- return pageMetadata({title:discoveryFeatures[id]?.[locale].title ?? `${p.name} · ${p.location} · ${locale === "fr" ? categoryFR[p.category].name : c.name}`,description:locale === "fr" ? placeDescriptionFr[id] || p.description : p.description,path:`/${locale}/place/${id}`,locale,image:mediaForPlace(id)});
+ return pageMetadata({title:placeFacts[id]?.copy[locale].title ?? discoveryFeatures[id]?.[locale].title ?? `${p.name} · ${p.location} · ${locale === "fr" ? categoryFR[p.category].name : c.name}`,description:placeFacts[id]?.copy[locale].description ?? (locale === "fr" ? placeDescriptionFr[id] || p.description : p.description),path:`/${locale}/place/${id}`,locale,image:placeFactsMedia[id] ? {...placeFactsMedia[id],alt:placeFactsMedia[id].caption[locale]} : mediaForPlace(id)});
 }
 export default async function Page({params}:{params:Promise<{locale:string;id:string}>}) {
  const {locale,id}=await params;if(!isLocale(locale))notFound();const p=places.find(x=>x.id===id);if(!p)notFound();
@@ -168,6 +172,6 @@ export default async function Page({params}:{params:Promise<{locale:string;id:st
  const town=destinationForLocation(p.location);
  const schemaType=p.category === "eat" ? "Restaurant" : id === "monroes-pub" ? "BarOrPub" : ["caves-du-roy", "gaio-club"].includes(id) ? "NightClub" : "Place";
  return <><Breadcrumbs locale={locale} items={[{name:"LE GOLFE",path:`/${locale}`},{name,path:`/${locale}/explore/${p.category}`},{name:p.name,path:`/${locale}/place/${id}`}]} />
- {siteOrigin() && <JsonLd data={{"@context":"https://schema.org","@type":schemaType,name:p.name,url:absoluteUrl(`/${locale}/place/${id}`),description:locale === "fr" ? placeDescriptionFr[id] || p.description : p.description,image:media && !media.contextual ? media.src : undefined,address:{"@type":"PostalAddress",addressLocality:p.location,addressCountry:"FR"},geo:typeof p.latitude === "number" && typeof p.longitude === "number" ? {"@type":"GeoCoordinates",latitude:p.latitude,longitude:p.longitude}:undefined,telephone:p.phone,sameAs:p.website ? [p.website] : undefined}} />}
- <PlaceContent params={params}/><GuideLinks items={guidesForPlace(id)} locale={locale}/><PlacePreparation place={p} locale={locale}/>{town && <div className="lg-shell py-6"><Link className="lg-btn" href={`/${locale}/destinations/${town.slug}`}>{locale==="fr"?"Adresses et séjour à":"Places and stays in"} {town.name} →</Link></div>}<section className="lg-shell py-12"><h2 className="text-2xl font-black">{locale === "fr" ? "À découvrir aussi" : "Explore nearby and similar places"}</h2><div className="mt-6 grid gap-6 md:grid-cols-3">{related.map(x=><PlaceCard key={x.id} place={x} locale={locale}/>)}</div></section></>;
+ {siteOrigin() && <JsonLd data={{"@context":"https://schema.org","@type":schemaType,name:p.name,url:absoluteUrl(`/${locale}/place/${id}`),description:placeFacts[id]?.copy[locale].description ?? (locale === "fr" ? placeDescriptionFr[id] || p.description : p.description),image:placeFactsMedia[id] ? {"@type":"ImageObject",contentUrl:absoluteUrl(placeFactsMedia[id].src),caption:placeFactsMedia[id].caption[locale],creditText:placeFactsMedia[id].credit,license:placeFactsMedia[id].licenseUrl,url:placeFactsMedia[id].source} : media && !media.contextual ? media.src : undefined,address:{"@type":"PostalAddress",addressLocality:p.location,addressCountry:"FR"},geo:typeof p.latitude === "number" && typeof p.longitude === "number" ? {"@type":"GeoCoordinates",latitude:p.latitude,longitude:p.longitude}:undefined,telephone:p.phone,sameAs:p.website ? [p.website] : undefined}} />}
+ <PlaceContent params={params}/><GuideLinks items={guidesForPlace(id)} locale={locale}/>{!placeFacts[id] && <PlacePreparation place={p} locale={locale}/>}{town && <div className="lg-shell py-6"><Link className="lg-btn" href={`/${locale}/destinations/${town.slug}`}>{locale==="fr"?"Adresses et séjour à":"Places and stays in"} {town.name} →</Link></div>}<section className="lg-shell py-12"><h2 className="text-2xl font-black">{locale === "fr" ? "À découvrir aussi" : "Explore nearby and similar places"}</h2><div className="mt-6 grid gap-6 md:grid-cols-3">{related.map(x=><PlaceCard key={x.id} place={x} locale={locale}/>)}</div></section></>;
 }

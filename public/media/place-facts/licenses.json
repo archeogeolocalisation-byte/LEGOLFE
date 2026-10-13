@@ -1,0 +1,63 @@
+[
+  {
+    "id": "grimaud-village",
+    "source": "https://commons.wikimedia.org/wiki/File:Grimaud_%28Var%29.jpg",
+    "original": "https://upload.wikimedia.org/wikipedia/commons/6/65/Grimaud_%28Var%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original",
+    "originalSha256": "4103868829a774ce2abca03211024f8ac812948352afcdd80dfcfe2364a1ba4d",
+    "verified": "2026-10-13",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "file": "/media/place-facts/grimaud-village.webp",
+    "author": "Grimaud Tourisme",
+    "width": 1400,
+    "height": 933,
+    "sha256": "71ce024a76af8fd8a28dec0de575e52c9e58e1b0b6081966c260719213306e0c",
+    "changes": "Resized, encoded as WebP; display crop. Derivative licensed CC BY-SA 4.0."
+  },
+  {
+    "id": "port-grimaud",
+    "source": "https://commons.wikimedia.org/wiki/File:La_cit%C3%A9_lacustre_de_Port_Grimaud%2C_vue_du_ciel.jpg",
+    "original": "https://upload.wikimedia.org/wikipedia/commons/2/23/La_cit%C3%A9_lacustre_de_Port_Grimaud%2C_vue_du_ciel.jpg?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original",
+    "originalSha256": "e9018d7610b8abc00a461bb48464cbd147becee80e7922c58eeef0d12ea6bd4a",
+    "verified": "2026-10-13",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "file": "/media/place-facts/port-grimaud.webp",
+    "author": "Cyril Carpentier / Grimaud Tourisme",
+    "width": 1400,
+    "height": 899,
+    "sha256": "9f68bd2121a99ef6f9cf262c114016050dfeac2a6caa6ff1050b74c043b11549",
+    "changes": "Resized, encoded as WebP; display crop. Derivative licensed CC BY-SA 4.0.",
+    "note": "Uploader: Grimaud Tourisme. Original bears a Cyril Carpentier credit, retained in the image and visible caption."
+  },
+  {
+    "id": "sainte-maxime-village",
+    "source": "https://commons.wikimedia.org/wiki/File:Sainte-Maxime_port_tour_carr%C3%A9_%C3%A9glise.jpg",
+    "original": "https://upload.wikimedia.org/wikipedia/commons/1/10/Sainte-Maxime_port_tour_carr%C3%A9_%C3%A9glise.jpg?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original",
+    "originalSha256": "c6ddf5745ca221eb12cc70d4ed7772080af7f0d07f3f22fa6e735be8178cb7a5",
+    "verified": "2026-10-13",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "file": "/media/place-facts/sainte-maxime-village.webp",
+    "author": "Jibi44",
+    "width": 1400,
+    "height": 1050,
+    "sha256": "0b194aaf7671b84cbbb72d3d29715aa770b7f341032ea9b30ad54e8d230a8351",
+    "changes": "Resized, encoded as WebP; display crop. Derivative licensed CC BY-SA 4.0."
+  },
+  {
+    "id": "cogolin-village",
+    "source": "https://commons.wikimedia.org/wiki/File:Cogolin_-_Rue_du_piquet.jpg",
+    "original": "https://upload.wikimedia.org/wikipedia/commons/a/a4/Cogolin_-_Rue_du_piquet.jpg?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original",
+    "originalSha256": "0f3202a98da7d32e567efb4988344d279c571bf343e95b7445cc2e930b57ed1d",
+    "verified": "2026-10-13",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "file": "/media/place-facts/cogolin-village.webp",
+    "author": "Villedecogolin",
+    "width": 1400,
+    "height": 933,
+    "sha256": "1b4bf7d1a908fde774467af6f3437347bc5fcdc90b81e8c105d4c88aceb91fd0",
+    "changes": "Resized, encoded as WebP; display crop. Derivative licensed CC BY-SA 4.0."
+  }
+]

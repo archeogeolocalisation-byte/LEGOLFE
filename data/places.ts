@@ -1,3 +1,4 @@
+import {placeFacts} from "./placeFacts";
 export const placeCategories = [
   { id: "eat", label: "EAT", name: "Restaurants", description: "Tables chosen for the moment, the people and the mood." },
   { id: "beach", label: "BEACH", name: "Beaches & beach clubs", description: "Where to swim, settle in, bring the kids or stay for sunset." },
@@ -42,6 +43,7 @@ export type Place = {
 // Facts below were desk-checked against official/tourism sources in September 2026;
 // "bestFor", "notIdealFor" and tags are LE GOLFE editorial classifications.
 export const places: Place[] = [
+{ id:"port-grimaud", name:"Port Grimaud", category:"places", location:"Grimaud", description:placeFacts["port-grimaud"].copy.en.description, bestFor:["Canals and waterside walks"],notIdealFor:["Unplanned transport connections"],tags:["port-grimaud","canals","architecture","market"],goodToKnow:["Grimaud hilltop village is a separate stop.","Check seasonal market and boat services."],verified:false,featured:false,source:placeFacts["port-grimaud"].sources[0].url,lastVerifiedAt:"2026-10-13" },
 {
   "id": "moulin-de-paillas",
   "name": "Moulin de Paillas",
@@ -892,3 +894,10 @@ export const placeDescriptionFr: Record<string, string> = {
   "maison-laurent-conciergerie": "Un service de conciergerie local pour accompagner certains besoins pratiques autour d'un séjour dans le Golfe.",
   "plan-de-la-tour-village": "Un village en retrait de la côte, entouré de collines boisées et de hameaux — assez près du Golfe pour en profiter, assez loin pour rester au calme."
 };
+
+// Factual sheet descriptions are shared by cards, metadata and bilingual pages.
+for (const [id,sheet] of Object.entries(placeFacts)) {
+ const place=places.find(p=>p.id===id);
+ if(place){place.description=sheet.copy.en.description;place.lastVerifiedAt=sheet.verified;}
+ placeDescriptionFr[id]=sheet.copy.fr.description;
+}

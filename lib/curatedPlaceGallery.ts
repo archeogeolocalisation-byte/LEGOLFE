@@ -1,3 +1,4 @@
+import {placeFactsMedia} from '../data/placeFactsMedia';
 import {discoveryPlaceMedia} from '../data/discoveryMedia';
 import {suppliedPlaceMedia} from '../data/suppliedPlaceMedia';
 import {legacyPlaceMedia} from '../data/legacyPlaceMedia';
@@ -6,6 +7,7 @@ import {pressMedia} from './pressMedia';
 
 // Only photographs of the named place are eligible, never pictures of its surroundings.
 export function photosForPlace(id:string):VillagePhoto[]{
+ if(placeFactsMedia[id])return [placeFactsMedia[id]];
  if(discoveryPlaceMedia[id])return discoveryPlaceMedia[id];
  if(suppliedPlaceMedia[id])return suppliedPlaceMedia[id];
  if(villageMedia[id])return villageMedia[id].filter(photo=>!photo.contextual);
