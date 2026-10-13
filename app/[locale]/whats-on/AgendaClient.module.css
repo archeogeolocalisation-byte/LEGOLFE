@@ -1,4 +1,4 @@
-.featured{background:#0b4f6c;color:#fff;padding:32px 0 40px}
+.featured{background:#000;color:#fff;padding:32px 0 40px}
 .featuredHeading{font-size:11px;font-weight:900;letter-spacing:2px;text-transform:uppercase;margin:0 0 20px}
 .featuredGrid{display:grid;gap:20px}
 .featureLarge,.featureSmall{min-width:0;background:#f4f0e7;color:#071d2b;display:flex;flex-direction:column}
@@ -14,5 +14,5 @@
 .eventImage{display:block;aspect-ratio:16/9;overflow:hidden}.eventImage img{height:100%;width:100%;object-fit:cover}
 .eventBody{padding:22px;display:flex;flex-direction:column;flex:1}.eventTop{display:flex;align-items:center;gap:14px}.day{font-size:40px;line-height:1;font-weight:900;letter-spacing:-2px;color:#0b4f6c}.month{font-size:11px;font-weight:900;color:#0b4f6c}.location{font-size:11px;line-height:1.6;color:#405659}.eventCard h3{font-size:28px;font-weight:900;line-height:1.1;letter-spacing:-.6px;margin-top:18px;color:#071d2b}.eventDates{font-size:12px;font-weight:800;color:#0b4f6c;line-height:1.7;margin-top:14px}.eventSummary{font-size:14px;line-height:1.7;color:#405659;margin-top:14px}.eventWhy{font-size:14px;line-height:1.65;border-left:3px solid #0b4f6c;padding-left:14px;margin-top:18px}.eventLinks{display:flex;flex-wrap:wrap;gap:16px;margin-top:auto;padding-top:22px}.eventLinks a{display:inline-flex;align-items:center;min-height:44px;color:#0b4f6c;font-size:11px;font-weight:900;text-decoration:underline;text-underline-offset:3px}
 .featured a:focus-visible,.eventGrid a:focus-visible{outline:3px solid #c48337;outline-offset:3px}
-@media(min-width:768px){.eventGrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(min-width:768px){.eventCard{display:grid;grid-template-columns:240px minmax(0,1fr)}.eventImage{margin:22px 0 22px 22px;align-self:start;aspect-ratio:4/3}}
 @media(min-width:960px){.featuredGrid{grid-template-columns:minmax(0,1.45fr) minmax(0,1fr)}.featureLarge{grid-row:span 2}.featureSmall{display:grid;grid-template-columns:minmax(110px,.75fr) minmax(0,1.25fr)}.featureSmall .featureImage{height:100%;aspect-ratio:auto}.featureSmall .featureCopy{padding:18px}.featureSmall h2{font-size:23px}.featureSmall .featureSummary{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}.featureSmall .featureLinks{gap:8px;padding-top:12px}.featureSmall .credit{font-size:9px}}
