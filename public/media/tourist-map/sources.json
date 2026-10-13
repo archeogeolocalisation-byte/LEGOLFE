@@ -53,7 +53,14 @@
   },
   "illustrations": {
     "grimaud": "Original imagegen illustration approved in this conversation on 2026-10-13.",
-    "portGrimaud": "Original imagegen illustration with LE GOLFE signature approved in this conversation on 2026-10-13."
+    "portGrimaud": "Original imagegen illustration with LE GOLFE signature approved in this conversation on 2026-10-13.",
+    "le-plan-de-la-tour": "Original imagegen illustration approved in this conversation on 2026-10-13. Resized to 600 × 400 and encoded WebP; original composition and signature retained.",
+    "gassin": "Original imagegen illustration approved in this conversation on 2026-10-13. Resized to 600 × 400 and encoded WebP; original composition and signature retained.",
+    "sainte-maxime": "Original imagegen illustration approved in this conversation on 2026-10-13. Resized to 600 × 400 and encoded WebP; original composition and signature retained.",
+    "la-mole": "Original imagegen illustration approved in this conversation on 2026-10-13. Resized to 600 × 400 and encoded WebP; original composition and signature retained.",
+    "cavalaire-sur-mer": "Original imagegen illustration approved in this conversation on 2026-10-13. Resized to 600 × 400 and encoded WebP; original composition and signature retained.",
+    "la-garde-freinet": "Original imagegen illustration approved in this conversation on 2026-10-13. Resized to 600 × 400 and encoded WebP; original composition and signature retained.",
+    "saint-tropez": "Original imagegen illustration approved in this conversation on 2026-10-13. Resized to 600 × 400 and encoded WebP; original composition and signature retained."
   },
   "files": [
     {
@@ -83,6 +90,55 @@
       "height": 763,
       "bytes": 71818,
       "sha256": "0219e8cfd3b4af8ca8c0f38bbca31dc5816bca84d28a1e045c4360bc6ecdec03"
+    },
+    {
+      "file": "/media/tourist-map/le-plan-de-la-tour-illustration.webp",
+      "width": 600,
+      "height": 400,
+      "bytes": 70226,
+      "sha256": "1de4bb74e587c38a418b3e4e7dffdf80b97836144db18de5e512eb1ab3f6e1de"
+    },
+    {
+      "file": "/media/tourist-map/gassin-illustration.webp",
+      "width": 600,
+      "height": 400,
+      "bytes": 53258,
+      "sha256": "14d5569fad52bf6a20618ff311367a8514933e88a952b3a8adbe4590ab60ffbf"
+    },
+    {
+      "file": "/media/tourist-map/sainte-maxime-illustration.webp",
+      "width": 600,
+      "height": 400,
+      "bytes": 59686,
+      "sha256": "ca5091400580052fe81819fcfe242ba546263864301b795f3fecddd5d5d385bc"
+    },
+    {
+      "file": "/media/tourist-map/la-mole-illustration.webp",
+      "width": 600,
+      "height": 400,
+      "bytes": 58382,
+      "sha256": "c4b0dc53a69a4ea75bb6ab7487bf98fb38caf0578ca1703de5bb748e61d5a14d"
+    },
+    {
+      "file": "/media/tourist-map/cavalaire-sur-mer-illustration.webp",
+      "width": 600,
+      "height": 400,
+      "bytes": 52798,
+      "sha256": "d193594d74d69b214a2a50f8c703791eeb10d6f5d9f9159c981a05b4c6679e35"
+    },
+    {
+      "file": "/media/tourist-map/la-garde-freinet-illustration.webp",
+      "width": 600,
+      "height": 400,
+      "bytes": 70948,
+      "sha256": "7e4dc7b669847eb86aef410cf2e0978c62331ec1d10cb5f23d5114eb7336f7c4"
+    },
+    {
+      "file": "/media/tourist-map/saint-tropez-illustration.webp",
+      "width": 600,
+      "height": 400,
+      "bytes": 50912,
+      "sha256": "0d030c5879d05b1667f1c83429481a49faa1b19cc021469c7ef96d3d490a6d71"
     }
   ]
 }

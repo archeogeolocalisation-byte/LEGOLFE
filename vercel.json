@@ -19,7 +19,8 @@
       "content/four-guides-seo": false,
       "content/place-facts-seo": false,
       "feature/place-maps": false,
-      "feature/tourist-map": false
+      "feature/tourist-map": false,
+      "feature/village-visuals": false
     }
   }
 }

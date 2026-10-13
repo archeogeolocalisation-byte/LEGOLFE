@@ -6,17 +6,21 @@ process.env.VERCEL_ENV='production';process.env.NEXT_PUBLIC_SITE_URL='https://ww
 const load=Module._load;Module._load=function(request,parent,...rest){if(parent?.filename.endsWith('/sitemap.xml/route.ts')&&request.endsWith('/lib/publicEvents'))return {getPublicEvents:async()=>[]};if(parent?.filename.endsWith('/sitemap.xml/route.ts')&&request.endsWith('/lib/publicVillas'))return {getPublishedVillas:async()=>[]};return load.call(this,request,parent,...rest);};
 require.extensions['.webp']=(m,f)=>{m.exports={src:'/media/guides/'+path.basename(f),width:1200,height:800};};
 const {touristMapPlaces}=require('../data/touristMap.ts'),{touristMapPoint,touristMapBounds,clampTouristView,touristViewForPoint,touristMapTransform}=require('../lib/touristMap.ts');
+const {touristRoadMapUrl,touristDirectionsUrl}=require('../lib/touristRoadLinks.ts');
 const {destinationPaths}=require('../data/destinations.ts'),{places}=require('../data/places.ts');
 const Page=require('../app/[locale]/carte-touristique/page.tsx'),{renderToStaticMarkup}=require('react-dom/server'),{GET}=require('../app/sitemap.xml/route.ts');
 const manifest=JSON.parse(fs.readFileSync(path.join(__dirname,'../public/media/tourist-map/sources.json')));
 (async()=>{
+ const road=new URL(touristRoadMapUrl()),traffic=new URL(touristRoadMapUrl(true));
+ assert.equal(road.hostname,'www.google.com');assert.equal(road.searchParams.get('api'),'1');assert.equal(road.searchParams.get('basemap'),'roadmap');assert.equal(road.searchParams.get('layer'),null);assert.equal(traffic.searchParams.get('layer'),'traffic');
+ for(const id of ['le-plan-de-la-tour','gassin','sainte-maxime','la-mole','cavalaire-sur-mer','la-garde-freinet','saint-tropez'])assert.equal(touristMapPlaces.find(p=>p.id===id).illustration,`/media/tourist-map/${id}-illustration.webp`);
  assert.equal(touristMapPlaces.length,14);assert.equal(new Set(touristMapPlaces.map(p=>p.id)).size,14);
  const validPaths=new Set([...destinationPaths(),...places.map(p=>'/place/'+p.id)]);
  for(const p of touristMapPlaces){assert.equal(new URL(p.source).protocol,'https:');assert.ok(p.checked<=new Date().toISOString().slice(0,10));assert.ok(p.latitude>=touristMapBounds.south&&p.latitude<=touristMapBounds.north&&p.longitude>=touristMapBounds.west&&p.longitude<=touristMapBounds.east);
   const point=touristMapPoint(p.latitude,p.longitude);assert.ok(point.x>=0&&point.x<=1000&&point.y>=0&&point.y<=763);
   if(p.path)assert.ok(validPaths.has(p.path));else assert.equal(new URL(p.externalUrl).hostname,'www.golfe-saint-tropez-information.com');
   if(p.illustration)assert.ok(fs.existsSync(path.join(__dirname,'../public',p.illustration)));
-  for(const locale of ['fr','en'])assert.ok(p.copy[locale].description.length>30);
+  for(const locale of ['fr','en'])assert.ok(p.copy[locale].description.length>30);const direction=new URL(touristDirectionsUrl(p.name));assert.equal(direction.searchParams.get('destination'),`${p.name}, Var, France`);assert.equal(direction.searchParams.has('origin'),false);
   for(const zoom of [1,1.5,2,2.5,5]){const v=touristViewForPoint(zoom,point);assert.ok(v.zoom>=1&&v.zoom<=2.5);assert.ok(Math.abs(v.panX)<=(v.zoom-1)*50&&Math.abs(v.panY)<=(v.zoom-1)*50);assert.equal(touristMapTransform(v).includes('NaN'),false);}
  }
  const grimaud=touristMapPlaces.find(p=>p.id==='grimaud'),port=touristMapPlaces.find(p=>p.id==='port-grimaud'),nartelle=touristMapPlaces.find(p=>p.id==='la-nartelle');assert.notEqual(grimaud.longitude,port.longitude);assert.equal(nartelle.path,'/place/sainte-maxime-village');assert.ok(nartelle.linkLabel.fr.includes('Sainte-Maxime'));
@@ -26,7 +30,7 @@ const manifest=JSON.parse(fs.readFileSync(path.join(__dirname,'../public/media/t
  for(const locale of ['fr','en']){
   const metadata=await Page.generateMetadata({params:Promise.resolve({locale})});assert.equal(metadata.alternates.canonical,`https://www.legolfe.com/${locale}/carte-touristique`);assert.ok(metadata.openGraph.images[0].url.endsWith('/tourist-map/cover.webp'));
   const html=renderToStaticMarkup(await Page.default({params:Promise.resolve({locale})}));assert.equal((html.match(/<h1[ >]/g)||[]).length,1);assert.equal((html.match(/<option /g)||[]).length,14);assert.equal((html.match(/aria-pressed="true"/g)||[]).length,1);assert.ok(html.includes('aria-label="La Nartelle"'));assert.ok(html.includes('openstreetmap.org/copyright'));assert.ok(html.includes('tilezen/joerd'));
-  assert.ok(html.includes(`href="/${locale}/carte-touristique"`));assert.ok(html.includes(`href="/${locale}/destinations/grimaud"`));assert.ok(html.includes('aria-current="page"'));assert.equal(html.includes('<iframe'),false);assert.equal(html.includes('nominatim.openstreetmap.org'),false);
+  assert.ok(html.includes(`href="/${locale}/carte-touristique"`));assert.ok(html.includes(`href="/${locale}/destinations/grimaud"`));assert.ok(html.includes('aria-current="page"'));assert.ok(html.includes('layer=traffic'));assert.ok(html.includes('Itinéraire · Google Maps')||html.includes('Directions · Google Maps'));assert.equal(html.includes('<iframe'),false);assert.equal(html.includes('nominatim.openstreetmap.org'),false);
  }
  const xml=await(await GET()).text();for(const locale of ['fr','en'])assert.ok(xml.includes(`<loc>https://www.legolfe.com/${locale}/carte-touristique</loc><lastmod>2026-10-13</lastmod>`));assert.ok(xml.includes('/media/tourist-map/cover.webp'));
  // Exercise the actual client event handlers with isolated hook state, not a browser simulator.
@@ -42,7 +46,7 @@ const manifest=JSON.parse(fs.readFileSync(path.join(__dirname,'../public/media/t
  const nodes=e=>!e||typeof e!=='object'?[]:[e,...require('react').Children.toArray(e.props?.children).flatMap(nodes)];
  const button=(tree,label)=>nodes(tree).find(n=>n.type==='button'&&n.props['aria-label']===label);
  let tree=render();button(tree,'Port Grimaud').props.onClick();tree=render();assert.ok(nodes(tree).some(n=>n.type==='h3'&&n.props.children==='Port Grimaud'));assert.equal(button(tree,'Port Grimaud').props['aria-pressed'],true);
- for(const p of touristMapPlaces){nodes(tree).find(n=>n.type==='select').props.onChange({target:{value:p.id}});tree=render();assert.ok(nodes(tree).some(n=>n.type==='h3'&&n.props.children===p.name));}
+ for(const p of touristMapPlaces){nodes(tree).find(n=>n.type==='select').props.onChange({target:{value:p.id}});tree=render();assert.ok(nodes(tree).some(n=>n.type==='h3'&&n.props.children===p.name));assert.ok(nodes(tree).some(n=>n.type==='a'&&n.props.href===touristDirectionsUrl(p.name)));if(p.illustration)assert.ok(nodes(tree).some(n=>n.props?.src===p.illustration));}
  button(tree,'Zoomer').props.onClick();tree=render();assert.equal(slots[1].zoom,1.5);
  const capture=new Set(),host={getBoundingClientRect:()=>({width:1000,height:763}),setPointerCapture:id=>capture.add(id),hasPointerCapture:id=>capture.has(id),releasePointerCapture:id=>capture.delete(id)};
  const region=()=>nodes(tree).find(n=>n.props?.role==='region');
