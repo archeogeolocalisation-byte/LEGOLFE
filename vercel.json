@@ -17,7 +17,8 @@
       "fix/admin-contrast": false,
       "fix/direct-contact-pilot": false,
       "content/four-guides-seo": false,
-      "content/place-facts-seo": false
+      "content/place-facts-seo": false,
+      "feature/place-maps": false
     }
   }
 }

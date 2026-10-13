@@ -1,3 +1,4 @@
+import {placeMapPoints} from "./placeMapPoints";
 import {placeFacts} from "./placeFacts";
 export const placeCategories = [
   { id: "eat", label: "EAT", name: "Restaurants", description: "Tables chosen for the moment, the people and the mood." },
@@ -900,4 +901,10 @@ for (const [id,sheet] of Object.entries(placeFacts)) {
  const place=places.find(p=>p.id===id);
  if(place){place.description=sheet.copy.en.description;place.lastVerifiedAt=sheet.verified;}
  placeDescriptionFr[id]=sheet.copy.fr.description;
+}
+
+// Coordinates describe only verified public references of the named place.
+for(const [id,points] of Object.entries(placeMapPoints)){
+ const place=places.find(p=>p.id===id),point=points[0];
+ if(place&&point){place.latitude=point.latitude;place.longitude=point.longitude;}
 }
