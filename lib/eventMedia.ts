@@ -1,6 +1,7 @@
+import {carreEventImages as carreImages} from "../data/carreEventImages";
 import type { GolfeEvent } from "../data/events";
 
-export type EventMedia = { kind?:"illustration"; src:string; alt:string; credit:string; license:string; source:string };
+export type EventMedia = { kind?:"illustration"|"official"; src:string; alt:string; credit:string; license:string; source:string };
 const commons=(name:string)=>`https://commons.wikimedia.org/wiki/Special:Redirect/file/${encodeURIComponent(name)}`;
 
 const media = {
@@ -19,6 +20,12 @@ const media = {
 };
 
 export function mediaForEvent(event:GolfeEvent):EventMedia{
+  const recorded=carreImages.find(image=>image.eventId===event.id);
+  const officialImage=event.officialImage??recorded?.original;
+  if(officialImage&&/^https:\/\/img\.mapado\.net\/[a-zA-Z0-9_./%-]+\.(?:jpe?g|png|webp)$/i.test(officialImage)){
+    const saved=recorded?.original===officialImage?recorded:undefined;
+    return {src:saved?.src??officialImage,alt:`${event.titleFr||event.title} · Le Carré Léon Gaumont`,credit:saved?.credit??"Le Carré Léon Gaumont · billetterie officielle",license:"Utilisation autorisée",source:event.source,kind:"official"};
+  }
   if(event.id==="voiles-2026" || event.category==="sailing") return media.voiles;
   if(event.location==="La Garde-Freinet")return {src:"/media/tourist-map/la-garde-freinet-illustration.webp",alt:"Illustration de La Garde-Freinet",credit:"LE GOLFE",license:"Illustration originale",source:"/media/tourist-map/sources.json",kind:"illustration"};
   if(event.location==="Rayol-Canadel-sur-Mer")return {src:"/media/tourist-map/rayol-canadel-illustration.webp",alt:"Illustration de Rayol-Canadel",credit:"LE GOLFE",license:"Illustration originale",source:"/media/tourist-map/sources.json",kind:"illustration"};
@@ -33,4 +40,9 @@ export function mediaForEvent(event:GolfeEvent):EventMedia{
   if(event.id.includes("classic") || event.id.includes("braderie") || event.category==="local") return media.lices;
   if(event.category==="culture" || event.category==="music") return media.citadel;
   return media.saintTropez;
+}
+
+export function eventMediaLabel(image:EventMedia,locale:string){
+ const fr=locale==='fr';
+ return image.kind==='official'?(fr?'Visuel officiel du spectacle':'Official show image'):image.kind==='illustration'?(fr?'Illustration de contexte':'Context illustration'):(fr?'Photo de contexte':'Context photo');
 }

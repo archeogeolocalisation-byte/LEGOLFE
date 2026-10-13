@@ -29,7 +29,8 @@
       "design/citadelle-sheet": false,
       "design/agenda-layout": false,
       "design/agenda-final": false,
-      "feature/menu-agenda-sources": false
+      "feature/menu-agenda-sources": false,
+      "feature/agenda-show-images": false
     }
   }
 }
