@@ -1,3 +1,4 @@
+import {touristMapUpdated} from "../../lib/touristMap";
 import {placeFacts} from "../../data/placeFacts";
 import { agendaPaths } from "../../lib/agendaCalendar";
 import { parisIsoDay } from "../../lib/localCalendar";
@@ -16,13 +17,13 @@ const xml = (s:string) => s.replace(/[<>&"']/g, c => ({"<":"&lt;",">":"&gt;","&"
 export async function GET() {
  const origin=siteOrigin();if(!origin)return new Response("Configure NEXT_PUBLIC_SITE_URL before enabling indexing.",{status:503,headers:{"Retry-After":"3600"}});
  const catalog=await getPublicEvents();
- const paths=["","/explore","/whats-on","/local","/how-it-works",...guidePaths(),...destinationPaths(),...stayPaths(),...agendaPaths(catalog,parisIsoDay()),...placeCategories.map(x=>`/explore/${x.id}`),...places.map(x=>`/place/${x.id}`),...catalog.map(x=>`/event/${x.id}`)];
+ const paths=["","/carte-touristique","/explore","/whats-on","/local","/how-it-works",...guidePaths(),...destinationPaths(),...stayPaths(),...agendaPaths(catalog,parisIsoDay()),...placeCategories.map(x=>`/explore/${x.id}`),...places.map(x=>`/place/${x.id}`),...catalog.map(x=>`/event/${x.id}`)];
  const rows=[...new Set(paths)].flatMap(path=>["fr","en"].map(locale=>{
  const guide=path.startsWith("/guides/") ? guides.find(g=>g.slug===path.split("/").pop()) : undefined;
  const media=path.startsWith("/place/") ? mediaForPlace(path.split("/").pop()!) : undefined;
- const checked=guide?.verified ?? (path.startsWith("/place/") ? placeFacts[path.split("/").pop()!]?.verified : undefined);
+ const checked=path==="/carte-touristique" ? touristMapUpdated : guide?.verified ?? (path.startsWith("/place/") ? placeFacts[path.split("/").pop()!]?.verified : undefined);
  const lastmod=checked ? `<lastmod>${xml(checked)}</lastmod>` : "";
- const image=guide ? `<image:image><image:loc>${xml(new URL(mediaForGuide(guide).photo.src,origin).href)}</image:loc></image:image>` : media && !media.contextual ? `<image:image><image:loc>${xml(new URL(media.src,origin).href)}</image:loc></image:image>` : "";
+ const image=path==="/carte-touristique" ? `<image:image><image:loc>${xml(origin+"/media/tourist-map/cover.webp")}</image:loc></image:image>` : guide ? `<image:image><image:loc>${xml(new URL(mediaForGuide(guide).photo.src,origin).href)}</image:loc></image:image>` : media && !media.contextual ? `<image:image><image:loc>${xml(new URL(media.src,origin).href)}</image:loc></image:image>` : "";
  return `<url><loc>${xml(origin+"/"+locale+path)}</loc>${lastmod}${["fr","en","x-default"].map(lang=>`<xhtml:link rel="alternate" hreflang="${lang}" href="${xml(origin+"/"+(lang==="x-default"?"en":lang)+path)}"/>`).join("")}${image}</url>`;
  }));
  const houses=(await getPublishedVillas()).map(v=>({id:v.id,image:v.photos[0]?.src}));

@@ -1,0 +1,88 @@
+{
+  "created": "2026-10-13",
+  "bounds": {
+    "west": 6.38,
+    "east": 6.83,
+    "south": 43.135,
+    "north": 43.385
+  },
+  "projection": "Web Mercator",
+  "terrain": {
+    "source": "https://registry.opendata.aws/terrain-tiles/",
+    "attribution": "https://github.com/tilezen/joerd/blob/master/docs/attribution.md",
+    "zoom": 11,
+    "tiles": [
+      {
+        "file": "11-1060-749.png",
+        "sha256": "44c88845d82a18d3c90b9899ff4051d317e37023c75f886e94cbc0ff633aa5ae"
+      },
+      {
+        "file": "11-1060-750.png",
+        "sha256": "3972a0261e979ef7439985b820434629060fbfbb547097936a816c880fadbc21"
+      },
+      {
+        "file": "11-1060-751.png",
+        "sha256": "23a268af44299c5b5a1fb599b082d60ac9cbfbb1c7e8278b15486f2ea5d24908"
+      },
+      {
+        "file": "11-1061-749.png",
+        "sha256": "55787974915ed26e281854f33727d9078ad08a231ef042d80b8d4c9a3368d065"
+      },
+      {
+        "file": "11-1061-750.png",
+        "sha256": "25ebde9fd7cac9796c1bd304a458cc8d31baf52b75cc883e838ce25937b9f93f"
+      },
+      {
+        "file": "11-1061-751.png",
+        "sha256": "90bc8b769f3c3dde3cbf44b2993681350045c642f697bbde95014e64ea5152e2"
+      },
+      {
+        "file": "11-1062-749.png",
+        "sha256": "a202069a122ceeeef013475053621fc672749e3c4996bb61a0c3b8cdba6aba11"
+      },
+      {
+        "file": "11-1062-750.png",
+        "sha256": "a8f009c8422b5f52bde45386b395fd8b714bdd5fa446c8673fa44ddd87fdf819"
+      },
+      {
+        "file": "11-1062-751.png",
+        "sha256": "e55cc133aa25f637fe7cb9e842afe60bc496fa531b523b9fe4b075eeb95f7fd5"
+      }
+    ],
+    "changes": "Cropped, coloured elevation bands, shaded, shoreline generalized and encoded WebP."
+  },
+  "illustrations": {
+    "grimaud": "Original imagegen illustration approved in this conversation on 2026-10-13.",
+    "portGrimaud": "Original imagegen illustration with LE GOLFE signature approved in this conversation on 2026-10-13."
+  },
+  "files": [
+    {
+      "file": "/media/tourist-map/cover.webp",
+      "width": 1000,
+      "height": 763,
+      "bytes": 69714,
+      "sha256": "48e7363739dec2fcd94e24cd18c7c84fda102bcbb7fb43c10118d15eb2c94a9d"
+    },
+    {
+      "file": "/media/tourist-map/grimaud-illustration.webp",
+      "width": 600,
+      "height": 400,
+      "bytes": 68080,
+      "sha256": "ce9f68c2a1e136412535284be32405901eb40d09325c059ac1c92d8006d25c18"
+    },
+    {
+      "file": "/media/tourist-map/port-grimaud-illustration.webp",
+      "width": 600,
+      "height": 400,
+      "bytes": 73864,
+      "sha256": "5db9d44e9d9cd1ecf4f671442415c662d0daca5d8615a7c68dd42198aa746e87"
+    },
+    {
+      "file": "/media/tourist-map/relief.webp",
+      "width": 1000,
+      "height": 763,
+      "bytes": 71818,
+      "sha256": "0219e8cfd3b4af8ca8c0f38bbca31dc5816bca84d28a1e045c4360bc6ecdec03"
+    }
+  ]
+}

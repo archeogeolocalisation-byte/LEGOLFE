@@ -1,3 +1,4 @@
+import Link from "next/link";
 import DestinationLinks from "../../../components/DestinationLinks";
 import { pageMetadata } from "../../../lib/seo";
 import {notFound} from "next/navigation";
@@ -22,6 +23,7 @@ export default async function Page({params,searchParams}:{params:Promise<{locale
     </div>
     <div className="explore-edition"><span className="explore-edition-count">{String(places.length).padStart(2,"0")}</span><p className="lg-kicker">{l==="fr"?"ADRESSES / UNE SÉLECTION":"PLACES / ONE SELECTION"}</p><p>{l==="fr"?"Le Golfe, à votre rythme.":"The Golfe, at your pace."}</p></div>
    </div>
+   <div className="mb-7 flex flex-wrap items-center gap-4"><Link className="lg-btn secondary" href={`/${l}/carte-touristique`}>{l==="fr"?"Découvrir les paysages et les villages sur la carte":"Discover landscapes and villages on the map"} →</Link></div>
    <ExploreIntentGrid places={places} locale={l} filter={initialFilter} query={query} town={town}/>
    <details className="explore-about"><summary>{l==="fr"?"Comment nous choisissons ces adresses":"How we select these places"}</summary><p>{t.guideDesc}</p></details>
    <DestinationLinks locale={l}/>
