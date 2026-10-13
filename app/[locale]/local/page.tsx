@@ -22,7 +22,7 @@ export default async function LocalPage({params}:{params:Promise<{locale:string}
  return <main className="min-h-screen bg-[#f7f6f2] text-black"><SiteHeader locale={l} path="/local"/>
   <section className="lg-shell pb-10 pt-10 md:pb-14 md:pt-16">
    <div className="grid gap-8 border-b-4 border-black pb-8 lg:grid-cols-[1fr_auto] lg:items-end">
-    <div><p className="lg-kicker text-[var(--lg-blue)]">LE GOLFE / {fr?"ÉDITION LOCALE":"LOCAL EDITION"}</p><h1 className="mt-5 max-w-5xl text-[18vw] font-black uppercase leading-[.76] tracking-[-.075em] md:text-[128px]">{fr?<>LE GOLFE.<br/><span className="lg-accent">AUJOURD’HUI.</span></>:<>THE GOLFE.<br/><span className="lg-accent">TODAY.</span></>}</h1></div>
+    <div><p className="lg-kicker text-[var(--lg-blue)]">LE GOLFE / {fr?"ÉDITION LOCALE":"LOCAL EDITION"}</p><h1 className="lg-menu-title mt-5 max-w-5xl">{fr?<>LE GOLFE.<br/><span className="lg-accent">AUJOURD’HUI.</span></>:<>THE GOLFE.<br/><span className="lg-accent">TODAY.</span></>}</h1></div>
     <div className="max-w-sm border-t border-black pt-4 lg:border-t-0 lg:pb-2"><p className="text-[10px] font-black uppercase tracking-[.18em] text-black/45">02.10.2026 · {fr ? "ÉDITION LOCALE" : "LOCAL EDITION"}</p><p className="mt-3 text-sm font-bold leading-6 text-black/60">{fr?"Ce qui change vraiment votre séjour : accès, mobilité, nouveaux lieux, littoral et vie locale. Pas tout. Juste l'utile.":"What can genuinely change your stay: access, mobility, new openings, the coast and local life. Not everything. Only what matters."}</p></div>
    </div>
   </section>

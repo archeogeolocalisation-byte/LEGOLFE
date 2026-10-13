@@ -17,7 +17,7 @@ export default async function Page({params,searchParams}:{params:Promise<{locale
    <div className="explore-intro">
     <div>
      <p className="lg-kicker lg-accent">LE GOLFE / {l==="fr"?"LE CARNET D’ADRESSES":"THE ADDRESS BOOK"}</p>
-     <h1 className="lg-display explore-title">{t.guideTitle}</h1>
+     <h1 className="lg-menu-title ">{t.guideTitle}</h1>
      <p className="explore-deck">{l==="fr"?"Tables, plages, sorties et activités. Les bonnes adresses, selon vos envies.":"Restaurants, beaches, activities and nights out. The right places for your mood."}</p>
     </div>
     <div className="explore-edition"><span className="explore-edition-count">{String(places.filter(isExploreAddress).length).padStart(2,"0")}</span><p className="lg-kicker">{l==="fr"?"ADRESSES / UNE SÉLECTION":"PLACES / ONE SELECTION"}</p><p>{l==="fr"?"Le Golfe, à votre rythme.":"The Golfe, at your pace."}</p></div>

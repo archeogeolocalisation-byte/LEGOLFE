@@ -25,7 +25,7 @@ export default async function Page({ params }: Props) {
     <CollectionSchema name={fr ? "Guides pratiques du Golfe" : "Practical Golfe guides"} path={`/${locale}/guides`} items={guides.map(guide => ({ name: guide.copy[locale].seoTitle, path: `/${locale}/guides/${guide.slug}` }))} />
     <section className="lg-shell pb-20 pt-10 md:pb-28 md:pt-14">
       <p className="lg-kicker text-[var(--lg-blue)]">LE GOLFE / GUIDES</p>
-      <h1 className="lg-display mt-7 text-[16vw] md:text-[110px]">{fr ? <>LE BON PLAN.<br /><span className="lg-accent">LES BONS REPÈRES.</span></> : <>MAKE A PLAN.<br /><span className="lg-accent">KNOW YOUR WAY.</span></>}</h1>
+      <h1 className="lg-menu-title mt-7">{fr ? <>LE BON PLAN.<br /><span className="lg-accent">LES BONS REPÈRES.</span></> : <>MAKE A PLAN.<br /><span className="lg-accent">KNOW YOUR WAY.</span></>}</h1>
       <p className="mt-9 max-w-3xl text-lg font-bold leading-8 md:text-xl">{fr ? "Choisir un marché, sortir avec les enfants, profiter du Golfe sans billet ou préparer une randonnée. Des guides pour prendre les bonnes décisions avant de partir, avec des repères pratiques et les sources pour vérifier ce qui change." : "Choose a market, plan a family outing, explore without an entry ticket or prepare a walk. Guides to help you decide before setting off, with practical details and sources for information that changes."}</p>
       <div className="mt-12 md:mt-16"><GuideCards items={guides} locale={locale} /></div>
     </section>

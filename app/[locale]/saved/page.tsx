@@ -49,7 +49,7 @@ export default function SavedPage({ params }: { params: Promise<{ locale: string
     <SiteHeader locale={locale} path="/saved" />
     <section className="lg-shell pb-20 pt-12 md:pt-20">
       <p className="lg-kicker">{fr?"MON SÉJOUR":"MY STAY"} / {String(savedPlaces.length + savedVillas.length).padStart(2, "0")}</p>
-      <h1 className="lg-display mt-6 text-[18vw] md:text-[140px]">{fr ? <>MON<br/><span className="lg-accent">SÉJOUR.</span></> : <>MY<br/><span className="lg-accent">STAY.</span></>}</h1>
+      <h1 className="lg-menu-title mt-6">{fr ? <>MON<br/><span className="lg-accent">SÉJOUR.</span></> : <>MY<br/><span className="lg-accent">STAY.</span></>}</h1>
       <div className="mt-8 grid gap-8 border-t border-black pt-6 md:grid-cols-[1fr_auto] md:items-start">
         <div><p className="max-w-2xl text-lg font-bold leading-7 text-black/55">{fr ? "Votre sélection devient un projet de séjour. LE GOLFE peut maintenant relier ces lieux, éviter les mauvais enchaînements et construire un rythme de séjour cohérent." : "Your shortlist becomes a brief. LE GOLFE can connect these places, avoid bad combinations and build a coherent stay rhythm."}</p>
         {categories.length>0 && <div className="mt-5 flex flex-wrap gap-2">{categories.map((id)=><span key={id} className="border border-black px-3 py-2 text-[9px] font-black uppercase tracking-[.12em]">{fr ? categoryFR[id].name : getCategory(id)?.label}</span>)}</div>}</div>
