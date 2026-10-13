@@ -2,7 +2,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 import SiteHeader from './SiteHeader';
 import PlaceActions from './PlaceActions';
-import CommunitySection from './CommunitySection';
 import { places } from '../data/places';
 import { placeFacts } from '../data/placeFacts';
 import { placeFactsMedia } from '../data/placeFactsMedia';
@@ -32,6 +31,6 @@ export default function PlaceFactSheet({id,locale}:{id:string;locale:Locale}) {
    <aside className="mt-10 border-t border-black/20 pt-7"><h2 className="text-xl font-black">{fr?'Sources et informations à jour':'Sources and current information'}</h2><p className="mt-3 text-sm leading-6 text-black/75">{fr?'Repères documentaires vérifiés le':'Reference information checked on'} <time dateTime={sheet.verified}>{fr?'13 octobre 2026':'13 October 2026'}</time>. {fr?'Programme proposé par LE GOLFE ; vérifiez les horaires, accès et tarifs pour votre date auprès des sources officielles.':'Programme suggested by LE GOLFE; check opening times, access and prices for your date with the official sources.'}</p><ul className="mt-4 space-y-2">{sheet.sources.map(source=><li key={source.url}><a className="text-sm font-bold underline underline-offset-4" href={source.url} target="_blank" rel="noreferrer">{source.label} ↗</a></li>)}</ul></aside>
    <section className="mt-10 border-t border-black/20 pt-7"><h2 className="text-2xl font-black">{fr?'Poursuivre la découverte':'Explore further'}</h2><div className="mt-5 flex flex-wrap gap-3">{sheet.nearby.map(target=><Link className="lg-btn" key={target} href={`/${locale}/place/${target}`}>{places.find(p=>p.id===target)!.name} →</Link>)}</div></section>
   </article>
-  <PlaceActions place={place} locale={locale}/><CommunitySection placeId={id} locale={locale}/>
+  <PlaceActions place={place} locale={locale}/>
  </main>;
 }
