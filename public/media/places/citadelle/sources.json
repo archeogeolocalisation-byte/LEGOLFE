@@ -1,0 +1,58 @@
+{
+  "checked": "2026-10-13",
+  "changes": "User-supplied photographs encoded WebP without upscaling or retouching; original aspect ratios retained. Gallery display crop with full-screen originals, historical model shown fully in the article.",
+  "files": [
+    {
+      "file": "/media/places/citadelle/photo-1.webp",
+      "uploadedName": "Aerial_view_of_the_Citadel_of_Saint-Tropez,_France_(52723266272).jpg",
+      "width": 1280,
+      "height": 853,
+      "bytes": 325322,
+      "inputSha256": "1bf2741f09c3eed5df868c7814f91af2a5a552db70cbf0d44ad60f3d40cd58d0",
+      "sha256": "70912f953ebf44981b875f768a82384973339c073f2aedbefe2e2c0eb1760036",
+      "credit": "dronepicr / Wikimedia Commons",
+      "license": "CC BY 2.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
+      "source": "https://commons.wikimedia.org/wiki/File:Aerial_view_of_the_Citadel_of_Saint-Tropez,_France_(52723266272).jpg"
+    },
+    {
+      "file": "/media/places/citadelle/photo-2.webp",
+      "uploadedName": "Saint-Tropez_-_Donjon_de_la_Citadelle.jpg",
+      "width": 1280,
+      "height": 853,
+      "bytes": 273714,
+      "inputSha256": "c7333e51543b8bfeeb09b5e8b89751e26a4ca9379168d228ce05c7756024d76c",
+      "sha256": "b7e4f347d65426524f3650adcb741345a21bcd7b28f8988286e9d7f32b3d6384",
+      "credit": "Starus / Wikimedia Commons",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+      "source": "https://commons.wikimedia.org/wiki/File:Saint-Tropez_-_Donjon_de_la_Citadelle.jpg"
+    },
+    {
+      "file": "/media/places/citadelle/photo-3.webp",
+      "uploadedName": "Saint-Tropez_-_Canons_de_la_Citadelle.jpg",
+      "width": 1280,
+      "height": 850,
+      "bytes": 306176,
+      "inputSha256": "892e41386a41ac92666f011dfd2bb318e4da31bedf0c08b4a5eb2857f1df3463",
+      "sha256": "e77a7daa27513fa91fb51efaa9f80ba0801c91a0167238e795c6269ca1763dc9",
+      "credit": "Starus / Wikimedia Commons",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+      "source": "https://commons.wikimedia.org/wiki/File:Saint-Tropez_-_Canons_de_la_Citadelle.jpg"
+    },
+    {
+      "file": "/media/places/citadelle/photo-4.webp",
+      "uploadedName": "St-Tropez_maquette_5926.jpg",
+      "width": 1280,
+      "height": 707,
+      "bytes": 215926,
+      "inputSha256": "b065c17e416e95cce49939c127f506aa8f8266c94818a25a93a48e3b1c7a25b1",
+      "sha256": "973180989604315ee235326923fa6696721decf49951a3b77dc7afe58e6f40ac",
+      "credit": "G.Garitan / Wikimedia Commons",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+      "source": "https://commons.wikimedia.org/wiki/File:St-Tropez_maquette_5926.jpg"
+    }
+  ]
+}

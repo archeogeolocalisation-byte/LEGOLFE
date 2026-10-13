@@ -1,3 +1,4 @@
+import {citadelleMedia} from '../data/citadelleMedia';
 import {pampelonneMedia} from '../data/pampelonneMedia';
 import {placeFactsMedia} from '../data/placeFactsMedia';
 import {discoveryPlaceMedia} from '../data/discoveryMedia';
@@ -8,6 +9,7 @@ import {pressMedia} from './pressMedia';
 
 // Named-place photographs; contextual peninsula view only where explicitly supplied and labelled.
 export function photosForPlace(id:string):VillagePhoto[]{
+ if(id==='citadelle-saint-tropez')return citadelleMedia;
  if(id==='pampelonne')return pampelonneMedia;
  if(placeFactsMedia[id])return [placeFactsMedia[id]];
  if(discoveryPlaceMedia[id])return discoveryPlaceMedia[id];

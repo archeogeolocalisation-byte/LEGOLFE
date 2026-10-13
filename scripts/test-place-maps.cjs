@@ -10,9 +10,11 @@ const Block=require('../components/PlaceMapBlock.tsx').default,Page=require('../
 const expandNames=new Set(['PlaceContent','PlaceStoryPhotos','LegacyPlacePage','EditorialFeaturePlace','VillageFeaturePlace','PlaceFactSheet','DiscoveryFeaturePlace']);
 async function nodes(element){if(!element||typeof element!=='object')return [];if(typeof element.type==='function'&&expandNames.has(element.type.name))return nodes(await element.type(element.props));return [element,...(await Promise.all(require('react').Children.toArray(element.props?.children).map(nodes))).flat()];}
 (async()=>{
- const manifest=JSON.parse(fs.readFileSync(require('node:path').join(__dirname,'../public/media/places/pampelonne/sources.json')));
- const photos=require('../data/pampelonneMedia.ts').pampelonneMedia;assert.equal(photos.length,5);
+ for(const [folder,module,exportName,length] of [['pampelonne','pampelonneMedia','pampelonneMedia',5],['citadelle','citadelleMedia','citadelleMedia',4]]){
+ const manifest=JSON.parse(fs.readFileSync(require('node:path').join(__dirname,`../public/media/places/${folder}/sources.json`)));
+ const photos=require(`../data/${module}.ts`)[exportName];assert.equal(photos.length,length);
  for(const file of manifest.files){const bytes=fs.readFileSync(require('node:path').join(__dirname,'../public',file.file));assert.equal(require('node:crypto').createHash('sha256').update(bytes).digest('hex'),file.sha256);assert.ok(bytes.length<400000);const photo=photos.find(p=>p.src===file.file);assert.equal(photo.credit,file.credit);assert.equal(photo.licenseUrl,file.licenseUrl);assert.equal(new URL(photo.source).hostname,'commons.wikimedia.org');}
+ }
  let count=0;
  for(const [id,points] of Object.entries(placeMapPoints)){
   assert.ok(places.some(p=>p.id===id),id);assert.equal(new Set(points.map(p=>p.id)).size,points.length);
@@ -34,7 +36,7 @@ async function nodes(element){if(!element||typeof element!=='object')return [];i
   const community=children.filter(e=>typeof e.type==='function'&&e.type.name==='CommunitySection');assert.equal(community.length,1);const locationAt=children.indexOf(blocks[0]),communityAt=children.indexOf(community[0]);assert.ok(locationAt<communityAt);
   const factsAt=children.findIndex(e=>e.type==='dl');if(factsAt>=0)assert.ok(locationAt<factsAt,place.id+' map before facts');
   const preparationAt=children.findIndex(e=>typeof e.type==='function'&&e.type.name==='PlacePreparation');if(preparationAt>=0)assert.ok(locationAt<preparationAt&&preparationAt<communityAt);
-  if(place.id==='caves-du-roy'){const practicalAt=children.findIndex(e=>e.type==='h2'&&e.props.children===require('../data/editorialFeatures.ts').editorialFeatures['caves-du-roy'][locale].practicalTitle);assert.ok(locationAt<practicalAt);}
+  if(['caves-du-roy','citadelle-saint-tropez'].includes(place.id)){const practicalAt=children.findIndex(e=>e.type==='h2'&&e.props.children===require('../data/editorialFeatures.ts').editorialFeatures[place.id][locale].practicalTitle);assert.ok(locationAt<practicalAt);}
   if(place.id==='pampelonne'){
    const gallery=children.find(e=>typeof e.type==='function'&&e.type.name==='PlaceMediaGallery');assert.equal(gallery.props.photos.length,5);assert.equal(gallery.props.processed,true);assert.equal(gallery.props.photos[2].contextual,true);
    const photos=children.filter(e=>typeof e.type==='function'&&e.type.name==='PampelonnePhoto');assert.deepEqual(photos.map(e=>e.props.index),[4,3]);
@@ -42,6 +44,13 @@ async function nodes(element){if(!element||typeof element!=='object')return [];i
    const actions=children.filter(e=>typeof e.type==='function'&&e.type.name==='PlaceActions');assert.equal(actions.length,1);
    const siblings=require('react').Children.toArray(element.props.children),at=siblings.findIndex(e=>typeof e.type==='function'&&e.type.name==='CommunitySection');assert.equal(siblings[at-1].props.children.type.name,'PlaceActions');
    const metadata=await require('../app/[locale]/place/[id]/page.tsx').generateMetadata({params:Promise.resolve({locale,id:place.id})});assert.ok(metadata.openGraph.images[0].url.endsWith('/media/places/pampelonne/photo-1.webp'));
+  }
+  if(place.id==='citadelle-saint-tropez'){
+   const gallery=children.find(e=>typeof e.type==='function'&&e.type.name==='PlaceMediaGallery');assert.equal(gallery.props.photos.length,4);assert.equal(gallery.props.processed,true);assert.ok(gallery.props.photos[0].src.endsWith('/citadelle/photo-1.webp'));
+   const story=children.filter(e=>typeof e.type==='function'&&e.type.name==='CitadelleStoryPhoto');assert.equal(story.length,1);const model=renderToStaticMarkup(story[0].type(story[0].props));assert.ok(model.includes(encodeURIComponent('/media/places/citadelle/photo-4.webp')));assert.ok(model.includes('G.Garitan'));assert.ok(model.includes('by-sa/3.0'));
+   const actions=children.filter(e=>typeof e.type==='function'&&e.type.name==='PlaceActions');assert.equal(actions.length,1);
+   const siblings=require('react').Children.toArray(element.props.children),at=siblings.findIndex(e=>typeof e.type==='function'&&e.type.name==='CommunitySection');assert.equal(siblings[at-1].props.children.type.name,'PlaceActions');
+   const metadata=await require('../app/[locale]/place/[id]/page.tsx').generateMetadata({params:Promise.resolve({locale,id:place.id})});assert.ok(metadata.openGraph.images[0].url.endsWith('/media/places/citadelle/photo-1.webp'));
   }
   const siblings=require('react').Children.toArray(element.props.children),communityIndex=siblings.findIndex(e=>typeof e.type==='function'&&e.type.name==='CommunitySection');assert.ok(['lg-shell py-6','lg-shell py-12'].includes(siblings[communityIndex+1].props.className));
  }
