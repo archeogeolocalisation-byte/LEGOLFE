@@ -9,12 +9,12 @@ export const practicalGuides: Guide[] = [
     },
     "image": "marches-golfe-saint-tropez-jours-cover",
     "imageAlt": {
-      "fr": "Les marchés. — illustration éditoriale",
-      "en": "Market days. — editorial illustration"
+      "fr": "Illustration d’une place de marché provençal, stands de fruits, légumes et fleurs sous les platanes",
+      "en": "Illustration of a Provençal market square with produce and flower stalls beneath plane trees"
     },
     "imageCaption": {
-      "fr": "Illustration originale · LE GOLFE · Représentation symbolique",
-      "en": "Original illustration · LE GOLFE · Symbolic representation"
+      "fr": "Illustration éditoriale · LE GOLFE",
+      "en": "Editorial illustration · LE GOLFE"
     },
     "destinations": [
       "saint-tropez",
@@ -371,12 +371,12 @@ export const practicalGuides: Guide[] = [
     },
     "image": "activites-gratuites-golfe-saint-tropez-cover",
     "imageAlt": {
-      "fr": "Le golfe. — illustration éditoriale",
-      "en": "The golfe. — editorial illustration"
+      "fr": "Illustration d’une promenade au bord du Golfe, entre pins parasols et village côtier",
+      "en": "Illustration of a walk beside the Golfe, between umbrella pines and a coastal village"
     },
     "imageCaption": {
-      "fr": "Illustration originale · LE GOLFE · Représentation symbolique",
-      "en": "Original illustration · LE GOLFE · Symbolic representation"
+      "fr": "Illustration éditoriale · LE GOLFE",
+      "en": "Editorial illustration · LE GOLFE"
     },
     "destinations": [
       "saint-tropez",
@@ -682,12 +682,12 @@ export const practicalGuides: Guide[] = [
     },
     "image": "golfe-saint-tropez-avec-enfants-cover",
     "imageAlt": {
-      "fr": "Avec les enfants. — illustration éditoriale",
-      "en": "With children. — editorial illustration"
+      "fr": "Illustration d’une famille sur la plage, avec deux enfants construisant un château de sable",
+      "en": "Illustration of a family on the beach, with two children building a sandcastle"
     },
     "imageCaption": {
-      "fr": "Illustration originale · LE GOLFE · Représentation symbolique",
-      "en": "Original illustration · LE GOLFE · Symbolic representation"
+      "fr": "Illustration éditoriale · LE GOLFE",
+      "en": "Editorial illustration · LE GOLFE"
     },
     "destinations": [
       "grimaud",
@@ -961,12 +961,12 @@ export const practicalGuides: Guide[] = [
     },
     "image": "week-end-automne-golfe-saint-tropez-cover",
     "imageAlt": {
-      "fr": "L’automne. — illustration éditoriale",
-      "en": "Autumn. — editorial illustration"
+      "fr": "Illustration d’un village et de vignes dorées en automne au-dessus du Golfe",
+      "en": "Illustration of a village and golden autumn vineyards above the Golfe"
     },
     "imageCaption": {
-      "fr": "Illustration originale · LE GOLFE · Représentation symbolique",
-      "en": "Original illustration · LE GOLFE · Symbolic representation"
+      "fr": "Illustration éditoriale · LE GOLFE",
+      "en": "Editorial illustration · LE GOLFE"
     },
     "destinations": [
       "saint-tropez",

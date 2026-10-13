@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-require-imports */
-const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),Module=require('node:module'),ts=require('typescript');
+const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),crypto=require('node:crypto'),Module=require('node:module'),ts=require('typescript');
 for(const ext of ['.ts','.tsx'])require.extensions[ext]=(module,filename)=>module._compile(ts.transpileModule(fs.readFileSync(filename,'utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022,jsx:ts.JsxEmit.ReactJSX,esModuleInterop:true}}).outputText,filename);
 require.extensions['.webp']=(module,filename)=>{module.exports={src:'/media/guides/'+path.basename(filename),width:1200,height:800};};
 process.env.VERCEL_ENV='production';process.env.NEXT_PUBLIC_SITE_URL='https://www.legolfe.com';
 const load=Module._load;
 Module._load=function(request,parent,...rest){
- if(parent?.filename.endsWith('/sitemap.xml/route.ts')&&request.endsWith('/lib/publicEvents'))return {getPublicEvents:async()=>[]};
+ if((parent?.filename.endsWith('/sitemap.xml/route.ts')||parent?.filename.endsWith('/app/[locale]/page.tsx'))&&request.endsWith('/lib/publicEvents'))return {getPublicEvents:async()=>[]};
  if(parent?.filename.endsWith('/sitemap.xml/route.ts')&&request.endsWith('/lib/publicVillas'))return {getPublishedVillas:async()=>[]};
  return load.call(this,request,parent,...rest);
 };
@@ -18,6 +18,10 @@ const Page=require('../app/[locale]/guides/[slug]/page.tsx');
 const {renderToStaticMarkup}=require('react-dom/server');
 const {GET}=require('../app/sitemap.xml/route.ts');
 (async()=>{
+ const manifest=JSON.parse(fs.readFileSync(path.join(__dirname,'../public/media/guides/illustration-v2-sources.json')));assert.equal(manifest.files.length,4);
+ for(const file of manifest.files){const bytes=fs.readFileSync(path.join(__dirname,'../public',file.file));assert.equal(crypto.createHash('sha256').update(bytes).digest('hex'),file.sha256);assert.equal(bytes.subarray(0,4).toString(),'RIFF');assert.equal(file.width,1200);assert.equal(file.height,800);assert.ok(bytes.length<300000);assert.ok(mediaForGuide(guides.find(g=>g.slug===file.guide)).photo.src.endsWith('-cover-v2.webp'));}
+ const Home=require('../app/[locale]/page.tsx').default;
+ for(const locale of ['fr','en']){const html=renderToStaticMarkup(await Home({params:Promise.resolve({locale})}));for(const id of ['grimaud','saint-tropez','sainte-maxime']){assert.ok(html.includes(encodeURIComponent(`/media/tourist-map/${id}-illustration.webp`)));assert.ok(html.includes(`href="/${locale}/destinations/${id}"`));}assert.equal(html.includes('Jibi44'),false);assert.ok(html.includes(`href="/${locale}/carte-touristique"`));}
  const slugs=new Set(guides.map(g=>g.slug));assert.equal(slugs.size,guides.length);assert.ok(guides.length>=12);
  const titles=new Set(),validDest=new Set(destinations.map(d=>d.slug)),validPlaces=new Set(places.map(p=>p.id));
  const validPaths=new Set(['/whats-on','/stay','/destinations','/explore',...placeCategories.map(c=>'/explore/'+c.id),...destinationPaths(),...guides.map(g=>'/guides/'+g.slug),...places.map(p=>'/place/'+p.id)]);

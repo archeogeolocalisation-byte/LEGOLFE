@@ -21,7 +21,8 @@
       "feature/place-maps": false,
       "feature/tourist-map": false,
       "feature/village-visuals": false,
-      "design/commune-grid": false
+      "design/commune-grid": false,
+      "design/home-guide-art": false
     }
   }
 }
