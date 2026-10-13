@@ -6,12 +6,12 @@ import { categoryFR, type Locale } from "../lib/i18n";
 import { mediaForPlace } from "../lib/placeMedia";
 
 import { destinations } from "../data/destinations";
-import { exploreFilterIds, exploreFilterLabels, exploreFilterHref, exploreFilterCategory, matchesExploreFilter, matchesExploreSearch, type ExploreFilter } from "../lib/exploreFilters";
+import { isExploreAddress, exploreFilterIds, exploreFilterLabels, exploreFilterHref, exploreFilterCategory, matchesExploreFilter, matchesExploreSearch, type ExploreFilter } from "../lib/exploreFilters";
 
 export default function ExploreIntentGrid({ places, locale, filter = "all", query="", town="" }: { places: Place[]; locale: Locale; filter?: ExploreFilter;query?:string;town?:string }) {
   const fr = locale === "fr";
   const labels = exploreFilterLabels[locale];
-  const candidates=places.filter(place=>matchesExploreSearch(place,query,town));
+  const candidates=places.filter(isExploreAddress).filter(place=>matchesExploreSearch(place,query,town));
   const list = candidates.filter(place => matchesExploreFilter(place, filter));
   const counts = Object.fromEntries(exploreFilterIds.map(id => [id, candidates.filter(place => matchesExploreFilter(place, id)).length]));
   const category = exploreFilterCategory(filter);

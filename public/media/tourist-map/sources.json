@@ -60,7 +60,11 @@
     "la-mole": "Original imagegen illustration approved in this conversation on 2026-10-13. Resized to 600 × 400 and encoded WebP; original composition and signature retained.",
     "cavalaire-sur-mer": "Original imagegen illustration approved in this conversation on 2026-10-13. Resized to 600 × 400 and encoded WebP; original composition and signature retained.",
     "la-garde-freinet": "Original imagegen illustration approved in this conversation on 2026-10-13. Resized to 600 × 400 and encoded WebP; original composition and signature retained.",
-    "saint-tropez": "Original imagegen illustration approved in this conversation on 2026-10-13. Resized to 600 × 400 and encoded WebP; original composition and signature retained."
+    "saint-tropez": "Original imagegen illustration approved in this conversation on 2026-10-13. Resized to 600 × 400 and encoded WebP; original composition and signature retained.",
+    "cogolin": "Original imagegen illustration created for the twelve-commune grid in this conversation on 2026-10-13. Resized to 600 × 400 WebP, full composition retained.",
+    "ramatuelle": "Original imagegen illustration created for the twelve-commune grid in this conversation on 2026-10-13. Resized to 600 × 400 WebP, full composition retained.",
+    "la-croix-valmer": "Original imagegen illustration created for the twelve-commune grid in this conversation on 2026-10-13. Resized to 600 × 400 WebP, full composition retained.",
+    "rayol-canadel": "Original imagegen illustration created for the twelve-commune grid in this conversation on 2026-10-13. Resized to 600 × 400 WebP, full composition retained."
   },
   "files": [
     {
@@ -139,6 +143,34 @@
       "height": 400,
       "bytes": 50912,
       "sha256": "0d030c5879d05b1667f1c83429481a49faa1b19cc021469c7ef96d3d490a6d71"
+    },
+    {
+      "file": "/media/tourist-map/cogolin-illustration.webp",
+      "width": 600,
+      "height": 400,
+      "bytes": 53592,
+      "sha256": "2fb7246da0052be056bbc614eabc7561edfab413a3069b3645b32f5417511168"
+    },
+    {
+      "file": "/media/tourist-map/ramatuelle-illustration.webp",
+      "width": 600,
+      "height": 400,
+      "bytes": 55668,
+      "sha256": "d31183e2bce0b677283aaa66619a3a5cb5ca828fb426c98fbb1432f0af360175"
+    },
+    {
+      "file": "/media/tourist-map/la-croix-valmer-illustration.webp",
+      "width": 600,
+      "height": 400,
+      "bytes": 59868,
+      "sha256": "9cd35b769c04c22a42089bdcd7b01d16f42ce137d89a9460406ea09809abc903"
+    },
+    {
+      "file": "/media/tourist-map/rayol-canadel-illustration.webp",
+      "width": 600,
+      "height": 400,
+      "bytes": 59382,
+      "sha256": "061ee8fe8d847aa0b0ecf3066f2440cae11b0a465310510114c56709c665e0fa"
     }
   ]
 }

@@ -35,3 +35,11 @@ La page propose deux liens externes Routes / Trafic en direct et un itinéraire 
 Pas de script ou iframe Google, pas de requête tierce avant clic, aucune nouvelle clé ni facturation API. Documentation vérifiée : https://developers.google.com/maps/documentation/urls/get-started . Une future carte de trafic intégrée nécessiterait Maps JavaScript API / TrafficLayer, clé restreinte et projet Google avec facturation activée ; elle n'est pas activée ici.
 
 Validation : suite tourist-map étendue aux nouveaux visuels, liens routes/trafic et itinéraires de chaque sélection en FR/EN ; TypeScript, ESLint et compilation CI. Contrôle navigateur à effectuer après publication : ouverture Google Maps sur téléphone et bureau, activation du calque trafic selon la couverture et images sans recadrage. Branche feature/village-visuals sans preview publique.
+
+## Communes sous la carte et Explorer
+
+Douze communes présentées sous la carte dans une grille de trois colonnes dès 960 px, deux à partir de 640 px et une sur téléphone. Chaque carte conserve son illustration entière et renvoie à la page de destination existante ; La Garde-Freinet ouvre toujours la source touristique officielle faute de fiche interne. Les quatre visuels manquants (Cogolin, Ramatuelle, La Croix-Valmer, Rayol-Canadel) sont créés dans le style demandé et encodés en WebP avec provenance/empreintes. Port Grimaud et La Nartelle restent des points de la carte, pas des communes supplémentaires.
+
+Explorer masque les onze fiches communales existantes et Port Grimaud dans ses résultats, compteurs et pages de catégorie. Les fiches et URL ne sont pas supprimées. Le filtre historique `places` devient Patrimoine / Heritage et conserve le Moulin de Paillas ; la recherche par commune reste disponible. Les liens de communes en bas d'Explorer sont retirés au profit de l'accès à Découvrir le Golfe. Les textes d'introduction et métadonnées d'Explorer correspondent désormais aux adresses et activités.
+
+Validation étendue : douze cartes, illustrations et liens FR/EN ; absence des fiches village dans tous les filtres d'Explorer et sa catégorie Patrimoine ; conservation des sites à visiter. TypeScript, ESLint et CI. Vérification navigateur des trois/deux/une colonnes à faire après publication. Aucune migration ou variable requise, preview publique désactivée pour design/commune-grid.
