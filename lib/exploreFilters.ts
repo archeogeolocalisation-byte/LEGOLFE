@@ -7,8 +7,8 @@ import type { Locale } from "./i18n";
 export const exploreFilterIds = ["all", "places", "eat", "beach", "sea", "do", "party", "wellness", "services", "quiet", "view", "family"] as const;
 export type ExploreFilter = typeof exploreFilterIds[number];
 export const exploreFilterLabels: Record<Locale, Record<ExploreFilter, string>> = {
-  fr: { all: "Tout", places: "Villages", eat: "Restaurants", beach: "Plages", sea: "Mer & bateaux", do: "À faire", party: "Sortir", wellness: "Bien-être & sport", services: "Services", quiet: "Au calme", view: "Belle vue", family: "En famille" },
-  en: { all: "All", places: "Villages", eat: "Restaurants", beach: "Beaches", sea: "Boats & sea", do: "Things to do", party: "Nightlife", wellness: "Wellness & sport", services: "Services", quiet: "Quiet", view: "Great view", family: "Family" },
+  fr: { all: "Tout", places: "Patrimoine", eat: "Restaurants", beach: "Plages", sea: "Mer & bateaux", do: "À faire", party: "Sortir", wellness: "Bien-être & sport", services: "Services", quiet: "Au calme", view: "Belle vue", family: "En famille" },
+  en: { all: "All", places: "Heritage", eat: "Restaurants", beach: "Beaches", sea: "Boats & sea", do: "Things to do", party: "Nightlife", wellness: "Wellness & sport", services: "Services", quiet: "Quiet", view: "Great view", family: "Family" },
 };
 export function isExploreFilter(value: unknown): value is ExploreFilter {
   return typeof value === "string" && exploreFilterIds.some(id => id === value);
@@ -61,3 +61,6 @@ export function matchesExploreSearch(place: Place, query: string, town: string) 
   const text = normalizeSearch([place.name,placeName(place,"fr"),place.location,place.description,placeDescriptionFr[place.id]||""].join(" "));
   return terms.every(term=>text.includes(term));
 }
+
+const villageIds=new Set(destinations.flatMap(d=>d.villageId?[d.villageId]:[]));
+export function isExploreAddress(place:Place){return !villageIds.has(place.id)&&place.id!=="port-grimaud";}

@@ -20,7 +20,8 @@
       "content/place-facts-seo": false,
       "feature/place-maps": false,
       "feature/tourist-map": false,
-      "feature/village-visuals": false
+      "feature/village-visuals": false,
+      "design/commune-grid": false
     }
   }
 }

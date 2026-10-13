@@ -5,7 +5,7 @@ require.extensions['.css']=m=>{m.exports=new Proxy({},{get:(_,key)=>key==='__esM
 process.env.VERCEL_ENV='production';process.env.NEXT_PUBLIC_SITE_URL='https://www.legolfe.com';process.env.NEXT_PUBLIC_SUPABASE_URL='https://example.supabase.co';process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY='sb_publishable_ci_dummy';
 const load=Module._load;Module._load=function(request,parent,...rest){if(parent?.filename.endsWith('/sitemap.xml/route.ts')&&request.endsWith('/lib/publicEvents'))return {getPublicEvents:async()=>[]};if(parent?.filename.endsWith('/sitemap.xml/route.ts')&&request.endsWith('/lib/publicVillas'))return {getPublishedVillas:async()=>[]};return load.call(this,request,parent,...rest);};
 require.extensions['.webp']=(m,f)=>{m.exports={src:'/media/guides/'+path.basename(f),width:1200,height:800};};
-const {touristMapPlaces}=require('../data/touristMap.ts'),{touristMapPoint,touristMapBounds,clampTouristView,touristViewForPoint,touristMapTransform}=require('../lib/touristMap.ts');
+const {touristMapPlaces,touristMapCommunes}=require('../data/touristMap.ts'),{touristMapPoint,touristMapBounds,clampTouristView,touristViewForPoint,touristMapTransform}=require('../lib/touristMap.ts');
 const {touristRoadMapUrl,touristDirectionsUrl}=require('../lib/touristRoadLinks.ts');
 const {destinationPaths}=require('../data/destinations.ts'),{places}=require('../data/places.ts');
 const Page=require('../app/[locale]/carte-touristique/page.tsx'),{renderToStaticMarkup}=require('react-dom/server'),{GET}=require('../app/sitemap.xml/route.ts');
@@ -14,6 +14,7 @@ const manifest=JSON.parse(fs.readFileSync(path.join(__dirname,'../public/media/t
  const road=new URL(touristRoadMapUrl()),traffic=new URL(touristRoadMapUrl(true));
  assert.equal(road.hostname,'www.google.com');assert.equal(road.searchParams.get('api'),'1');assert.equal(road.searchParams.get('basemap'),'roadmap');assert.equal(road.searchParams.get('layer'),null);assert.equal(traffic.searchParams.get('layer'),'traffic');
  for(const id of ['le-plan-de-la-tour','gassin','sainte-maxime','la-mole','cavalaire-sur-mer','la-garde-freinet','saint-tropez'])assert.equal(touristMapPlaces.find(p=>p.id===id).illustration,`/media/tourist-map/${id}-illustration.webp`);
+ assert.equal(touristMapCommunes.length,12);assert.equal(new Set(touristMapCommunes.map(p=>p.id)).size,12);assert.ok(touristMapCommunes.every(p=>p.illustration));assert.equal(touristMapCommunes.some(p=>['port-grimaud','la-nartelle'].includes(p.id)),false);
  assert.equal(touristMapPlaces.length,14);assert.equal(new Set(touristMapPlaces.map(p=>p.id)).size,14);
  const validPaths=new Set([...destinationPaths(),...places.map(p=>'/place/'+p.id)]);
  for(const p of touristMapPlaces){assert.equal(new URL(p.source).protocol,'https:');assert.ok(p.checked<=new Date().toISOString().slice(0,10));assert.ok(p.latitude>=touristMapBounds.south&&p.latitude<=touristMapBounds.north&&p.longitude>=touristMapBounds.west&&p.longitude<=touristMapBounds.east);
@@ -30,7 +31,14 @@ const manifest=JSON.parse(fs.readFileSync(path.join(__dirname,'../public/media/t
  for(const locale of ['fr','en']){
   const metadata=await Page.generateMetadata({params:Promise.resolve({locale})});assert.equal(metadata.alternates.canonical,`https://www.legolfe.com/${locale}/carte-touristique`);assert.ok(metadata.openGraph.images[0].url.endsWith('/tourist-map/cover.webp'));
   const html=renderToStaticMarkup(await Page.default({params:Promise.resolve({locale})}));assert.equal((html.match(/<h1[ >]/g)||[]).length,1);assert.equal((html.match(/<option /g)||[]).length,14);assert.equal((html.match(/aria-pressed="true"/g)||[]).length,1);assert.ok(html.includes('aria-label="La Nartelle"'));assert.ok(html.includes('openstreetmap.org/copyright'));assert.ok(html.includes('tilezen/joerd'));
-  assert.ok(html.includes(`href="/${locale}/carte-touristique"`));assert.ok(html.includes(`href="/${locale}/destinations/grimaud"`));assert.ok(html.includes('aria-current="page"'));assert.ok(html.includes('layer=traffic'));assert.ok(html.includes('Itinéraire · Google Maps')||html.includes('Directions · Google Maps'));assert.equal(html.includes('<iframe'),false);assert.equal(html.includes('nominatim.openstreetmap.org'),false);
+  assert.ok(html.includes(`href="/${locale}/carte-touristique"`));assert.ok(html.includes(`href="/${locale}/destinations/grimaud"`));assert.ok(html.includes('aria-current="page"'));assert.equal((html.match(/data-commune=/g)||[]).length,12);for(const commune of touristMapCommunes){assert.ok(html.includes(`data-commune="${commune.id}"`));assert.ok(html.includes(encodeURIComponent(commune.illustration)));}assert.ok(html.includes('layer=traffic'));assert.ok(html.includes('Itinéraire · Google Maps')||html.includes('Directions · Google Maps'));assert.equal(html.includes('<iframe'),false);assert.equal(html.includes('nominatim.openstreetmap.org'),false);
+ }
+ const ExplorePage=require('../app/[locale]/explore/page.tsx'),CategoryPage=require('../app/[locale]/explore/[category]/page.tsx'),Grid=require('../components/ExploreIntentGrid.tsx').default;
+ const {isExploreAddress,exploreFilterIds}=require('../lib/exploreFilters.ts');const villages=places.filter(p=>!isExploreAddress(p));assert.equal(villages.length,12);assert.ok(isExploreAddress(places.find(p=>p.id==='moulin-de-paillas')));
+ for(const locale of ['fr','en']){
+  for(const filter of exploreFilterIds){const html=renderToStaticMarkup(Grid({places,locale,filter,query:'',town:''}));for(const village of villages)assert.equal(html.includes(`/${locale}/place/${village.id}`),false);}
+  const html=renderToStaticMarkup(await ExplorePage.default({params:Promise.resolve({locale}),searchParams:Promise.resolve({q:'',town:'',filter:'all'})}));for(const village of villages)assert.equal(html.includes(`/${locale}/place/${village.id}`),false);assert.ok(html.includes(`/${locale}/carte-touristique`));
+  const category=renderToStaticMarkup(await CategoryPage.default({params:Promise.resolve({locale,category:'places'})}));for(const village of villages)assert.equal(category.includes(`/${locale}/place/${village.id}`),false);
  }
  const xml=await(await GET()).text();for(const locale of ['fr','en'])assert.ok(xml.includes(`<loc>https://www.legolfe.com/${locale}/carte-touristique</loc><lastmod>2026-10-13</lastmod>`));assert.ok(xml.includes('/media/tourist-map/cover.webp'));
  // Exercise the actual client event handlers with isolated hook state, not a browser simulator.

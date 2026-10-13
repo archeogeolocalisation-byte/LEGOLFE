@@ -23,7 +23,8 @@ export const touristMapPlaces:TouristMapPlace[] = [
         "description": "An old centre, a market and local craft traditions to discover."
       }
     },
-    "path": "/destinations/cogolin"
+    "path": "/destinations/cogolin",
+    "illustration": "/media/tourist-map/cogolin-illustration.webp"
   },
   {
     "id": "gassin",
@@ -72,7 +73,8 @@ export const touristMapPlaces:TouristMapPlace[] = [
         "description": "Explore the village lanes, then the coast at Pampelonne and L’Escalet."
       }
     },
-    "path": "/destinations/ramatuelle"
+    "path": "/destinations/ramatuelle",
+    "illustration": "/media/tourist-map/ramatuelle-illustration.webp"
   },
   {
     "id": "la-croix-valmer",
@@ -96,7 +98,8 @@ export const touristMapPlaces:TouristMapPlace[] = [
         "description": "The village, vineyards and beaches at Gigaro and Le Débarquement."
       }
     },
-    "path": "/destinations/la-croix-valmer"
+    "path": "/destinations/la-croix-valmer",
+    "illustration": "/media/tourist-map/la-croix-valmer-illustration.webp"
   },
   {
     "id": "cavalaire-sur-mer",
@@ -145,7 +148,8 @@ export const touristMapPlaces:TouristMapPlace[] = [
         "description": "Domaine du Rayol and beaches below the coastal road."
       }
     },
-    "path": "/destinations/rayol-canadel"
+    "path": "/destinations/rayol-canadel",
+    "illustration": "/media/tourist-map/rayol-canadel-illustration.webp"
   },
   {
     "id": "la-mole",
@@ -351,3 +355,6 @@ export const touristMapPlaces:TouristMapPlace[] = [
     }
   }
 ];
+
+// The grid lists communes only; Port Grimaud and La Nartelle remain map locations.
+export const touristMapCommunes=touristMapPlaces.filter(place=>place.id!=="port-grimaud"&&place.id!=="la-nartelle");
