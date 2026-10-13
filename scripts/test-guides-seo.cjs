@@ -6,6 +6,7 @@ process.env.VERCEL_ENV='production';process.env.NEXT_PUBLIC_SITE_URL='https://ww
 const load=Module._load;
 Module._load=function(request,parent,...rest){
  if((parent?.filename.endsWith('/sitemap.xml/route.ts')||parent?.filename.endsWith('/app/[locale]/page.tsx'))&&request.endsWith('/lib/publicEvents'))return {getPublicEvents:async()=>[]};
+ if(parent?.filename.endsWith('/sitemap.xml/route.ts')&&request.endsWith('/lib/publicNews'))return {getPublicNews:async()=>require('../data/localNews.ts').localNews};
  if(parent?.filename.endsWith('/sitemap.xml/route.ts')&&request.endsWith('/lib/publicVillas'))return {getPublishedVillas:async()=>[]};
  return load.call(this,request,parent,...rest);
 };
@@ -48,6 +49,7 @@ const {GET}=require('../app/sitemap.xml/route.ts');
   assert.ok(relatedGuidesFor(guide).every(other=>other.slug!==guide.slug));
  }
  const xml=await (await GET()).text();assert.equal(xml.includes('<loc>https://www.legolfe.com/match</loc>'),false);assert.equal(xml.includes('/admin'),false);assert.equal(xml.includes('/host'),false);
+ for(const month of ['2026-10','2026-09'])for(const locale of ['fr','en'])assert.ok(xml.includes(`<loc>https://www.legolfe.com/${locale}/local/archives/${month}</loc>`));
  for(const guide of guides)for(const locale of ['fr','en'])assert.ok(xml.includes(`<loc>https://www.legolfe.com/${locale}/guides/${guide.slug}</loc>`));
  const match=require('../app/match/layout.tsx').metadata;assert.equal(match.robots.index,false);
  process.env.VERCEL_ENV='preview';assert.equal(guideArticleSchema(guides[0],'fr'),null);
