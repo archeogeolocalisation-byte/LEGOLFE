@@ -5,6 +5,14 @@ const {parseCarreProgramme,mergeCarreProgramme,carreProgrammeUrl}=require('../li
 const fixture=fs.readFileSync(path.join(__dirname,'fixtures/carre-programme.html'),'utf8');
 (async()=>{
  const programme=parseCarreProgramme(fixture,'2026-10-13');assert.equal(programme.length,31);assert.deepEqual(programme,carreProgrammeSnapshot);assert.equal(new Set(programme.map(e=>e.id)).size,31);
+ const {mediaForEvent,eventMediaLabel}=require('../lib/eventMedia.ts');
+ const imageManifest=require('../data/carreEventImages.ts').carreEventImages;assert.equal(imageManifest.length,31);
+ for(const event of programme){const media=mediaForEvent(event);assert.equal(media.kind,'official');assert.ok(media.src.startsWith('/media/events/carre/'));const file=path.join(__dirname,'../public',media.src);assert.ok(fs.statSync(file).size>1000);const buf=fs.readFileSync(file);assert.equal(buf.toString('ascii',8,12),'WEBP');assert.equal(eventMediaLabel(media,'en'),'Official show image');}
+ assert.ok(parseCarreProgramme(fixture.replaceAll('//img.mapado.net/','//untrusted.example/'),'2026-10-13').every(e=>!e.officialImage));
+ assert.ok(programme.every(e=>e.officialImage.startsWith('https://img.mapado.net/')));
+ const noImage=parseCarreProgramme(fixture.replace(/<img[^>]*>/g,''),'2026-10-13');assert.equal(noImage.length,31);assert.equal(mediaForEvent(noImage[0]).kind,'official');
+ const changed={...programme[0],officialImage:'https://img.mapado.net/2026/10/new-show.jpg'};assert.equal(mediaForEvent(changed).src,changed.officialImage);
+ assert.notEqual(mediaForEvent({...programme[0],officialImage:'https://untrusted.example/photo.jpg'}).kind,'official');
  const greg=programme.find(e=>e.id==='carre-733261');assert.equal(greg.start,'2026-10-30');assert.equal(greg.time,'20:30');assert.equal(greg.category,'music');
  const magic=programme.find(e=>e.id==='carre-733303');assert.deepEqual(magic.sessions.map(s=>s.start),['2026-11-12','2026-11-13']);assert.ok(programme.some(e=>e.start==='2027-05-21'));
  assert.deepEqual(parseCarreProgramme('<main>Maintenance</main>','2026-10-13'),[]);assert.deepEqual(parseCarreProgramme(fixture.replace(/20:30/g,'99:99'),'2026-10-13').filter(e=>e.id===greg.id),[]);

@@ -17,11 +17,15 @@ export function parseCarreProgramme(html:string,checked:string):GolfeEvent[]{
    return [{start,time}];
   }).sort((a,b)=>a.start.localeCompare(b.start)||a.time.localeCompare(b.time));
   if(!sessions.length)continue;
+  const imageSrc=plain(body.match(/<img\b[^>]*src="([^"]+)"/)?.[1]??'');
+  const original=imageSrc.replace(/_thumbs\/.*$/,'');
+  const imageUrl=original.startsWith('//')?'https:'+original:original;
+  const officialImage=/^https:\/\/img\.mapado\.net\/[a-zA-Z0-9_./%-]+\.(?:jpe?g|png|webp)$/i.test(imageUrl)?imageUrl:undefined;
   const numericId=slug.split('-')[0],id=aliases[numericId]??`carre-${numericId}`;
   let category:EventCategory='culture';
   if(/JUSTINA|GREG ZLAP|MANOUKIAN|ABD AL MALIK|SOUAD MASSI/.test(title))category='music';
   if(/BOREALE|CHIFFONADE|CAMUS EST HIP HOP/.test(title))category='family';
-  found.set(id,{id,title,titleFr:title,start:sessions[0].start,time:sessions[0].time,sessions,location:'Sainte-Maxime',venue:'Le Carré Léon Gaumont',streetAddress:'107 Route du Plan de la Tour',postalCode:'83120',category,summary:'A performance in Le Carré’s official programme. See the venue for booking and current details.',summaryFr:'Un spectacle de la programmation officielle du Carré. Consultez le lieu pour réserver et confirmer les informations.',why:'A cultural stop to build into a Sainte-Maxime visit.',whyFr:'Une étape culturelle à intégrer à une journée à Sainte-Maxime.',source:carreProgrammeUrl+'event/'+slug,sourceLabel:'Le Carré · billetterie officielle',sourceCheckedAt:checked});
+  found.set(id,{id,officialImage,title,titleFr:title,start:sessions[0].start,time:sessions[0].time,sessions,location:'Sainte-Maxime',venue:'Le Carré Léon Gaumont',streetAddress:'107 Route du Plan de la Tour',postalCode:'83120',category,summary:'A performance in Le Carré’s official programme. See the venue for booking and current details.',summaryFr:'Un spectacle de la programmation officielle du Carré. Consultez le lieu pour réserver et confirmer les informations.',why:'A cultural stop to build into a Sainte-Maxime visit.',whyFr:'Une étape culturelle à intégrer à une journée à Sainte-Maxime.',source:carreProgrammeUrl+'event/'+slug,sourceLabel:'Le Carré · billetterie officielle',sourceCheckedAt:checked});
  }
  return [...found.values()].sort((a,b)=>a.start.localeCompare(b.start));
 }
