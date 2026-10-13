@@ -1,5 +1,6 @@
 "use client";
 import {normalizeMapLocation,type VillaMapLocation} from "../lib/villaMapLocation";
+import RecoverLocalDrafts from "./RecoverLocalDrafts";
 import HostAvailability from "./HostAvailability";
 
 import Link from "next/link";
@@ -127,9 +128,27 @@ export default function HostDesk({locale}:{locale:Locale}) {
       setStays(Array.isArray(savedStays)?savedStays:seedStays);
       setHydrated(true);
     }catch{setStorageError(fr?'Impossible de lire les annonces de ce compte sur cet appareil.':'Unable to read this account’s listings on this device.');}
-  },[storageScope,scopeReady]);
-  useEffect(()=>{if(hydrated&&scope.current===storageScope)try{localStorage.setItem(propertyKey,JSON.stringify(properties));}catch{setStorageError(fr?'Enregistrement impossible sur cet appareil.':'Unable to save on this device.');}},[properties,hydrated,storageScope]);
-  useEffect(()=>{if(hydrated&&scope.current===storageScope)try{localStorage.setItem(stayKey,JSON.stringify(stays));}catch{setStorageError(fr?'Impossible de conserver les séjours.':'Unable to save stays.');}},[stays,hydrated,storageScope]);
+  },[storageScope,scopeReady,propertyKey,stayKey,fr]);
+  useEffect(()=>{if(hydrated&&scope.current===storageScope)try{localStorage.setItem(propertyKey,JSON.stringify(properties));}catch{queueMicrotask(()=>{if(scope.current===storageScope)setStorageError(fr?'Enregistrement impossible sur cet appareil.':'Unable to save on this device.');});}},[properties,hydrated,storageScope,propertyKey,fr]);
+  useEffect(()=>{if(hydrated&&scope.current===storageScope)try{localStorage.setItem(stayKey,JSON.stringify(stays));}catch{queueMicrotask(()=>{if(scope.current===storageScope)setStorageError(fr?'Impossible de conserver les séjours.':'Unable to save stays.');});}},[stays,hydrated,storageScope,stayKey,fr]);
+
+  useEffect(()=>{
+    if(!hydrated||storageScope==='anonymous')return;
+    let active=true;const actor=storageScope;
+    async function load(){
+      try{
+        const {data:{user},error:authError}=await supabase.auth.getUser();
+        if(authError||user?.id!==actor)return;
+        const {data,error}=await supabase.from('villa_listings').select('id,payload,status,visibility').eq('owner_id',actor).order('created_at',{ascending:false}).limit(200).abortSignal(AbortSignal.timeout(15000));
+        if(!active||scope.current!==actor)return;
+        if(error)throw error;
+        const rows=(data||[]).map(remoteProperty);if(rows.some(row=>!row))throw new Error('INVALID_LISTING');
+        const remote=rows as Property[];
+        setProperties(previous=>[...remote,...previous.filter(p=>!p.online&&!remote.some(r=>r.id===p.id))]);
+      }catch{if(active&&scope.current===actor)setStorageError(fr?'Impossible de charger les annonces en ligne. Utilisez « Retrouver mes annonces en ligne » pour réessayer.':'Unable to load online listings. Use “Load my online listings” to retry.');}
+    }
+    void load();return()=>{active=false;};
+  },[hydrated,storageScope,fr]);
 
   async function chooseRole(next:Role){
     const actor=scope.current;
@@ -188,7 +207,7 @@ export default function HostDesk({locale}:{locale:Locale}) {
     setProperties(list=>list.map(p=>p.id===property.id?{...p,status:next}:p));
   }
   async function putOnline(property:Property){if(publishing)return;const actor=scope.current;setPublishing(true);setStorageError('');try{const result=await publishVilla(property);if(scope.current!==actor)throw new Error('SESSION_CHANGED');const next=properties.map(p=>p.id===property.id?result:p);localStorage.setItem(propertyKey,JSON.stringify(next));setProperties(next);}catch(e){setStorageError(e instanceof Error&&e.message.includes('Connectez')?e.message:(fr?'Mise en ligne non confirmée. Vérifiez votre connexion et l’activation du stockage des annonces. Votre annonce locale est conservée.':'Publishing not confirmed. Check sign-in and listing storage setup. Your local listing is preserved.'));}finally{setPublishing(false);}}
-  async function syncListings(){const actor=scope.current;setStorageError('');try{const {data:{user},error:authError}=await supabase.auth.getUser();if(authError||!user)throw new Error('SIGN_IN_REQUIRED');const {data,error}=await supabase.from('villa_listings').select('id,payload,status,visibility').eq('owner_id',user.id).order('created_at',{ascending:false}).limit(200).abortSignal(AbortSignal.timeout(15000));if(error)throw error;const remote=(data||[]).flatMap(row=>{const p=remoteProperty(row);return p?[p]:[];});const {data:{user:current}}=await supabase.auth.getUser();if(current?.id!==user.id||scope.current!==actor)throw new Error('SIGN_IN_REQUIRED');setProperties(previous=>[...remote,...previous.filter(p=>!p.online&&!remote.some(r=>r.id===p.id))]);}catch(e){setStorageError(e instanceof Error&&e.message==='SIGN_IN_REQUIRED'?(fr?'Connectez-vous pour retrouver vos annonces en ligne.':'Sign in to load your online listings.'):(fr?'Impossible de charger les annonces en ligne.':'Unable to load online listings.'));}}
+  async function syncListings(){const actor=scope.current;setStorageError('');try{const {data:{user},error:authError}=await supabase.auth.getUser();if(authError||!user)throw new Error('SIGN_IN_REQUIRED');const {data,error}=await supabase.from('villa_listings').select('id,payload,status,visibility').eq('owner_id',user.id).order('created_at',{ascending:false}).limit(200).abortSignal(AbortSignal.timeout(15000));if(error)throw error;const parsed=(data||[]).map(remoteProperty);if(parsed.some(p=>!p))throw new Error('INVALID_LISTING');const remote=parsed as Property[];const {data:{user:current}}=await supabase.auth.getUser();if(current?.id!==user.id||scope.current!==actor)throw new Error('SIGN_IN_REQUIRED');setProperties(previous=>[...remote,...previous.filter(p=>!p.online&&!remote.some(r=>r.id===p.id))]);}catch(e){setStorageError(e instanceof Error&&e.message==='SIGN_IN_REQUIRED'?(fr?'Connectez-vous pour retrouver vos annonces en ligne.':'Sign in to load your online listings.'):(fr?'Impossible de charger les annonces en ligne.':'Unable to load online listings.'));}}
   function showInquiry(id?:string){setOpenInquiry(previous=>({id,token:(previous?.token||0)+1}));setView('inquiries');}
   function createInquiryBrief(stay:HostStay){
     try{const items=JSON.parse(localStorage.getItem(stayKey)||'[]') as Stay[];if(!Array.isArray(items))throw new Error('Invalid stays');const next=items.some(s=>s.sourceInquiryId===stay.sourceInquiryId)?items:[stay,...items];localStorage.setItem(stayKey,JSON.stringify(next));setStays(next);setBriefNotice(fr?'Projet de séjour conservé sur cet appareil. Aucune réservation n’est confirmée.':'Brief saved on this device. No booking has been confirmed.');setView('stays');return true;}catch{setStorageError(fr?'Impossible de conserver le projet de séjour sur cet appareil.':'Unable to save the brief on this device.');return false;}
@@ -226,7 +245,7 @@ export default function HostDesk({locale}:{locale:Locale}) {
 
     {view==="properties" && <div className="py-12">
       <div className="flex flex-wrap items-end justify-between gap-6"><div><p className="lg-kicker">{fr?"MES ANNONCES":"MY LISTINGS"}</p><h2 className="lg-title mt-4 text-6xl md:text-8xl">{properties.length} {fr?"MAISON(S).":"HOME(S)."}</h2></div><button onClick={openCreateProperty} className="lg-btn lg-btn--dark">{fr?"Ajouter une annonce":"Add listing"} +</button></div>
-      <button onClick={()=>void syncListings()} disabled={publishing} className="lg-btn mt-6">{fr?"Retrouver mes annonces en ligne":"Load my online listings"} ↻</button><div className="mt-10 border-t border-black">{properties.map(p=><article key={p.id} className="grid gap-6 border-b border-black py-7 md:grid-cols-[160px_1.1fr_.6fr_auto] md:items-center">
+      <button onClick={()=>void syncListings()} disabled={publishing} className="lg-btn mt-6">{fr?"Retrouver mes annonces en ligne":"Load my online listings"} ↻</button><RecoverLocalDrafts fr={fr} currentIds={properties.map(p=>p.id)} onRecover={p=>setProperties(rows=>[normalizeProperty(p),...rows])}/><div className="mt-10 border-t border-black">{properties.map(p=><article key={p.id} className="grid gap-6 border-b border-black py-7 md:grid-cols-[160px_1.1fr_.6fr_auto] md:items-center">
         <div className="aspect-[4/3] overflow-hidden bg-black/[.04]">{p.images[0]?<HostPhoto fr={fr} src={p.images[0]} alt="" className="h-full w-full object-cover"/>:<div className="flex h-full items-end p-4 text-[10px] font-black uppercase tracking-[.14em] text-black/35">{fr?"Photo à ajouter":"Add a photo"}</div>}</div>
         <div><div className="flex flex-wrap gap-2"><StatusBadge status={p.status} fr={fr}/><span className="border border-black px-2 py-1 text-[9px] font-black uppercase tracking-[.12em]">{p.visibility}</span></div><p className="lg-kicker mt-4 text-black/45">{p.location} · {p.distanceFromSaintTropez} km ST-TROPEZ</p><h3 className="mt-2 text-4xl font-black tracking-[-.05em]">{p.name}</h3><p className="mt-2 text-sm font-bold text-black/45">{fr?"Géré par":"Managed by"} {p.managedBy}</p></div>
         <div><p className="text-2xl font-black">{p.price?`${p.price.toLocaleString(fr?"fr-FR":"en-GB")} € / ${fr?"sem.":"week"}`:(fr?"Prix sur demande":"Price on request")}</p><p className="mt-2 text-sm font-bold text-black/45">{p.guests} {fr?"voyageurs":"guests"} · {p.bedrooms} {fr?"ch.":"beds"} · {p.bathrooms} {fr?"sdb":"baths"}</p></div>

@@ -9,6 +9,7 @@ import SiteFooter from "../../../components/SiteFooter";
 import { supabase } from "../../../lib/supabase";
 import AccountAuthForm from "../../../components/AccountAuthForm";
 import AccountPasswordForm from "../../../components/AccountPasswordForm";
+import AdminAccessLink from "../../../components/AdminAccessLink";
 import ProfileDetails from "../../../components/ProfileDetails";
 import AccountTypeFields from "../../../components/AccountTypeFields";
 import { accountType, accountTypeLabel, type AccountType } from "../../../lib/accountTypes";
@@ -139,6 +140,7 @@ export default function AccountPage() {
             <p className="mt-5 break-all text-xl font-black">{userEmail}</p>
             <p className="mt-3 text-sm font-bold">{accountTypeLabel(profileType,fr)}</p>
             <div className="mt-6 flex flex-wrap gap-3">
+              <AdminAccessLink locale={locale}/>
               <Link className="lg-btn" href={"/"+locale+"/saved"}>{fr ? "Mon séjour" : "My stay"} ↗</Link>
               {profileType !== "traveler" && <Link className="lg-btn lg-btn--dark" href={"/"+locale+"/host"}>{fr ? "Mes annonces" : "My listings / Host"} ↗</Link>}
             </div>

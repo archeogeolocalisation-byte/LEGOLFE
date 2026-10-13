@@ -5,7 +5,7 @@
 * { box-sizing:border-box; }
 html { background:#fff; scroll-behavior:smooth; }
 body { margin:0; background:#fff; color:#000; font-family:Arial,Helvetica,sans-serif; -webkit-font-smoothing:antialiased; }
-a { color:inherit; text-decoration:none; }
+@layer base { a { color:inherit; text-decoration:none; } }
 img { display:block; max-width:100%; }
 button,textarea,input { font:inherit; }
 ::selection { background:#000; color:#fff; }
@@ -19,7 +19,10 @@ button,textarea,input { font:inherit; }
 .lg-rule { border-top:1px solid #000; }
 .lg-btn { display:inline-flex; align-items:center; justify-content:center; min-height:48px; border:1px solid #000; padding:0 18px; font-size:10px; font-weight:900; letter-spacing:.14em; text-transform:uppercase; transition:.2s ease; }
 .lg-btn--dark { background:#000; color:#fff; }
-.lg-btn:hover { opacity:.58; }
+@layer components { .lg-btn { background:#fff; color:#000; } }
+.lg-btn:hover { filter:brightness(.9); }
+.lg-btn:focus-visible { outline:3px solid var(--lg-blue); outline-offset:3px; }
+.lg-btn:disabled { cursor:wait; }
 .lg-credit { margin-top:8px; font-size:8px; line-height:1.4; letter-spacing:.1em; text-transform:uppercase; color:rgb(0 0 0 / .3); }
 .lg-image { overflow:hidden; background:#e9e9e9; }
 .lg-image img { width:100%; height:100%; object-fit:cover; transition:transform .7s cubic-bezier(.2,.7,.2,1); }
