@@ -1,3 +1,6 @@
+import PlaceMapBlock from './PlaceMapBlock';
+import {placeMapPoints} from '../data/placeMapPoints';
+import {placeName} from '../lib/placeNames';
 import Image from 'next/image';
 import Link from 'next/link';
 import SiteHeader from './SiteHeader';
@@ -24,6 +27,7 @@ export default function PlaceFactSheet({id,locale}:{id:string;locale:Locale}) {
      <a className="underline" href={photo.source} target="_blank" rel="noreferrer">{photo.credit}</a> · <a className="underline" href={photo.licenseUrl} target="_blank" rel="noreferrer">{photo.license}</a> · {fr?'Redimensionnement, conversion WebP et recadrage d’affichage ; image adaptée sous la même licence.':'Resized, converted to WebP and display-cropped; adapted image under the same licence.'}
     </figcaption>
    </figure>
+   <PlaceMapBlock name={placeName(place,locale)} location={place.location} points={placeMapPoints[id]??[]} locale={locale}/>
    <dl className="mt-9 grid gap-6 border-y border-black/20 py-7 sm:grid-cols-2 lg:grid-cols-4">{copy.facts.map(([label,value])=><div key={label}><dt className="text-xs font-black uppercase tracking-wide text-[#0B4F6C]">{label}</dt><dd className="mt-2 text-sm font-semibold leading-6">{value}</dd></div>)}</dl>
    <nav aria-label={fr?'Dans cette fiche':'On this page'} className="mt-8 flex flex-wrap gap-x-6 gap-y-3 text-sm font-bold">{copy.sections.map(([title],i)=><a className="underline underline-offset-4" key={title} href={`#visit-${i+1}`}>{title}</a>)}<a className="underline underline-offset-4" href="#questions">{fr?'Questions fréquentes':'Common questions'}</a></nav>
    <div className="mt-10 grid gap-9 md:grid-cols-2">{copy.sections.map(([title,body],i)=><section id={`visit-${i+1}`} key={title} className="scroll-mt-24 border-t border-black/20 pt-6"><h2 className="text-2xl font-black leading-tight">{title}</h2><p className="mt-4 max-w-2xl text-base leading-8 text-black/75">{body}</p></section>)}</div>
