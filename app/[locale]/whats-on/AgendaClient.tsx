@@ -1,4 +1,5 @@
 "use client";
+import styles from "./AgendaClient.module.css";
 import { parisIsoDay } from "../../../lib/localCalendar";
 import { dateWindow, monthWindow, eventsInWindow, eventOverlaps, catalogMonths, formatCalendarMonth, sessionsInWindow, formatCalendarDay } from "../../../lib/agendaCalendar";
 
@@ -50,7 +51,9 @@ export default function AgendaClient({ locale, events, initialDay }: Props) {
   const locations = useMemo(() => Array.from(new Set(events.map((e) => e.location))).sort(), [events]);
   const filtered=useMemo(()=>eventsInWindow(events,{from:selectedWindow.from,to:selectedWindow.to}).filter(e=>(category==="all"||e.category===category)&&(location==="all"||e.location===location)),[events,selectedWindow.from,selectedWindow.to,category,location]);
   const upcoming=filtered.filter(e=>eventOverlaps(e,todayIso,selectedWindow.to));
-  const featured=upcoming.find(e=>e.featured)||upcoming[0];
+  const featured=[...upcoming.filter(e=>e.featured),...upcoming.filter(e=>!e.featured)].slice(0,3);
+  const featuredIds=new Set(featured.map(e=>e.id));
+  const remaining=filtered.filter(e=>!featuredIds.has(e.id));
   const displayEvent=(event:GolfeEvent)=>{const session=sessionsInWindow(event,selectedWindow)[0];return session?{...event,start:session.start,end:session.end,time:session.time}:event;};
   const periodText = month ? formatCalendarMonth(month, locale) : `${formatCalendarDay(selectedWindow.from,locale,true)}${selectedWindow.to !== selectedWindow.from ? ` — ${formatCalendarDay(selectedWindow.to,locale,true)}` : ""}`;
 
@@ -64,12 +67,12 @@ export default function AgendaClient({ locale, events, initialDay }: Props) {
 
   return (
     <>
-      <section className="border-b border-black bg-white">
+      <section className="border-b border-[#c5d4d7] bg-[#f4f0e7]">
         <div className="mx-auto max-w-7xl px-6 py-8 md:px-10 md:py-12">
           <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
             <div>
               <p className="text-[11px] font-bold uppercase tracking-[.24em]" style={{ color: accent }}>LE GOLFE / AGENDA</p>
-              <h1 className="mt-4 max-w-5xl text-6xl font-black leading-[.84] tracking-[-.055em] sm:text-7xl md:text-8xl lg:text-[7.4rem]">
+              <h1 className="mt-4 max-w-5xl text-[clamp(2.4rem,5.3vw,5rem)] font-black leading-[.94] tracking-[-.045em]">
                 {fr ? <>CE QUI SE PASSE<br/><span style={{ color: accent }}>ICI. MAINTENANT.</span></> : <>WHAT&apos;S HAPPENING<br/><span style={{ color: accent }}>HERE. NOW.</span></>}
               </h1>
             </div>
@@ -100,53 +103,27 @@ export default function AgendaClient({ locale, events, initialDay }: Props) {
         </div>
       </section>
 
-      {featured && (
-        <section className="bg-black text-white">
-          <div className="mx-auto grid max-w-7xl lg:grid-cols-[0.72fr_1.28fr]">
-            <div className="border-b border-white/15 p-6 md:p-10 lg:border-b-0 lg:border-r">
-              <p className="text-[10px] font-black uppercase tracking-[.24em]" style={{ color: "#5DA4C0" }}>{fr ? "À L'AFFICHE" : "FEATURED EVENT"}</p>
-              <div className="mt-8 flex items-end gap-3">
-                <span className="text-7xl font-black leading-none md:text-8xl">{dayNumber(displayEvent(featured))}</span>
-                <span className="pb-2 text-sm font-black uppercase tracking-[.2em] text-white/45">{monthLabel(displayEvent(featured), locale)}</span>
-              </div>
-              <p className="mt-8 text-xs uppercase tracking-[.18em] text-white/45">{featured.location} · {fr ? categoryLabels[featured.category].fr : categoryLabels[featured.category].en}</p>
-            </div>
-            <div>
-              <div className="lg-image aspect-[16/8] border-b border-white/15"><img src={mediaForEvent(featured).src} alt={mediaForEvent(featured).alt}/></div>
-              <div className="p-6 md:p-10 lg:p-14">
-              <div className="flex flex-wrap items-center gap-3">
-                <span className="border border-white/25 px-3 py-1.5 text-[9px] font-black uppercase tracking-[.18em]">{fr?"LA SÉLECTION LE GOLFE":"LE GOLFE PICK"}</span>
-                <span className="text-xs text-white/45">{eventDateLabel(displayEvent(featured), locale)}{displayEvent(featured).time ? ` · ${displayEvent(featured).time}` : ""}</span>
-              </div>
-              <h2 className="mt-6 max-w-4xl text-4xl font-black leading-[.94] tracking-[-.035em] md:text-6xl">{fr ? (featured.titleFr || featured.title) : featured.title}</h2>
-              <p className="mt-6 max-w-2xl text-base leading-7 text-white/65">{fr ? featured.summaryFr : featured.summary}</p>
-              <div className="mt-8 border-l-4 pl-5" style={{ borderColor: accent }}>
-                <p className="text-[9px] font-black uppercase tracking-[.2em] text-white/35">{fr ? "POURQUOI ON LE RETIENT" : "WHY IT MADE THE EDIT"}</p>
-                <p className="mt-2 max-w-2xl text-lg font-semibold leading-7">{fr ? featured.whyFr : featured.why}</p>
-              </div>
-              <div className="mt-8 flex flex-wrap gap-3">
-                <a href={featured.source} target="_blank" rel="noreferrer" className="bg-white px-5 py-3 text-xs font-black uppercase tracking-[.14em] text-black">{fr ? "Infos officielles" : "Official info"} ↗</a>
-                <Link href={`/${locale}/ask?prompt=${encodeURIComponent(fr ? `Construis-moi un moment dans le Golfe autour de ${featured.titleFr || featured.title}.` : `Build me a moment in the Golfe around ${featured.title}.`)}`} className="border border-white/25 px-5 py-3 text-xs font-black uppercase tracking-[.14em] text-white">{fr ? "Construire autour" : "Build around it"} →</Link>
-              </div>
-              <p className="mt-6 text-[9px] font-bold uppercase tracking-[.12em] text-white/30">Photo: {mediaForEvent(featured).credit} · {mediaForEvent(featured).license}</p>
-              </div>
-            </div>
-          </div>
-        </section>
-      )}
+      {featured.length>0&&<section className={styles.featured} aria-label={fr?"À l’affiche":"Featured events"}>
+       <div className="mx-auto max-w-7xl px-6 md:px-10"><p className={styles.featuredHeading}>{fr?"À L’AFFICHE":"FEATURED EVENTS"}</p><div className={styles.featuredGrid}>
+        {featured.map((e,i)=>{const image=mediaForEvent(e);return <article key={e.id} data-agenda-featured={e.id} className={i===0?styles.featureLarge:styles.featureSmall}>
+         <Link href={`/${locale}/event/${e.id}`} className={styles.featureImage} aria-label={fr?e.titleFr||e.title:e.title}><img src={image.src} alt={image.alt} loading="lazy"/></Link>
+         <div className={styles.featureCopy}><p className={styles.featureMeta}>{e.location} · {categoryLabels[e.category][locale]}</p><h2><Link href={`/${locale}/event/${e.id}`}>{fr?e.titleFr||e.title:e.title}</Link></h2><p className={styles.featureDates}>{sessionsInWindow(e,selectedWindow).map(session=>`${eventDateLabel({...e,start:session.start,end:session.end},locale)}${session.time?` · ${session.time}`:''}`).join(' · ')}</p><p className={styles.featureSummary}>{fr?e.summaryFr:e.summary}</p>{i===0&&<p className={styles.featureWhy}>{fr?e.whyFr:e.why}</p>}<div className={styles.featureLinks}><Link href={`/${locale}/event/${e.id}`}>{fr?'Voir la fiche':'Event details'} →</Link><a href={e.source} target="_blank" rel="noopener noreferrer">{fr?'Infos officielles':'Official info'} ↗</a><Link href={`/${locale}/ask?prompt=${encodeURIComponent(fr?`Construis-moi un moment autour de ${e.titleFr||e.title} à ${e.location}.`:`Build me a moment around ${e.title} in ${e.location}.`)}`}>{fr?'Construire autour':'Build around it'} →</Link></div><p className={styles.credit}>{fr?'Photo de contexte':'Context photo'} : {image.credit} · {image.license}</p></div>
+        </article>;})}
+       </div></div>
+      </section>}
 
       <section className="mx-auto max-w-7xl px-6 py-10 md:px-10 md:py-14">
         <div className="grid gap-8 border-b border-black/15 pb-10 lg:grid-cols-[1fr_auto] lg:items-end">
           <div>
             <p className="text-[10px] font-black uppercase tracking-[.22em] text-black/35">{fr ? "AFFINER" : "REFINE"}</p>
             <div className="mt-4 flex flex-wrap gap-2">
-              <button aria-pressed={category === "all"} onClick={() => setCategory("all")} className={`px-3 py-2 text-[10px] font-black uppercase tracking-[.14em] ${category === "all" ? "bg-black text-white" : "border border-black/15"}`}>{fr ? "Tout" : "All"}</button>
-              {(Object.keys(categoryLabels) as EventCategory[]).map((key) => <button key={key} aria-pressed={category === key} onClick={() => setCategory(key)} className={`px-3 py-2 text-[10px] font-black uppercase tracking-[.14em] ${category === key ? "bg-black text-white" : "border border-black/15"}`}>{fr ? categoryLabels[key].fr : categoryLabels[key].en}</button>)}
+              <button aria-pressed={category === "all"} onClick={() => setCategory("all")} className={`px-3 py-2 text-[10px] font-black uppercase tracking-[.14em] ${category === "all" ? "bg-[#0B4F6C] text-white" : "border border-[#c5d4d7] text-[#0B4F6C]"}`}>{fr ? "Tout" : "All"}</button>
+              {(Object.keys(categoryLabels) as EventCategory[]).map((key) => <button key={key} aria-pressed={category === key} onClick={() => setCategory(key)} className={`px-3 py-2 text-[10px] font-black uppercase tracking-[.14em] ${category === key ? "bg-[#0B4F6C] text-white" : "border border-[#c5d4d7] text-[#0B4F6C]"}`}>{fr ? categoryLabels[key].fr : categoryLabels[key].en}</button>)}
             </div>
           </div>
           <div>
             <label htmlFor="agenda-location" className="block text-[10px] font-black uppercase tracking-[.18em] text-black/35">{fr ? "OÙ ?" : "WHERE?"}</label>
-            <select id="agenda-location" value={location} onChange={(e) => setLocation(e.target.value)} className="mt-3 min-w-52 border-0 border-b-2 border-black bg-white px-0 py-2 text-sm font-bold outline-none">
+            <select id="agenda-location" value={location} onChange={(e) => setLocation(e.target.value)} className="mt-3 min-w-52 border-0 border-b-2 border-[#0B4F6C] bg-white px-0 py-2 text-sm font-bold focus-visible:outline-2 focus-visible:outline-[#0B4F6C]">
               <option value="all">{fr ? "Tout le Golfe" : "Across the Golfe"}</option>
               {locations.map((loc) => <option key={loc} value={loc}>{loc}</option>)}
             </select>
@@ -166,41 +143,17 @@ export default function AgendaClient({ locale, events, initialDay }: Props) {
             <p className="text-3xl font-black">{fr ? "Rien dans ce filtre." : "Nothing in this filter."}</p>
             <p className="mt-3 text-sm text-black/50">{fr ? "Élargissez la période ou changez de catégorie." : "Widen the dates or change category."}</p>
           </div>
-        ) : (
-          <div className="mt-8 border-t border-black">
-            {filtered.map((e) => (
-              <article key={e.id} className="group grid border-b border-black/15 py-7 transition hover:bg-black/[.025] md:grid-cols-[110px_220px_1fr_auto] md:gap-7 md:py-9">
-                <div className="flex items-baseline gap-3 md:block">
-                  <span className="text-5xl font-black leading-none tracking-[-.05em] md:text-6xl">{dayNumber(displayEvent(e))}</span>
-                  <span className="text-[10px] font-black uppercase tracking-[.18em] text-black/40 md:mt-2 md:block">{monthLabel(displayEvent(e), locale)}</span>
-                  {displayEvent(e).time && <span className="text-xs font-bold text-black/45 md:mt-3 md:block">{displayEvent(e).time}</span>}
-                </div>
-                <div className="mt-5 md:mt-0">
-                  <div className="lg-image aspect-[4/3]"><img src={mediaForEvent(e).src} alt={mediaForEvent(e).alt}/></div>
-                  <p className="mt-1 text-[8px] font-bold uppercase tracking-[.1em] text-black/25">{mediaForEvent(e).credit}</p>
-                </div>
-                <div className="mt-5 md:mt-0">
-                  <div className="flex flex-wrap items-center gap-2 text-[9px] font-black uppercase tracking-[.17em]">
-                    <span style={{ color: accent }}>{fr ? categoryLabels[e.category].fr : categoryLabels[e.category].en}</span>
-                    <span className="text-black/20">/</span>
-                    <span className="text-black/45">{e.location}</span>
-                    {e.featured && <span className="bg-black px-2 py-1 text-[8px] text-white">{fr?"LA SÉLECTION LE GOLFE":"LE GOLFE PICK"}</span>}
-                  </div>
-                  <h3 className="mt-3 max-w-3xl text-2xl font-black leading-[1.02] tracking-[-.025em] transition group-hover:text-[#0B4F6C] md:text-4xl"><Link href={`/${locale}/event/${e.id}`}>{fr ? (e.titleFr || e.title) : e.title}</Link></h3><p className="mt-3 text-xs font-bold">{sessionsInWindow(e,selectedWindow).map(session=>`${formatCalendarDay(session.start,locale,true)}${session.end&&session.end!==session.start?` — ${formatCalendarDay(session.end,locale,true)}`:""}${session.time?` · ${session.time}`:""}`).join(" · ")}</p>
-                  <p className="mt-3 max-w-2xl text-sm leading-6 text-black/55">{fr ? e.summaryFr : e.summary}</p>
-                  <p className="mt-4 max-w-2xl border-l-2 pl-4 text-sm font-semibold leading-6" style={{ borderColor: accent }}>{fr ? e.whyFr : e.why}</p>
-                </div>
-                <div className="mt-6 flex items-end gap-4 md:mt-0 md:flex-col md:justify-end md:text-right">
-                  <Link href={`/${locale}/event/${e.id}`} className="text-[10px] font-black uppercase underline">{fr ? "Voir la fiche" : "Event details"} →</Link><a href={e.source} target="_blank" rel="noreferrer" className="text-[10px] font-black uppercase tracking-[.14em] underline decoration-black/25 underline-offset-4">{fr ? "Infos" : "Info"} ↗</a>
-                  <Link href={`/${locale}/ask?prompt=${encodeURIComponent(fr ? `Construis-moi un moment autour de ${e.titleFr || e.title} à ${e.location}.` : `Build me a moment around ${e.title} in ${e.location}.`)}`} className="text-[10px] font-black uppercase tracking-[.14em]" style={{ color: accent }}>{fr ? "Autour de ça" : "Build around it"} →</Link>
-                </div>
-              </article>
-            ))}
+        ) : remaining.length>0 ? (
+          <div className={styles.eventGrid} aria-label={fr?'Les autres rendez-vous':'More events'}>
+           {remaining.map(e=>{const image=mediaForEvent(e);return <article key={e.id} data-agenda-event={e.id} className={styles.eventCard}>
+            <Link href={`/${locale}/event/${e.id}`} className={styles.eventImage} aria-label={fr?e.titleFr||e.title:e.title}><img src={image.src} alt={image.alt} loading="lazy"/></Link>
+            <div className={styles.eventBody}><div className={styles.eventTop}><span className={styles.day}>{dayNumber(displayEvent(e))}</span><div><p className={styles.month}>{monthLabel(displayEvent(e),locale)} · {categoryLabels[e.category][locale]}</p><p className={styles.location}>{e.location}</p></div></div><h3><Link href={`/${locale}/event/${e.id}`}>{fr?e.titleFr||e.title:e.title}</Link></h3><p className={styles.eventDates}>{sessionsInWindow(e,selectedWindow).map(session=>`${formatCalendarDay(session.start,locale,true)}${session.end&&session.end!==session.start?` — ${formatCalendarDay(session.end,locale,true)}`:''}${session.time?` · ${session.time}`:''}`).join(' · ')}</p><p className={styles.eventSummary}>{fr?e.summaryFr:e.summary}</p><p className={styles.eventWhy}>{fr?e.whyFr:e.why}</p><div className={styles.eventLinks}><Link href={`/${locale}/event/${e.id}`}>{fr?'Voir la fiche':'Event details'} →</Link><a href={e.source} target="_blank" rel="noopener noreferrer">{fr?'Infos officielles':'Official info'} ↗</a><Link href={`/${locale}/ask?prompt=${encodeURIComponent(fr?`Construis-moi un moment autour de ${e.titleFr||e.title} à ${e.location}.`:`Build me a moment around ${e.title} in ${e.location}.`)}`}>{fr?'Construire autour':'Build around it'} →</Link></div><p className={styles.credit}>{fr?'Photo de contexte':'Context photo'} : {image.credit} · {image.license}</p></div>
+           </article>;})}
           </div>
-        )}
+        ) : <p className="mt-8 text-sm text-[#405659]">{fr?'Tous les rendez-vous de cette sélection sont présentés à l’affiche ci-dessus.':'All events in this selection appear in the featured section above.'}</p>}
       </section>
 
-      <section className="border-t border-black bg-[#f7f7f4]">
+      <section className="border-t border-[#c5d4d7] bg-[#edf4f6]">
         <div className="mx-auto max-w-7xl px-6 py-14 md:px-10 md:py-20">
           <div className="grid gap-10 lg:grid-cols-[.72fr_1.28fr]">
             <div>

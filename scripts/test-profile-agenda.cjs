@@ -5,6 +5,7 @@ const fs = require('node:fs');
 const Module = require('node:module');
 const ts = require('typescript');
 for (const ext of ['.ts', '.tsx']) require.extensions[ext] = (module, filename) => module._compile(ts.transpileModule(fs.readFileSync(filename, 'utf8'), { compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022, jsx: ts.JsxEmit.ReactJSX } }).outputText, filename);
+require.extensions['.css']=m=>{m.exports=new Proxy({},{get:(_,key)=>key==='__esModule'?false:String(key)});};
 let values, refs, index, refIndex, effects, initialized, calls, currentId, metadata, updateError, uploadError, compressionError, authListener;
 const id = '11111111-1111-4111-8111-111111111111';
 const oldPath = `${id}/legolfe-profile/old.jpg`;
@@ -86,6 +87,15 @@ const choose = tree => find(tree, n => n.type === 'input').props.onChange({ targ
   assert.ok(text.includes('19:00')); assert.ok(text.includes('20:00'));
   find(tree, n => n.type === 'button' && n.props.children === 'Aujourd’hui').props.onClick();
   tree = render(Agenda, agendaProps); assert.deepEqual(ids(tree), ['today']);
+  for(const locale of ['fr','en']){
+   reset();const samples=Array.from({length:7},(_,i)=>({...base,id:`event-${i}`,start:`2026-10-${String(11+i).padStart(2,'0')}`,end:undefined,sessions:undefined,featured:[1,3].includes(i),category:i===6?'family':'culture',location:i===6?'Grimaud':'Saint-Tropez'}));
+   const props={locale,initialDay:'2026-10-11',events:samples};let tree=render(Agenda,props);
+   const featured=tree=>nodes(tree).filter(n=>n.props?.['data-agenda-featured']).map(n=>n.props['data-agenda-featured']);const remaining=tree=>nodes(tree).filter(n=>n.props?.['data-agenda-event']).map(n=>n.props['data-agenda-event']);
+   assert.deepEqual(featured(tree),['event-1','event-3','event-0']);assert.equal(remaining(tree).length,4);assert.equal(new Set([...featured(tree),...remaining(tree)]).size,7);
+   find(tree,n=>n.type==='button'&&n.props.children===(locale==='fr'?'Famille':'Family')).props.onClick();tree=render(Agenda,props);assert.deepEqual(featured(tree),['event-6']);assert.deepEqual(remaining(tree),[]);
+   find(tree,n=>n.props?.id==='agenda-location').props.onChange({target:{value:'Saint-Tropez'}});tree=render(Agenda,props);assert.deepEqual(featured(tree),[]);assert.deepEqual(remaining(tree),[]);
+   find(tree,n=>n.type==='button'&&n.props.children===(locale==='fr'?'Tout':'All')).props.onClick();tree=render(Agenda,props);assert.equal(featured(tree).length,3);assert.equal(remaining(tree).length,3);
+  }
   const header = fs.readFileSync('components/SiteHeader.tsx', 'utf8');
   assert.equal(header.includes('`${base}/host`'), false); assert.ok(header.includes('`${base}/account`'));
   console.log('Profile: persistence, namespacing, uploads, replacement, removal, failures and session changes passed. Agenda: inline periods/months and recurring sessions passed.');

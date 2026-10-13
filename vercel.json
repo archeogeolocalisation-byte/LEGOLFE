@@ -26,7 +26,8 @@
       "design/place-layout": false,
       "design/place-slider-overlay": false,
       "design/pampelonne-sheet": false,
-      "design/citadelle-sheet": false
+      "design/citadelle-sheet": false,
+      "design/agenda-layout": false
     }
   }
 }
