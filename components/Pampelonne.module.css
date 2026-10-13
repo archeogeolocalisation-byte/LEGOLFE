@@ -1,0 +1,13 @@
+.page{color:#071d2b}
+.page h1,.page :global(.lg-kicker){color:#0b4f6c}
+.page :global(.lg-quote-box){background:#edf4f6;border-color:#0b4f6c}
+.page :global(.lg-quote-box) p:first-child{color:#0b4f6c}
+.page :global(.lg-blue-rule){background:#0b4f6c}
+.access{background:#0b4f6c;color:#fff}
+.access :global(.lg-kicker){color:#fff}
+.access a{color:#fff;text-underline-offset:3px}
+.access figcaption{color:#e3edf2}
+.access h2{font-size:clamp(36px,5.5vw,76px);line-height:.98;letter-spacing:-.045em;font-weight:900}
+.accessText{font-size:18px;line-height:1.8;color:#f0f5f6;margin-top:28px;max-width:600px}
+
+.actions>section{background:#edf4f6;border-color:#0b4f6c}.actions :global(.lg-title),.actions :global(.lg-kicker){color:#0b4f6c}.actions :global(.lg-btn--dark){background:#0b4f6c;border-color:#0b4f6c;color:#fff}

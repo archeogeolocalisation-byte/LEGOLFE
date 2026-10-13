@@ -1,3 +1,5 @@
+import PampelonnePhoto from '../../../../components/PampelonnePhoto';
+import pampelonneStyles from '../../../../components/Pampelonne.module.css';
 import PlaceStoryPhotos from '../../../../components/PlaceStoryPhotos';
 import PlaceMapBlock from '../../../../components/PlaceMapBlock';
 import {placeMapPoints} from '../../../../data/placeMapPoints';
@@ -138,15 +140,16 @@ function VillagePracticalGuide({id,locale}:{id:keyof typeof villagePractical;loc
 
 function LegacyPlacePage({id,locale}:{id:string;locale:"fr"|"en"}){
  const c=legacyPlaceFeatures[id][locale],place=places.find(p=>p.id===id)!;
- return <main className="min-h-screen bg-white text-black"><SiteHeader locale={locale} path={`/place/${id}`}/>
+ return <main className={`min-h-screen bg-white text-black ${id==='pampelonne'?pampelonneStyles.page:''}`}><SiteHeader locale={locale} path={`/place/${id}`}/>
   <EditorialIntro id={id} locale={locale} kicker={c.kicker} title={c.title} sub={c.sub} intro={c.intro}/>
-  <PlaceMediaGallery name={place.name} photos={photosForPlace(id)} locale={locale}/>
+  <PlaceMediaGallery name={place.name} photos={photosForPlace(id)} locale={locale} processed={id==='pampelonne'}/>
   <EditorialQuote label={c.local} quote={c.quote} body={c.body}/>
   <EditorialMoments label={c.rhythm} title={c.rhythmTitle} moments={c.moments}/>
+  {id==='pampelonne'&&<section className="lg-shell pb-16"><PampelonnePhoto index={4} locale={locale}/></section>}
   <section className="lg-shell pb-24"><div className="grid gap-10 border-t border-black pt-10 md:grid-cols-[.7fr_1.3fr]"><p className="lg-kicker">{c.layer}</p><div><h2 className="text-5xl font-black leading-[.9] tracking-[-.055em] md:text-8xl">{c.layerTitle}</h2><p className="mt-7 max-w-2xl text-lg leading-8 text-black/55">{c.layerBody}</p></div></div></section>
-  <EditorialDark label={c.dark} title={c.darkTitle} body={c.darkBody}/>
+  {id==='pampelonne'?<section className={pampelonneStyles.access}><div className="lg-shell grid items-center gap-12 py-16 md:grid-cols-[1.2fr_.8fr] md:py-24"><div><p className="lg-kicker">{c.dark}</p><h2 className="mt-6">{c.darkTitle}</h2><p className={pampelonneStyles.accessText}>{c.darkBody}</p></div><PampelonnePhoto index={3} locale={locale}/></div></section>:<EditorialDark label={c.dark} title={c.darkTitle} body={c.darkBody}/>}
   <EditorialClose label={c.close} title={c.closeTitle} body={c.closeBody} facts={c.facts} best={c.best} bestItems={c.bestItems} less={c.less} lessItems={c.lessItems} credit={locale==="fr"?"Légendes, sources et licences sous chaque photo.":"Captions, sources and licences beneath each photograph."} ask={c.ask} locale={locale}/>
-  <PlaceMapBlock name={placeName(place,locale)} location={place.location} points={placeMapPoints[id]??[]} locale={locale}/>{id in villagePractical && <VillagePracticalGuide id={id as keyof typeof villagePractical} locale={locale}/>}<PlaceActions place={place} locale={locale}/>
+  <PlaceMapBlock name={placeName(place,locale)} location={place.location} points={placeMapPoints[id]??[]} locale={locale}/>{id in villagePractical && <VillagePracticalGuide id={id as keyof typeof villagePractical} locale={locale}/>}{id!=='pampelonne'&&<PlaceActions place={place} locale={locale}/>}
  </main>;
 }
 
@@ -177,5 +180,5 @@ export default async function Page({params}:{params:Promise<{locale:string;id:st
  const schemaType=p.category === "eat" ? "Restaurant" : id === "monroes-pub" ? "BarOrPub" : ["caves-du-roy", "gaio-club"].includes(id) ? "NightClub" : "Place";
  return <><Breadcrumbs locale={locale} items={[{name:"LE GOLFE",path:`/${locale}`},{name,path:`/${locale}/explore/${p.category}`},{name:p.name,path:`/${locale}/place/${id}`}]} />
  {siteOrigin() && <JsonLd data={{"@context":"https://schema.org","@type":schemaType,name:p.name,url:absoluteUrl(`/${locale}/place/${id}`),description:placeFacts[id]?.copy[locale].description ?? (locale === "fr" ? placeDescriptionFr[id] || p.description : p.description),image:placeFactsMedia[id] ? {"@type":"ImageObject",contentUrl:absoluteUrl(placeFactsMedia[id].src),caption:placeFactsMedia[id].caption[locale],creditText:placeFactsMedia[id].credit,license:placeFactsMedia[id].licenseUrl,url:placeFactsMedia[id].source} : media && !media.contextual ? media.src : undefined,address:{"@type":"PostalAddress",addressLocality:p.location,addressCountry:"FR"},geo:typeof p.latitude === "number" && typeof p.longitude === "number" ? {"@type":"GeoCoordinates",latitude:p.latitude,longitude:p.longitude}:undefined,telephone:p.phone,sameAs:p.website ? [p.website] : undefined}} />}
- <PlaceContent params={params}/><GuideLinks items={guidesForPlace(id)} locale={locale}/>{!placeFacts[id] && <PlacePreparation place={p} locale={locale}/>}<PlaceStoryPhotos id={id} locale={locale}/><CommunitySection key={id} placeId={id} locale={locale}/>{town && <div className="lg-shell py-6"><Link className="lg-btn" href={`/${locale}/destinations/${town.slug}`}>{locale==="fr"?"Adresses et séjour à":"Places and stays in"} {town.name} →</Link></div>}<section className="lg-shell py-12"><h2 className="text-2xl font-black">{locale === "fr" ? "À découvrir aussi" : "Explore nearby and similar places"}</h2><div className="mt-6 grid gap-6 md:grid-cols-3">{related.map(x=><PlaceCard key={x.id} place={x} locale={locale}/>)}</div></section></>;
+ <PlaceContent params={params}/><GuideLinks items={guidesForPlace(id)} locale={locale}/>{!placeFacts[id] && <PlacePreparation place={p} locale={locale}/>}{id!=='pampelonne'&&<PlaceStoryPhotos id={id} locale={locale}/>} {id==='pampelonne'&&<div className={pampelonneStyles.actions}><PlaceActions place={p} locale={locale}/></div>}<CommunitySection key={id} placeId={id} locale={locale}/>{town && <div className="lg-shell py-6"><Link className="lg-btn" href={`/${locale}/destinations/${town.slug}`}>{locale==="fr"?"Adresses et séjour à":"Places and stays in"} {town.name} →</Link></div>}<section className="lg-shell py-12"><h2 className="text-2xl font-black">{locale === "fr" ? "À découvrir aussi" : "Explore nearby and similar places"}</h2><div className="mt-6 grid gap-6 md:grid-cols-3">{related.map(x=><PlaceCard key={x.id} place={x} locale={locale}/>)}</div></section></>;
 }
