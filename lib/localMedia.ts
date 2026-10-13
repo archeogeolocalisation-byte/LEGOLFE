@@ -1,4 +1,4 @@
-export type LocalMedia={src:string;alt:string;credit:string;license:string;source:string};
+export type LocalMedia={kind?:"illustration";src:string;alt:string;credit:string;license:string;source:string};
 const commons=(name:string)=>`https://commons.wikimedia.org/wiki/Special:Redirect/file/${encodeURIComponent(name)}`;
 const m={
   gigaro:{src:commons("Aerial view of Gigaro Beach in La Croix-Valmer, France (52723801211).jpg"),alt:"Plage de Gigaro à La Croix-Valmer",credit:"dronepicr / Wikimedia Commons",license:"CC BY 2.0",source:"https://commons.wikimedia.org/wiki/File:Aerial_view_of_Gigaro_Beach_in_La_Croix-Valmer,_France_(52723801211).jpg"},
@@ -8,6 +8,9 @@ const m={
   citadel:{src:"https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Aerial_view_of_the_Citadel_of_Saint-Tropez%2C_France_%2852723266272%29.jpg/1280px-Aerial_view_of_the_Citadel_of_Saint-Tropez%2C_France_%2852723266272%29.jpg",alt:"Citadelle de Saint-Tropez",credit:"dronepicr / Wikimedia Commons",license:"CC BY 2.0",source:"https://commons.wikimedia.org/wiki/File:Aerial_view_of_the_Citadel_of_Saint-Tropez,_France_(52723266272).jpg"},
 };
 export function mediaForLocal(id:string):LocalMedia{
+  if(id.includes("nartelle"))return {src:"/media/tourist-map/sainte-maxime-illustration.webp",alt:"Illustration de Sainte-Maxime",credit:"LE GOLFE",license:"Illustration originale",source:"/media/tourist-map/sources.json",kind:"illustration"};
+  if(id.includes("tamaris")||id.includes("lauriers"))return {src:"/media/tourist-map/saint-tropez-illustration.webp",alt:"Illustration de Saint-Tropez",credit:"LE GOLFE",license:"Illustration originale",source:"/media/tourist-map/sources.json",kind:"illustration"};
+  if(id.includes("partenariat")||id.includes("voiles"))return m.port;
   if(id.includes("gigaro")) return m.gigaro;
   if(id.includes("family")) return m.family;
   if(id.includes("spar")) return m.lices;
