@@ -17,7 +17,7 @@ export async function publishVilla(p:Property){
  }else if(photo.src.startsWith('/')){throw new Error('Remplacez les photos de démonstration par vos photos ou des URL HTTPS avant la mise en ligne.');}
  }
  if(!parsePublicVilla(p.id,villa))throw new Error('Annonce incomplète ou photos invalides.');
- writing=true;const {error:e}=await supabase.from('villa_listings').upsert({id:p.id,owner_id:user.id,status:p.status,visibility:p.visibility,payload:villa},{onConflict:'id'}).select('id').abortSignal(AbortSignal.timeout(15000)).single();if(e)throw e;
+ writing=true;const {error:e}=await supabase.from('villa_listings').upsert({id:p.id,owner_id:user.id,status:p.status,visibility:p.visibility,payload:villa},{onConflict:'id'}).select('id').abortSignal(AbortSignal.timeout(15000)).single();if(e){if(e.message==='PILOT_FULL')throw new Error('PILOT_FULL');throw e;}
  return {...p,images:villa.photos.map(x=>x.src),online:true};
  }catch(e){if(!writing&&uploaded.length)await supabase.storage.from('villa-photos').remove(uploaded);throw e;}
 }

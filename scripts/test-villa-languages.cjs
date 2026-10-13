@@ -17,8 +17,9 @@ for (const villa of villas) {
     const card = renderToStaticMarkup(createElement(VillaCard,{villa,locale}));
     assert.ok(card.includes(`href="${villaHref(villa.id,locale)}"`));
     const detail = renderToStaticMarkup(createElement(VillaDetail,{villa:{...villa,photos:[{src:villa.image,alt:villa.name}],amenities:['Pool'],highlights:[]},today:'2026-10-12',locale}));
-    assert.ok(detail.includes(`action="${villaHref(villa.id,locale,true)}"`));
-    assert.ok(detail.includes(locale==='en'?'Request availability':'Demander les disponibilités'));
+    assert.equal(detail.includes("<form"),false);
+    assert.ok(detail.includes(locale==='fr'?'Exemple de présentation':'Presentation example'));
+
     if(locale==='en')assert.equal(detail.includes('Choisir mes dates'),false);
   }
 }
@@ -30,4 +31,16 @@ assert.ok(contact.includes('value="2026-11-01"'));
 assert.equal(contact.includes('/fr/en/'),false);
 const { validateStayDates }=require('../lib/stayRequest.ts');
 assert.equal(validateStayDates({arrival:'2026-11-05',departure:'2026-11-01',guests:'2'},8,'2026-10-12','en'),'Departure must be after arrival.');
-console.log('Villas: six catalogs/details in FR/EN, localized contact URLs, language switch, prefilled dates and English validation passed.');
+const live={...villas[0],id:'property-live',live:true,photos:[{src:'https://example.com/photo.jpg',alt:'House'}],amenities:[],highlights:[]};
+for(const locale of ['fr','en']){
+ const page=renderToStaticMarkup(createElement(VillaDetail,{villa:live,today:'2026-10-12',locale}));
+ assert.ok(page.includes(`action="${villaHref(live.id,locale,true)}"`));
+ assert.ok(page.includes(`/${locale}/account?next=/villa/property-live`));
+ assert.ok(page.includes(locale==='fr'?'Transmettre une demande':'Send an enquiry'));
+ assert.equal(page.includes('owner@example.com'),false);
+}
+const {safeReturnPath}=require('../lib/security.ts');
+assert.equal(safeReturnPath('/villa/property-live'),'/villa/property-live');
+assert.equal(safeReturnPath('/villa/../../account'),'');
+const {actOnBooking}=require('../lib/villaBookingStore.ts');
+void assert.rejects(actOnBooking('id','confirm',null,'100','terms',true),/BOOKING_DISABLED_DURING_PILOT/).then(()=>console.log('Villas: FR/EN examples, live enquiry/contact paths, privacy, safe return links and booking mutation disabled passed.')).catch(error=>{console.error(error);process.exitCode=1;});

@@ -20,6 +20,7 @@ jobs:
       - run: npm ci
       - run: npm run test:security
       - run: node scripts/test-admin.cjs
+      - run: node scripts/test-direct-contact.mjs
       - run: npm audit --omit=dev --audit-level=high
       - run: node scripts/test-seo.cjs
       - run: node scripts/test-explore-filters.cjs
