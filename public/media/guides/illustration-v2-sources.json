@@ -1,0 +1,38 @@
+{
+  "created": "2026-10-13",
+  "method": "Original imagegen illustrations. Textured Mediterranean style referenced from the Saint-Tropez illustration approved in this conversation. Market revised to a broad Provençal square with prominent produce and flower stalls following user feedback. Resized to 1200 × 800, converted to WebP, no scene crop.",
+  "files": [
+    {
+      "guide": "marches-golfe-saint-tropez-jours",
+      "file": "/media/guides/marches-golfe-saint-tropez-jours-cover-v2.webp",
+      "width": 1200,
+      "height": 800,
+      "bytes": 290842,
+      "sha256": "71638e5cf2c96f3ca4f9275981c49849f78e82dcb45c74a0681b42adb10ed9e2"
+    },
+    {
+      "guide": "activites-gratuites-golfe-saint-tropez",
+      "file": "/media/guides/activites-gratuites-golfe-saint-tropez-cover-v2.webp",
+      "width": 1200,
+      "height": 800,
+      "bytes": 266968,
+      "sha256": "acf52c443ecf5c77e54f5001b0658ec70dd3f9bb074d6c31126cfc802cacfdbf"
+    },
+    {
+      "guide": "golfe-saint-tropez-avec-enfants",
+      "file": "/media/guides/golfe-saint-tropez-avec-enfants-cover-v2.webp",
+      "width": 1200,
+      "height": 800,
+      "bytes": 239682,
+      "sha256": "43db0b129f45d462c11f7fe5720cb9695d6e4a438175a261cec4d4e20f10c95f"
+    },
+    {
+      "guide": "week-end-automne-golfe-saint-tropez",
+      "file": "/media/guides/week-end-automne-golfe-saint-tropez-cover-v2.webp",
+      "width": 1200,
+      "height": 800,
+      "bytes": 263796,
+      "sha256": "e2bb7d1775a8cd1a9aede1b78ac9bfe7f7a4b80299963d006c9bff96c5472b6a"
+    }
+  ]
+}

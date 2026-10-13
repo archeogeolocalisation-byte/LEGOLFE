@@ -9,16 +9,16 @@ import SiteHeader from "../../components/SiteHeader";
 import SiteFooter from "../../components/SiteFooter";
 import {localNews} from "../../data/localNews";
 import {isLocale} from "../../lib/i18n";
-import {mediaForPlace} from "../../lib/placeMedia";
+import Image from "next/image";
 import {guides} from "../../data/guides";
 import GuideCards from "../../components/GuideCards";
 
 export default async function Home({params}:{params:Promise<{locale:string}>}){
  const {locale:l}=await params;if(!isLocale(l))notFound();const fr=l==="fr";
  const picks=[
-  {id:"grimaud",name:"Grimaud",path:"/place/grimaud-village",media:mediaForPlace("grimaud-village")},
-  {id:"saint-tropez",name:"Saint-Tropez",path:"/place/saint-tropez-village",media:mediaForPlace("saint-tropez-village")},
-  {id:"sainte-maxime",name:"Sainte-Maxime",path:"/place/sainte-maxime-village",media:{src:"https://thumb.wikimedia.org/wikipedia/commons/thumb/1/10/Sainte-Maxime_port_tour_carr%C3%A9_%C3%A9glise.jpg/1280px-Sainte-Maxime_port_tour_carr%C3%A9_%C3%A9glise.jpg",alt:fr?"Le port, la Tour Carrée et l’église de Sainte-Maxime":"Sainte-Maxime harbour, Tour Carrée and church"}},
+  {id:"grimaud",name:"Grimaud",path:"/destinations/grimaud",src:"/media/tourist-map/grimaud-illustration.webp"},
+  {id:"saint-tropez",name:"Saint-Tropez",path:"/destinations/saint-tropez",src:"/media/tourist-map/saint-tropez-illustration.webp"},
+  {id:"sainte-maxime",name:"Sainte-Maxime",path:"/destinations/sainte-maxime",src:"/media/tourist-map/sainte-maxime-illustration.webp"},
  ];
  const window=dateWindow("7days",parisIsoDay());
  const upcoming=eventsInWindow(await getPublicEvents(),window);
@@ -61,9 +61,9 @@ export default async function Home({params}:{params:Promise<{locale:string}>}){
   </div></section>
 
   <section className="lg-shell py-20 md:py-28">
-   <div className="flex items-end justify-between border-b border-black pb-5"><div><p className="lg-kicker">{fr?"EXPLORER / 3 IDÉES":"EXPLORE / 03 PICKS"}</p><h2 className="lg-title mt-3 text-[12vw] uppercase md:text-[82px]">{fr?<>ICI, <span className="lg-accent">PAS AILLEURS.</span></>:<>HERE, <span className="lg-accent">NOT ELSEWHERE.</span></>}</h2></div><Link href={`/${l}/explore`} className="hidden lg-kicker md:block">{fr?"Tout découvrir":"View all"} ↗</Link></div>
-   <div className="grid md:grid-cols-3">{picks.map((p,i)=><Link key={p.id} href={`/${l}${p.path}`} className={`group py-5 md:px-5 ${i<2?"border-b border-black md:border-b-0 md:border-r":""} ${i===0?"md:pl-0":""} ${i===2?"md:pr-0":""}`}>{(()=>{const m=p.media;return <><div className="lg-image aspect-[4/3]">{m?<img src={m.src} alt={m.alt}/>:<div className="h-full bg-black"/>}</div><p className="lg-kicker mt-4 text-black/40">{fr?"VILLAGES & LIEUX":"VILLAGES & PLACES"}</p><h3 className="mt-2 text-[34px] font-black uppercase leading-[.88] tracking-[-.055em] md:text-[42px]">{p.name}</h3></>})()}</Link>)}</div>
-   <p className="lg-credit"><a href="https://commons.wikimedia.org/wiki/File:Sainte-Maxime_port_tour_carr%C3%A9_%C3%A9glise.jpg" target="_blank" rel="noreferrer">Sainte-Maxime : Jibi44 / Wikimedia Commons</a> · <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noreferrer">CC BY-SA 4.0</a> · {fr?"Recadrage d’affichage":"Display crop"}</p>
+   <div className="flex items-end justify-between border-b border-black pb-5"><div><p className="lg-kicker">{fr?"DÉCOUVRIR / 3 VILLAGES":"DISCOVER / 03 TOWNS"}</p><h2 className="lg-title mt-3 text-[12vw] uppercase md:text-[82px]">{fr?<>ICI, <span className="lg-accent">PAS AILLEURS.</span></>:<>HERE, <span className="lg-accent">NOT ELSEWHERE.</span></>}</h2></div><Link href={`/${l}/carte-touristique`} className="hidden lg-kicker md:block">{fr?"Tout découvrir":"View all"} ↗</Link></div>
+   <div className="grid md:grid-cols-3">{picks.map((p,i)=><Link key={p.id} href={`/${l}${p.path}`} className={`group py-5 md:px-5 ${i<2?"border-b border-black md:border-b-0 md:border-r":""} ${i===0?"md:pl-0":""} ${i===2?"md:pr-0":""}`}><div className="lg-image aspect-[3/2]"><Image src={p.src} alt={fr?`Illustration de ${p.name} · LE GOLFE`:`Illustration of ${p.name} · LE GOLFE`} width={600} height={400} sizes="(max-width: 767px) 100vw, 33vw" style={{objectFit:"contain",transform:"none"}}/></div><p className="lg-kicker mt-4 text-black/40">{fr?"VILLAGES & LIEUX":"VILLAGES & PLACES"}</p><h3 className="mt-2 text-[34px] font-black uppercase leading-[.88] tracking-[-.055em] md:text-[42px]">{p.name}</h3></Link>)}</div>
+   <p className="lg-credit">{fr?"Illustrations · LE GOLFE":"Illustrations · LE GOLFE"}</p>
   </section>
 
   <HomeUpdates locale={l} events={now} news={news} window={window}/>
