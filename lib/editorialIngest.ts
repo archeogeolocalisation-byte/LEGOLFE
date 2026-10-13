@@ -1,3 +1,5 @@
+import {parseLocalRss} from "./localRss";
+import {localFeedSources} from "../data/localFeedSources";
 import type { EditorialSource } from "../data/agendaSources";
 
 type Candidate = {
@@ -92,12 +94,16 @@ function fp(source:string,url:string,title:string,date:string|null){
 }
 
 export async function fetchSourceCandidates(source:EditorialSource):Promise<Candidate[]>{
-  const res=await fetch(source.url,{headers:{"user-agent":"LE-GOLFE/1.0 (+editorial-monitor)","accept":"text/html,application/xhtml+xml"},cache:"no-store",signal:AbortSignal.timeout(10000)});
+  const res=await fetch(source.url,{headers:{"user-agent":"LE-GOLFE/1.0 (+editorial-monitor)","accept":source.format==="rss"?"application/rss+xml,application/xml":"text/html,application/xhtml+xml"},cache:"no-store",signal:AbortSignal.timeout(10000)});
   if(!res.ok)throw new Error(`${source.label}: HTTP ${res.status}`);
   const reader=res.body?.getReader();if(!reader)throw new Error("Empty source");
   const chunks:Uint8Array[]=[];let size=0;
   for(;;){const {done,value}=await reader.read();if(done)break;size+=value.length;if(size>2*1024*1024){await reader.cancel();throw new Error("Source too large");}chunks.push(value);}
   const html=Buffer.concat(chunks).toString("utf8");
+  if(source.format==="rss"){
+    const feed=localFeedSources.find(item=>item.key===source.key);if(!feed)return [];
+    return parseLocalRss(html,feed).map(item=>({content_type:"news",source_key:source.key,source_label:source.label,external_url:item.source,fingerprint:fp(source.key,item.source,item.title,item.date),title:item.title,title_fr:item.title,summary:null,summary_fr:null,start_date:item.date,location:item.location,category:"around",raw:{rss:true,published:item.date}}));
+  }
   const nodes=jsonLd(html);
   const out:Candidate[]=[];
   for(const item of nodes){

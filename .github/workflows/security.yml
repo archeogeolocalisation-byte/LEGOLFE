@@ -32,6 +32,7 @@ jobs:
       - run: node scripts/test-villa-languages.cjs
       - run: node scripts/test-profile-agenda.cjs
       - run: node scripts/test-agenda-feeds.cjs
+      - run: node scripts/test-local-news.cjs
       - run: npx tsc --noEmit
       - run: npm run build
         env:

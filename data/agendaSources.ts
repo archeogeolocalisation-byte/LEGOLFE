@@ -1,4 +1,7 @@
+import {localFeedSources} from "./localFeedSources";
+
 export type EditorialSource = {
+  format?: "rss";
   key: string;
   label: string;
   type: "event" | "news" | "both";
@@ -7,6 +10,7 @@ export type EditorialSource = {
 };
 
 export const editorialSources: EditorialSource[] = [
+  ...localFeedSources.map(source=>({...source,type:"news" as const,format:"rss" as const})),
   { key:"saint-tropez-tourisme", label:"Saint-Tropez Tourisme", type:"event", location:"Saint-Tropez", url:"https://www.sainttropeztourisme.com/fr/evenements-saint-tropez/agenda-evenements-saint-tropez/" },
   { key:"saint-tropez-ville", label:"Ville de Saint-Tropez", type:"both", location:"Saint-Tropez", url:"https://www.saint-tropez.fr/decouvrir/agenda/" },
   { key:"ramatuelle-tourisme", label:"Ramatuelle Tourisme", type:"event", location:"Ramatuelle", url:"https://www.ramatuelle-tourisme.com/fr/animation/" },
@@ -18,5 +22,4 @@ export const editorialSources: EditorialSource[] = [
   { key:"cogolin", label:"Ville de Cogolin", type:"both", location:"Cogolin", url:"https://www.cogolin.fr/agenda/" },
   { key:"la-croix-valmer", label:"La Croix-Valmer Tourisme", type:"event", location:"La Croix-Valmer", url:"https://www.lacroixvalmertourisme.com/fr/sortir-se-divertir/evenements" },
   { key:"cavalaire", label:"Cavalaire Tourisme", type:"event", location:"Cavalaire-sur-Mer", url:"https://www.cavalairesurmer.fr/agenda/" },
-  { key:"golfe-interco", label:"Golfe de Saint-Tropez · Communauté de communes", type:"news", location:"Golfe de Saint-Tropez", url:"https://www.golfe-sainttropez.fr/nous-connaitre/actualites/" },
 ];

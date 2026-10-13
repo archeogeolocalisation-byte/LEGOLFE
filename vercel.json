@@ -30,7 +30,8 @@
       "design/agenda-layout": false,
       "design/agenda-final": false,
       "feature/menu-agenda-sources": false,
-      "feature/agenda-show-images": false
+      "feature/agenda-show-images": false,
+      "feature/local-news-journal": false
     }
   }
 }

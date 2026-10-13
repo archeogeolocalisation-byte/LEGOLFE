@@ -1,3 +1,5 @@
+import {getPublicNews} from "../../lib/publicNews";
+import {newsMonths} from "../../lib/localNewsCatalog";
 import {touristMapUpdated} from "../../lib/touristMap";
 import {placeFacts} from "../../data/placeFacts";
 import { agendaPaths } from "../../lib/agendaCalendar";
@@ -16,8 +18,8 @@ export const dynamic = "force-dynamic";
 const xml = (s:string) => s.replace(/[<>&"']/g, c => ({"<":"&lt;",">":"&gt;","&":"&amp;",'"':"&quot;","'":"&apos;"}[c]!));
 export async function GET() {
  const origin=siteOrigin();if(!origin)return new Response("Configure NEXT_PUBLIC_SITE_URL before enabling indexing.",{status:503,headers:{"Retry-After":"3600"}});
- const catalog=await getPublicEvents();
- const paths=["","/carte-touristique","/explore","/whats-on","/local","/how-it-works",...guidePaths(),...destinationPaths(),...stayPaths(),...agendaPaths(catalog,parisIsoDay()),...placeCategories.map(x=>`/explore/${x.id}`),...places.map(x=>`/place/${x.id}`),...catalog.map(x=>`/event/${x.id}`)];
+ const [catalog,news]=await Promise.all([getPublicEvents(),getPublicNews()]);
+ const paths=["","/carte-touristique","/explore","/whats-on","/local","/how-it-works",...newsMonths(news).map(month=>`/local/archives/${month}`),...guidePaths(),...destinationPaths(),...stayPaths(),...agendaPaths(catalog,parisIsoDay()),...placeCategories.map(x=>`/explore/${x.id}`),...places.map(x=>`/place/${x.id}`),...catalog.map(x=>`/event/${x.id}`)];
  const rows=[...new Set(paths)].flatMap(path=>["fr","en"].map(locale=>{
  const guide=path.startsWith("/guides/") ? guides.find(g=>g.slug===path.split("/").pop()) : undefined;
  const media=path.startsWith("/place/") ? mediaForPlace(path.split("/").pop()!) : undefined;
