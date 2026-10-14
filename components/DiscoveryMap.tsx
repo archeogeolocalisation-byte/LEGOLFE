@@ -1,6 +1,6 @@
 'use client';
 import Link from 'next/link';
-import {useCallback,useEffect,useMemo,useRef,useState,type PointerEvent,type WheelEvent} from 'react';
+import {useEffect,useMemo,useRef,useState,type PointerEvent,type WheelEvent} from 'react';
 import type {Locale} from '../lib/i18n';
 
 export type DiscoveryMapPlace={id:string;name:string;category:string;location:string;lat:number;lon:number;kind:'area'|'venue'};
