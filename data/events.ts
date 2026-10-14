@@ -40,6 +40,7 @@ export const events:GolfeEvent[]=[
 
 export type AgendaSource = { name:string; area:string; type:"tourism"|"municipal"|"venue"; url:string };
 export const agendaSources:AgendaSource[] = [
+  {name:"Mairie du Rayol-Canadel · manifestations",area:"Rayol-Canadel-sur-Mer",type:"municipal",url:"https://www.rayol-canadel.fr/fr/les-manifestations.htm"},
   {name:"Cinéma Le Pagnol · Carré Léon Gaumont",area:"Sainte-Maxime",type:"venue",url:"https://cinemapagnol-stemaxime.com/"},
   {name:"Domaine du Rayol",area:"Rayol-Canadel-sur-Mer",type:"venue",url:"https://www.domainedurayol.org/agenda-domaine-rayol/"},
   {name:"La Garde-Freinet · programme officiel",area:"La Garde-Freinet",type:"tourism",url:"https://www.golfe-saint-tropez-information.com/fr/villages-stations/la-garde-freinet"},
