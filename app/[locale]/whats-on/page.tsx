@@ -17,8 +17,8 @@ export default async function WhatsOn({ params }: { params: Promise<{ locale: st
 
   return (
     <main className="min-h-screen bg-[#050505] text-[#f5f5f2]">
-      <SiteHeader locale={locale} path="/whats-on" />
-      <AgendaClient locale={locale} events={merged} initialDay={parisIsoDay()} /><SiteFooter locale={locale}/>
+      <SiteHeader light={false} locale={locale} path="/whats-on" />
+      <AgendaClient locale={locale} events={merged} initialDay={parisIsoDay()} /><SiteFooter locale={locale} dark/>
     </main>
   );
 }
