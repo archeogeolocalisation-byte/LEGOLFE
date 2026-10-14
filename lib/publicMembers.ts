@@ -11,7 +11,7 @@ function privateClient(){
   return createClient(url,key,{auth:{persistSession:false,autoRefreshToken:false}});
 }
 
-export type PublicMember={id:string;name:string;bio:string;avatarUrl:string|null;connection:"local"|"visiting"|null};
+export type PublicMember={id:string;name:string;bio:string;avatarUrl:string|null;galleryUrls:string[];connection:"local"|"visiting"|null};
 export type PublicContribution={id:string;place_id:string;type:string;comment:string|null;imageUrl:string|null;created_at:string};
 
 export async function getPublicMembers(ids:string[]):Promise<PublicMember[]>{
@@ -33,8 +33,13 @@ export async function getPublicMembers(ids:string[]):Promise<PublicMember[]>{
       const signed=await db.storage.from("community-photos").createSignedUrl(path,3600);
       if(!signed.error)avatarUrl=signed.data.signedUrl;
     }
+    const galleryPaths=Array.isArray(metadata.legolfe_gallery_paths)?metadata.legolfe_gallery_paths.filter((path:unknown)=>typeof path==="string"&&path.startsWith(id+"/legolfe-profile/")&&avatarPattern.test(path)).slice(0,3) as string[]:[];
+    const galleryUrls=(await Promise.all(galleryPaths.map(async path=>{
+      const signed=await db.storage.from("community-photos").createSignedUrl(path,3600);
+      return signed.error?null:signed.data.signedUrl;
+    }))).filter((url):url is string=>!!url);
     const connection=metadata.legolfe_connection==="local"||metadata.legolfe_connection==="visiting"?metadata.legolfe_connection:null;
-    return {id,name,bio:typeof metadata.legolfe_bio==="string"?metadata.legolfe_bio.slice(0,280):"",avatarUrl,connection} satisfies PublicMember;
+    return {id,name,bio:typeof metadata.legolfe_bio==="string"?metadata.legolfe_bio.slice(0,280):"",avatarUrl,galleryUrls,connection} satisfies PublicMember;
   }));
   return result.filter((member):member is PublicMember=>member!==null);
 }
