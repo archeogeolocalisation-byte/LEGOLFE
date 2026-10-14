@@ -18,7 +18,8 @@ type CommunityPost = {
   created_at: string;
 };
 
-type ProfileMap = Record<string, string>;
+type PublicMember = {id:string;name:string;avatarUrl:string|null};
+type ProfileMap = Record<string, PublicMember>;
 
 const MAX_FILE_BYTES = 8 * 1024 * 1024;
 const ALLOWED_TYPES = ["image/jpeg", "image/png", "image/webp"];
@@ -56,14 +57,15 @@ export default function CommunitySection({ placeId, locale }: { placeId: string;
       setPosts(rows);
       const ids = [...new Set(rows.map((row) => row.user_id))];
       if (ids.length) {
-        const { data: profileRows } = await supabase
-          .from("community_profiles")
-          .select("user_id,display_name")
-          .in("user_id", ids);
-        if (!mounted.current || ticket !== generation.current) return;
-        const map: ProfileMap = {};
-        for (const row of profileRows ?? []) map[row.user_id] = row.display_name;
-        setProfiles(map);
+        try {
+          const response = await fetch("/api/community/members?ids=" + encodeURIComponent(ids.slice(0,30).join(",")), {cache:"no-store"});
+          if (!response.ok) throw new Error("MEMBERS_UNAVAILABLE");
+          const result = await response.json() as {members?:PublicMember[]};
+          if (!mounted.current || ticket !== generation.current) return;
+          const map: ProfileMap = {};
+          for (const member of result.members ?? []) map[member.id] = member;
+          setProfiles(map);
+        } catch { if(mounted.current && ticket === generation.current) setProfiles({}); }
       }
     }
     if (currentUserId !== undefined) setUserId(currentUserId);
@@ -166,7 +168,7 @@ export default function CommunitySection({ placeId, locale }: { placeId: string;
   const comments = approved.filter((post) => post.comment);
 
   function author(post: CommunityPost) {
-    return profiles[post.user_id] || (fr ? "Membre LE GOLFE" : "LE GOLFE member");
+    return profiles[post.user_id]?.name || (fr ? "Membre LE GOLFE" : "LE GOLFE member");
   }
 
   return (
@@ -195,7 +197,7 @@ export default function CommunitySection({ placeId, locale }: { placeId: string;
               return (
                 <figure key={post.id} className={`${index === 0 ? "col-span-2 row-span-2" : ""} group overflow-hidden bg-neutral-100`}>
                   <CommunityPhoto path={post.image_path!} alt={post.comment || "Community"} className="h-full min-h-52 w-full object-cover transition duration-500 group-hover:scale-[1.02]" />
-                  <figcaption className="sr-only">{author(post)}</figcaption>
+                  <figcaption className="bg-white px-3 py-3"><Link href={`/${locale}/member/${post.user_id}`} className="inline-flex items-center gap-2 text-xs font-bold hover:text-[var(--lg-blue)]">{profiles[post.user_id]?.avatarUrl ? <img src={profiles[post.user_id].avatarUrl!} alt="" className="h-8 w-8 rounded-full object-cover"/> : <span aria-hidden="true" className="flex h-8 w-8 items-center justify-center rounded-full bg-[#0B4F6C] text-[10px] text-white">LG</span>}{author(post)} ↗</Link></figcaption>
                 </figure>
               );
             })}
@@ -214,8 +216,9 @@ export default function CommunitySection({ placeId, locale }: { placeId: string;
                 comments.slice(0, 6).map((post) => (
                   <blockquote key={post.id} className="border-b border-black py-5">
                     <p className="text-base font-semibold leading-7 text-black/70">“{post.comment}”</p>
-                    <footer className="mt-3 text-[10px] font-black uppercase tracking-[.14em] text-black/35">
-                      {author(post)} · {new Intl.DateTimeFormat(locale === "fr" ? "fr-FR" : "en-GB", { month: "short", year: "numeric" }).format(new Date(post.created_at))}
+                    <footer className="mt-4 flex items-center gap-3 text-[10px] font-black uppercase tracking-[.08em] text-black/55">
+                      <Link href={`/${locale}/member/${post.user_id}`} className="inline-flex items-center gap-2 hover:text-[var(--lg-blue)]">{profiles[post.user_id]?.avatarUrl ? <img src={profiles[post.user_id].avatarUrl!} alt="" className="h-10 w-10 rounded-full object-cover"/> : <span aria-hidden="true" className="flex h-10 w-10 items-center justify-center rounded-full bg-[#0B4F6C] text-white">LG</span>}{author(post)} ↗</Link>
+                      <span>· {new Intl.DateTimeFormat(locale === "fr" ? "fr-FR" : "en-GB", { month: "short", year: "numeric" }).format(new Date(post.created_at))}</span>
                     </footer>
                   </blockquote>
                 ))
