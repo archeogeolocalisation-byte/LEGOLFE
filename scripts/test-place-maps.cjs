@@ -29,10 +29,11 @@ async function nodes(element){if(!element||typeof element!=='object')return [];i
  assert.equal(new URL(placeSearchUrl('A & B','Saint-Tropez')).searchParams.get('query'),'A & B, Saint-Tropez, France');
  for(const place of places)for(const locale of ['fr','en']){
   const points=placeMapPoints[place.id]??[],html=renderToStaticMarkup(require('react').createElement(Block,{name:place.name,location:place.location,points,locale}));
-  assert.equal(html.includes('<iframe'),false);assert.equal(html.includes('navigator.geolocation'),false);
-  if(points.length){assert.ok(html.includes('openstreetmap.org/copyright'));assert.ok(html.includes('google.com/maps/dir/'));assert.ok(html.includes(locale==='fr'?'Afficher le plan':'Show map'));}
+  assert.equal(html.includes('<iframe'),points.length>0);assert.equal(html.includes('navigator.geolocation'),false);
+  if(points.length){assert.ok(html.includes('openstreetmap.org/copyright'));assert.ok(html.includes('google.com/maps/dir/'));assert.ok(html.includes(locale==='fr'?'Itinéraire vers cette adresse':'Directions to this address'));}
   else{assert.ok(html.includes('google.com/maps/search/'));assert.equal(place.latitude,undefined);}
   const element=await Page({params:Promise.resolve({locale,id:place.id})});const children=await nodes(element);const blocks=children.filter(e=>e.type===Block);assert.equal(blocks.length,1);assert.equal(blocks[0].props.points.length,points.length);
+  const {newExperienceFacts}=require('../data/newExperienceFacts.ts');if(newExperienceFacts[place.id]){assert.equal(blocks[0].props.address,newExperienceFacts[place.id].address);const blockHtml=renderToStaticMarkup(require('react').createElement(Block,blocks[0].props));assert.ok(blockHtml.includes('output=embed')||points.length>0);assert.ok(blockHtml.includes('Itinéraire vers cette adresse')||blockHtml.includes('Directions to this address'));}
   const community=children.filter(e=>typeof e.type==='function'&&e.type.name==='CommunitySection');assert.equal(community.length,1);const locationAt=children.indexOf(blocks[0]),communityAt=children.indexOf(community[0]);assert.ok(locationAt<communityAt);
   const factsAt=children.findIndex(e=>e.type==='dl');if(factsAt>=0){const isFactSheet=!!require('../data/placeFacts.ts').placeFacts[place.id];assert.ok(isFactSheet?factsAt<locationAt:locationAt<factsAt,place.id+' Pampelonne editorial ordering of maps and facts');}
   const preparationAt=children.findIndex(e=>typeof e.type==='function'&&e.type.name==='PlacePreparation');if(preparationAt>=0)assert.ok(locationAt<preparationAt&&preparationAt<communityAt);
