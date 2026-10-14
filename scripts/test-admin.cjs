@@ -11,7 +11,7 @@ const db={auth:{admin:{
   updateUserById:async(id,change)=>{calls.push({id,change});return {error:null};},
 }},from(table){
   calls.push({table});let updating=false;
-  const q={select(){return q;},eq(){return q;},order(){return q;},range(){return q;},ilike(){return q;},abortSignal:async()=>({data:[{id:payload.id,payload,owner_id:ownerId,status:'published',visibility:'public'}],error:null}),single:async()=>({data:updating?{id:payload.id}:{payload},error:null}),update(change){updating=true;calls.push({change});return q;}};return q;
+  const q={select(){return q;},eq(){return q;},in(){return Promise.resolve({data:[],error:null});},order(){return q;},range(){return q;},ilike(){return q;},upsert(){return Promise.resolve({error:null});},delete(){return q;},then(resolve){return Promise.resolve({data:[],error:null}).then(resolve);},abortSignal:async()=>({data:[{id:payload.id,payload,owner_id:ownerId,status:'published',visibility:'public'}],error:null}),single:async()=>({data:updating?{id:payload.id}:{payload},error:null}),update(change){updating=true;calls.push({change});return q;}};return q;
 }};
 const load=Module._load;
 Module._load=function(request,parent,...rest){
@@ -28,7 +28,7 @@ const request=(method='GET',body,token='valid',origin='https://www.legolfe.com',
   assert.equal((await GET(request('GET',undefined,''))).status,401);
   assert.equal((await GET(request('GET',undefined,'invalid'))).status,401);
   actor=ownerId;calls=[];assert.equal((await GET(request())).status,403);assert.deepEqual(calls,[]);
-  assert.equal((await PATCH(request('PATCH',{kind:'user',id:ownerId,accountType:'owner'}))).status,403);assert.deepEqual(calls,[]);
+  assert.equal((await PATCH(request('PATCH',{kind:'user',id:ownerId,role:'moderator'}))).status,403);assert.deepEqual(calls,[]);
   actor=adminId;assert.equal((await PATCH(request('PATCH',{},'valid','https://attacker.example'))).status,403);
   delete process.env.SUPABASE_SECRET_KEY;assert.equal((await GET(request())).status,503);process.env.SUPABASE_SECRET_KEY='secret';
   const r=await GET(request());assert.equal(r.status,200);assert.equal(r.headers.get('Cache-Control'),'no-store, private');const listing=(await r.json()).listings[0];assert.equal(listing.ownerEmail,'owner@example.com');
@@ -38,6 +38,6 @@ const request=(method='GET',body,token='valid',origin='https://www.legolfe.com',
   for(const patch of [{ownerId:'bad'},{status:'deleted'},{visibility:'invalid'},{name:''},{description:'x'.repeat(4001)}])assert.throws(()=>validateAdminChange({...change,...patch}),/INVALID_CHANGE/);
   calls=[];assert.equal((await PATCH(request('PATCH',change))).status,200);const saved=calls.find(c=>c.change)?.change;assert.equal(saved.payload.extraField,'preserve');assert.deepEqual(saved.payload.photos,payload.photos);assert.equal(saved.owner_id,ownerId);assert.equal(saved.payload.name,'Mas updated');
   missingOwner=true;calls=[];assert.equal((await PATCH(request('PATCH',change))).status,400);assert.equal(calls.some(c=>c.change),false);missingOwner=false;
-  calls=[];assert.equal((await PATCH(request('PATCH',{kind:'user',id:ownerId,accountType:'concierge'}))).status,200);assert.deepEqual(calls[0].change,{user_metadata:{anotherSetting:'keep',legolfe_account_type:'concierge'}});
+  calls=[];assert.equal((await PATCH(request('PATCH',{kind:'user',id:ownerId,role:'moderator'}))).status,200);assert.deepEqual(calls.find(c=>c.change?.app_metadata)?.change,{app_metadata:{legolfe_role:'moderator'}});
   console.log('Admin: authorization, validation, privacy and preservation checks passed.');
 })().catch(error=>{console.error(error);process.exitCode=1;});
