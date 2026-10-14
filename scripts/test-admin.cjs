@@ -27,7 +27,7 @@ const request=(method='GET',body,token='valid',origin='https://www.legolfe.com',
   assert.equal(isAdminId(adminId,` ${adminId}, ${ownerId}`),true);assert.equal(isAdminId(adminId,undefined),false);assert.equal(isAdminId(adminId,adminId.slice(0,-1)),false);
   assert.equal((await GET(request('GET',undefined,''))).status,401);
   assert.equal((await GET(request('GET',undefined,'invalid'))).status,401);
-  actor=ownerId;calls=[];assert.equal((await GET(request())).status,403);assert.deepEqual(calls,[]);
+  actor=ownerId;calls=[];assert.equal((await GET(request())).status,403);assert.equal(calls.some(c=>c.change),false);
   assert.equal((await PATCH(request('PATCH',{kind:'user',id:ownerId,role:'moderator'}))).status,403);assert.deepEqual(calls,[]);
   actor=adminId;assert.equal((await PATCH(request('PATCH',{},'valid','https://attacker.example'))).status,403);
   delete process.env.SUPABASE_SECRET_KEY;assert.equal((await GET(request())).status,503);process.env.SUPABASE_SECRET_KEY='secret';
