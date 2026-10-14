@@ -34,7 +34,7 @@ export default async function Home({params}:{params:Promise<{locale:string}>}){
  return <main className="min-h-screen bg-white text-black"><SiteHeader locale={l}/>
   <section className="lg-shell pb-14 pt-10 md:pb-20 md:pt-16">
    <p className="lg-kicker">Golfe de Saint-Tropez / {fr?"Le guide local":"Local intelligence"}</p>
-   <h1 className="lg-display mt-7 text-[17.5vw] sm:text-[15vw] md:text-[138px]">{fr?<>LE GOLFE.<br/><span className="lg-accent">AUTREMENT.</span></>:<>THE GOLFE.<br/><span className="lg-accent">DIFFERENTLY.</span></>}</h1>
+   <h1 className="lg-display mt-7 max-w-full text-[clamp(2.45rem,10.5vw,7.5rem)]">{fr?<>LE GOLFE.<br/><span className="lg-accent">AUTREMENT.</span></>:<>THE GOLFE.<br/><span className="lg-accent">DIFFERENTLY.</span></>}</h1>
    <div className="mt-9 grid gap-7 border-t border-black pt-6 md:grid-cols-[1fr_auto] md:items-start">
     <p className="max-w-2xl text-[18px] font-bold leading-7 md:text-[21px] md:leading-8">{fr?"Le bon village. La bonne table. La bonne plage. La bonne maison. Pas plus de choix — de meilleurs choix.":"The right village. The right table. The right beach. The right stay. Not more choice — better choices."}</p>
     <div className="flex gap-2"><Link href={`/${l}/ask`} className="lg-btn bg-[var(--lg-blue)] text-white !border-[var(--lg-blue)]">{fr?"Demander à LE GOLFE":"Ask Le Golfe"}</Link><Link href={`/${l}/explore`} className="lg-btn">{fr?"Explorer":"Explore"}</Link></div>
