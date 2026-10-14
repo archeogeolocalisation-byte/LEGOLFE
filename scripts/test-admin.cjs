@@ -11,7 +11,7 @@ const db={auth:{admin:{
   updateUserById:async(id,change)=>{calls.push({id,change});return {error:null};},
 }},from(table){
   calls.push({table});let updating=false;
-  const q={select(){return q;},eq(){return q;},in(){return Promise.resolve({data:[],error:null});},order(){return q;},range(){return q;},ilike(){return q;},upsert(){return Promise.resolve({error:null});},delete(){return q;},then(resolve){return Promise.resolve({data:[],error:null}).then(resolve);},abortSignal:async()=>({data:[{id:payload.id,payload,owner_id:ownerId,status:'published',visibility:'public'}],error:null}),single:async()=>({data:updating?{id:payload.id}:{payload},error:null}),update(change){updating=true;calls.push({change});return q;}};return q;
+  const q={select(){return q;},eq(){return q;},in(){return Promise.resolve({data:[],error:null});},maybeSingle:async()=>({data:null,error:null}),order(){return q;},range(){return q;},ilike(){return q;},upsert(){return Promise.resolve({error:null});},delete(){return q;},then(resolve){return Promise.resolve({data:[],error:null}).then(resolve);},abortSignal:async()=>({data:[{id:payload.id,payload,owner_id:ownerId,status:'published',visibility:'public'}],error:null}),single:async()=>({data:updating?{id:payload.id}:{payload},error:null}),update(change){updating=true;calls.push({change});return q;}};return q;
 }};
 const load=Module._load;
 Module._load=function(request,parent,...rest){
