@@ -848,7 +848,7 @@ export const legacyPlaceFeatures:Record<string,Record<Locale,LegacyPlaceCopy>> =
       "kicker": "PLAGE · RAMATUELLE",
       "title": "PAMPELONNE",
       "sub": "UNE PLAGE. PLUSIEURS JOURNÉES POSSIBLES.",
-      "intro": "4,5 kilomètres de sable sur la commune de Ramatuelle. Pampelonne n'est pas une seule ambiance : le secteur, l'heure et le type de journée changent tout.",
+      "intro": "Pampelonne se parcourt comme une succession de secteurs de plage, sur environ 4,5 km à Ramatuelle. Tahiti, Moulins, Tamaris, Patch, Épi, Barraques ou Bonne Terrasse : choisir le bon accès change le trajet, le stationnement et le rythme de la journée.",
       "local": "LE REGARD LE GOLFE",
       "quote": "La bonne question n'est pas “Pampelonne ou pas ?” mais “quelle Pampelonne ?”",
       "body": "On peut y venir pour une plage publique simple, un déjeuner iconique, une journée en famille, un beach club ou une arrivée en bateau. LE GOLFE doit aider à choisir le bon secteur plutôt que recommander la plage comme un bloc unique.",
@@ -856,17 +856,17 @@ export const legacyPlaceFeatures:Record<string,Record<Locale,LegacyPlaceCopy>> =
         [
           "01 · TÔT",
           "La plage avant la scène",
-          "Arriver tôt permet de profiter de la longueur de la plage et de la mer avant que les parkings, les restaurants et les clubs ne donnent leur rythme à la journée."
+          "En plein été, viser une arrivée avant la pointe de fin de matinée réduit le risque de circulation dense et de parkings complets. Les conditions restent variables selon le jour et les événements."
         ],
         [
           "02 · MIDI",
           "Faire du déjeuner un choix",
-          "Club 55, adresse plus contemporaine ou pique-nique sur une zone publique : le déjeuner détermine souvent l'ambiance du reste de la journée."
+          "Club de plage, restaurant ou pique-nique dans les parties publiques : fixez d'abord votre adresse précise. Les accès et parkings de deux établissements éloignés ne sont pas forcément reliés par la route."
         ],
         [
           "03 · FIN D'APRÈS-MIDI",
           "Rester quand ça se vide",
-          "La lumière baisse, les départs commencent et certaines portions retrouvent une sensation plus simple. C'est souvent un très bon moment pour marcher le long de l'eau."
+          "La lumière devient plus douce, mais les départs se concentrent parfois entre 18 h et 19 h 30 en haute saison. Prévoir son retour à l'avance évite de dépendre d'un véhicule disponible au dernier moment."
         ]
       ],
       "facts": [
@@ -905,10 +905,10 @@ export const legacyPlaceFeatures:Record<string,Record<Locale,LegacyPlaceCopy>> =
       "rhythmTitle": "Choisir son rythme avant son transat.",
       "layer": "4,5 KM",
       "layerTitle": "La longueur est son principal luxe.",
-      "layerBody": "Pampelonne peut absorber plusieurs usages parce qu'elle est vaste. Les accès publics, les secteurs plus familiaux et les plages privées créent des micro-ambiances. Le bon choix dépend davantage de votre journée que du prestige d'une adresse.",
+      "layerBody": "Quatre kilomètres et demi de côte signifient des expériences différentes et plusieurs routes de desserte. Depuis la D93, les principaux chemins sont la route de Tahiti, le chemin des Moulins, le chemin des Tamaris, le boulevard Patch, la route de l’Épi, le chemin des Barraques et la route de Bonne Terrasse. Choisir son secteur avant de partir est plus utile que suivre simplement « Pampelonne » sur le GPS.",
       "dark": "ACCÈS",
       "darkTitle": "En été, penser trajet avant de penser plage.",
-      "darkBody": "En 2026, Ramatuelle indique une navette gratuite depuis le village toutes les 20 minutes du 15 juin au 22 septembre, ainsi que la ligne 875, les accès vélo/deux-roues et plusieurs parkings. En haute saison, partir tôt reste la meilleure optimisation.",
+      "darkBody": "En haute saison, les arrivées entre 11 h et 13 h et les retours en début de soirée peuvent concentrer les bouchons. Le stationnement dépend du secteur et de la période : évitez les accotements interdits et vérifiez les tarifs. Ramatuelle publie les dessertes saisonnières (navette village-plages, bus ZOU 875). Pour les groupes, une navette ou un chauffeur réservé à l'avance peut être pratique, sans être indispensable à tous les visiteurs.",
       "close": "POUR QUI ?",
       "closeTitle": "Iconique, oui. Uniforme, jamais.",
       "closeBody": "Pampelonne est incontournable si vous voulez comprendre la culture plage du Golfe. Mais elle n'est pas automatiquement le meilleur choix pour tout le monde : l'Escalet, les criques ou d'autres plages peuvent mieux convenir à une journée plus naturelle ou plus calme."
@@ -917,7 +917,7 @@ export const legacyPlaceFeatures:Record<string,Record<Locale,LegacyPlaceCopy>> =
       "kicker": "BEACH · RAMATUELLE",
       "title": "PAMPELONNE",
       "sub": "ONE BEACH. MANY DIFFERENT DAYS.",
-      "intro": "4.5 kilometres of sand in Ramatuelle. Pampelonne is not one mood: the sector, time of day and type of plan change everything.",
+      "intro": "Pampelonne is a series of beach areas spanning roughly 4.5 km in Ramatuelle. Tahiti, Moulins, Tamaris, Patch, Épi, Barraques and Bonne Terrasse have distinct access roads: choosing the right one shapes the whole day.",
       "local": "LE GOLFE VIEW",
       "quote": "The question is not “Pampelonne or not?” but “which Pampelonne?”",
       "body": "You can come for a simple public beach, an iconic lunch, a family day, a beach club or a boat arrival. LE GOLFE should help choose the right sector instead of recommending the beach as one single experience.",
@@ -925,17 +925,17 @@ export const legacyPlaceFeatures:Record<string,Record<Locale,LegacyPlaceCopy>> =
         [
           "01 · EARLY",
           "The beach before the scene",
-          "Arriving early lets you enjoy the scale of the beach and the sea before parking, restaurants and clubs set the pace."
+          "In peak summer, arriving before the late-morning rush can help avoid heavy traffic and full car parks. Conditions vary by day and local events."
         ],
         [
           "02 · LUNCH",
           "Make lunch a decision",
-          "Club 55, a more contemporary address or a picnic on a public stretch: lunch often determines the mood of the rest of the day."
+          "Whether you choose a beach club, restaurant or public stretch, decide on the precise destination first. Different beach venues may require separate approach roads and car parks."
         ],
         [
           "03 · LATE AFTERNOON",
           "Stay as it empties",
-          "Light softens, departures begin and some sections become much simpler again. It is often one of the best times to walk the waterline."
+          "The light softens, but departures can bunch up between around 6pm and 7.30pm during high season. Arrange your return rather than assuming a car will be immediately available."
         ]
       ],
       "facts": [
@@ -974,10 +974,10 @@ export const legacyPlaceFeatures:Record<string,Record<Locale,LegacyPlaceCopy>> =
       "rhythmTitle": "Choose the rhythm before the sunbed.",
       "layer": "4.5 KM",
       "layerTitle": "Its length is the real luxury.",
-      "layerBody": "Pampelonne can support many different uses because it is vast. Public access points, more family-friendly sectors and private beaches create micro-moods. The right choice depends more on your day than the prestige of an address.",
+      "layerBody": "Along its 4.5 km coastline, the main approaches from the D93 include route de Tahiti, chemin des Moulins, chemin des Tamaris, boulevard Patch, route de l’Épi, chemin des Barraques and route de Bonne Terrasse. The best access is the one matching your chosen area, not just a GPS search for the beach.",
       "dark": "ACCESS",
       "darkTitle": "In summer, plan the journey before the beach.",
-      "darkBody": "For 2026, Ramatuelle lists a free shuttle from the village every 20 minutes from 15 June to 22 September, plus bus line 875, bike/two-wheel parking and several car parks. In high season, leaving early remains the best optimisation.",
+      "darkBody": "Peak arrivals can build between 11am and 1pm, with busy returns early in the evening. Parking availability and charges depend on the area and season; avoid prohibited roadside parking. Ramatuelle provides information on seasonal village shuttles and bus line 875. For groups, a pre-booked shuttle or driver can simplify the day, though it is not essential for everyone.",
       "close": "THE RIGHT MATCH",
       "closeTitle": "Iconic, yes. Uniform, never.",
       "closeBody": "Pampelonne is essential if you want to understand the Golfe's beach culture. But it is not automatically the best beach for everyone: l'Escalet, coves or other shores can be better for a quieter or more natural day."

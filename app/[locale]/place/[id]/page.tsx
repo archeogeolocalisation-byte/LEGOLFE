@@ -1,6 +1,7 @@
 import {fallbackSignature} from "../../../../lib/placeEditorialSignatures";
 import citadelleStyles from '../../../../components/Citadelle.module.css';
 import PampelonnePhoto from '../../../../components/PampelonnePhoto';
+import PampelonneAccessGuide from '../../../../components/PampelonneAccessGuide';
 import pampelonneStyles from '../../../../components/Pampelonne.module.css';
 import PlaceStoryPhotos from '../../../../components/PlaceStoryPhotos';
 import PlaceMapBlock from '../../../../components/PlaceMapBlock';
@@ -147,7 +148,7 @@ function LegacyPlacePage({id,locale}:{id:string;locale:"fr"|"en"}){
   <PlaceMediaGallery name={place.name} photos={photosForPlace(id)} locale={locale} processed={id==='pampelonne'}/>
   <EditorialQuote label={c.local} quote={c.quote} body={c.body}/>
   <EditorialMoments label={c.rhythm} title={c.rhythmTitle} moments={c.moments}/>
-  {id==='pampelonne'&&<section className="lg-shell pb-16"><PampelonnePhoto index={4} locale={locale}/></section>}
+  {id==='pampelonne'&&<PampelonneAccessGuide locale={locale}/>}
   <section className="lg-shell pb-24"><div className="grid gap-10 border-t border-black pt-10 md:grid-cols-[.7fr_1.3fr]"><p className="lg-kicker">{c.layer}</p><div><h2 className="text-5xl font-black leading-[.9] tracking-[-.055em] md:text-[5rem]">{c.layerTitle}</h2><p className="mt-7 max-w-2xl text-lg leading-8 text-black/55">{c.layerBody}</p></div></div></section>
   {id==='pampelonne'?<section className={pampelonneStyles.access}><div className="lg-shell grid items-center gap-12 py-16 md:grid-cols-[1.2fr_.8fr] md:py-24"><div><p className="lg-kicker">{c.dark}</p><h2 className="mt-6">{c.darkTitle}</h2><p className={pampelonneStyles.accessText}>{c.darkBody}</p></div><PampelonnePhoto index={3} locale={locale}/></div></section>:<EditorialDark label={c.dark} title={c.darkTitle} body={c.darkBody}/>}
   <EditorialClose label={c.close} title={c.closeTitle} body={c.closeBody} facts={c.facts} best={c.best} bestItems={c.bestItems} less={c.less} lessItems={c.lessItems} credit={locale==="fr"?"Légendes, sources et licences sous chaque photo.":"Captions, sources and licences beneath each photograph."} ask={c.ask} locale={locale}/>
