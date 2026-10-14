@@ -11,6 +11,7 @@ import AccountAuthForm from "../../../components/AccountAuthForm";
 import AccountPasswordForm from "../../../components/AccountPasswordForm";
 import AdminAccessLink from "../../../components/AdminAccessLink";
 import ProfileDetails from "../../../components/ProfileDetails";
+import ProfileGallery from "../../../components/ProfileGallery";
 
 export default function AccountPage() {
   const params = useParams<{ locale: string }>();
@@ -153,6 +154,7 @@ export default function AccountPage() {
           </div>
 
           <div>
+            <ProfileGallery key={"gallery-"+userId} userId={userId} fr={fr} />
             <ProfileDetails key={userId} userId={userId} fr={fr} />
           <form onSubmit={saveProfile}>
             <p className="lg-kicker">{fr ? "NOM PUBLIC" : "PUBLIC NAME"}</p>
