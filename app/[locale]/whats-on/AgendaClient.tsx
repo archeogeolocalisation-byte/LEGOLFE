@@ -101,7 +101,7 @@ export default function AgendaClient({ locale, events, initialDay }: Props) {
             </select>
           </div>
         </div>
-        <div className="mt-4 grid gap-5 border-t border-black/10 pt-4 lg:grid-cols-[1fr_auto] lg:items-end">
+        <div className="mx-auto grid max-w-7xl gap-5 border-t border-black/10 px-6 pt-4 md:px-10 lg:grid-cols-[1fr_auto] lg:items-end">
                   <div>
                     <p className="text-[10px] font-black uppercase tracking-[.22em] text-black/35">{fr ? "AFFINER" : "REFINE"}</p>
                     <div className="mt-3 flex max-w-full flex-wrap gap-2">
