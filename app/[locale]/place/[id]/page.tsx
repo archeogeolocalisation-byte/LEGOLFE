@@ -1,3 +1,4 @@
+import {fallbackSignature} from "../../../../lib/placeEditorialSignatures";
 import citadelleStyles from '../../../../components/Citadelle.module.css';
 import PampelonnePhoto from '../../../../components/PampelonnePhoto';
 import pampelonneStyles from '../../../../components/Pampelonne.module.css';
@@ -53,24 +54,23 @@ async function PlaceContent({ params }: { params: Promise<{ locale: string; id: 
   const desc = l === "fr" ? placeDescriptionFr[id] || p.description : p.description;
   const curatedMedia = mediaForPlace(id);
 
-  return (
-    <main className="min-h-screen bg-[#FFFFFF] text-[#000000]">
-      <SiteHeader light locale={l} path={`/place/${id}`} />
-      <section className="px-6 pb-24 pt-12 md:px-10">
-        <div className="mx-auto max-w-7xl">
-          <Link href={`/${l}/explore/${p.category}`} className="text-xs opacity-45">← {l === "fr" ? categoryFR[p.category].name : c.name}</Link>
-          {curatedMedia && <div className="mt-10"><div className="aspect-[16/8] min-h-[360px] overflow-hidden bg-black"><img src={curatedMedia.src} alt={curatedMedia.alt} className="h-full w-full object-cover"/></div>{(curatedMedia.credit||curatedMedia.license)&&<p className="mt-2 text-[9px] uppercase tracking-[.12em] opacity-35">Photo: {curatedMedia.credit} · {curatedMedia.license}</p>}</div>}
-          <div className="mt-12 grid gap-14 md:grid-cols-[1.15fr_.85fr]">
-            <div><p className="text-[10px] font-bold tracking-[.22em] text-[#000000]">{l === "fr" ? categoryFR[p.category].name : c.label} · {p.location}</p><h1 className="mt-5 font-black text-6xl md:text-8xl">{p.name}</h1><p className="mt-8 max-w-2xl text-lg leading-8 opacity-65">{desc}</p></div>
-            <aside className="bg-[#000000] p-7 text-white"><p className="text-[10px] font-bold tracking-[.22em] text-[#FFFFFF]">{l === "fr" ? "LE CONSEIL LE GOLFE" : "LE GOLFE NOTE"}</p><p className="mt-4 font-black text-3xl">{t.right}</p><p className="mt-4 text-sm leading-6 text-white/55">{t.rightDesc}</p><Link href={`/${l}/ask`} className="mt-7 inline-block bg-[#000000] px-5 py-3 text-sm">{t.ask} →</Link></aside>
-          </div>
-          <PlaceMapBlock name={placeName(p,l)} location={p.location} points={placeMapPoints[id]??[]} locale={l}/>
-          <div className="mt-20 grid gap-10 border-t pt-10 md:grid-cols-3"><Info title={t.best} items={p.bestFor}/><Info title={t.know} items={p.goodToKnow}/><Info title={t.notIdeal} items={p.notIdealFor}/></div>
-        </div>
-      </section>
-      <PlaceActions place={p} locale={l} />
-    </main>
-  );
+  const signature=fallbackSignature(p.name,l);
+  return <main className="min-h-screen bg-white text-black">
+    <SiteHeader light locale={l} path={`/place/${id}`}/>
+    <section className="lg-shell py-12 md:py-20">
+      <Link href={`/${l}/explore/${p.category}`} className="text-xs font-bold underline underline-offset-4">← {l==='fr'?categoryFR[p.category].name:c.name}</Link>
+      <p className="lg-kicker mt-10 text-[#0B4F6C]">{l==='fr'?categoryFR[p.category].name:c.name} · {p.location}</p>
+      <h1 className="mt-6 max-w-full break-words text-[clamp(3.3rem,10.5vw,9.5rem)] font-black uppercase leading-[.83] tracking-[-.07em] text-[#0B4F6C] [overflow-wrap:anywhere]">{p.name}</h1>
+      <div className="mt-10 grid gap-8 border-t border-black pt-7 md:grid-cols-2"><h2 className="max-w-3xl text-4xl font-black uppercase leading-[.94] tracking-[-.055em] md:text-6xl">{signature.subtitle}</h2><p className="max-w-xl text-lg font-bold leading-8 text-black/65">{desc}</p></div>
+    </section>
+    {curatedMedia?<section className="lg-shell pb-10"><figure><img src={curatedMedia.src} alt={curatedMedia.alt} className="aspect-[16/9] w-full bg-[#071D2B] object-cover"/>{(curatedMedia.credit||curatedMedia.license)&&<figcaption className="mt-3 text-xs text-black/60">{curatedMedia.credit} · {curatedMedia.license}{curatedMedia.contextual?' · '+(l==='fr'?'Photo du secteur':'Area photograph'):''}</figcaption>}</figure></section>:<section className="lg-shell pb-10"><div className="flex min-h-[320px] items-end bg-[#071D2B] p-7 text-white md:min-h-[490px] md:p-12"><p className="max-w-full break-words text-[clamp(2.6rem,9vw,8rem)] font-black uppercase leading-[.88] tracking-[-.055em]">{p.name}</p></div></section>}
+    <section className="lg-shell py-16 md:py-24"><div className="lg-quote-box grid gap-9 bg-[#edf4f6] md:grid-cols-[.35fr_1.65fr]"><div><p className="lg-kicker text-[#0B4F6C]">{l==='fr'?'LE REGARD LE GOLFE':'THE LE GOLFE VIEW'}</p><div className="lg-blue-rule mt-5"/></div><div><p className="text-4xl font-black uppercase leading-[.95] tracking-[-.055em] text-[#0B4F6C] md:text-7xl">“{signature.quote}”</p><p className="mt-7 max-w-2xl text-lg leading-8 text-black/65">{desc}</p></div></div></section>
+    <section className="border-t border-black"><div className="lg-shell py-20"><p className="lg-kicker text-[#0B4F6C]">{l==='fr'?'POURQUOI ON AIME':'WHY IT WORKS'}</p><h2 className="mt-5 max-w-5xl text-5xl font-black uppercase leading-[.9] tracking-[-.055em] md:text-8xl">{signature.rhythm}</h2><div className="mt-14 grid border-t border-black md:grid-cols-3">{p.bestFor.slice(0,3).map((item,i)=><article key={item} className="border-b border-black/20 py-8 md:border-b-0 md:border-r md:px-8 first:md:pl-0 last:md:border-r-0"><span className="lg-kicker text-[#0B4F6C]">0{i+1}</span><h3 className="mt-5 text-2xl font-black uppercase tracking-[-.04em]">{item}</h3></article>)}</div></div></section>
+    <section className="bg-[#0B4F6C] text-white"><div className="lg-shell py-20 md:py-28"><p className="lg-kicker text-white/75">{l==='fr'?'LE BON REPÈRE':'THE USEFUL DISTINCTION'}</p><div className="mt-5 h-1 w-16 bg-[#a5def0]"/><div className="mt-9 grid gap-10 md:grid-cols-[1.1fr_.9fr]"><h2 className="text-5xl font-black uppercase leading-[.9] tracking-[-.055em] md:text-8xl">{signature.dark}</h2><div className="text-lg leading-8 text-white/85">{p.goodToKnow.map((item,i)=><p className="mb-4" key={i}>{item}</p>)}</div></div></div></section>
+    <PlaceMapBlock name={placeName(p,l)} location={p.location} points={placeMapPoints[id]??[]} locale={l}/>
+    <section className="lg-shell py-20 md:py-24"><p className="lg-kicker text-[#0B4F6C]">{l==='fr'?'LES REPÈRES PRATIQUES':'PLAN YOUR VISIT'}</p><h2 className="mt-5 text-5xl font-black uppercase leading-[.92] tracking-[-.055em] md:text-8xl">{signature.close}</h2><div className="mt-12 grid gap-10 border-t border-black pt-9 md:grid-cols-3"><Info title={t.best} items={p.bestFor}/><Info title={t.know} items={p.goodToKnow}/><Info title={t.notIdeal} items={p.notIdealFor}/></div><Link href={`/${l}/ask?place=${encodeURIComponent(p.name)}`} className="mt-10 inline-flex min-h-12 items-center bg-[#0B4F6C] px-6 text-xs font-black uppercase tracking-[.12em] text-white">{t.ask} →</Link></section>
+    <PlaceActions place={p} locale={l}/>
+  </main>;
 }
 
 
@@ -155,9 +155,9 @@ function LegacyPlacePage({id,locale}:{id:string;locale:"fr"|"en"}){
  </main>;
 }
 
-function EditorialIntro({id,locale,kicker,title,sub,intro}:{id:string;locale:"fr"|"en";kicker:string;title:string;sub:string;intro:string}){return <section className="lg-shell pb-12 pt-10 md:pt-16"><p className="lg-kicker">{kicker}</p><h1 className="mt-5 text-[15vw] font-black leading-[.78] tracking-[-.075em] md:text-[150px]">{title}</h1><VillageSignature id={id} locale={locale}/><div className="mt-8 grid gap-8 border-t border-black pt-6 md:grid-cols-2"><h2 className="text-4xl font-black leading-[.9] tracking-[-.05em] md:text-6xl">{sub}</h2><p className="max-w-xl text-lg font-bold leading-7 text-black/55">{intro}</p></div></section>}
+function EditorialIntro({id,locale,kicker,title,sub,intro}:{id:string;locale:"fr"|"en";kicker:string;title:string;sub:string;intro:string}){return <section className="lg-shell pb-12 pt-10 md:pt-16"><p className="lg-kicker">{kicker}</p><h1 className="mt-5 text-[15vw] font-black leading-[.78] tracking-[-.075em] md:text-[150px] text-[#0B4F6C]">{title}</h1><VillageSignature id={id} locale={locale}/><div className="mt-8 grid gap-8 border-t border-black pt-6 md:grid-cols-2"><h2 className="text-4xl font-black leading-[.9] tracking-[-.05em] md:text-6xl">{sub}</h2><p className="max-w-xl text-lg font-bold leading-7 text-black/55">{intro}</p></div></section>}
 
-function EditorialQuote({label,quote,body}:{label:string;quote:string;body:string}){return <section className="lg-shell py-20 md:py-24"><div className="lg-quote-box grid gap-10 md:grid-cols-[.35fr_1.65fr]"><div><p className="lg-kicker">{label}</p><div className="lg-blue-rule mt-5"/></div><div><p className="max-w-4xl text-5xl font-black leading-[.95] tracking-[-.055em] md:text-8xl">“{quote}”</p><p className="mt-8 max-w-2xl text-lg leading-8 text-black/55">{body}</p></div></div></section>}
+function EditorialQuote({label,quote,body}:{label:string;quote:string;body:string}){return <section className="lg-shell py-20 md:py-24"><div className="lg-quote-box grid gap-10 bg-[#edf4f6] md:grid-cols-[.35fr_1.65fr]"><div><p className="lg-kicker">{label}</p><div className="lg-blue-rule mt-5"/></div><div><p className="max-w-4xl text-5xl font-black leading-[.95] tracking-[-.055em] md:text-8xl text-[#0B4F6C]">“{quote}”</p><p className="mt-8 max-w-2xl text-lg leading-8 text-black/55">{body}</p></div></div></section>}
 
 function EditorialMoments({label,title,moments}:{label:string;title:string;moments:string[][]}){return <section className="border-t border-black"><div className="lg-shell py-20"><p className="lg-kicker">{label}</p><h2 className="mt-5 max-w-5xl text-5xl font-black leading-[.9] tracking-[-.055em] md:text-8xl">{title}</h2><div className="mt-16 grid border-t border-black md:grid-cols-3">{moments.map(([k,t,b])=><article key={k} className="border-b border-black py-8 md:border-b-0 md:border-r md:px-8 first:md:pl-0 last:md:border-r-0"><p className="text-[10px] font-black tracking-[.18em]">{k}</p><h3 className="mt-5 text-3xl font-black tracking-[-.04em]">{t}</h3><p className="mt-5 text-sm leading-7 text-black/55">{b}</p></article>)}</div></div></section>}
 

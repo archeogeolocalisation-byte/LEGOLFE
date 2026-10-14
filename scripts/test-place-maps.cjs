@@ -34,7 +34,7 @@ async function nodes(element){if(!element||typeof element!=='object')return [];i
   else{assert.ok(html.includes('google.com/maps/search/'));assert.equal(place.latitude,undefined);}
   const element=await Page({params:Promise.resolve({locale,id:place.id})});const children=await nodes(element);const blocks=children.filter(e=>e.type===Block);assert.equal(blocks.length,1);assert.equal(blocks[0].props.points.length,points.length);
   const community=children.filter(e=>typeof e.type==='function'&&e.type.name==='CommunitySection');assert.equal(community.length,1);const locationAt=children.indexOf(blocks[0]),communityAt=children.indexOf(community[0]);assert.ok(locationAt<communityAt);
-  const factsAt=children.findIndex(e=>e.type==='dl');if(factsAt>=0)assert.ok(locationAt<factsAt,place.id+' map before facts');
+  const factsAt=children.findIndex(e=>e.type==='dl');if(factsAt>=0){const isFactSheet=!!require('../data/placeFacts.ts').placeFacts[place.id];assert.ok(isFactSheet?factsAt<locationAt:locationAt<factsAt,place.id+' Pampelonne editorial ordering of maps and facts');}
   const preparationAt=children.findIndex(e=>typeof e.type==='function'&&e.type.name==='PlacePreparation');if(preparationAt>=0)assert.ok(locationAt<preparationAt&&preparationAt<communityAt);
   if(['caves-du-roy','citadelle-saint-tropez'].includes(place.id)){const practicalAt=children.findIndex(e=>e.type==='h2'&&e.props.children===require('../data/editorialFeatures.ts').editorialFeatures[place.id][locale].practicalTitle);assert.ok(locationAt<practicalAt);}
   if(place.id==='pampelonne'){
