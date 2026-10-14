@@ -9,13 +9,14 @@ export const dynamic="force-dynamic";
 export const metadata={robots:{index:false,follow:false}};
 export default async function MemberPage({params}:{params:Promise<{locale:string;id:string}>}){
   const {locale:raw,id}=await params;
-  const locale=raw==="fr"?"fr":"en",fr=locale==="fr";
+  if(raw!=="fr"&&raw!=="en")notFound();
+  const locale=raw,fr=locale==="fr";
   if(!memberIdPattern.test(id))notFound();
   const [member]=await getPublicMembers([id]);
   if(!member)notFound();
   const contributions=await getPublicContributions(id);
   return <main className="min-h-screen bg-white text-black">
-    <SiteHeader locale={locale} path="/explore"/>
+    <SiteHeader locale={locale} path={`/member/${id}`}/>
     <section className="lg-shell py-16 md:py-24">
       <p className="lg-kicker lg-accent">{fr?"COMMUNAUTÉ / MEMBRE":"COMMUNITY / MEMBER"}</p>
       <div className="mt-8 flex flex-wrap items-center gap-7 border-t border-black pt-8">
