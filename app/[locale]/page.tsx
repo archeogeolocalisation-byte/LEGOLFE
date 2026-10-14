@@ -12,6 +12,7 @@ import {isLocale} from "../../lib/i18n";
 import Image from "next/image";
 import {guides} from "../../data/guides";
 import GuideCards from "../../components/GuideCards";
+import GuideImage from "../../components/GuideImage";
 
 export default async function Home({params}:{params:Promise<{locale:string}>}){
  const {locale:l}=await params;if(!isLocale(l))notFound();const fr=l==="fr";
@@ -49,10 +50,39 @@ export default async function Home({params}:{params:Promise<{locale:string}>}){
    </Link>
   </section>
 
-  <section className="lg-shell py-16 md:py-28">
-    <div className="grid gap-8 md:grid-cols-[.38fr_1.62fr]">
-      <div><p className="lg-kicker">{fr?"COMMENCER PAR UNE ENVIE":"START WITH A FEELING"}</p><p className="mt-5 max-w-[250px] text-sm font-semibold leading-6 text-black/45">{fr?"Vous n'avez pas besoin de connaître le Golfe. Commencez par ce que vous voulez ressentir.":"You do not need to know the Golfe. Start with how you want it to feel."}</p></div>
-      <div className="border-t border-black">{intents.map((item)=><Link key={item.mood} href={`/${l}/explore?mood=${item.mood}`} className="group lg-link-accent grid gap-2 border-b border-black py-6 md:grid-cols-[1fr_auto] md:items-end md:py-8"><div><p className="text-[10px] font-black uppercase tracking-[.18em] text-black/40">{item.sub}</p><p className="mt-2 text-[12vw] font-black uppercase leading-[.78] tracking-[-.07em] md:text-[64px]">{item.label}</p></div><span className="text-3xl font-black transition-transform duration-200 group-hover:translate-x-2 md:text-5xl">↗</span></Link>)}</div>
+  <section className="lg-shell py-16 md:py-20">
+    <div className="grid gap-10 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] lg:gap-14">
+      <div className="min-w-0">
+        <div className="mb-8 lg:mb-6">
+          <p className="lg-kicker">{fr?"COMMENCER PAR UNE ENVIE":"START WITH A FEELING"}</p>
+          <p className="mt-4 max-w-sm text-sm font-semibold leading-6 text-black/45">{fr?"Vous n'avez pas besoin de connaître le Golfe. Commencez par ce que vous voulez ressentir.":"You do not need to know the Golfe. Start with how you want it to feel."}</p>
+        </div>
+        <nav aria-label={fr?"Explorer selon vos envies":"Explore by mood"} className="border-t border-black">
+          {intents.map(item=><Link key={item.mood} href={`/${l}/explore?mood=${item.mood}`} className="group lg-link-accent grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3 border-b border-black py-6 lg:py-[15px]">
+            <div className="min-w-0">
+              <p className="text-[10px] font-black uppercase tracking-[.13em] text-black/45">{item.sub}</p>
+              <p className="mt-2 text-[12vw] font-black uppercase leading-[.82] tracking-[-.065em] sm:text-[65px] lg:mt-1.5 lg:text-[clamp(1.65rem,2.7vw,2.75rem)]">{item.label}</p>
+            </div>
+            <span aria-hidden="true" className="text-3xl font-black transition-transform duration-200 group-hover:translate-x-1 lg:text-2xl">↗</span>
+          </Link>)}
+        </nav>
+      </div>
+      <div className="hidden min-w-0 lg:block">
+        <div className="mb-6 flex items-end justify-between gap-5 border-b border-black pb-4">
+          <div><p className="lg-kicker text-[var(--lg-blue)]">{fr?"LA SÉLECTION LE GOLFE":"THE LE GOLFE EDIT"}</p><h2 className="mt-3 text-3xl font-black uppercase leading-none tracking-[-.055em]">{fr?"TROIS IDÉES POUR PARTIR.":"THREE PLACES TO START."}</h2></div>
+          <Link href={`/${l}/guides`} className="shrink-0 text-[10px] font-black uppercase tracking-[.12em] underline underline-offset-4">{fr?"Tous les guides":"All guides"} ↗</Link>
+        </div>
+        <div className="grid gap-5">
+          {guides.slice(0,3).map((guide,i)=><article key={guide.slug} className="grid grid-cols-[minmax(0,0.45fr)_minmax(0,0.55fr)] gap-5 border-b border-black/20 pb-5">
+            <div className="min-w-0"><GuideImage guide={guide} locale={l}/></div>
+            <div className="min-w-0">
+              <p className="lg-kicker text-[var(--lg-blue)]">0{i+1} / {guide.category[l]}</p>
+              <h3 className="mt-3 text-[clamp(1.1rem,1.75vw,1.8rem)] font-black uppercase leading-[1.03] tracking-[-.045em]"><Link href={`/${l}/guides/${guide.slug}`} className="lg-link-accent">{guide.copy[l].title} {guide.copy[l].accent} <span aria-hidden="true">↗</span></Link></h3>
+              <p className="mt-3 line-clamp-3 text-xs leading-5 text-black/65">{guide.copy[l].description}</p>
+            </div>
+          </article>)}
+        </div>
+      </div>
     </div>
   </section>
 
@@ -69,7 +99,7 @@ export default async function Home({params}:{params:Promise<{locale:string}>}){
   <HomeUpdates locale={l} events={now} news={news} window={window}/>
   <section className="lg-shell py-16 md:py-24">
     <div className="mb-10 flex flex-wrap items-end justify-between gap-6 border-b border-black pb-6"><div><p className="lg-kicker text-[var(--lg-blue)]">LE GOLFE / GUIDES</p><h2 className="lg-title mt-4 text-[12vw] uppercase md:text-[72px]">{fr?"PRÉPAREZ LE TERRAIN.":"MAKE YOUR PLAN."}</h2></div><Link href={`/${l}/guides`} className="lg-btn">{fr?"Tous les guides":"All guides"} ↗</Link></div>
-    <GuideCards items={guides.slice(0,2)} locale={l}/>
+    <GuideCards items={guides.slice(3,5)} locale={l}/>
   </section>
   <SiteFooter locale={l}/>
  </main>
