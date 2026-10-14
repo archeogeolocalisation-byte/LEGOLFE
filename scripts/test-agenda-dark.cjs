@@ -16,9 +16,7 @@ assert.match(css,/\.eventGrid\{columns:1;column-gap:20px/);
 assert.match(css,/@media\(min-width:680px\)\{\.eventGrid\{columns:2\}\}/);
 assert.match(css,/@media\(min-width:1060px\)\{\.eventGrid\{columns:3\}\}/);
 assert.match(css,/\.eventCard\{[^}]*break-inside:avoid/);
-for(const className of ['featured','featureLarge','featureSmall','eventCard']){
- const rule=css.match(new RegExp('\\.'+className+'\\{([^}]*)\\}'));
- assert.ok(rule,'Missing '+className);
- assert.match(rule[1],/background:#(?:050505|111)/);
-}
+assert.match(css,/\.featured\{[^}]*background:#050505/);
+assert.match(css,/\.featureLarge,\.featureSmall\{[^}]*background:#111/);
+assert.match(css,/\.eventCard\{[^}]*background:#111/);
 console.log('Agenda dark layout, source section, responsive masonry and header/footer invariants passed.');
