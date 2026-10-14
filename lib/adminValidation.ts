@@ -6,8 +6,8 @@ export function isAdminId(id:string,allowlist:string|undefined){
 export function validateAdminChange(value:unknown){
   if(!value||typeof value!=='object'||Array.isArray(value))throw new RequestError('INVALID_CHANGE',400);
   const v=value as Record<string,unknown>;
-  if(v.kind==='user'&&typeof v.id==='string'&&/^[0-9a-f-]{36}$/i.test(v.id)&&['traveler','owner','concierge'].includes(String(v.accountType))){
-    return {kind:'user' as const,id:v.id,accountType:String(v.accountType)};
+  if(v.kind==='user'&&typeof v.id==='string'&&/^[0-9a-f-]{36}$/i.test(v.id)&&['user','moderator','admin'].includes(String(v.role))){
+    return {kind:'user' as const,id:v.id,role:String(v.role) as 'user'|'moderator'|'admin'};
   }
   if(v.kind!=='listing'||typeof v.id!=='string'||!/^property-[a-zA-Z0-9-]{1,100}$/.test(v.id)||!['draft','published','paused'].includes(String(v.status))||!['public','private','request'].includes(String(v.visibility)))throw new RequestError('INVALID_CHANGE',400);
   const fields:Record<string,string>={};
