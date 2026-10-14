@@ -1,5 +1,5 @@
 import type {LocalFeedItem} from "../lib/localRss";
-/** Official RSS headlines checked 14 October 2026. */
+/** Public RSS headlines checked 14 October 2026. Restricted sources are excluded. */
 export const localFeedSnapshot:LocalFeedItem[] = [
   {
     "id": "rss-golfe-interco-2a78f6160db546cc",

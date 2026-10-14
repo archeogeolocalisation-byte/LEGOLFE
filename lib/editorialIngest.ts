@@ -102,7 +102,7 @@ export async function fetchSourceCandidates(source:EditorialSource):Promise<Cand
   const html=Buffer.concat(chunks).toString("utf8");
   if(source.format==="rss"){
     const feed=localFeedSources.find(item=>item.key===source.key);if(!feed)return [];
-    return parseLocalRss(html,feed).map(item=>({content_type:"news",source_key:source.key,source_label:source.label,external_url:item.source,fingerprint:fp(source.key,item.source,item.title,item.date),title:item.title,title_fr:item.title,summary:null,summary_fr:null,start_date:item.date,location:item.location,category:"around",raw:{rss:true,published:item.date}}));
+    return parseLocalRss(html,feed).map(item=>({content_type:"news",source_key:source.key,source_label:source.label,external_url:item.source,fingerprint:fp(source.key,item.source,item.title,item.date),title:item.title,title_fr:item.title,summary:null,summary_fr:null,start_date:item.date,location:item.location,category:"around",raw:{rss:true,published:item.date,requiresReusePermission:feed.publicHeadlines===false}}));
   }
   const nodes=jsonLd(html);
   const out:Candidate[]=[];
