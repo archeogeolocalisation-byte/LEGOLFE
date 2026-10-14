@@ -29,7 +29,6 @@ export default function ProfileDetails({ userId, fr }: { userId: string; fr: boo
       if (session?.user.id !== userId) active.current = false;
     });
     void (async () => {
-      let loaded = false;
       try {
         const { data, error } = await supabase.auth.getUser();
         if (!active.current || data.user?.id !== userId) return;
@@ -39,7 +38,6 @@ export default function ProfileDetails({ userId, fr }: { userId: string; fr: boo
         setConnection(metadata.legolfe_connection === "local" || metadata.legolfe_connection === "visiting" ? metadata.legolfe_connection : "");
         const savedPath = ownPhoto(metadata.legolfe_avatar_path, userId);
         setPath(savedPath);
-        loaded = true;
         if (savedPath) {
           const result = await supabase.storage.from(bucket).createSignedUrl(savedPath, 3600);
           if (!active.current) return;
@@ -48,7 +46,7 @@ export default function ProfileDetails({ userId, fr }: { userId: string; fr: boo
         }
       } catch {
         if (active.current) setMessage(fr ? "Impossible de charger le profil. Rechargez la page pour réessayer." : "Unable to load your profile. Reload the page to try again.");
-      } finally { if (active.current && loaded) setLoading(false); }
+      } finally { if (active.current) setLoading(false); }
     })();
     return () => { active.current = false; listener.subscription.unsubscribe(); };
   }, [userId, fr]);
