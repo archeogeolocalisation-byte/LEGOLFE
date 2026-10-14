@@ -18,7 +18,12 @@ export async function GET(request:Request){
       if(!['pending','approved','rejected'].includes(status))throw new RequestError('INVALID_QUERY',400);
       const {data,error}=await db.from('community_posts').select('id,place_id,user_id,image_path,comment,type,status,created_at,moderated_at').eq('status',status).order('created_at',{ascending:false}).range((page-1)*50,page*50-1);
       if(error)throw error;
-      return response({posts:data||[],hasNext:(data||[]).length===50});
+      const posts=await Promise.all((data||[]).map(async post=>{
+        if(!post.image_path)return {...post,imageUrl:null};
+        const signed=await db.storage.from('community-photos').createSignedUrl(post.image_path,300);
+        return {...post,imageUrl:signed.error?null:signed.data.signedUrl};
+      }));
+      return response({posts,hasNext:posts.length===50});
     }
     if(role!=='admin')throw new RequestError('ADMIN_REQUIRED',403);
     if(section==='users'){
