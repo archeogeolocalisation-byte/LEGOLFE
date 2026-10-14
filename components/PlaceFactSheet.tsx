@@ -17,6 +17,7 @@ export default function PlaceFactSheet({id,locale}:{id:string;locale:Locale}) {
  const sheet=placeFacts[id],copy=sheet.copy[locale],photo=placeFactsMedia[id],experiencePhotos=newExperienceMedia[id]||[],experiencePhoto=experiencePhotos[0],place=places.find(p=>p.id===id)!;
  const fr=locale==='fr',signature=editorialSignatures[id]?.[locale]??fallbackSignature(place.name,locale);
  const chapters=copy.sections;
+ const visitAddress=newExperienceFacts[id]?.address??copy.facts.find(([label])=>/^(adresse|address)$/i.test(label.trim()))?.[1];
  return <main className="min-h-screen bg-white text-black">
   <SiteHeader light locale={locale} path={`/place/${id}`}/>
   <article className="lg-shell py-10 md:py-16">
@@ -55,9 +56,9 @@ export default function PlaceFactSheet({id,locale}:{id:string;locale:Locale}) {
   <section className="lg-shell py-20 md:py-24"><p className="lg-kicker text-[#0B4F6C]">{fr?'PRÉPARER LA VISITE':'PLAN YOUR VISIT'}</p>
    <h2 className="mt-5 max-w-5xl text-5xl font-black uppercase leading-[.92] tracking-[-.055em] md:text-[5rem]">{signature.close}</h2>
    <p className="mt-7 max-w-2xl text-lg leading-8 text-black/65">{copy.description}</p>
-   <dl className="mt-14 grid gap-7 border-y border-black py-8 sm:grid-cols-2 lg:grid-cols-4">{copy.facts.map(([label,value])=><div key={label}><dt className="lg-kicker text-[#0B4F6C]">{label}</dt><dd className="mt-3 text-sm font-semibold leading-7 text-black/70">{value}</dd></div>)}</dl>
+   <dl className="mt-14 grid gap-7 border-y border-black py-8 sm:grid-cols-2 lg:grid-cols-4">{copy.facts.filter(([label])=>!(visitAddress&&/^(adresse|address)$/i.test(label.trim()))).map(([label,value])=><div key={label}><dt className="lg-kicker text-[#0B4F6C]">{label}</dt><dd className="mt-3 text-sm font-semibold leading-7 text-black/70">{value}</dd></div>)}</dl>
 
-   <PlaceMapBlock name={placeName(place,locale)} location={place.location} points={placeMapPoints[id]??[]} address={newExperienceFacts[id]?.address} locale={locale}/>
+   <PlaceMapBlock name={placeName(place,locale)} location={place.location} points={placeMapPoints[id]??[]} address={visitAddress} locale={locale}/>
 
    <section id="questions" className="mt-12 scroll-mt-24"><h2 className="text-2xl font-black">{fr?'Questions fréquentes':'Common questions'}</h2><div className="mt-5">{copy.questions.map(([question,answer])=><details key={question} className="border-t border-black/20 py-5"><summary className="cursor-pointer font-bold leading-7">{question}</summary><p className="mt-3 max-w-3xl leading-7 text-black/75">{answer}</p></details>)}</div></section>
    <aside className="mt-10 border-t border-black/20 pt-7"><h2 className="text-xl font-black">{fr?'Sources et informations à jour':'Sources and current information'}</h2><p className="mt-3 text-sm leading-6 text-black/75">{fr?'Repères documentaires vérifiés le':'Reference information checked on'} <time dateTime={sheet.verified}>{new Intl.DateTimeFormat(fr?'fr-FR':'en-GB',{day:'numeric',month:'long',year:'numeric',timeZone:'UTC'}).format(new Date(sheet.verified+'T12:00:00Z'))}</time>. {fr?'Programme proposé par LE GOLFE ; vérifiez les horaires, accès et tarifs pour votre date auprès des sources officielles.':'Programme suggested by LE GOLFE; check opening times, access and prices for your date with the official sources.'}</p><ul className="mt-4 space-y-2">{sheet.sources.map(source=><li key={source.url}><a className="text-sm font-bold underline underline-offset-4" href={source.url} target="_blank" rel="noreferrer">{source.label} ↗</a></li>)}</ul></aside>
