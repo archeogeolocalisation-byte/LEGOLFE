@@ -78,11 +78,11 @@ function equal(a, b) { assert.deepEqual(a, b); checks++; }
   await submit(render(AuthForm, props));
   equal(calls.length, 0);
   passwords[1].props.onChange({ target: { value: "safe-test-password" } });
-  find(tree, n => typeof n.type === "function" && n.props.onChange && n.props.value === "traveler").props.onChange("concierge");
+  equal(nodes(render(AuthForm, props)).filter(n => n.props?.name === "legolfe-account-type").length, 0);
   await submit(render(AuthForm, props));
   equal(calls[0], ["signup", {
     email: "guest@example.invalid", password: "safe-test-password",
-    options: { emailRedirectTo: "https://www.legolfe.com/fr/account", data: { legolfe_account_type: "concierge", legolfe_display_name: "Guest" } },
+    options: { emailRedirectTo: "https://www.legolfe.com/fr/account", data: { legolfe_display_name: "Guest" } },
   }]);
   equal(authenticated, 1); // confirmation required: no session yet
   equal(nodes(render(AuthForm, props)).filter(n => n.type === "input" && n.props.type === "password").map(n => n.props.value), ["", ""]);
