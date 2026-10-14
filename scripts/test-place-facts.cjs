@@ -51,7 +51,7 @@ const licenses=JSON.parse(fs.readFileSync(path.join(__dirname,'../public/media/p
   for(const locale of ['fr','en']){
    const copy=fact.copy[locale],html=renderToStaticMarkup(Sheet({id,locale}));
    assert.ok(copy.intro.length>180);assert.ok(copy.sections.length>=4);assert.ok(copy.questions.length>=3);
-   assert.ok(html.includes(fact.address));assert.ok(html.includes('google.com/maps/search/'));assert.ok(html.includes(media[0].licenseUrl));
+   assert.ok(html.includes(fact.address));assert.ok(html.includes('google.com/maps/dir/'));assert.ok(html.includes('output=embed'));assert.equal((html.match(/<address/g)||[]).length,1);assert.equal(html.includes('ADRESSE DE VISITE'),false);assert.ok(html.includes(media[0].licenseUrl));
    assert.match(html,/datetime="2026-10-14"/i);
    for(const source of fact.sources)assert.ok(html.includes(source.url));
    const metadata=await Page.generateMetadata({params:Promise.resolve({locale,id})});
