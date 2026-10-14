@@ -196,7 +196,7 @@ export default function CommunitySection({ placeId, locale }: { placeId: string;
 
               return (
                 <figure key={post.id} className={`${index === 0 ? "col-span-2 row-span-2" : ""} group overflow-hidden bg-neutral-100`}>
-                  <CommunityPhoto path={post.image_path!} alt={post.comment || "Community"} className="h-full min-h-52 w-full object-cover transition duration-500 group-hover:scale-[1.02]" />
+                  <Link href={`/${locale}/member/${post.user_id}`} aria-label={fr?`Voir le profil de ${author(post)}`:`View ${author(post)} profile`} className="block overflow-hidden"><CommunityPhoto path={post.image_path!} alt={post.comment || (fr?"Photo partagée":"Shared photo")} className="h-full min-h-52 w-full object-cover transition duration-500 group-hover:scale-[1.02]" /></Link>
                   <figcaption className="bg-white px-3 py-3"><Link href={`/${locale}/member/${post.user_id}`} className="inline-flex items-center gap-2 text-xs font-bold hover:text-[var(--lg-blue)]">{profiles[post.user_id]?.avatarUrl ? <img src={profiles[post.user_id].avatarUrl!} alt="" className="h-8 w-8 rounded-full object-cover"/> : <span aria-hidden="true" className="flex h-8 w-8 items-center justify-center rounded-full bg-[#0B4F6C] text-[10px] text-white">LG</span>}{author(post)} ↗</Link></figcaption>
                 </figure>
               );
