@@ -11,12 +11,13 @@ export async function requireStaff(request:Request){
   const auth=createClient(url,key,{auth:{persistSession:false,autoRefreshToken:false}});
   const {data,error}=await auth.auth.getUser(token);
   if(error||!data.user)throw new RequestError('SIGN_IN_REQUIRED',401);
-  const secret=process.env.SUPABASE_SECRET_KEY||process.env.SUPABASE_SERVICE_ROLE_KEY;
-  if(!secret)throw new RequestError('ADMIN_NOT_CONFIGURED',503);
-  const db=createClient(url,secret,{auth:{persistSession:false,autoRefreshToken:false}});
   const actorId=data.user.id;
   // Never trust user_metadata; only server-controlled app_metadata and the bootstrap allowlist.
   const isAdmin=isAdminId(actorId,process.env.LEGOLFE_ADMIN_USER_IDS)||data.user.app_metadata?.legolfe_role==='admin';
+  const secret=process.env.SUPABASE_SECRET_KEY||process.env.SUPABASE_SERVICE_ROLE_KEY;
+  if(!isAdmin&&!secret)throw new RequestError('ADMIN_REQUIRED',403);
+  if(!secret)throw new RequestError('ADMIN_NOT_CONFIGURED',503);
+  const db=createClient(url,secret,{auth:{persistSession:false,autoRefreshToken:false}});
   if(isAdmin)return {db,actorId,role:'admin' as const};
   const {data:member,error:membershipError}=await db.from('community_moderators').select('user_id').eq('user_id',actorId).maybeSingle();
   if(membershipError)throw new RequestError('ADMIN_UNAVAILABLE',503);
