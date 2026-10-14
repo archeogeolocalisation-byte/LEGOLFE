@@ -11,8 +11,7 @@ import AccountAuthForm from "../../../components/AccountAuthForm";
 import AccountPasswordForm from "../../../components/AccountPasswordForm";
 import AdminAccessLink from "../../../components/AdminAccessLink";
 import ProfileDetails from "../../../components/ProfileDetails";
-import AccountTypeFields from "../../../components/AccountTypeFields";
-import { accountType, accountTypeLabel, type AccountType } from "../../../lib/accountTypes";
+import ProfileGallery from "../../../components/ProfileGallery";
 
 export default function AccountPage() {
   const params = useParams<{ locale: string }>();
@@ -26,7 +25,6 @@ export default function AccountPage() {
   const [saving, setSaving] = useState(false);
   const [moderator, setModerator] = useState(false);
   const [ready, setReady] = useState(false);
-  const [profileType, setProfileType] = useState<AccountType>("traveler");
   const [showPassword, setShowPassword] = useState(false);
   const [recovery, setRecovery] = useState(false);
   const activeUser = useRef<string | null>(null);
@@ -50,7 +48,6 @@ export default function AccountPage() {
       if(ticket!==generation.current)return;
       const savedName = user.user_metadata?.legolfe_display_name;
       setDisplayName(profile?.display_name ?? (typeof savedName === "string" ? savedName.slice(0,40) : ""));
-      setProfileType(accountType(user.user_metadata?.legolfe_account_type) ?? "traveler");
       if(ticket!==generation.current)return;
       setModerator(Boolean(isModerator));
     } else {
@@ -96,9 +93,9 @@ export default function AccountPage() {
       });
       if(activeUser.current !== actor)return;
       if(profileError) {setMessage(fr ? "Impossible d'enregistrer le nom public. Réessayez." : "Unable to save your public name. Please try again.");return;}
-      const { error } = await supabase.auth.updateUser({data:{legolfe_account_type:profileType,legolfe_display_name:cleanName}});
+      const { error } = await supabase.auth.updateUser({data:{legolfe_display_name:cleanName}});
       if(activeUser.current !== actor)return;
-      setMessage(error ? (fr ? "Nom enregistré, mais le type de profil n'a pas pu être mis à jour. Réessayez." : "Name saved, but profile type could not be updated. Please try again.") : (fr ? "Profil enregistré." : "Profile saved."));
+      setMessage(error ? (fr ? "Nom enregistré, mais la synchronisation du compte a échoué. Réessayez." : "Name saved, but account sync failed. Please try again.") : (fr ? "Profil enregistré." : "Profile saved."));
     } catch { if(activeUser.current === actor)setMessage(fr ? "Service indisponible. Réessayez." : "Service unavailable. Please try again."); }
     finally {setSaving(false);}
   }
@@ -117,8 +114,8 @@ export default function AccountPage() {
           <div className="mt-12 grid gap-10 border-t border-black pt-8 md:grid-cols-2">
             <p className="max-w-lg text-xl font-bold leading-8">
               {fr
-                ? "Créez votre compte avec un email et un mot de passe. Voyageur, propriétaire ou conciergerie : choisissez le profil qui vous correspond."
-                : "Create your account with an email and password. Choose the profile that fits you: traveler, owner or concierge."}
+                ? "Rejoignez la communauté du Golfe de Saint-Tropez. Un compte pour découvrir, enregistrer vos adresses préférées et partager vos expériences."
+                : "Join the Golfe de Saint-Tropez community. One account to discover places, save favorites and share experiences."}
             </p>
             <AccountAuthForm locale={locale} onAuthenticated={() => {void hydrate();}} />
           </div>
@@ -138,11 +135,10 @@ export default function AccountPage() {
           <div>
             <p className="lg-kicker">{fr ? "COMPTE" : "ACCOUNT"}</p>
             <p className="mt-5 break-all text-xl font-black">{userEmail}</p>
-            <p className="mt-3 text-sm font-bold">{accountTypeLabel(profileType,fr)}</p>
             <div className="mt-6 flex flex-wrap gap-3">
               <AdminAccessLink locale={locale}/>
               <Link className="lg-btn" href={"/"+locale+"/saved"}>{fr ? "Mon séjour" : "My stay"} ↗</Link>
-              {profileType !== "traveler" && <Link className="lg-btn lg-btn--dark" href={"/"+locale+"/host"}>{fr ? "Mes annonces" : "My listings / Host"} ↗</Link>}
+              <Link className="lg-btn lg-btn--dark" href={"/"+locale+"/host"}>{fr ? "Mes annonces" : "My listings / Host"} ↗</Link>
             </div>
             <button type="button" onClick={() => setShowPassword(value => !value)} className="mt-7 block text-sm font-bold underline underline-offset-4">{fr ? "Définir / modifier mon mot de passe" : "Set / change my password"}</button>
             {showPassword && <AccountPasswordForm key={userId} userId={userId} fr={fr} recovery={recovery} onSaved={() => {setShowPassword(false);setRecovery(false);setMessage(fr ? "Mot de passe enregistré." : "Password saved.");}} />}
@@ -158,6 +154,7 @@ export default function AccountPage() {
           </div>
 
           <div>
+            <ProfileGallery key={"gallery-"+userId} userId={userId} fr={fr} />
             <ProfileDetails key={userId} userId={userId} fr={fr} />
           <form onSubmit={saveProfile}>
             <p className="lg-kicker">{fr ? "NOM PUBLIC" : "PUBLIC NAME"}</p>
@@ -176,8 +173,6 @@ export default function AccountPage() {
               onChange={(event) => setDisplayName(event.target.value)}
               className="mt-7 h-14 w-full border-b border-black bg-transparent text-3xl font-black tracking-[-.04em] outline-none"
             />
-            <AccountTypeFields value={profileType} onChange={setProfileType} fr={fr} />
-            <p className="mt-3 text-sm text-black/55">{fr ? "Votre type de profil personnalise votre espace. Vous pouvez le modifier ici." : "Your profile type personalizes your space. You can change it here."}</p>
             <div className="mt-6 flex flex-wrap gap-3">
               <button disabled={saving} className="lg-btn lg-btn--dark disabled:opacity-40">{saving ? (fr ? "Enregistrement…" : "Saving…") : fr ? "Enregistrer" : "Save"}</button>
               {next && <Link className="lg-btn" href={`/${locale}${next}`}>{fr ? "Retour à la fiche" : "Back to place"} ↗</Link>}

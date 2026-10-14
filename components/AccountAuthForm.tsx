@@ -1,8 +1,7 @@
 "use client";
 import { useState, type FormEvent } from "react";
 import { supabase } from "../lib/supabase";
-import { matchingPasswords, type AccountType } from "../lib/accountTypes";
-import AccountTypeFields from "./AccountTypeFields";
+import { matchingPasswords } from "../lib/accountTypes";
 
 type Mode = "signin" | "signup" | "reset";
 
@@ -15,7 +14,6 @@ export default function AccountAuthForm({ locale, onAuthenticated }: {
   const [password, setPassword] = useState("");
   const [confirmation, setConfirmation] = useState("");
   const [name, setName] = useState("");
-  const [type, setType] = useState<AccountType>("traveler");
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState("");
   function switchMode(value: Mode) {
@@ -41,7 +39,7 @@ export default function AccountAuthForm({ locale, onAuthenticated }: {
       } else if (mode === "signup") {
         const { data, error } = await supabase.auth.signUp({
           email: email.trim(), password,
-          options: { emailRedirectTo: redirectTo, data: { legolfe_account_type: type, legolfe_display_name: name.trim() } },
+          options: { emailRedirectTo: redirectTo, data: { legolfe_display_name: name.trim() } },
         });
         if (error) {
           setMessage(error.code === "weak_password" ? (fr ? "Ce mot de passe ne respecte pas les règles de sécurité. Choisissez-en un autre." : "This password does not meet the security requirements. Choose another.") : (fr ? "Inscription impossible. Si vous avez déjà un compte, connectez-vous ou utilisez « Mot de passe oublié »." : "Unable to sign up. If you already have an account, sign in or use Forgot password."));
@@ -80,7 +78,6 @@ export default function AccountAuthForm({ locale, onAuthenticated }: {
         <label className="mt-6 block text-sm font-bold">{fr ? "Confirmer le mot de passe" : "Confirm password"}
           <input required type="password" autoComplete="new-password" minLength={12} maxLength={128} value={confirmation} onChange={event => setConfirmation(event.target.value)} className="mt-2 h-12 w-full border-b border-black bg-transparent text-lg outline-none" />
         </label>
-        <AccountTypeFields value={type} onChange={setType} fr={fr} />
       </>}
       <button disabled={busy} className="lg-btn lg-btn--dark mt-6 disabled:opacity-40">
         {busy ? (fr ? "Veuillez patienter…" : "Please wait…") : mode === "signup" ? (fr ? "Créer mon compte" : "Create my account") : mode === "reset" ? (fr ? "Envoyer l'email" : "Send email") : (fr ? "Se connecter" : "Sign in")} ↗
