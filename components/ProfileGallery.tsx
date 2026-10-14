@@ -25,7 +25,7 @@ export default function ProfileGallery({ userId, fr }: { userId: string; fr: boo
   const active = useRef(true);
   const busy = useRef(false);
   const itemsRef = useRef<GalleryItem[]>([]);
-  itemsRef.current = items;
+  useEffect(() => { itemsRef.current = items; }, [items]);
 
   useEffect(() => {
     active.current = true;
