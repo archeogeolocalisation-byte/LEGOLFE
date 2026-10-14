@@ -16,9 +16,9 @@ export default async function WhatsOn({ params }: { params: Promise<{ locale: st
   const merged = await getPublicEvents();
 
   return (
-    <main className="min-h-screen bg-white text-black">
-      <SiteHeader locale={locale} path="/whats-on" />
-      <AgendaClient locale={locale} events={merged} initialDay={parisIsoDay()} /><SiteFooter locale={locale}/>
+    <main className="min-h-screen bg-[#050505] text-[#f5f5f2]">
+      <SiteHeader light={false} locale={locale} path="/whats-on" />
+      <AgendaClient locale={locale} events={merged} initialDay={parisIsoDay()} /><SiteFooter locale={locale} dark/>
     </main>
   );
 }
