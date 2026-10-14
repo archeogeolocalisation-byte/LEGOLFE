@@ -110,8 +110,8 @@ export default function HostDesk({locale}:{locale:Locale}) {
       setEditingProperty(null);setPreviewProperty(null);setCalendarProperty(null);setView('today');
     }
     let changed=false;
-    void supabase.auth.getUser().then(({data})=>{if(!changed)apply(data.user?.id||null,data.user?.user_metadata?.legolfe_account_type);});
-    const {data:{subscription}}=supabase.auth.onAuthStateChange((_event,session)=>{changed=true;apply(session?.user.id||null,session?.user.user_metadata?.legolfe_account_type);});
+    void supabase.auth.getUser().then(({data})=>{if(!changed)apply(data.user?.id||null,data.user?.user_metadata?.legolfe_host_kind ?? data.user?.user_metadata?.legolfe_account_type);});
+    const {data:{subscription}}=supabase.auth.onAuthStateChange((_event,session)=>{changed=true;apply(session?.user.id||null,session?.user.user_metadata?.legolfe_host_kind ?? session?.user.user_metadata?.legolfe_account_type);});
     return()=>{active=false;subscription.unsubscribe();};
   },[]);
   useEffect(()=>{
@@ -160,7 +160,7 @@ export default function HostDesk({locale}:{locale:Locale}) {
     const {data:{user}}=await supabase.auth.getUser();
     if(user?.id!==actor||scope.current!==actor)return;
     // Preference only: does not change the permission to publish or manage a house.
-    const {error}=await supabase.auth.updateUser({data:{legolfe_account_type:next}});
+    const {error}=await supabase.auth.updateUser({data:{legolfe_host_kind:next}});
     if(error&&scope.current===actor)setStorageError(fr?"Votre choix local est conservé, mais le profil n'a pas pu être synchronisé.":"Your local choice is saved, but the profile could not be synchronized.");
   }
   function openCreateProperty(){ setEditingProperty(null); setShowProperty(true); }

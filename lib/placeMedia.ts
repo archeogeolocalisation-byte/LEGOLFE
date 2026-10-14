@@ -197,5 +197,6 @@ export const siteMedia = {
 };
 
 export function mediaForPlace(id: string): PlaceMedia | undefined {
-  return photosForPlace(id)[0];
+  // Prefer the actual venue; otherwise use an explicitly labelled area view.
+  return photosForPlace(id)[0] ?? placeMedia[id] ?? contextualMedia[id];
 }

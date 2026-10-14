@@ -106,6 +106,7 @@ export default function ProfileDetails({ userId, fr }: { userId: string; fr: boo
   return <form onSubmit={save} className="mb-10 border-b border-black/15 pb-10">
     <fieldset disabled={loading || saving}>
       <legend className="lg-kicker">{fr ? "PHOTO & PRÉSENTATION" : "PHOTO & INTRODUCTION"}</legend>
+      <p className="mt-3 text-xs leading-5 text-black/55">{fr ? "La photo, votre présentation et votre lien avec le Golfe seront visibles sur votre profil public. Votre e-mail ne sera pas affiché." : "Your photo, introduction and connection to the Golfe appear on your public profile. Your email stays private."}</p>
       <div className="mt-5 flex flex-wrap items-center gap-5">
         <div className="flex h-24 w-24 shrink-0 items-center justify-center overflow-hidden rounded-full bg-[#0B4F6C] text-3xl font-black text-white">
           {preview ? <Image unoptimized width={96} height={96} src={preview} alt={fr ? "Votre photo de profil" : "Your profile photo"} className="h-full w-full object-cover" /> : <span aria-hidden="true">LG</span>}

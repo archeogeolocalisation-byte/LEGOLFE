@@ -135,7 +135,7 @@ export default function ProfileGallery({ userId, fr }: { userId: string; fr: boo
 
   return <section className="mb-10 border-b border-black/15 pb-10" aria-label={fr ? "Photos de couverture du profil" : "Profile cover photos"}>
     <p className="lg-kicker">{fr ? "MON GOLFE EN IMAGES" : "MY GOLFE IN PICTURES"}</p>
-    <p className="mt-3 text-sm text-black/60">{fr ? "Ajoutez jusqu’à 3 photos pour personnaliser votre profil. Sans photo, aucun slider ne s’affiche." : "Add up to 3 photos to personalize your profile. Without photos, no slider appears."}</p>
+    <p className="mt-3 text-sm text-black/60">{fr ? "Ajoutez jusqu’à 3 photos visibles sur votre profil public. Sans photo, aucun slider ne s’affiche." : "Add up to 3 photos visible on your public profile. Without photos, no slider appears."}</p>
     {items.length > 0 && <div className="relative mt-6 overflow-hidden bg-neutral-100">
       <div className="relative aspect-[16/9] w-full">
         <Image unoptimized fill sizes="(max-width: 768px) 100vw, 700px" src={items[Math.min(index, items.length - 1)].url} alt={fr ? "Photo " + (Math.min(index, items.length - 1) + 1) + " du profil" : "Profile photo " + (Math.min(index, items.length - 1) + 1)} className="object-cover" />

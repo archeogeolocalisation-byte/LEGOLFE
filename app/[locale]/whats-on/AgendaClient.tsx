@@ -83,8 +83,8 @@ export default function AgendaClient({ locale, events, initialDay }: Props) {
         </div>
       </section>
 
-      <section className="sticky top-0 z-30 border-b border-black/15 bg-white/95 backdrop-blur" aria-label={fr ? "Filtrer l’agenda" : "Filter the agenda"}>
-        <div className="mx-auto flex max-w-7xl flex-wrap items-center gap-4 px-6 py-4 md:px-10">
+      <section className="relative z-30 border-b border-black/15 bg-white" aria-label={fr ? "Filtrer l’agenda" : "Filter the agenda"}>
+        <div className="mx-auto max-w-7xl px-6 py-4 md:px-10">
           <div className="flex max-w-full gap-2 overflow-x-auto pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
             {rangeButtons.map((item) => {
               const selected = !month && range === item.key;
@@ -93,7 +93,7 @@ export default function AgendaClient({ locale, events, initialDay }: Props) {
               </button>;
             })}
           </div>
-          <div className="flex items-center gap-3">
+          <div className="mt-3 flex items-center gap-3">
             <label htmlFor="agenda-month" className="text-[10px] font-black uppercase tracking-[.13em]">{fr ? "Choisir un mois" : "Choose a month"}</label>
             <select id="agenda-month" value={month} onChange={event => setMonth(event.target.value)} className="max-w-full border border-black/20 bg-white px-3 py-2 text-xs font-bold">
               <option value="">{fr ? "Période rapide" : "Quick dates"}</option>
@@ -101,6 +101,24 @@ export default function AgendaClient({ locale, events, initialDay }: Props) {
             </select>
           </div>
         </div>
+        <div className="mx-auto grid max-w-7xl gap-5 border-t border-black/10 px-6 pt-4 md:px-10 lg:grid-cols-[1fr_auto] lg:items-end">
+                  <div>
+                    <p className="text-[10px] font-black uppercase tracking-[.22em] text-black/35">{fr ? "AFFINER" : "REFINE"}</p>
+                    <div className="mt-3 flex max-w-full flex-wrap gap-2">
+                      <button aria-pressed={category === "all"} onClick={() => setCategory("all")} className={`px-3 py-2 text-[10px] font-black uppercase tracking-[.14em] ${category === "all" ? "bg-[#0B4F6C] text-white" : "border border-[#c5d4d7] text-[#0B4F6C]"}`}>{fr ? "Tout" : "All"}</button>
+                      {(Object.keys(categoryLabels) as EventCategory[]).map((key) => <button key={key} aria-pressed={category === key} onClick={() => setCategory(key)} className={`px-3 py-2 text-[10px] font-black uppercase tracking-[.14em] ${category === key ? "bg-[#0B4F6C] text-white" : "border border-[#c5d4d7] text-[#0B4F6C]"}`}>{fr ? categoryLabels[key].fr : categoryLabels[key].en}</button>)}
+                    </div>
+                  </div>
+                  <div>
+                    <label htmlFor="agenda-location" className="block text-[10px] font-black uppercase tracking-[.18em] text-black/35">{fr ? "OÙ ?" : "WHERE?"}</label>
+                    <select id="agenda-location" value={location} onChange={(e) => setLocation(e.target.value)} className="mt-2 min-w-52 border-0 border-b-2 border-[#0B4F6C] bg-white px-0 py-2 text-sm font-bold focus-visible:outline-2 focus-visible:outline-[#0B4F6C]">
+                      <option value="all">{fr ? "Tout le Golfe" : "Across the Golfe"}</option>
+                      {locations.map((loc) => <option key={loc} value={loc}>{loc}</option>)}
+                    </select>
+                  </div>
+                </div>
+        
+        
       </section>
 
       {featured.length>0&&<section className={styles.featured} aria-label={fr?"À l’affiche":"Featured events"}>
@@ -113,23 +131,6 @@ export default function AgendaClient({ locale, events, initialDay }: Props) {
       </section>}
 
       <section className="mx-auto max-w-7xl px-6 py-10 md:px-10 md:py-14">
-        <div className="grid gap-8 border-b border-black/15 pb-10 lg:grid-cols-[1fr_auto] lg:items-end">
-          <div>
-            <p className="text-[10px] font-black uppercase tracking-[.22em] text-black/35">{fr ? "AFFINER" : "REFINE"}</p>
-            <div className="mt-4 flex flex-wrap gap-2">
-              <button aria-pressed={category === "all"} onClick={() => setCategory("all")} className={`px-3 py-2 text-[10px] font-black uppercase tracking-[.14em] ${category === "all" ? "bg-[#0B4F6C] text-white" : "border border-[#c5d4d7] text-[#0B4F6C]"}`}>{fr ? "Tout" : "All"}</button>
-              {(Object.keys(categoryLabels) as EventCategory[]).map((key) => <button key={key} aria-pressed={category === key} onClick={() => setCategory(key)} className={`px-3 py-2 text-[10px] font-black uppercase tracking-[.14em] ${category === key ? "bg-[#0B4F6C] text-white" : "border border-[#c5d4d7] text-[#0B4F6C]"}`}>{fr ? categoryLabels[key].fr : categoryLabels[key].en}</button>)}
-            </div>
-          </div>
-          <div>
-            <label htmlFor="agenda-location" className="block text-[10px] font-black uppercase tracking-[.18em] text-black/35">{fr ? "OÙ ?" : "WHERE?"}</label>
-            <select id="agenda-location" value={location} onChange={(e) => setLocation(e.target.value)} className="mt-3 min-w-52 border-0 border-b-2 border-[#0B4F6C] bg-white px-0 py-2 text-sm font-bold focus-visible:outline-2 focus-visible:outline-[#0B4F6C]">
-              <option value="all">{fr ? "Tout le Golfe" : "Across the Golfe"}</option>
-              {locations.map((loc) => <option key={loc} value={loc}>{loc}</option>)}
-            </select>
-          </div>
-        </div>
-
         <div className="mt-12 flex items-end justify-between gap-5">
           <div>
             <p className="text-[10px] font-black uppercase tracking-[.22em]" style={{ color: accent }}>{periodText}</p>
