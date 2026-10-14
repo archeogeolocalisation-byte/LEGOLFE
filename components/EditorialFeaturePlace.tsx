@@ -19,7 +19,7 @@ export default function EditorialFeaturePlace({ feature, locale }: { feature: Ed
     <SiteHeader locale={locale} path={`/place/${feature.id}`} />
     <section className="lg-shell pb-12 pt-10 md:pt-16">
       <p className="lg-kicker">{c.kicker}</p>
-      <h1 className="mt-5 text-[14vw] font-black leading-[.78] tracking-[-.075em] md:text-[138px]">{c.title}</h1>
+      <h1 className="mt-5 text-[14vw] font-black leading-[.78] tracking-[-.075em] md:text-[138px] text-[#0B4F6C]">{c.title}</h1>
       <div className="mt-8 grid gap-8 border-t border-black pt-6 md:grid-cols-2">
         <h2 className="text-4xl font-black leading-[.9] tracking-[-.05em] md:text-6xl">{c.sub}</h2>
         <p className="max-w-xl text-lg font-bold leading-7 text-black/55">{c.intro}</p>
@@ -28,7 +28,7 @@ export default function EditorialFeaturePlace({ feature, locale }: { feature: Ed
 
     {photos.length>0 ? <PlaceMediaGallery name={place.name} photos={photos} locale={locale} processed={citadelle}/> : <section className="lg-shell"><div className="mobile-edge flex min-h-[420px] items-end bg-[#071D2B] p-8 text-white md:mx-0 md:min-h-[560px] md:p-14"><p className="max-w-full break-words text-[clamp(2.5rem,9vw,8rem)] font-black uppercase leading-[.88] tracking-[-.06em] [overflow-wrap:anywhere]">{place.name}</p></div></section>}
 
-    <section className="lg-shell py-20 md:py-24"><div className="lg-quote-box grid gap-10 md:grid-cols-[.35fr_1.65fr]"><div><p className="lg-kicker">{c.quoteLabel}</p><div className="lg-blue-rule mt-5"/></div><div><p className="max-w-4xl text-5xl font-black leading-[.95] tracking-[-.055em] md:text-8xl">“{c.quote}”</p><p className="mt-8 max-w-2xl text-lg leading-8 text-black/55">{c.quoteBody}</p></div></div></section>
+    <section className="lg-shell py-20 md:py-24"><div className="lg-quote-box grid gap-10 bg-[#edf4f6] md:grid-cols-[.35fr_1.65fr]"><div><p className="lg-kicker">{c.quoteLabel}</p><div className="lg-blue-rule mt-5"/></div><div><p className="max-w-4xl text-5xl font-black leading-[.95] tracking-[-.055em] md:text-8xl text-[#0B4F6C]">“{c.quote}”</p><p className="mt-8 max-w-2xl text-lg leading-8 text-black/55">{c.quoteBody}</p></div></div></section>
 
     <section className="border-t border-black"><div className="lg-shell py-20"><p className="lg-kicker">{c.rhythmLabel}</p><h2 className="mt-5 max-w-5xl text-5xl font-black leading-[.9] tracking-[-.055em] md:text-8xl">{c.rhythmTitle}</h2><div className="mt-16 grid border-t border-black md:grid-cols-3">{c.moments.map(([k,t,b])=><article key={k} className="border-b border-black py-8 md:border-b-0 md:border-r md:px-8 first:md:pl-0 last:md:border-r-0"><p className="text-[10px] font-black tracking-[.18em] text-[#0B4F6C]">{k}</p><h3 className="mt-5 text-3xl font-black tracking-[-.04em]">{t}</h3><p className="mt-5 text-sm leading-7 text-black/55">{b}</p></article>)}</div></div></section>
 
