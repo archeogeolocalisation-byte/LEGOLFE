@@ -25,7 +25,7 @@ export default function PlaceFactSheet({id,locale}:{id:string;locale:Locale}) {
    <figure className="mt-9 max-w-5xl">
     {photo ? <Image src={photo.src} alt={(photo||experiencePhoto)?.caption[locale]} width={photo.width} height={photo.height} sizes="(max-width: 768px) 100vw, 1000px" preload className="aspect-[3/2] w-full object-cover"/> : experiencePhoto ? <img src={experiencePhoto.src} alt={experiencePhoto.alt} className="aspect-[3/2] w-full object-cover" loading="eager"/> : null}
     <figcaption className="mt-3 text-xs leading-6 text-black/70">
-     <span className="block font-bold">{photo.caption[locale]}</span>
+     <span className="block font-bold">{(photo||experiencePhoto)?.caption[locale]}</span>
      <a className="underline" href={(photo||experiencePhoto)?.source} target="_blank" rel="noreferrer">{(photo||experiencePhoto)?.credit}</a> · <a className="underline" href={(photo||experiencePhoto)?.licenseUrl} target="_blank" rel="noreferrer">{(photo||experiencePhoto)?.license}</a> · {fr?'Redimensionnement, conversion WebP et recadrage d’affichage ; image adaptée sous la même licence.':'Resized, converted to WebP and display-cropped; adapted image under the same licence.'}
     </figcaption>
    </figure>
