@@ -44,6 +44,141 @@ export type Place = {
 // Facts below were desk-checked against official/tourism sources in September 2026;
 // "bestFor", "notIdealFor" and tags are LE GOLFE editorial classifications.
 export const places: Place[] = [
+{
+  "id": "domaine-de-la-croix",
+  "name": "Domaine de La Croix",
+  "category": "do",
+  "location": "La Croix-Valmer",
+  "description": "A long-established Provence winery with tastings and bookable cellar visits, a practical introduction to the Croix-Valmer wine-growing landscape.",
+  "bestFor": [
+    "Provence wine tasting",
+    "Bookable guided cellar tours",
+    "Vineyard landscapes"
+  ],
+  "notIdealFor": [
+    "Unbooked guided visits outside the main season",
+    "Visitors expecting a full restaurant"
+  ],
+  "tags": [
+    "vineyard",
+    "wine",
+    "tasting",
+    "provence",
+    "local",
+    "la-croix-valmer"
+  ],
+  "goodToKnow": [
+    "The wine shop is distinct from a bookable cellar visit.",
+    "Confirm appointment slots and tasting selection before travelling."
+  ],
+  "verified": false,
+  "featured": true,
+  "website": "https://www.domainedelacroix.com/",
+  "phone": "+33 4 94 17 47 65",
+  "source": "https://www.domainedelacroix.com/",
+  "lastVerifiedAt": "2026-10-14"
+},
+{
+  "id": "chateau-des-marres",
+  "name": "Château des Marres",
+  "category": "do",
+  "location": "Ramatuelle",
+  "description": "A family-run organic Provence wine estate on the beach road, offering reserved cellar tours, tasting sessions and a seasonal wine bar.",
+  "bestFor": [
+    "Wine tasting",
+    "Booked cellar visits",
+    "Provencal vineyard experience"
+  ],
+  "notIdealFor": [
+    "Walk-in guided tours without reservation",
+    "Visitors expecting a year-round wine bar"
+  ],
+  "tags": [
+    "vineyard",
+    "organic",
+    "wine",
+    "tasting",
+    "provence",
+    "ramatuelle"
+  ],
+  "goodToKnow": [
+    "Guided winery visits are normally bookable in the main season with a minimum party size.",
+    "Tour prices and seasonal wine-bar dates should be reconfirmed."
+  ],
+  "verified": false,
+  "featured": true,
+  "website": "https://www.chateaudesmarres.com/",
+  "phone": "+33 4 94 97 22 61",
+  "source": "https://www.ramatuelle-tourisme.com/fr/loisirs/chateau-des-marres-4600982/",
+  "lastVerifiedAt": "2026-10-14"
+},
+{
+  "id": "base-nautique-cogolin",
+  "name": "Base nautique municipale de Cogolin",
+  "category": "sea",
+  "location": "Cogolin · Les Marines",
+  "description": "Municipal sailing and watersports on Marines beach: kayaking, paddleboarding, dinghy sailing and guided lessons for families and beginners.",
+  "bestFor": [
+    "Paddleboarding",
+    "Kayak hire",
+    "Family sailing classes"
+  ],
+  "notIdealFor": [
+    "Visitors expecting guaranteed sessions without booking",
+    "Unsuitable wind or sea conditions"
+  ],
+  "tags": [
+    "kayak",
+    "paddle",
+    "sailing",
+    "sea",
+    "family",
+    "cogolin"
+  ],
+  "goodToKnow": [
+    "The watersports base is on Marines beach, not in Cogolin old town.",
+    "Availability depends on equipment, enrolment and weather."
+  ],
+  "verified": false,
+  "featured": true,
+  "website": "https://www.cogolin.fr/sport/la-base-nautique/",
+  "phone": "+33 4 94 56 14 08",
+  "source": "https://www.cogolin.fr/sport/la-base-nautique/",
+  "lastVerifiedAt": "2026-10-14"
+},
+{
+  "id": "musee-gendarmerie-cinema",
+  "name": "Musée de la Gendarmerie et du Cinéma",
+  "category": "do",
+  "location": "Saint-Tropez",
+  "description": "Visit the iconic former Saint-Tropez gendarmerie for Louis de Funès film heritage, recreated rooms and the history of cinema on the peninsula.",
+  "bestFor": [
+    "Film history",
+    "Families",
+    "Culture on a rainy day"
+  ],
+  "notIdealFor": [
+    "Visitors seeking a large all-day museum",
+    "Trips planned without checking temporary exhibitions"
+  ],
+  "tags": [
+    "museum",
+    "cinema",
+    "culture",
+    "family",
+    "heritage",
+    "saint-tropez"
+  ],
+  "goodToKnow": [
+    "The entrance is at 2 place Blanqui, in the former gendarmerie.",
+    "Consult the official listing for seasonal opening and concessions."
+  ],
+  "verified": false,
+  "featured": true,
+  "source": "https://www.sainttropeztourisme.com/fr/fiche/musee-de-la-gendarmerie-et-du-cinema-4082975/",
+  "phone": "+33 4 94 55 90 20",
+  "lastVerifiedAt": "2026-10-14"
+},
 { id:"port-grimaud", name:"Port Grimaud", category:"places", location:"Grimaud", description:placeFacts["port-grimaud"].copy.en.description, bestFor:["Canals and waterside walks"],notIdealFor:["Unplanned transport connections"],tags:["port-grimaud","canals","architecture","market"],goodToKnow:["Grimaud hilltop village is a separate stop.","Check seasonal market and boat services."],verified:false,featured:false,source:placeFacts["port-grimaud"].sources[0].url,lastVerifiedAt:"2026-10-13" },
 {
   "id": "moulin-de-paillas",

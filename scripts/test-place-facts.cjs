@@ -17,11 +17,11 @@ const Sheet=require('../components/PlaceFactSheet.tsx').default,Page=require('..
 const {renderToStaticMarkup}=require('react-dom/server'),{GET}=require('../app/sitemap.xml/route.ts');
 const licenses=JSON.parse(fs.readFileSync(path.join(__dirname,'../public/media/place-facts/licenses.json')));
 (async()=>{
- assert.equal(Object.keys(placeFacts).length,4);
+ assert.equal(Object.keys(placeFacts).length,8);
  assert.equal(new Set(places.map(p=>p.id)).size,places.length);
  assert.ok(placesInDestination(getDestination('grimaud')).some(p=>p.id==='port-grimaud'));
  const xml=await(await GET()).text();
- for(const [id,sheet] of Object.entries(placeFacts)){
+ for(const [id,sheet] of Object.entries(placeFacts).filter(([id])=>!!placeFactsMedia[id])){
   assert.ok(places.some(p=>p.id===id));assert.ok(sheet.nearby.every(target=>places.some(p=>p.id===target)&&target!==id));
   const photo=placeFactsMedia[id],entry=licenses.find(x=>x.id===id),file=path.join(__dirname,'../public',photo.src);
   assert.equal(entry.license,'CC BY-SA 4.0');assert.equal(entry.licenseUrl,photo.licenseUrl);assert.equal(entry.source,photo.source);assert.ok(photo.credit.includes(entry.author));
@@ -36,6 +36,28 @@ const licenses=JSON.parse(fs.readFileSync(path.join(__dirname,'../public/media/p
    const metadata=await Page.generateMetadata({params:Promise.resolve({locale,id})});
    assert.equal(metadata.alternates.canonical,`https://www.legolfe.com/${locale}/place/${id}`);assert.equal(metadata.description,copy.description);assert.ok(metadata.title.absolute.startsWith(copy.title));assert.ok(metadata.openGraph.images[0].url.endsWith(photo.src));
    assert.ok(xml.includes(`<loc>https://www.legolfe.com/${locale}/place/${id}</loc><lastmod>2026-10-13</lastmod>`));
+  }
+ }
+ const experienceIds=['domaine-de-la-croix','chateau-des-marres','base-nautique-cogolin','musee-gendarmerie-cinema'];
+ const {newExperienceFacts}=require('../data/newExperienceFacts.ts');
+ const {newExperienceMedia}=require('../data/newExperienceMedia.ts');
+ for(const id of experienceIds){
+  assert.ok(placeFacts[id],id);assert.ok(places.some(p=>p.id===id),id);
+  const fact=newExperienceFacts[id],media=newExperienceMedia[id];
+  assert.equal(fact.verified,'2026-10-14');assert.ok(fact.address.includes('France'));
+  assert.ok(media.length>=1);assert.ok(fact.sources.length>=2);
+  for(const photo of media){assert.ok(photo.source.startsWith('https://commons.wikimedia.org/'));assert.ok(photo.licenseUrl.startsWith('https://creativecommons.org/'));assert.ok(photo.credit);assert.ok(photo.caption.fr&&photo.caption.en);}
+  assert.ok(fact.nearby.every(target=>target!==id&&places.some(p=>p.id===target)));
+  for(const locale of ['fr','en']){
+   const copy=fact.copy[locale],html=renderToStaticMarkup(Sheet({id,locale}));
+   assert.ok(copy.intro.length>180);assert.ok(copy.sections.length>=4);assert.ok(copy.questions.length>=3);
+   assert.ok(html.includes(fact.address));assert.ok(html.includes('google.com/maps/search/'));assert.ok(html.includes(media[0].licenseUrl));
+   assert.match(html,/datetime="2026-10-14"/i);
+   for(const source of fact.sources)assert.ok(html.includes(source.url));
+   const metadata=await Page.generateMetadata({params:Promise.resolve({locale,id})});
+   assert.equal(metadata.description,copy.description);
+   assert.ok(metadata.title.absolute.startsWith(copy.title));
+   assert.ok(xml.includes(`https://www.legolfe.com/${locale}/place/${id}`));
   }
  }
  process.env.VERCEL_ENV='preview';assert.equal((await Page.generateMetadata({params:Promise.resolve({locale:'fr',id:'port-grimaud'})})).robots.index,false);
