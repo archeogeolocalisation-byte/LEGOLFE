@@ -12,6 +12,7 @@ function ownPhoto(value: unknown, userId: string): string {
 
 export default function ProfileDetails({ userId, fr }: { userId: string; fr: boolean }) {
   const [bio, setBio] = useState("");
+  const [connection, setConnection] = useState<"local" | "visiting" | "">("");
   const [path, setPath] = useState("");
   const [photo, setPhoto] = useState<File | null>(null);
   const [preview, setPreview] = useState("");
@@ -35,6 +36,7 @@ export default function ProfileDetails({ userId, fr }: { userId: string; fr: boo
         if (error) throw error;
         const metadata = data.user.user_metadata;
         setBio(typeof metadata.legolfe_bio === "string" ? metadata.legolfe_bio.slice(0, 280) : "");
+        setConnection(metadata.legolfe_connection === "local" || metadata.legolfe_connection === "visiting" ? metadata.legolfe_connection : "");
         const savedPath = ownPhoto(metadata.legolfe_avatar_path, userId);
         setPath(savedPath);
         loaded = true;
@@ -86,7 +88,7 @@ export default function ProfileDetails({ userId, fr }: { userId: string; fr: boo
       if (!active.current) throw new Error("Session changed");
       const { data: current, error: sessionError } = await supabase.auth.getUser();
       if (!active.current || current.user?.id !== userId || sessionError) throw new Error("Session changed");
-      const { error } = await supabase.auth.updateUser({ data: { legolfe_bio: cleanBio, legolfe_avatar_path: nextPath } });
+      const { error } = await supabase.auth.updateUser({ data: { legolfe_bio: cleanBio, legolfe_avatar_path: nextPath, legolfe_connection: connection } });
       if (error) throw error;
       committed = true;
       if (!active.current) return;
@@ -117,6 +119,7 @@ export default function ProfileDetails({ userId, fr }: { userId: string; fr: boo
           {(preview || path) && <button type="button" onClick={() => { setRemoved(true); setPhoto(null); setPreview(""); }} className="mt-2 text-xs font-bold underline">{fr ? "Retirer la photo" : "Remove photo"}</button>}
         </div>
       </div>
+      <fieldset className="mt-6"><legend className="text-sm font-bold">{fr ? "Mon lien avec le Golfe (facultatif)" : "My connection to the Golfe (optional)"}</legend><div className="mt-3 flex flex-wrap gap-3">{([["local", fr ? "Je vis dans le Golfe" : "I live in the Golfe"], ["visiting", fr ? "Je suis de passage" : "I am visiting"]] as const).map(([value, label]) => <label key={value} className={"cursor-pointer border px-4 py-3 text-sm font-bold " + (connection === value ? "border-[#0B4F6C] bg-[#0B4F6C] text-white" : "border-black/20")}><input type="radio" name="golfe-connection" value={value} checked={connection === value} onChange={() => setConnection(value)} className="sr-only" />{label}</label>)}<button type="button" className="text-xs underline" onClick={() => setConnection("")}>{fr ? "Ne pas préciser" : "Prefer not to say"}</button></div></fieldset>
       <label htmlFor="profile-bio" className="mt-6 block text-sm font-bold">{fr ? "Quelques mots sur moi" : "A few words about me"}</label>
       <textarea id="profile-bio" rows={3} maxLength={280} value={bio} onChange={event => setBio(event.target.value)} placeholder={fr ? "Ce que vous aimez dans le Golfe, vos envies, votre activité…" : "What you love about the Golfe, your interests, your activity…"} aria-describedby="bio-count" className="mt-3 w-full resize-y border border-black/20 p-4 text-sm leading-6 focus:border-black focus:outline-none" />
       <p id="bio-count" className="mt-1 text-right text-xs text-black/50">{bio.length}/280</p>
