@@ -2,6 +2,7 @@ import Link from "next/link";
 import {notFound} from "next/navigation";
 import SiteHeader from "../../../../components/SiteHeader";
 import SiteFooter from "../../../../components/SiteFooter";
+import MemberCoverSlider from "../../../../components/MemberCoverSlider";
 import {getPublicContributions,getPublicMembers,memberIdPattern} from "../../../../lib/publicMembers";
 
 export const dynamic="force-dynamic";
@@ -26,6 +27,7 @@ export default async function MemberPage({params}:{params:Promise<{locale:string
           {member.connection&&<p className="mt-3 text-xs font-black uppercase tracking-[.12em] text-[var(--lg-blue)]">{member.connection==="local"?(fr?"Je vis dans le Golfe":"I live in the Golfe"):(fr?"Je suis de passage":"I am visiting")}</p>}
         </div>
       </div>
+      <MemberCoverSlider photos={member.galleryUrls} fr={fr}/>
       {member.bio&&<p className="mt-8 max-w-2xl whitespace-pre-wrap text-lg leading-8 text-black/75">{member.bio}</p>}
       <div className="mt-12 border-t border-black pt-8">
         <h2 className="lg-title text-3xl md:text-5xl">{fr?"SES CONTRIBUTIONS.":"THEIR CONTRIBUTIONS."}</h2>
