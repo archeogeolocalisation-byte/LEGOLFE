@@ -7,7 +7,7 @@ const m={
   port:{src:commons("Yachts in dock at the old port of Saint-Tropez, France (52724054464).jpg"),alt:"Vieux port de Saint-Tropez",credit:"dronepicr / Wikimedia Commons",license:"CC BY 2.0",source:"https://commons.wikimedia.org/wiki/File:Yachts_in_dock_at_the_old_port_of_Saint-Tropez,_France_(52724054464).jpg"},
   citadel:{src:"https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Aerial_view_of_the_Citadel_of_Saint-Tropez%2C_France_%2852723266272%29.jpg/1280px-Aerial_view_of_the_Citadel_of_Saint-Tropez%2C_France_%2852723266272%29.jpg",alt:"Citadelle de Saint-Tropez",credit:"dronepicr / Wikimedia Commons",license:"CC BY 2.0",source:"https://commons.wikimedia.org/wiki/File:Aerial_view_of_the_Citadel_of_Saint-Tropez,_France_(52723266272).jpg"},
 };
-export function mediaForLocal(id:string):LocalMedia{
+export function mediaForLocal(id:string,location?:string):LocalMedia{
   if(id.includes("nartelle"))return {src:"/media/tourist-map/sainte-maxime-illustration.webp",alt:"Illustration de Sainte-Maxime",credit:"LE GOLFE",license:"Illustration originale",source:"/media/tourist-map/sources.json",kind:"illustration"};
   if(id.includes("tamaris")||id.includes("lauriers"))return {src:"/media/tourist-map/saint-tropez-illustration.webp",alt:"Illustration de Saint-Tropez",credit:"LE GOLFE",license:"Illustration originale",source:"/media/tourist-map/sources.json",kind:"illustration"};
   if(id.includes("partenariat")||id.includes("voiles"))return m.port;
@@ -15,5 +15,18 @@ export function mediaForLocal(id:string):LocalMedia{
   if(id.includes("family")) return m.family;
   if(id.includes("spar")) return m.lices;
   if(id.includes("citadelle")) return m.citadel;
-  return m.port;
+  return location?illustrationForLocal(location):m.port;
+}
+
+const localIllustrations:Record<string,{slug:string;name:string}>={
+ "Golfe de Saint-Tropez":{slug:"saint-tropez",name:"Golfe de Saint-Tropez"},
+ "Saint-Tropez":{slug:"saint-tropez",name:"Saint-Tropez"},
+ "Sainte-Maxime":{slug:"sainte-maxime",name:"Sainte-Maxime"},
+ "Cogolin":{slug:"cogolin",name:"Cogolin"},
+ "La Mole":{slug:"la-mole",name:"La Mole"},
+ "La Croix-Valmer":{slug:"la-croix-valmer",name:"La Croix-Valmer"},
+};
+export function illustrationForLocal(location:string):LocalMedia{
+ const place=localIllustrations[location]??localIllustrations["Golfe de Saint-Tropez"];
+ return {src:`/media/tourist-map/${place.slug}-illustration.webp`,alt:`Illustration de ${place.name}`,credit:"LE GOLFE",license:"Illustration originale",source:"/media/tourist-map/sources.json",kind:"illustration"};
 }

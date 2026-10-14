@@ -9,6 +9,7 @@ import { supabase } from "../../../lib/supabase";
 import { editorialSources } from "../../../data/agendaSources";
 
 type Item={
+  raw?:{requiresReusePermission?:boolean}|null;
   id:string;content_type:"event"|"news";source_label:string;external_url:string;title:string;title_fr:string|null;
   summary:string|null;summary_fr:string|null;why:string|null;why_fr:string|null;start_date:string|null;end_date:string|null;
   event_time:string|null;location:string|null;venue:string|null;category:string|null;image_url:string|null;created_at:string;
@@ -90,6 +91,8 @@ export default function EditorialDesk(){
               {item.image_url&&<img src={item.image_url} alt="" className="mt-4 aspect-square w-full object-cover"/>}
             </div>
             <div className="space-y-4">
+              {item.raw?.requiresReusePermission&&<p className="border-l-4 border-[var(--lg-blue)] bg-[#e5f1f6] p-3 text-sm leading-6">{fr?"Cette source réserve la réutilisation de ses contenus. Obtenez son accord avant de republier ses titres, textes ou photos. Vous pouvez préparer une nouvelle rédigée par LE GOLFE à partir des faits et utiliser nos illustrations.":"This source reserves reuse of its content. Obtain permission before republishing its headlines, text or photos. You can prepare a LE GOLFE story from the facts and use our illustrations."}</p>}
+
               <input value={item.title_fr||""} onChange={e=>patch(item.id,"title_fr",e.target.value)} placeholder="Titre FR" className="w-full border-b-2 border-black bg-transparent py-2 text-2xl font-black uppercase outline-none"/>
               <input value={item.title||""} onChange={e=>patch(item.id,"title",e.target.value)} placeholder="Title EN" className="w-full border-b border-black/25 bg-transparent py-2 text-lg font-bold outline-none"/>
               <textarea value={item.summary_fr||""} onChange={e=>patch(item.id,"summary_fr",e.target.value)} placeholder="Résumé FR" className="min-h-24 w-full border border-black/20 p-3 text-sm font-semibold outline-none"/>
