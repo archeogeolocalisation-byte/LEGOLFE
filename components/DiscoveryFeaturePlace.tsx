@@ -19,7 +19,7 @@ export default function DiscoveryFeaturePlace({id,locale}:{id:string;locale:Loca
   <section className="lg-shell py-12 md:py-20">
    <Link className="text-xs font-bold text-black/55" href={`/${locale}/explore/do`}>← {locale==='fr'?'À faire':'Things to do'}</Link>
    <p className="lg-kicker mt-10 text-[#0B4F6C]">{place.location} · {locale==='fr'?'NATURE & PATRIMOINE':'NATURE & HERITAGE'}</p>
-   <h1 className="mt-6 max-w-5xl break-words text-[clamp(3.4rem,10vw,9rem)] font-black uppercase leading-[.86] tracking-[-.07em] text-[#0B4F6C]">{guide.title}</h1>
+   <h1 className="lg-menu-title mt-6 max-w-5xl text-[#0B4F6C]">{guide.title}</h1>
    <div className="mt-10 grid gap-8 border-t border-black pt-7 md:grid-cols-2"><h2 className="text-4xl font-black uppercase leading-[.94] tracking-[-.05em] md:text-6xl">{signature.subtitle}</h2><p className="max-w-xl text-lg font-bold leading-8 text-black/65">{guide.intro}</p></div>
   </section>
   <PlaceMediaGallery name={place.name} photos={photosForPlace(id)} locale={locale}/>
