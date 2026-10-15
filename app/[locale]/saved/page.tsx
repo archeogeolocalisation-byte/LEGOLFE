@@ -11,6 +11,7 @@ import { categoryFR, isLocale } from "../../../lib/i18n";
 import { mediaForPlace } from "../../../lib/placeMedia";
 import VillaComparison from "../../../components/VillaComparison";
 import StayPlanner from "../../../components/StayPlanner";
+import SavedDayPlanSection from "../../../components/SavedDayPlan";
 
 const STORAGE_KEY = "le-golfe-saved-places";
 const VILLA_STORAGE_KEY = "le-golfe-saved-villas";
@@ -57,6 +58,7 @@ export default function SavedPage({ params }: { params: Promise<{ locale: string
       </div>
 
       <div className="mt-6 flex flex-wrap items-center justify-between gap-4"><p className="text-xs leading-5 text-black/50">{fr?"Sélection conservée sur ce navigateur, sans compte.":"Shortlist saved in this browser, no account required."}</p><Link href="/requests" className="lg-btn">{fr?"Mes demandes de séjour":"My stay requests"} →</Link></div>
+      <SavedDayPlanSection locale={locale}/>
       {storageError&&<p role="alert" className="mt-5 border border-red-700 p-4 text-sm">{storageError}</p>}
       {!ready?<p className="mt-12" role="status">{fr?"Chargement de votre sélection…":"Loading your shortlist…"}</p>:savedPlaces.length === 0 && savedVillas.length === 0 ? <div className="mt-20 border-y border-black py-14"><p className="text-3xl font-black tracking-[-.04em]">{fr ? "Votre séjour commence ici." : "Your stay starts here."}</p><Link href={`/${locale}/explore`} className="mt-6 inline-flex lg-btn">{fr?"Explorer":"Explore"} →</Link><Link href={`/${locale}/stay`} className="lg-btn ml-3 mt-6">{fr?'Choisir une maison':'Choose a home'} →</Link></div> : <>
       <div className="mt-16 grid gap-2 md:grid-cols-12">
