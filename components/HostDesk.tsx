@@ -239,6 +239,11 @@ export default function HostDesk({locale}:{locale:Locale}) {
       <button onClick={()=>{localStorage.removeItem("legolfe_host_role");setRole(null)}} className="text-[10px] font-black uppercase tracking-[.14em] underline underline-offset-4">{fr?"Changer de profil":"Switch profile"}</button>
     </div>
 
+    <div className="mt-6 grid gap-3 md:grid-cols-3" aria-label={fr?"Étapes pour publier une annonce":"Steps to publish a listing"}>
+      <button type="button" onClick={openCreateProperty} className="min-h-24 border border-black/25 p-4 text-left transition hover:bg-[#edf7fa]"><span className="lg-kicker text-[var(--lg-blue)]">01 / {fr?"CRÉER":"CREATE"}</span><span className="mt-3 block text-sm font-black">{fr?"Ajouter une annonce":"Add a listing"} ↗</span></button>
+      <button type="button" onClick={()=>{setView("properties");void syncListings();}} className="min-h-24 border border-black/25 p-4 text-left transition hover:bg-[#edf7fa]"><span className="lg-kicker text-[var(--lg-blue)]">02 / {fr?"GÉRER":"MANAGE"}</span><span className="mt-3 block text-sm font-black">{fr?"Modifier mes annonces":"Edit my listings"} ↗</span></button>
+      <button type="button" onClick={()=>setView("inquiries")} className="min-h-24 border border-black/25 p-4 text-left transition hover:bg-[#edf7fa]"><span className="lg-kicker text-[var(--lg-blue)]">03 / {fr?"RÉPONDRE":"RESPOND"}</span><span className="mt-3 block text-sm font-black">{fr?"Consulter mes demandes":"View enquiries"} ↗</span></button>
+    </div>
     <PilotNotice locale={locale}/>
     <p className="mt-5 text-sm leading-6 text-black/55">{fr?"Vos brouillons et aperçus sont conservés sur cet appareil. Utilisez Mettre en ligne pour créer une fiche publique après connexion.":"Drafts and previews stay on this device. Use Publish online to create a public page after signing in."}</p><div className="sticky top-0 z-20 -mx-5 flex gap-5 overflow-x-auto border-b border-black bg-white px-5 py-4 text-[10px] font-black uppercase tracking-[.14em] md:-mx-8 md:px-8">
       {[["today",fr?"Tableau de bord":"Dashboard"],["properties",fr?"Annonces":"Listings"],["confirmed",fr?"Archives":"History"],["stays",fr?"Projets de séjour":"Briefs"],["inquiries",fr?"Demandes":"Enquiries"]].map(([k,l])=><button key={k} onClick={()=>setView(k as typeof view)} className={view===k?"text-[var(--lg-blue)]":""}>{l}</button>)}

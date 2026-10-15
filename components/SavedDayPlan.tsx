@@ -48,6 +48,17 @@ export default function SavedDayPlanSection({locale}:{locale:Locale}){
   catch{setError(fr?"Suppression du compte impossible.":"Unable to delete account copy.");}
   finally{setBusy(false);}
  }
+ function addStopsToSavedPlaces(){
+  try{
+   const key="le-golfe-saved-places";
+   const raw=JSON.parse(localStorage.getItem(key)||"[]");
+   const current=Array.isArray(raw)?raw.filter((id):id is string=>typeof id==="string"&&places.some(p=>p.id===id)):[];
+   const next=[...new Set([...current,...displayPlan.placeIds])];
+   localStorage.setItem(key,JSON.stringify(next));
+   window.dispatchEvent(new Event("le-golfe:saved-places"));
+   setError(fr?"Étapes ajoutées aux adresses enregistrées.":"Stops added to saved places.");
+  }catch{setError(fr?"Ajout impossible sur cet appareil.":"Unable to add stops on this device.");}
+ }
  function update(ids:string[]){
   try{
    if(!ids.length){localStorage.removeItem(SAVED_DAY_PLAN_KEY);setPlan(null);}
@@ -58,7 +69,7 @@ export default function SavedDayPlanSection({locale}:{locale:Locale}){
  if(!plan&&!cloud)return null;
  const displayPlan=plan??cloud!;
  const conflict=!!plan&&!!cloud&&(plan.format!==cloud.format||plan.placeIds.join("|")!==cloud.placeIds.join("|"));
- return <section className="mt-14 border-t border-white/25 pt-8" aria-label={fr?"Mon programme enregistré":"My saved plan"}>
+ return <section id="programme" className="mt-14 scroll-mt-24 border-t border-white/25 pt-8" aria-label={fr?"Mon programme enregistré":"My saved plan"}>
   <p className="lg-kicker text-[#b9e9f4]">{fr?"MON PROGRAMME":"MY PLAN"}</p>
   <h2 className="mt-4 text-3xl font-black uppercase md:text-5xl">{fr?"UN SÉJOUR À VOTRE RYTHME.":"YOUR STAY, YOUR PACE."}</h2>
   <p className="mt-3 max-w-2xl text-sm leading-6 text-white/65">{displayPlan.format==="half"?(fr?"Demi-journée":"Half day"):(fr?"Journée":"Full day")} · {fr?"Conservé sur cet appareil, et synchronisable avec un compte. Vérifiez trajets, horaires et réservations.":"Stored on this device, with optional account sync. Check travel, opening times and bookings."}</p>
@@ -79,6 +90,7 @@ export default function SavedDayPlanSection({locale}:{locale:Locale}){
     <button type="button" onClick={()=>update(displayPlan.placeIds.filter(x=>x!==id))} className="border border-white/40 px-3 py-2 text-xs">{fr?"Retirer":"Remove"}</button>
    </div>
   </li>})}</ol>
+  <div className="mt-5 flex flex-wrap items-center gap-3"><button type="button" onClick={addStopsToSavedPlaces} className="lg-btn lg-btn--accent">{fr?"Ajouter les étapes à mes adresses":"Add stops to saved places"} →</button><Link href={`/${locale}/stay`} className="lg-btn">{fr?"Choisir une maison":"Find a home"} →</Link></div>
   <div className="mt-5 flex flex-wrap items-center gap-4"><Link href={`/${locale}/ask`} className="text-xs font-bold text-[#b9e9f4] underline">{fr?"Créer un autre programme":"Create another plan"} ↗</Link><button type="button" onClick={()=>update([])} className="text-xs font-bold text-white/65 underline">{fr?"Effacer ce programme":"Delete this plan"}</button></div>
   {error&&<p role="alert" className="mt-3 text-sm text-red-200">{error}</p>}
  </section>;
