@@ -38,7 +38,7 @@ const signals:Record<PlaceFacet,readonly string[]>={
  beachclub:["beach-club","beach club"]
 };
 function norm(v:string){return v.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"");}
-export function categoriesForPlace(p:Place):PlaceCategory[]{return [...new Set([p.category,...(secondaryCategories[p.id]??[])])];}
+export function categoriesForPlace(p:Place):PlaceCategory[]{return Array.from(new Set([p.category,...(secondaryCategories[p.id]??[])]));}
 export function facetsForPlace(p:Place):PlaceFacet[]{
  // Only match explicit affirmative tags and best-for statements; never descriptions
  // or notIdealFor, which may contain negated characteristics.
