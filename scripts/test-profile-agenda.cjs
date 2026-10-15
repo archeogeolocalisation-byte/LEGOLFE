@@ -80,10 +80,10 @@ const choose = tree => find(tree, n => n.type === 'input').props.onChange({ targ
   assert.deepEqual(ids(tree), ['today', 'tomorrow']);
   find(tree, n => n.type === 'button' && buttonText(n) === 'Demain').props.onClick();
   tree = render(Agenda, agendaProps); assert.deepEqual(ids(tree), ['tomorrow']);
-  assert.equal(find(tree, n => n.type === 'button' && n.props.children === 'Demain').props['aria-pressed'], true);
+  assert.equal(find(tree, n => n.type === 'button' && buttonText(n) === 'Demain').props['aria-pressed'], true);
   find(tree, n => n.props?.id === 'agenda-month').props.onChange({ target: { value: '2026-11' } });
   tree = render(Agenda, agendaProps); assert.deepEqual(ids(tree), ['november']);
-  assert.equal(find(tree, n => n.type === 'button' && n.props.children === 'Demain').props['aria-pressed'], false);
+  assert.equal(find(tree, n => n.type === 'button' && buttonText(n) === 'Demain').props['aria-pressed'], false);
   const text = nodes(tree).flatMap(n => n.props?.children ?? []).filter(n => typeof n === 'string').join(' ');
   assert.ok(text.includes('19:00')); assert.ok(text.includes('20:00'));
   find(tree, n => n.type === 'button' && buttonText(n) === 'Aujourd’hui').props.onClick();
