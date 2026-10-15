@@ -12,7 +12,7 @@ function airKm(a:{latitude:number;longitude:number},b:{latitude:number;longitude
 }
 export function nearbyExplorer(placeId:string,max=4){
  const center=placeMapPoints[placeId]?.[0];
- if(!center||!validMapPoint(center.latitude,center.longitude))return [];
+ if(!center||!validMapPoint(center.latitude,center.longitude)||!center.source?.startsWith("https://"))return [];
  return places.flatMap(place=>{
   if(place.id===placeId||place.category==="services")return [];
   const pt=placeMapPoints[place.id]?.[0];
