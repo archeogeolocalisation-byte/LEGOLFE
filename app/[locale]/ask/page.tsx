@@ -12,8 +12,8 @@ import { localNews } from "../../../data/localNews";
 import { villas } from "../../../data/villas";
 import { mediaForPlace } from "../../../lib/placeMedia";
 import {rankAskPlaces,composeAskShortlist,buildAskDayPlan} from "../../../lib/askMatching";
-import {mapAskPlan} from "../../../lib/askPlanMap";
-import AskPlanMap from "../../../components/AskPlanMap";
+
+import EditableAskPlan from "../../../components/EditableAskPlan";
 
 const STOP = new Set(["le","la","les","un","une","des","de","du","au","aux","et","ou","pour","avec","dans","sur","près","proche","nous","je","veux","on","the","a","an","and","or","for","with","in","near","we","i","want","to","of","this","that"]);
 const SYNONYMS: Record<string,string[]> = {
@@ -43,7 +43,7 @@ export default function Page({params}:{params:Promise<{locale:string}>}){
     const matched=rankAskPlaces(q,places,l,4,strictPreferences);const placeHits=matched.hits;
     const composition=composeAskShortlist(q,places,l,strictPreferences);
     const dayPlan=buildAskDayPlan(q,places,l,planFormat,strictPreferences);
-    const planMap=dayPlan?mapAskPlan(dayPlan):null;
+
     const eventHits=events.map(e=>({e,s:score(q,e)})).sort((a,b)=>b.s-a.s).filter(x=>x.s>0).slice(0,3);
     const villaHits=villas.map(v=>({v,s:score(q,v)})).sort((a,b)=>b.s-a.s).filter(x=>x.s>0).slice(0,2);
     const newsHits=localNews.map(n=>({n,s:score(q,n)})).sort((a,b)=>b.s-a.s).filter(x=>x.s>0).slice(0,2);
@@ -51,7 +51,7 @@ export default function Page({params}:{params:Promise<{locale:string}>}){
     const take=fr
       ? main?`${main.name} correspond à plusieurs critères identifiés. Voici les raisons du choix et les points à confirmer avant de prévoir votre sortie.`:"Aucune adresse ne remplit suffisamment les critères reconnus. Essayez de préciser la commune ou d’assouplir une contrainte."
       : main?`${main.name} matches several identified criteria. Here is why, and what still needs checking before you go.`:"No listed place matches enough of the identified criteria. Try specifying a town or relaxing a constraint.";
-    return {placeHits,eventHits,villaHits,newsHits,take,intent:matched.intent,composition,dayPlan,planMap};
+    return {placeHits,eventHits,villaHits,newsHits,take,intent:matched.intent,composition,dayPlan};
   },[sent,q,fr,l,strictPreferences,planFormat]);
 
   const ex=fr?["Deux familles, cinq enfants, déjeuner au calme près de Pampelonne.","Un week-end romantique sans courir partout.","Que faire samedi soir autour de Sainte-Maxime ?","Une journée bateau pour 8 avec un bon déjeuner après."]:["Two families, five kids, calm lunch near Pampelonne.","A romantic weekend without rushing around.","What should we do Saturday night around Sainte-Maxime?","A boat day for eight with a good lunch afterwards."];
@@ -78,16 +78,7 @@ export default function Page({params}:{params:Promise<{locale:string}>}){
             </div>
           </div>
           <p className="mt-4 max-w-3xl text-sm leading-6 text-white/65">{fr?"Une proposition de lieux à relier, sans horaires inventés. L’ordre est indicatif, pas un itinéraire optimisé.":"A suggested combination of places without invented times. Stop order is editorial, not route-optimised."}</p>
-          <ol className="mt-7 grid gap-3 md:grid-cols-3">{result.dayPlan.steps.map(({category,match,source},i)=><li key={match.p.id} className="border border-white/25 p-5">
-            <p className="lg-kicker text-[#b9e9f4]">{String(i+1).padStart(2,"0")} / {fr?categoryFR[category].name:category}</p>
-            <h3 className="mt-3 text-2xl font-black uppercase leading-tight"><Link href={`/${l}/place/${match.p.id}`} className="hover:underline">{match.p.name} ↗</Link></h3>
-            <p className="mt-2 text-xs text-white/60">{match.p.location}</p>
-            {source==="complementary"&&<p className="mt-3 text-xs font-semibold text-[#b9e9f4]">{fr?"Suggestion complémentaire, non demandée explicitement":"Complementary suggestion, not explicitly requested"}</p>}
-            {match.reasons.length>0&&<p className="mt-3 text-xs leading-5 text-white/70">{match.reasons.join(" · ")}</p>}
-            {match.cautions.length>0&&<p className="mt-3 text-xs leading-5 text-white/55">{fr?"À confirmer":"To check"} : {match.cautions.join(" · ")}</p>}
-          </li>)}</ol>
-          {result.planMap&&<AskPlanMap markers={result.planMap.mapped} total={result.planMap.total} locale={l}/>}
-          {result.planMap&&result.planMap.missing.length>0&&<p className="mt-3 text-xs leading-6 text-white/55">{fr?"Étapes sans coordonnées sourcées (toujours accessibles depuis leurs fiches) : ":"Steps without sourced coordinates (place pages still available): "}{result.planMap.missing.map(x=>x.name).join(" · ")}</p>}
+          <EditableAskPlan key={`${q}|${planFormat}|${strictPreferences}`} plan={result.dayPlan} locale={l}/>
           <div className="mt-6 border-l-2 border-[#b9e9f4] pl-5"><p className="text-sm font-bold">{fr?"Avant de partir":"Before you go"}</p><ul className="mt-2 list-disc space-y-1 pl-5 text-xs leading-6 text-white/65">{result.dayPlan.notes.map(note=><li key={note}>{note}</li>)}</ul></div>
         </section>}
 
