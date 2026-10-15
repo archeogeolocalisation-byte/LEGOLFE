@@ -11,6 +11,8 @@ import { events } from "../../../data/events";
 import { localNews } from "../../../data/localNews";
 import { villas } from "../../../data/villas";
 import { mediaForPlace } from "../../../lib/placeMedia";
+import {categoriesForPlace,facetsForPlace,placeFacetLabels} from "../../../lib/placeFacets";
+import {categoryFR as categoriesFr} from "../../../lib/i18n";
 
 const STOP = new Set(["le","la","les","un","une","des","de","du","au","aux","et","ou","pour","avec","dans","sur","près","proche","nous","je","veux","on","the","a","an","and","or","for","with","in","near","we","i","want","to","of","this","that"]);
 const SYNONYMS: Record<string,string[]> = {
@@ -27,6 +29,32 @@ const SYNONYMS: Record<string,string[]> = {
 function words(q:string){return q.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").split(/[^a-z0-9-]+/).filter(x=>x.length>2&&!STOP.has(x));}
 function hay(v:unknown){return JSON.stringify(v).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"");}
 function score(q:string, item:unknown){const w=words(q);const h=hay(item);let s=0;for(const x of w){if(h.includes(x))s+=3;for(const y of SYNONYMS[x]||[]){if(h.includes(y))s+=1;}}return s;}
+const facetQueries:Record<string,readonly string[]>={
+ quiet:["calme","quiet","tranquille","repos"],view:["vue","panorama","view","paysage"],
+ family:["enfant","enfants","famille","family","kids","children"],
+ walk:["balade","randonn","hiking","walk","marcher","promenade"],heritage:["patrimoine","histor","heritage","culture"],
+ nature:["nature","foret","forest"],music:["musique","music","concert","danser","sortir","club","nightlife"],
+ romantic:["romantique","couple","romantic"],lunch:["dejeuner","lunch"],beachclub:["transat","club de plage","beach club"]
+};
+const categoryQueries:Record<string,readonly string[]>={
+ eat:["manger","restaurant","table","dejeuner","diner","dinner","lunch"],
+ beach:["plage","plages","beach","baignade"],sea:["bateau","boat","mer","nautique"],
+ do:["activite","activites","visite","balade","activity"],party:["fete","club","boite","soiree","party","nightlife"],
+ wellness:["sport","spa","wellness"],places:["village","heritage","patrimoine"],services:["service","chauffeur","conciergerie"]
+};
+function scorePlace(q:string,p:(typeof places)[number]){
+ const normalized=hay(q),tokens=words(q),facets=facetsForPlace(p),categories=categoriesForPlace(p);
+ const positive=[p.name,p.location,p.description,placeDescriptionFr[p.id]||"",...p.bestFor,...p.tags].join(" ");
+ let scoreValue=score(q,positive);
+ for(const facet of facets){if(facetQueries[facet].some(w=>normalized.includes(w)))scoreValue+=8;
+   const label=hay(placeFacetLabels.fr[facet]);if(normalized.includes(label))scoreValue+=8;}
+ for(const category of categories){if(categoryQueries[category].some(w=>normalized.includes(w)))scoreValue+=6;
+   if(normalized.includes(hay(categoriesFr[category].name)))scoreValue+=6;}
+ if(facets.includes("quiet")&&categoryQueries.party.some(w=>normalized.includes(w)))scoreValue-=3;
+ if(p.category==="party"&&(normalized.includes("calme")||normalized.includes("quiet")||normalized.includes("enfant")||normalized.includes("famille")))scoreValue-=8;
+ return Math.max(0,scoreValue);
+}
+
 
 export default function Page({params}:{params:Promise<{locale:string}>}){
   const {locale:raw}=use(params); const l=isLocale(raw)?raw:"en"; const fr=l==="fr";
@@ -35,7 +63,7 @@ export default function Page({params}:{params:Promise<{locale:string}>}){
 
   const result=useMemo(()=>{
     if(!sent||!q.trim())return null;
-    const placeHits=places.map(p=>({p,s:score(q,p)})).sort((a,b)=>b.s-a.s).filter(x=>x.s>0).slice(0,4);
+    const placeHits=places.map(p=>({p,s:scorePlace(q,p)})).sort((a,b)=>b.s-a.s).filter(x=>x.s>0).slice(0,4);
     const eventHits=events.map(e=>({e,s:score(q,e)})).sort((a,b)=>b.s-a.s).filter(x=>x.s>0).slice(0,3);
     const villaHits=villas.map(v=>({v,s:score(q,v)})).sort((a,b)=>b.s-a.s).filter(x=>x.s>0).slice(0,2);
     const newsHits=localNews.map(n=>({n,s:score(q,n)})).sort((a,b)=>b.s-a.s).filter(x=>x.s>0).slice(0,2);
