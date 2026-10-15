@@ -2,7 +2,7 @@
 const assert=require('node:assert/strict'),fs=require('node:fs'),ts=require('typescript');
 require.extensions['.ts']=(module,filename)=>module._compile(ts.transpileModule(fs.readFileSync(filename,'utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2020}}).outputText,filename);
 const {places}=require('../data/places.ts');
-const {parseAskIntent,rankAskPlaces}=require('../lib/askMatching.ts');
+const {parseAskIntent,rankAskPlaces,composeAskShortlist}=require('../lib/askMatching.ts');
 const rank=(query)=>rankAskPlaces(query,places,'fr',12).hits;
 let p=parseAskIntent('Une plage en famille à Ramatuelle, sans boîte, petit budget et à 15 minutes');
 assert.ok(p.categories.includes('beach'));
@@ -28,3 +28,14 @@ for(const x of rank('Restaurant à Gassin pour 4 personnes à 10 minutes, moins 
  assert.ok(x.cautions.some(c=>c.includes('Tarifs')));
 }
 console.log('Ask matching: FR/EN lexicon, exclusions, town, pricing guardrails, reasons and travel cautions passed');
+
+const multi=composeAskShortlist("Une plage et un restaurant à Ramatuelle",places,"fr");
+assert.ok(multi.length>=2,"beach and restaurant choices");
+assert.equal(new Set(multi.map(x=>x.match.p.id)).size,multi.length,"unique places");
+assert.ok(multi.every(x=>x.match.p.location.includes("Ramatuelle")),"town respected");
+const strict=rankAskPlaces("Un restaurant calme à Gassin",places,"fr",12,true).hits;
+assert.ok(strict.every(x=>x.reasons.some(reason=>reason==="Au calme")),"strict preferences met");
+const relaxed=rankAskPlaces("Un restaurant calme à Gassin",places,"fr",12,false).hits;
+assert.ok(strict.length<=relaxed.length,"strict results are subset in size");
+assert.deepEqual(composeAskShortlist("Une plage à Ramatuelle",places,"fr"),[],"one activity is not an itinerary");
+console.log("Multi-activity suggestions and strict optional preferences passed.");

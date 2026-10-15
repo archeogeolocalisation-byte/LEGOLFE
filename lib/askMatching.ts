@@ -64,8 +64,9 @@ export function parseAskIntent(question:string):AskIntent{
  return {categories,facets,excludedCategories,town,explicitTown,maxPriceLevel,exactEuroBudget,mentionsDistance,mentionsTime,partySize,hasConstraints:!!(categories.length||facets.length||excludedCategories.length||town||budget||exactEuroBudget||mentionsDistance||mentionsTime)};
 }
 function matchingTowns(place:Place){return destinationsForLocation(place.location).map(d=>d.slug);}
-export function rankAskPlaces(question:string,items:readonly Place[],locale:Locale,max=4){
+export function rankAskPlaces(question:string,items:readonly Place[],locale:Locale,max=4,strictPreferences=false,requestedCategories?:PlaceCategory[]){
  const intent=parseAskIntent(question);
+ const requiredCats=requestedCategories??intent.categories;
  const q=norm(question);
  const stop=new Set(["dans","avec","pour","une","des","les","nous","vous","qui","near","with","from","over","want","avoir","sans","vers","quel","quelle","the","and","pas","est"]);
  const tokens=q.split(/[^a-z0-9]+/).filter(x=>x.length>=4&&!stop.has(x));
@@ -76,14 +77,15 @@ export function rankAskPlaces(question:string,items:readonly Place[],locale:Loca
   // Children and peaceful outings are incompatible with nightlife listings.
   if((intent.facets.includes("family")||intent.facets.includes("quiet"))&&p.category==="party")return [];
   const inTown=!!wantedTown&&matchingTowns(p).includes(wantedTown);
-  const categoryHits=intent.categories.filter(c=>cats.includes(c));
+  const categoryHits=requiredCats.filter(c=>cats.includes(c));
   const facetHits=intent.facets.filter(f=>facets.includes(f));
   const explicitNamed=norm(p.name).length>5&&q.includes(norm(p.name));
   const evidence=norm([p.name,p.location,p.description,placeDescriptionFr[p.id]||"",...p.tags,...p.bestFor].join(" "));
   const lexicalHits=tokens.filter(t=>evidence.includes(t)).length;
   if(intent.maxPriceLevel!==null&&p.priceLevel!==undefined&&p.priceLevel>intent.maxPriceLevel)return [];
-  if(intent.categories.length&&categoryHits.length===0&&!explicitNamed)return [];
-  if(!intent.categories.length&&intent.facets.length&&facetHits.length===0&&!explicitNamed)return [];
+  if(requiredCats.length&&categoryHits.length===0&&!explicitNamed)return [];
+  if(strictPreferences&&facetHits.length<intent.facets.length)return [];
+  if(!requiredCats.length&&intent.facets.length&&facetHits.length===0&&!explicitNamed)return [];
   if(wantedTown&&!inTown&&!explicitNamed)return [];
   let score=categoryHits.length*14+facetHits.length*11+lexicalHits*1.3+(inTown?12:0)+(explicitNamed?30:0)+(p.featured?0.5:0);
   if(intent.maxPriceLevel!==null&&p.priceLevel!==undefined)score+=3;
@@ -96,7 +98,7 @@ export function rankAskPlaces(question:string,items:readonly Place[],locale:Loca
   if(intent.maxPriceLevel!==null&&p.priceLevel!==undefined)reasons.push(locale==="fr"?"Gamme tarifaire plutôt accessible":"Lower listed price range");
   if(explicitNamed)reasons.unshift(locale==="fr"?"Lieu cité dans votre demande":"Place named in your request");
   const cautions:string[]=[];
-  if(intent.categories.length&&categoryHits.length&&intent.facets.some(f=>!facetHits.includes(f)))cautions.push(locale==="fr"?"Certaines envies ne sont pas documentées pour ce lieu":"Some requested preferences are not documented for this place");
+  if(requiredCats.length&&categoryHits.length&&intent.facets.some(f=>!facetHits.includes(f)))cautions.push(locale==="fr"?"Certaines envies ne sont pas documentées pour ce lieu":"Some requested preferences are not documented for this place");
   if(intent.maxPriceLevel!==null&&p.priceLevel===undefined)cautions.push(locale==="fr"?"Budget non renseigné pour cette adresse":"Price range unavailable for this place");
   if(intent.exactEuroBudget)cautions.push(locale==="fr"?"Tarifs réels non vérifiés":"Actual prices not verified");
   if(intent.mentionsDistance||intent.mentionsTime)cautions.push(locale==="fr"?"Distance et temps de trajet à confirmer":"Distance and travel time need checking");
@@ -105,4 +107,22 @@ export function rankAskPlaces(question:string,items:readonly Place[],locale:Loca
  });
  scored.sort((a,b)=>b.s-a.s||a.p.name.localeCompare(b.p.name));
  return {intent,hits:scored.slice(0,max)};
+}
+
+/**
+ * An editorial shortlist, NOT a timed itinerary. Each requested activity family
+ * receives one different listing. No proximity, opening-time or availability claim.
+ */
+export function composeAskShortlist(question:string,items:readonly Place[],locale:Locale,strictPreferences=false){
+ const intent=parseAskIntent(question);
+ const priorities:PlaceCategory[]=["beach","sea","do","places","eat","wellness","party","services"];
+ const requested=priorities.filter(c=>intent.categories.includes(c));
+ if(requested.length<2)return [];
+ const used=new Set<string>();
+ const choices:{category:PlaceCategory;match:AskMatch}[]=[];
+ for(const category of requested){
+  const winner=rankAskPlaces(question,items.filter(p=>categoriesForPlace(p).includes(category)),locale,12,strictPreferences,[category]).hits.find(x=>!used.has(x.p.id));
+  if(winner){used.add(winner.p.id);choices.push({category,match:winner});}
+ }
+ return choices;
 }
