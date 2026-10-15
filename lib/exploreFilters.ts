@@ -30,7 +30,7 @@ export function exploreFilterCategory(filter: ExploreFilter): PlaceCategory | un
 }
 // One shared classification powers Explorer, place labels and recommendations.
 export function matchesExploreFilter(place: Place, filter: ExploreFilter): boolean {
-  return filter==="all" || placeFacetMatch(place,filter);
+  return filter==="all" || filter===place.category || placeFacetMatch(place,filter);
 }
 
 export function resolveExploreSearch(query: unknown, town: unknown) {
