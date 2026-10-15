@@ -1,3 +1,4 @@
+import PlaceTaxonomy from './PlaceTaxonomy';
 import CitadelleStoryPhoto from './CitadelleStoryPhoto';
 import citadelleStyles from './Citadelle.module.css';
 import PlaceMapBlock from './PlaceMapBlock';
@@ -20,6 +21,7 @@ export default function EditorialFeaturePlace({ feature, locale }: { feature: Ed
     <section className="lg-shell pb-12 pt-10 md:pt-16">
       <p className="lg-kicker">{c.kicker}</p>
       <h1 className="lg-menu-title mt-5 text-[#0B4F6C]">{c.title}</h1>
+      <PlaceTaxonomy place={place} locale={locale}/>
       <div className="mt-8 grid gap-8 border-t border-black pt-6 md:grid-cols-2">
         <h2 className="text-4xl font-black leading-[.9] tracking-[-.05em] md:text-6xl">{c.sub}</h2>
         <p className="max-w-xl text-lg font-bold leading-7 text-black/55">{c.intro}</p>
