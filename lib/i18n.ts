@@ -11,6 +11,6 @@ export const categoryFR: Record<string,{name:string;description:string}> = {
 
 // Shared labels keep desktop, mobile and footer navigation in the same language.
 export const navigation = {
- fr: { explore: "Explorer", touristMap: "Découvrir le Golfe", guides: "Guides", agenda: "Agenda", local: "Vie locale", stay: "Maisons & villas", host: "Propriétaires", saved: "Mon séjour", account: "Compte", ask: "Demander", askFull: "Demander à LE GOLFE" },
- en: { explore: "Explore", touristMap: "Discover the Golfe", guides: "Guides", agenda: "What’s on", local: "Local", stay: "Stay", host: "Host", saved: "My stay", account: "Account", ask: "Ask", askFull: "Ask Le Golfe" },
+ fr: { explore: "Explorer", touristMap: "Les cartes du Golfe", guides: "Guides", agenda: "Agenda", local: "Vie locale", stay: "Maisons & villas", host: "Propriétaires", saved: "Mon séjour", account: "Compte", ask: "Demander", askFull: "Demander à LE GOLFE" },
+ en: { explore: "Explore", touristMap: "Golfe maps", guides: "Guides", agenda: "What’s on", local: "Local", stay: "Stay", host: "Host", saved: "My stay", account: "Account", ask: "Ask", askFull: "Ask Le Golfe" },
 } as const;
