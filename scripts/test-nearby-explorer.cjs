@@ -26,5 +26,5 @@ assert.equal(placeMapPoints['la-verdoyante'][0].kind,'venue');
 assert.equal(placeMapPoints['gassin-village'][0].kind,'area');
 assert.ok(Math.abs(placeMapPoints['la-verdoyante'][0].latitude-(43+14/60+14.64/3600))<.00001);
 assert.ok(Math.abs(placeMapPoints['la-verdoyante'][0].longitude-(6+35/60+24.67/3600))<.00001);
-assert.ok(placeMapPoints['la-verdoyante'][0].note.fr.includes('2027'));
+assert.ok(placeMapPoints['la-verdoyante'][0].note.fr.includes('ne concordent pas'));
 console.log('Verified village centres and official restaurant GPS/seasonal reopening passed');
