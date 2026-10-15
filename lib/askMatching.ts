@@ -83,7 +83,7 @@ export function rankAskPlaces(question:string,items:readonly Place[],locale:Loca
   const lexicalHits=tokens.filter(t=>evidence.includes(t)).length;
   if(intent.maxPriceLevel!==null&&p.priceLevel!==undefined&&p.priceLevel>intent.maxPriceLevel)return [];
   if(intent.categories.length&&categoryHits.length===0&&!explicitNamed)return [];
-  if(intent.facets.length&&facetHits.length===0&&!explicitNamed)return [];
+  if(!intent.categories.length&&intent.facets.length&&facetHits.length===0&&!explicitNamed)return [];
   if(wantedTown&&!inTown&&!explicitNamed)return [];
   let score=categoryHits.length*14+facetHits.length*11+lexicalHits*1.3+(inTown?12:0)+(explicitNamed?30:0)+(p.featured?0.5:0);
   if(intent.maxPriceLevel!==null&&p.priceLevel!==undefined)score+=3;
@@ -96,6 +96,7 @@ export function rankAskPlaces(question:string,items:readonly Place[],locale:Loca
   if(intent.maxPriceLevel!==null&&p.priceLevel!==undefined)reasons.push(locale==="fr"?"Gamme tarifaire plutôt accessible":"Lower listed price range");
   if(explicitNamed)reasons.unshift(locale==="fr"?"Lieu cité dans votre demande":"Place named in your request");
   const cautions:string[]=[];
+  if(intent.categories.length&&categoryHits.length&&intent.facets.some(f=>!facetHits.includes(f)))cautions.push(locale==="fr"?"Certaines envies ne sont pas documentées pour ce lieu":"Some requested preferences are not documented for this place");
   if(intent.maxPriceLevel!==null&&p.priceLevel===undefined)cautions.push(locale==="fr"?"Budget non renseigné pour cette adresse":"Price range unavailable for this place");
   if(intent.exactEuroBudget)cautions.push(locale==="fr"?"Tarifs réels non vérifiés":"Actual prices not verified");
   if(intent.mentionsDistance||intent.mentionsTime)cautions.push(locale==="fr"?"Distance et temps de trajet à confirmer":"Distance and travel time need checking");
