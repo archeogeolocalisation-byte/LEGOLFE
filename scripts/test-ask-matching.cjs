@@ -3,7 +3,7 @@ const assert=require('node:assert/strict'),fs=require('node:fs'),ts=require('typ
 require.extensions['.ts']=(module,filename)=>module._compile(ts.transpileModule(fs.readFileSync(filename,'utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2020}}).outputText,filename);
 const {places}=require('../data/places.ts');
 const {parseAskIntent,rankAskPlaces}=require('../lib/askMatching.ts');
-const rank=(query)=>rankAskPlaces(query,places,'fr',12);
+const rank=(query)=>rankAskPlaces(query,places,'fr',12).hits;
 let p=parseAskIntent('Une plage en famille à Ramatuelle, sans boîte, petit budget et à 15 minutes');
 assert.ok(p.categories.includes('beach'));
 assert.ok(p.facets.includes('family'));
@@ -20,9 +20,9 @@ assert.equal(p.categories.includes('eat'),true);
 for(const {p} of rank('Un restaurant calme avec enfants à Saint-Tropez'))assert.notEqual(p.category,'party');
 for(const {p} of rank('Plage à Ramatuelle en famille'))assert.ok(p.location.includes('Ramatuelle'),p.id);
 for(const {p} of rank('Restaurant à petit budget'))assert.ok(p.priceLevel===undefined||p.priceLevel<=2,p.id);
-const exact=rank('Les Caves du Roy à Saint-Tropez');assert.equal(exact.hits[0].p.id,'caves-du-roy');
-const no=rank('Visiter une discothèque au Groenland avec rennes');assert.ok(!no.hits.some(x=>x.p.id==='caves-du-roy'));
-for(const x of rank('Restaurant à Gassin pour 4 personnes à 10 minutes, moins de 80 euros').hits){
+const exact=rank('Les Caves du Roy à Saint-Tropez');assert.equal(exact[0].p.id,'caves-du-roy');
+const no=rank('Visiter une discothèque au Groenland avec rennes');assert.ok(!no.some(x=>x.p.id==='caves-du-roy'));
+for(const x of rank('Restaurant à Gassin pour 4 personnes à 10 minutes, moins de 80 euros')){
  assert.ok(x.reasons.length>0);
  assert.ok(x.cautions.some(c=>c.includes('trajet')));
  assert.ok(x.cautions.some(c=>c.includes('Tarifs')));
