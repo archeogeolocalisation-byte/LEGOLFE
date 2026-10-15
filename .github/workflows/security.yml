@@ -29,6 +29,7 @@ jobs:
       - run: node scripts/test-place-gallery.cjs
       - run: node scripts/test-tourist-map.cjs
       - run: node scripts/test-explore-filters.cjs
+      - run: node scripts/test-ask-matching.cjs
       - run: node scripts/test-villa-languages.cjs
       - run: node scripts/test-public-members.cjs
       - run: node scripts/test-agenda-dark.cjs
