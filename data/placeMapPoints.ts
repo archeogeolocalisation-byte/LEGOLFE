@@ -5,7 +5,7 @@ export const placeMapPoints:Record<string,MapPoint[]> = {
   "la-verdoyante":[{
     id:"la-verdoyante",label:{fr:"La Verdoyante · restaurant",en:"La Verdoyante · restaurant"},
     latitude:43.2374,longitude:6.5901861,source:"https://www.la-verdoyante.fr/contact",checked:"2026-10-15",kind:"venue",
-    note:{fr:"GPS et adresse publiés sur le site officiel : 866 chemin vicinal de Coste Brigade, Gassin. Réouverture annoncée au printemps 2027 ; ne prévoyez pas un repas sans confirmation.",en:"Official GPS and address: 866 Chemin Vicinal de Coste Brigade, Gassin. Reopening announced for spring 2027; do not plan a meal without confirmation."},
+    note:{fr:"GPS et adresse publiés sur le site officiel : 866 chemin vicinal de Coste Brigade, Gassin. Les informations de réouverture sur les versions du site officiel ne concordent pas : contactez le restaurant avant de prévoir un repas.",en:"Official GPS and address: 866 Chemin Vicinal de Coste Brigade, Gassin. Reopening dates differ across versions of the official site: contact the restaurant before planning a meal."},
     directionsQuery:"866 chemin vicinal de Coste Brigade, 83580 Gassin, France"
   }],
   "gassin-village":[{
