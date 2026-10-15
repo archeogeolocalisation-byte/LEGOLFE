@@ -136,9 +136,15 @@ export function buildAskDayPlan(question:string,items:readonly Place[],locale:Lo
  const intent=parseAskIntent(question);
  const requested=composeAskShortlist(question,items,locale,strictPreferences);
  // No "automatic day" for empty or purely geographic queries.
- if(!intent.categories.length||!requested.length)return null;
+ if(!intent.categories.length&&!intent.facets.length)return null;
  const limit=format==="half"?2:3;
  const selected:AskDayPlan["steps"]=requested.slice(0,limit).map(x=>({...x,source:"requested"}));
+ // A single strong match is still a useful saved stop. Previously the entire
+ // editor disappeared unless a multi-activity programme existed.
+ if(!selected.length){
+  const first=rankAskPlaces(question,items,locale,items.length,strictPreferences).hits.find(hit=>!intent.categories.length||intent.categories.some(category=>categoriesForPlace(hit.p).includes(category)));
+  if(first)selected.push({category:first.p.category,match:first,source:"requested"});
+ }
  const used=new Set(selected.map(x=>x.match.p.id));
  // Only suggest food as a complementary stop when the visitor explicitly
  // asks for a day outing (not for a service, spa, nightlife or housing).
@@ -148,7 +154,7 @@ export function buildAskDayPlan(question:string,items:readonly Place[],locale:Lo
   const next=rankAskPlaces(question,items.filter(p=>categoriesForPlace(p).includes("eat")),locale,12,strictPreferences,["eat"]).hits.find(x=>!used.has(x.p.id));
   if(next)selected.push({category:"eat",match:next,source:"complementary"});
  }
- if(selected.length<2)return null;
+ if(!selected.length)return null;
  const notes=locale==="fr"
   ? ["Proposition éditoriale sans horaires imposés : confirmez l’ouverture et les réservations.","L’ordre des étapes ne garantit pas un trajet optimisé ni une distance à pied."]
   : ["Editorial plan without fixed times: confirm opening hours and bookings.","The order of the stops is not an optimised route or a walking-distance promise."];

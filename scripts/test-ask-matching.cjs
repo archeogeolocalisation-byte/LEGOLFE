@@ -72,3 +72,14 @@ assert.ok(mapUi.includes('ResizeObserver'),'responsive map');
 assert.ok(mapUi.includes('OpenStreetMap'),'map attribution');
 assert.equal(mapUi.includes('google.com/maps/dir'),false,'no fabricated itinerary link');
 console.log('Ask map: sourced and unmapped points, invalid points, responsive viewport and no fake routes passed.');
+
+const singleRestaurant=buildAskDayPlan("Un restaurant à Gassin",places,"fr","half");
+assert.ok(singleRestaurant&&singleRestaurant.steps.length>=1,"simple restaurant search has saveable programme");
+assert.ok(singleRestaurant.steps.every(x=>x.match.p.category==="eat"),"simple request recommends restaurants");
+const romantic=buildAskDayPlan("Un endroit romantique à Gassin",places,"fr","half");
+assert.ok(romantic&&romantic.steps.length>=1,"preference-only query can be saved");
+assert.equal(buildAskDayPlan("Je cherche une maison à Gassin",places,"fr","half"),null,"housing only must not fabricate plan");
+const askMarkup=fs.readFileSync('app/[locale]/ask/page.tsx','utf8');
+assert.ok(askMarkup.indexOf('{result.dayPlan&&<section')<askMarkup.indexOf('{result.placeHits.length>0&&<div'),"programme appears above results");
+assert.ok(askMarkup.includes('Enregistrer dans Mon séjour'),"save action is included");
+console.log("Single-place saveability and visible programme placement passed.");
