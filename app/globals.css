@@ -112,7 +112,27 @@ button,textarea,input { font:inherit; }
 .lg-saved-dark [class*="border-black"] { border-color: rgba(255,255,255,.28); }
 .lg-saved-dark [class*="bg-neutral-100"] { background-color: #172a37; }
 .lg-saved-dark [class*="bg-white"] { background-color: #132735; }
-.lg-saved-dark .lg-btn { border-color: rgba(255,255,255,.5); color: #fff; }
+/* All default buttons in My Stay must have an actual dark surface, not white on white. */
+.lg-saved-dark .lg-btn {
+ background-color:#142f40;
+ border-color:#86aab9;
+ color:#fff;
+}
+.lg-saved-dark .lg-btn:hover { background-color:#20526b; color:#fff; filter:none; }
+.lg-saved-dark .lg-btn:focus-visible,
+.lg-saved-dark button:focus-visible,
+.lg-saved-dark a:focus-visible { outline:3px solid #a6d8e5; outline-offset:3px; }
+.lg-saved-dark .lg-btn--accent,
+.lg-saved-dark .lg-btn--accent:hover {
+ background-color:#a6d8e5;
+ border-color:#a6d8e5;
+ color:#082235;
+}
+.lg-saved-dark .lg-btn--accent:hover { background-color:#c7edf4; }
+.lg-saved-dark .lg-kicker { color:#a6d8e5; }
+.lg-saved-dark .lg-link-accent:hover { color:#a6d8e5; }
+.lg-saved-dark button:disabled { opacity:.45; cursor:not-allowed; }
+
 .lg-saved-dark .lg-btn.bg-black, .lg-saved-dark button.bg-black { background-color: #0B4F6C; color: #fff; border-color: #0B4F6C; }
 .lg-saved-dark a:hover { color: #a6d8e5; }
 .lg-saved-dark .lg-accent { color: #a6d8e5; }
