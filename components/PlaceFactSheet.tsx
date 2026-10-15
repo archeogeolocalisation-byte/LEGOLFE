@@ -1,3 +1,4 @@
+import PlaceTaxonomy from './PlaceTaxonomy';
 import {editorialSignatures,fallbackSignature} from "../lib/placeEditorialSignatures";
 import {newExperienceMedia} from "../data/newExperienceMedia";
 import {newExperienceFacts} from "../data/newExperienceFacts";
@@ -24,6 +25,7 @@ export default function PlaceFactSheet({id,locale}:{id:string;locale:Locale}) {
    <Link className="text-sm font-bold underline underline-offset-4" href={`/${locale}/explore/${place.category}`}>← {fr?'Explorer les adresses':'Explore places'}</Link>
    <p className="lg-kicker mt-9 text-[#0B4F6C]">{place.location} · {fr?'LE GOLFE / DÉCOUVRIR':'LE GOLFE / DISCOVER'}</p>
    <h1 className="lg-menu-title mt-6 max-w-full text-[#0B4F6C]">{place.name}</h1>
+   <PlaceTaxonomy place={place} locale={locale}/>
    <div className="mt-10 grid gap-8 border-t border-black pt-7 md:grid-cols-2">
     <h2 className="max-w-3xl text-4xl font-black uppercase leading-[.94] tracking-[-.055em] md:text-6xl">{signature.subtitle}</h2>
     <p className="max-w-xl text-lg font-bold leading-8 text-black/65">{copy.intro}</p>

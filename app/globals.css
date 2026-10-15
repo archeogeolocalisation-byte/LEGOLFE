@@ -105,3 +105,16 @@ button,textarea,input { font:inherit; }
 
 /* Shared scale for primary navigation pages, aligned with the agenda. */
 .lg-menu-title{font-size:clamp(2.4rem,5.3vw,5rem);font-weight:900;line-height:.94;letter-spacing:-.045em;text-transform:uppercase;text-wrap:balance;overflow-wrap:break-word;}
+
+
+/* My Stay: coherent dark editorial treatment without altering the rest of the site. */
+.lg-saved-dark [class*="text-black"] { color: rgba(255,255,255,.72); }
+.lg-saved-dark [class*="border-black"] { border-color: rgba(255,255,255,.28); }
+.lg-saved-dark [class*="bg-neutral-100"] { background-color: #172a37; }
+.lg-saved-dark [class*="bg-white"] { background-color: #132735; }
+.lg-saved-dark .lg-btn { border-color: rgba(255,255,255,.5); color: #fff; }
+.lg-saved-dark .lg-btn.bg-black, .lg-saved-dark button.bg-black { background-color: #0B4F6C; color: #fff; border-color: #0B4F6C; }
+.lg-saved-dark a:hover { color: #a6d8e5; }
+.lg-saved-dark .lg-accent { color: #a6d8e5; }
+.lg-saved-dark input, .lg-saved-dark select, .lg-saved-dark textarea { background: #142936; color: #fff; border-color: rgba(255,255,255,.4); }
+.lg-saved-dark input::placeholder, .lg-saved-dark textarea::placeholder { color: rgba(255,255,255,.6); }

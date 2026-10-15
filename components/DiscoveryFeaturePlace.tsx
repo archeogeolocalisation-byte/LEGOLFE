@@ -1,3 +1,4 @@
+import PlaceTaxonomy from './PlaceTaxonomy';
 import {fallbackSignature} from "../lib/placeEditorialSignatures";
 import PlaceMapBlock from './PlaceMapBlock';
 import {placeMapPoints} from '../data/placeMapPoints';
@@ -20,6 +21,7 @@ export default function DiscoveryFeaturePlace({id,locale}:{id:string;locale:Loca
    <Link className="text-xs font-bold text-black/55" href={`/${locale}/explore/do`}>← {locale==='fr'?'À faire':'Things to do'}</Link>
    <p className="lg-kicker mt-10 text-[#0B4F6C]">{place.location} · {locale==='fr'?'NATURE & PATRIMOINE':'NATURE & HERITAGE'}</p>
    <h1 className="lg-menu-title mt-6 max-w-5xl text-[#0B4F6C]">{guide.title}</h1>
+   <PlaceTaxonomy place={place} locale={locale}/>
    <div className="mt-10 grid gap-8 border-t border-black pt-7 md:grid-cols-2"><h2 className="text-4xl font-black uppercase leading-[.94] tracking-[-.05em] md:text-6xl">{signature.subtitle}</h2><p className="max-w-xl text-lg font-bold leading-8 text-black/65">{guide.intro}</p></div>
   </section>
   <PlaceMediaGallery name={place.name} photos={photosForPlace(id)} locale={locale}/>
