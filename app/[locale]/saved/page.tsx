@@ -54,7 +54,7 @@ export default function SavedPage({ params }: { params: Promise<{ locale: string
       <div className="mt-8 grid gap-8 border-t border-black pt-6 md:grid-cols-[1fr_auto] md:items-start">
         <div><p className="max-w-2xl text-lg font-bold leading-7 text-black/55">{fr ? "Votre sélection devient un projet de séjour. LE GOLFE peut maintenant relier ces lieux, éviter les mauvais enchaînements et construire un rythme de séjour cohérent." : "Your shortlist becomes a brief. LE GOLFE can connect these places, avoid bad combinations and build a coherent stay rhythm."}</p>
         {categories.length>0 && <div className="mt-5 flex flex-wrap gap-2">{categories.map((id)=><span key={id} className="border border-black px-3 py-2 text-[9px] font-black uppercase tracking-[.12em]">{fr ? categoryFR[id].name : getCategory(id)?.label}</span>)}</div>}</div>
-        {(savedPlaces.length > 0 || savedVillas.length > 0) && <Link href={`/${locale}/ask?shortlist=${encodeURIComponent(prompt)}`} className="lg-btn bg-[#a6d8e5] text-[#082235] !border-[#a6d8e5]">{fr ? "Construire mon séjour" : "Build my stay"} →</Link>}
+        {(savedPlaces.length > 0 || savedVillas.length > 0) && <Link href={`/${locale}/ask?shortlist=${encodeURIComponent(prompt)}`} className="lg-btn lg-btn--accent">{fr ? "Construire mon séjour" : "Build my stay"} →</Link>}
       </div>
 
       <div className="mt-6 flex flex-wrap items-center justify-between gap-4"><p className="text-xs leading-5 text-black/50">{fr?"Sélection conservée sur ce navigateur, sans compte.":"Shortlist saved in this browser, no account required."}</p><Link href="/requests" className="lg-btn">{fr?"Mes demandes de séjour":"My stay requests"} →</Link></div>
