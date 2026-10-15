@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import {useMemo,useState} from "react";
+import {useEffect,useMemo,useRef,useState} from "react";
 import type {Locale} from "../lib/i18n";
 import type {AskPlanMarker} from "../lib/askPlanMap";
 import {pointMapUrl} from "../lib/placeMapLinks";
@@ -19,8 +19,11 @@ export default function AskPlanMap({markers,total,locale}:{markers:AskPlanMarker
  const fr=locale==="fr";
  const [focus,setFocus]=useState<{lat:number;lon:number;zoom:number}>(initial);
  const [selected,setSelected]=useState<string|null>(null);
+ const root=useRef<HTMLDivElement|null>(null);
+ const [size,setSize]=useState({width:1000,height:470});
+ useEffect(()=>{const el=root.current;if(!el)return;const update=()=>{const r=el.getBoundingClientRect();if(r.width>0)setSize({width:r.width,height:r.height});};update();const observer=new ResizeObserver(update);observer.observe(el);return()=>observer.disconnect();},[]);
+ const {width,height}=size;
  const center=project(focus.lat,focus.lon,focus.zoom);
- const width=1000,height=470;
  const tiles=useMemo(()=>{
   const output:{x:number;y:number;url:string;left:number;top:number}[]=[];
   const count=2**focus.zoom;
@@ -37,9 +40,8 @@ export default function AskPlanMap({markers,total,locale}:{markers:AskPlanMarker
   <div className="flex flex-wrap items-start justify-between gap-4"><div><p className="lg-kicker text-[#b9e9f4]">{fr?"VOS ÉTAPES SUR LA CARTE":"YOUR STOPS ON THE MAP"}</p><p className="mt-2 text-sm font-semibold text-white/70">{markers.length} / {total} {fr?"étapes avec repère géographique sourcé":"stops with sourced map references"}</p></div>
   {markers.length>0&&<button type="button" onClick={()=>{setFocus(initial);setSelected(null)}} className="border border-white/40 px-3 py-2 text-xs font-bold text-white hover:bg-white/15">{fr?"Vue du Golfe":"Golfe overview"}</button>}</div>
   {markers.length>0?<div className="mt-5">
-    <div className="relative mx-auto aspect-[1000/470] w-full overflow-hidden bg-[#dce6e6]" role="group" aria-label={fr?"Carte de repères sélectionnables":"Map with selectable pins"}>
-      <div className="absolute left-0 top-0 h-full w-full" style={{containerType:"inline-size"}}>
-        <div className="absolute left-1/2 top-1/2" style={{width:1000,height:470,transform:"translate(-50%,-50%) scale(min(1, 1))",transformOrigin:"center"}}>
+    <div ref={root} className="relative mx-auto h-[310px] w-full overflow-hidden bg-[#dce6e6] sm:h-[470px]" role="group" aria-label={fr?"Carte de repères sélectionnables":"Map with selectable pins"}>
+      <div className="absolute inset-0">
           {tiles.map(tile=><img key={`${focus.zoom}-${tile.x}-${tile.y}`} src={tile.url} alt="" aria-hidden="true" draggable={false} className="pointer-events-none absolute max-w-none select-none" style={{left:tile.left,top:tile.top,width:TILE,height:TILE}}/>)}
           {markers.map(m=>{
             const xy=project(m.point.latitude,m.point.longitude,focus.zoom);
@@ -48,7 +50,6 @@ export default function AskPlanMap({markers,total,locale}:{markers:AskPlanMarker
             return <button type="button" key={m.id} onClick={()=>choose(m)} title={m.name} aria-label={`${m.order}. ${m.name}`} aria-pressed={selected===m.id}
               className={`absolute z-10 flex h-10 w-10 -translate-x-1/2 -translate-y-full items-center justify-center rounded-full border-2 border-white text-sm font-black shadow-lg focus-visible:outline-4 focus-visible:outline-[#0B4F6C] ${selected===m.id?"bg-[#071D2B] text-white":"bg-[#0B4F6C] text-white"}`} style={{left,top}}>{m.order}</button>;
           })}
-        </div>
       </div>
       <div className="absolute right-3 top-3 z-20 flex flex-col border border-black/20 bg-white text-black"><button type="button" onClick={()=>setFocus(v=>({...v,zoom:Math.min(14,v.zoom+1)}))} disabled={focus.zoom>=14} aria-label={fr?"Zoomer":"Zoom in"} className="h-10 w-10 text-xl font-bold disabled:opacity-40">+</button><button type="button" onClick={()=>setFocus(v=>({...v,zoom:Math.max(9,v.zoom-1)}))} disabled={focus.zoom<=9} aria-label={fr?"Dézoomer":"Zoom out"} className="h-10 w-10 border-t border-black/20 text-xl font-bold disabled:opacity-40">−</button></div>
       <div className="absolute bottom-2 left-2 z-20 bg-white/90 px-2 py-1 text-[10px] text-black">© <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer" className="underline">OpenStreetMap</a> contributors</div>
