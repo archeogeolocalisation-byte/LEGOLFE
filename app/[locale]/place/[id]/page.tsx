@@ -1,3 +1,4 @@
+import PlaceTaxonomy from '../../../../components/PlaceTaxonomy';
 import {fallbackSignature} from "../../../../lib/placeEditorialSignatures";
 import citadelleStyles from '../../../../components/Citadelle.module.css';
 import PampelonnePhoto from '../../../../components/PampelonnePhoto';
@@ -62,6 +63,7 @@ async function PlaceContent({ params }: { params: Promise<{ locale: string; id: 
       <Link href={`/${l}/explore/${p.category}`} className="text-xs font-bold underline underline-offset-4">← {l==='fr'?categoryFR[p.category].name:c.name}</Link>
       <p className="lg-kicker mt-10 text-[#0B4F6C]">{l==='fr'?categoryFR[p.category].name:c.name} · {p.location}</p>
       <h1 className="lg-menu-title mt-6 max-w-full text-[#0B4F6C]">{p.name}</h1>
+      <PlaceTaxonomy place={p} locale={l}/>
       <div className="mt-10 grid gap-8 border-t border-black pt-7 md:grid-cols-2"><h2 className="max-w-3xl text-4xl font-black uppercase leading-[.94] tracking-[-.055em] md:text-6xl">{signature.subtitle}</h2><p className="max-w-xl text-lg font-bold leading-8 text-black/65">{desc}</p></div>
     </section>
     {curatedMedia?<section className="lg-shell pb-10"><figure><img src={curatedMedia.src} alt={curatedMedia.alt} className="aspect-[16/9] w-full bg-[#071D2B] object-cover"/>{(curatedMedia.credit||curatedMedia.license)&&<figcaption className="mt-3 text-xs text-black/60">{curatedMedia.credit} · {curatedMedia.license}{curatedMedia.contextual?' · '+(l==='fr'?'Photo du secteur':'Area photograph'):''}</figcaption>}</figure></section>:<section className="lg-shell pb-10"><div className="flex min-h-[320px] items-end bg-[#071D2B] p-7 text-white md:min-h-[490px] md:p-12"><p className="max-w-full break-words text-[clamp(2.4rem,5.3vw,5rem)] font-black uppercase leading-[.88] tracking-[-.055em]">{p.name}</p></div></section>}
@@ -145,6 +147,7 @@ function LegacyPlacePage({id,locale}:{id:string;locale:"fr"|"en"}){
  const c=legacyPlaceFeatures[id][locale],place=places.find(p=>p.id===id)!;
  return <main className={`min-h-screen bg-white text-black ${id==='pampelonne'?pampelonneStyles.page:''}`}><SiteHeader locale={locale} path={`/place/${id}`}/>
   <EditorialIntro id={id} locale={locale} kicker={c.kicker} title={c.title} sub={c.sub} intro={c.intro}/>
+  <section className="lg-shell pb-8"><PlaceTaxonomy place={place} locale={locale}/></section>
   <PlaceMediaGallery name={place.name} photos={photosForPlace(id)} locale={locale} processed={id==='pampelonne'}/>
   <EditorialQuote label={c.local} quote={c.quote} body={c.body}/>
   <EditorialMoments label={c.rhythm} title={c.rhythmTitle} moments={c.moments}/>
