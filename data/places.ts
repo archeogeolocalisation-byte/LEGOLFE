@@ -49,7 +49,7 @@ export const places: Place[] = [
   "name": "Domaine de La Croix",
   "category": "do",
   "location": "La Croix-Valmer",
-  "description": "A long-established Provence winery with tastings and bookable cellar visits, a practical introduction to the Croix-Valmer wine-growing landscape.",
+  "description": "Swap the beach for the vines at Domaine de La Croix, La Croix-Valmer. Discover the estate’s Provence wines, tasting shop at 816 Boulevard de Tabarin and pre-booked cellar tours; confirm the visit schedule before setting off.",
   "bestFor": [
     "Provence wine tasting",
     "Bookable guided cellar tours",
@@ -185,7 +185,7 @@ export const places: Place[] = [
   "name": "Moulin de Paillas",
   "category": "do",
   "location": "Ramatuelle",
-  "description": "Plan a stop at Moulin de Paillas above Ramatuelle: coastal views, access from the village and information on visiting the restored windmill.",
+  "description": "Above Ramatuelle, the restored Moulin de Paillas brings windmill heritage and sweeping Saint-Tropez peninsula views together. Find the right approach near Col de Paillas and confirm visit access before travelling.",
   "bestFor": [
     "Heritage and landscape"
   ],
@@ -210,7 +210,7 @@ export const places: Place[] = [
   "name": "Cap Taillat",
   "category": "do",
   "location": "Ramatuelle · La Croix-Valmer",
-  "description": "Plan your walk to Cap Taillat between Ramatuelle and La Croix-Valmer: access from l’Escalet, the coastal path and advice before setting out.",
+  "description": "Cap Taillat is the wild side of the Saint-Tropez peninsula: a protected coastal headland reached on foot from L’Escalet, not by car. Follow the coastal path and check weather and seasonal fire-access restrictions.",
   "bestFor": [
     "A prepared coastal walk"
   ],
@@ -235,7 +235,7 @@ export const places: Place[] = [
   "name": "Pont des Fées",
   "category": "do",
   "location": "Grimaud",
-  "description": "Explore Pont des Fées in Grimaud: a historic aqueduct, a walk from Saint-Roch windmill and advice for visiting the valley of the river Garde.",
+  "description": "Beyond Grimaud’s village lanes, Pont des Fées reveals the remains of a historic aqueduct amid the Vallon de la Garde. Plan a walk via the signed trail rather than following a car route straight to the structure.",
   "bestFor": [
     "Heritage and landscape"
   ],
@@ -463,7 +463,7 @@ export const places: Place[] = [
   },
   {
     id: "caves-du-roy", name: "Les Caves du Roy", category: "party", location: "Saint-Tropez",
-    description: "The classic Saint-Tropez nightclub reference: less about discovering a new concept than deliberately choosing the myth for a proper late night.",
+    description: "When Saint-Tropez swaps the harbour for the dance floor, Les Caves du Roy is one of its legendary late-night addresses. Check seasonal opening and entry arrangements before planning your night.",
     priceLevel: 4, bestFor: ["Iconic club night", "Dancing", "Late summer nights"], notIdealFor: ["Casual pub atmosphere", "Spontaneous low-key plans"],
     tags: ["club", "iconic", "dancing", "late-night", "saint-tropez"],
     goodToKnow: ["The tourism office describes more than five decades of Saint-Tropez nightlife history.", "In 2026 it is listed Fridays and Saturdays from 18 April to 30 June, then daily in July and August."],
@@ -572,7 +572,7 @@ export const places: Place[] = [
     name: "Byblos Beach",
     category: "eat",
     location: "Pampelonne · Ramatuelle",
-    description: "A polished Pampelonne lunch option for travellers who want the beach to be part of the restaurant experience, not simply somewhere to eat between swims.",
+    description: "Byblos Beach on Pampelonne pairs Mediterranean dining with a full beach day in Ramatuelle. Confirm the access road, seasonal opening and reservations before heading to the sand.",
     priceLevel: 4,
     bestFor: ["Beach lunch", "Groups of friends", "Pampelonne days"],
     notIdealFor: ["Quiet village dinner", "Budget-led lunch"],
@@ -738,7 +738,7 @@ export const places: Place[] = [
     name: "Le Club 55",
     category: "beach",
     location: "Pampelonne · Ramatuelle",
-    description: "The historic Pampelonne institution: a beach-and-lunch day built around a long-established Ramatuelle address rather than a high-energy party concept.",
+    description: "On Pampelonne in Ramatuelle, Le Club 55 offers a classic Saint-Tropez beach-lunch ritual. Make the day about the table and the shore, but plan the correct approach road and book ahead in high season.",
     priceLevel: 4,
     bestFor: ["Iconic Pampelonne day", "Long lunch", "Classic Saint-Tropez atmosphere"],
     notIdealFor: ["Budget beach day", "Spontaneous peak-season plans"],
@@ -911,7 +911,7 @@ export const places: Place[] = [
     name: "Plage de Gigaro",
     category: "beach",
     location: "La Croix-Valmer",
-    description: "A long, natural-feeling beach at the gateway to Cap Lardier — equally useful for a family swim or as the start of a serious coastal walk.",
+    description: "Gigaro in La Croix-Valmer is more than a sandy beach: it is a gateway to the Cap Lardier coastal paths. Come for a swim, a relaxed family beach day or the start of a shoreline hike.",
     image: "https://upload.wikimedia.org/wikipedia/commons/6/68/Aerial_view_of_Gigaro_Beach_in_La_Croix-Valmer%2C_France_%2852723801211%29.jpg",
     priceLevel: 1,
     bestFor: ["Families", "Coastal walks", "Natural beach days", "Sunset"],
@@ -979,7 +979,7 @@ export const places: Place[] = [
   {
     id:"san-peire-randonnee", name:"Randonnée de San Peïre", category:"do",
     location:"Le Plan-de-la-Tour",
-    description:"A woodland hike from Le Plan-de-la-Tour to the San Peïre hilltop and its archaeological remains, with broad views over the Golfe and the Maures.",
+    description:"Hike through the wooded Maures hills from Le Plan-de-la-Tour towards the San Peïre archaeological site and broad views over the Golfe. Check the trail and any seasonal forest restrictions before leaving.",
     bestFor:["Woodland walking","Panoramic views","Local history and archaeology"],
     notIdealFor:["Expecting a paved and accessible city walk","Setting out without checking summer fire restrictions"],
     tags:["walk","hiking","nature","forest","view","heritage","archaeology","quiet","san-peire"],
@@ -996,10 +996,11 @@ export function getCategory(id: string) {
 
 
 export const placeDescriptionFr: Record<string, string> = {
- "san-peire-randonnee":"Une randonnée dans les collines boisées du Plan-de-la-Tour jusqu’aux vestiges de San Peïre et à son panorama sur le Golfe. Vérifiez l’itinéraire et les restrictions d’accès aux massifs avant le départ.",
-  "moulin-de-paillas": "Découvrez le Moulin de Paillas sur les hauteurs de Ramatuelle : panorama, accès et conseils pour préparer la visite du moulin restauré.",
-  "cap-taillat": "Préparez votre balade au Cap Taillat entre Ramatuelle et La Croix-Valmer : départ de l’Escalet, sentier littoral et conseils avant de partir.",
-  "pont-des-fees": "Découvrez le Pont des Fées à Grimaud : ancien aqueduc, balade depuis le moulin Saint-Roch et conseils pour parcourir le vallon de la Garde.",
+ "domaine-de-la-croix":"À La Croix-Valmer, le Domaine de La Croix raconte le Golfe côté vignoble : dégustations, boutique au 816 boulevard de Tabarin et visites commentées des chais sur réservation. Une autre façon de parcourir la presqu’île, loin du sable.",
+ "san-peire-randonnee":"Au Plan-de-la-Tour, San Peïre offre une randonnée entre sous-bois, traces d’occupation ancienne et vues ouvertes sur le massif des Maures et le Golfe de Saint-Tropez. Le bon réflexe : vérifier le parcours et l’accès aux massifs avant de partir.",
+  "moulin-de-paillas": "À Ramatuelle, le Moulin de Paillas remet les collines au premier plan : un moulin restauré, la route du col de Paillas et un panorama sur la presqu’île de Saint-Tropez. Préparez l’accès et renseignez-vous sur les visites avant de monter.",
+  "cap-taillat": "Au Cap Taillat, la Côte d’Azur retrouve son visage sauvage. Depuis l’Escalet à Ramatuelle, le sentier littoral rejoint ce cap relié à la côte par une langue de sable. Ce n’est pas un accès en voiture : vérifiez météo et restrictions de randonnée.",
+  "pont-des-fees": "À Grimaud, le Pont des Fées n’est pas un simple pont : les vestiges d’un ancien aqueduc se découvrent au fil d’une promenade dans le vallon de la Garde. Pour y aller, cherchez le sentier, pas une adresse automobile au pied de l’ouvrage.",
 
 "cogolin-village":"Des ruelles qui montent, des savoir-faire à découvrir et un autre visage du Golfe. Cogolin se choisit pour une promenade au vieux village, une rencontre avec l’artisanat ou une étape entre les communes voisines.",
 "la-croix-valmer-village":"Un village en retrait de la mer, des vignobles et des plages pour prendre le large. La Croix-Valmer donne plusieurs directions au séjour : Gigaro, le Débarquement ou une promenade préparée sur le littoral.",
@@ -1011,9 +1012,9 @@ export const placeDescriptionFr: Record<string, string> = {
 
   "monroes-pub": "Un pub irlandais décontracté près de Port Grimaud, utile pour le sport, le karaoké et une soirée simple sans logistique tropézienne.",
   "gaio-club": "Un dîner qui glisse vers le live puis le club, au-dessus du port de Saint-Tropez, pour une soirée pensée pour durer tard.",
-  "caves-du-roy": "Le club mythique de Saint-Tropez : une adresse à choisir pour la nuit elle-même, plus que pour découvrir un nouveau concept.",
+  "caves-du-roy": "Aux Caves du Roy, Saint-Tropez passe de la carte postale à la nuit. Ce club emblématique fait partie de l’histoire festive de la ville : musique, danse et ambiance tardive, avec une saison et des conditions d’entrée à vérifier.",
   "opera-saint-tropez": "Un dîner-show face au port où restaurant, scène et club se mélangent dans une même soirée.",
-  "gigaro-beach": "Une grande plage naturelle à La Croix-Valmer, porte d'entrée du Cap Lardier et excellente base pour combiner baignade et sentier littoral.",
+  "gigaro-beach": "À La Croix-Valmer, Gigaro est bien plus qu’une plage : c’est un grand rivage de sable et une porte d’entrée vers les sentiers du Cap Lardier. À choisir pour une baignade, une journée en famille ou un départ de balade sur le littoral.",
   "maison-des-papillons": "Un petit musée singulier au cœur de Saint-Tropez, entre collections de papillons, atelier de Dany Lartigue et photographies familiales.",
   "les-halles-saint-tropez": "Une adresse facile près du port où stands, food trucks, brasserie et musique permettent de gérer simplement un groupe ou une soirée improvisée.",
   "spa-du-bailli": "Un spa face à la Méditerranée au Rayol-Canadel, particulièrement intéressant pour intégrer un vrai temps de récupération à un séjour côtier.",
@@ -1021,7 +1022,7 @@ export const placeDescriptionFr: Record<string, string> = {
   "la-voile": "Une table méditerranéenne raffinée dominant la côte à La Réserve Ramatuelle, adaptée à ceux qui recherchent une ambiance élégante et plus calme que Pampelonne.",
   "bello-visto": "Une terrasse de village avec une large vue sur le Golfe, entre cuisine méditerranéenne et rythme paisible du vieux Gassin.",
   "la-verdoyante": "Une table provençale sur les hauteurs de Gassin, entourée de vignes et ouverte sur le paysage du Golfe.",
-  "byblos-beach": "Une adresse de plage à Pampelonne pour associer déjeuner, mer et atmosphère Saint-Tropez dans une même journée.",
+  "byblos-beach": "À Pampelonne, Byblos Beach mêle restaurant de plage et journée au bord de l’eau. Une adresse à Ramatuelle pour un long déjeuner méditerranéen : choisissez l’accès routier correspondant et vérifiez les dates d’ouverture.",
   "ramatuelle-village": "Un village perché entre vignobles et littoral, utile pour comprendre la partie sud du Golfe au-delà de Pampelonne.",
   "gassin-village": "Un village médiéval perché avec de grands panoramas sur le Golfe, à découvrir pour ses ruelles et son rythme plus calme.",
   "grimaud-village": "Un village médiéval dominé par les ruines de son château, avec des ruelles provençales et une position très centrale dans le Golfe.",
@@ -1031,7 +1032,7 @@ export const placeDescriptionFr: Record<string, string> = {
   "chateau-minuty": "Un domaine viticole de Gassin associé aux vins de Provence, intéressant pour relier le séjour au paysage viticole local.",
   "citadelle-saint-tropez": "La citadelle dominant Saint-Tropez, à la fois point de vue, patrimoine et porte d'entrée vers l'histoire maritime locale.",
   "saint-tropez-village": "Le cœur historique et social du Golfe : port, ruelles, marché, restaurants et vie nocturne concentrés dans un petit périmètre.",
-  "club-55": "Une institution de Pampelonne où le déjeuner fait partie de l'expérience de plage et de l'imaginaire historique de Saint-Tropez.",
+  "club-55": "Sur Pampelonne, au cœur de Ramatuelle, le Club 55 incarne un déjeuner de plage à l’ancienne. Une adresse mythique pour prendre son temps, entre table et rivage ; prévoyez le bon accès et confirmez la réservation en haute saison.",
   "indie-beach": "Un beach club contemporain à Pampelonne pensé pour une journée qui peut glisser du déjeuner vers une ambiance plus festive.",
   "casita-pampelonne": "Une adresse de plage à Pampelonne pour combiner table, transats et journée au bord de l'eau.",
   "bateaux-verts-excursion": "Des liaisons et excursions maritimes permettant de découvrir le Golfe depuis l'eau et de relier plusieurs points du littoral.",
