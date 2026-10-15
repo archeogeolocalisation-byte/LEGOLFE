@@ -1,6 +1,20 @@
 import type {MapPoint} from '../lib/placeMapLinks';
 // Public venue references from official sources; never inferred from a business owner’s home.
 export const placeMapPoints:Record<string,MapPoint[]> = {
+  "musee-gendarmerie-cinema":[{
+    id:"musee-gendarmerie-cinema",label:{fr:"Musée de la Gendarmerie et du Cinéma",en:"Gendarmerie and Cinema Museum"},
+    latitude:43.26964,longitude:6.63554,
+    source:"https://www.openstreetmap.org/way/179782164",checked:"2026-10-15",kind:"venue",
+    note:{fr:"Musée situé dans l’ancienne gendarmerie, au 2 place Blanqui à Saint-Tropez. Repère du bâtiment, pas d’un parking ; vérifiez les horaires du musée.",en:"Museum in the former gendarmerie at 2 Place Blanqui, Saint-Tropez. This marks the building, not a car park; check museum opening times."},
+    directionsQuery:"2 place Blanqui, 83990 Saint-Tropez, France"
+  }],
+  "gigaro-beach":[{
+    id:"plage-gigaro",label:{fr:"Plage de Gigaro · secteur central",en:"Gigaro Beach · central section"},
+    latitude:43.1840143,longitude:6.5980572,
+    source:"https://www.cirkwi.com/fr/point-interet/3341772-plage-de-gigaro",checked:"2026-10-15",kind:"area",
+    note:{fr:"Repère de la plage publié par La Croix-Valmer Tourisme. Ce n’est pas une place de stationnement garantie ; vérifiez l’accès par le boulevard de Gigaro.",en:"Beach reference published by La Croix-Valmer Tourism. This is not guaranteed parking; check access from Boulevard de Gigaro."},
+    directionsQuery:"1198 boulevard de Gigaro, 83420 La Croix-Valmer, France"
+  }],
   "domaine-de-la-croix":[{id:"boutique-domaine",label:{fr:"Domaine de La Croix · Boutique & chais",en:"Domaine de La Croix · Shop & cellar"},latitude:43.1982,longitude:6.56966,source:"https://www.cirkwi.com/fr/point-interet/2271236-domaine-de-la-croix",checked:"2026-10-15",kind:"venue",note:{fr:"Repère de la boutique au 816 boulevard de Tabarin, La Croix-Valmer. Visite des chais sur réservation : vérifiez les créneaux avant le départ.",en:"Shop and winery marker at 816 Boulevard de Tabarin, La Croix-Valmer. Cellar tours require booking; check the current schedule."},directionsQuery:"816 boulevard de Tabarin, 83420 La Croix-Valmer, France"}],
   "moulin-de-paillas":[{id:"moulin-de-paillas",label:{fr:"Moulin de Paillas",en:"Paillas windmill"},latitude:43.21379,longitude:6.60534,source:"https://www.openstreetmap.org/way/179933452",checked:"2026-10-15",kind:"venue",note:{fr:"Repère du moulin restauré au col de Paillas, au-dessus de Ramatuelle. Accès et visites à vérifier auprès de l’office de tourisme.",en:"Restored windmill above Ramatuelle near Col de Paillas. Check public access and visit conditions with the tourist office."},directionsQuery:"Moulin de Paillas, Ramatuelle, France"}],
   "cap-taillat":[{id:"cap-taillat",label:{fr:"Cap Taillat · Pointe naturelle",en:"Cap Taillat · Coastal headland"},latitude:43.1679,longitude:6.6464,source:"https://www.openstreetmap.org/node/12784305722",checked:"2026-10-15",kind:"area",note:{fr:"Ce point indique le cap naturel, PAS un accès voiture. Préparez une marche sur le sentier littoral depuis l’Escalet et vérifiez l’ouverture des massifs.",en:"This marker shows the natural headland, NOT vehicle access. Plan a coastal-path hike from L’Escalet and check seasonal access restrictions."},directionsQuery:"Plage de l’Escalet, Ramatuelle, France"}],
