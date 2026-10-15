@@ -976,6 +976,18 @@ export const places: Place[] = [
     lastVerifiedAt: "2026-10-02",
   },
 
+  {
+    id:"san-peire-randonnee", name:"Randonnée de San Peïre", category:"do",
+    location:"Le Plan-de-la-Tour",
+    description:"A woodland hike from Le Plan-de-la-Tour to the San Peïre hilltop and its archaeological remains, with broad views over the Golfe and the Maures.",
+    bestFor:["Woodland walking","Panoramic views","Local history and archaeology"],
+    notIdealFor:["Expecting a paved and accessible city walk","Setting out without checking summer fire restrictions"],
+    tags:["walk","hiking","nature","forest","view","heritage","archaeology","quiet","san-peire"],
+    goodToKnow:["Trail conditions and access may vary; check the route and current forest restrictions before setting off.","Bring appropriate footwear and drinking water."],
+    verified:false,featured:false,
+    source:"https://www.golfe-sainttropez-tourisme.fr/",
+    lastVerifiedAt:"2026-10-15"
+  },
 ];
 
 export function getCategory(id: string) {
@@ -984,6 +996,7 @@ export function getCategory(id: string) {
 
 
 export const placeDescriptionFr: Record<string, string> = {
+ "san-peire-randonnee":"Une randonnée dans les collines boisées du Plan-de-la-Tour jusqu’aux vestiges de San Peïre et à son panorama sur le Golfe. Vérifiez l’itinéraire et les restrictions d’accès aux massifs avant le départ.",
   "moulin-de-paillas": "Découvrez le Moulin de Paillas sur les hauteurs de Ramatuelle : panorama, accès et conseils pour préparer la visite du moulin restauré.",
   "cap-taillat": "Préparez votre balade au Cap Taillat entre Ramatuelle et La Croix-Valmer : départ de l’Escalet, sentier littoral et conseils avant de partir.",
   "pont-des-fees": "Découvrez le Pont des Fées à Grimaud : ancien aqueduc, balade depuis le moulin Saint-Roch et conseils pour parcourir le vallon de la Garde.",
