@@ -979,7 +979,7 @@ export const places: Place[] = [
   {
     id:"san-peire-randonnee", name:"Randonnée de San Peïre", category:"do",
     location:"Le Plan-de-la-Tour",
-    description:"A woodland hike from Le Plan-de-la-Tour to the San Peïre hilltop and its archaeological remains, with broad views over the Golfe and the Maures.",
+    description:"Hike through the wooded Maures hills from Le Plan-de-la-Tour towards the San Peïre archaeological site and broad views over the Golfe. Check the trail and any seasonal forest restrictions before leaving.",
     bestFor:["Woodland walking","Panoramic views","Local history and archaeology"],
     notIdealFor:["Expecting a paved and accessible city walk","Setting out without checking summer fire restrictions"],
     tags:["walk","hiking","nature","forest","view","heritage","archaeology","quiet","san-peire"],
@@ -996,6 +996,7 @@ export function getCategory(id: string) {
 
 
 export const placeDescriptionFr: Record<string, string> = {
+ "domaine-de-la-croix":"À La Croix-Valmer, le Domaine de La Croix raconte le Golfe côté vignoble : dégustations, boutique au 816 boulevard de Tabarin et visites commentées des chais sur réservation. Une autre façon de parcourir la presqu’île, loin du sable.",
  "san-peire-randonnee":"Au Plan-de-la-Tour, San Peïre offre une randonnée entre sous-bois, traces d’occupation ancienne et vues ouvertes sur le massif des Maures et le Golfe de Saint-Tropez. Le bon réflexe : vérifier le parcours et l’accès aux massifs avant de partir.",
   "moulin-de-paillas": "À Ramatuelle, le Moulin de Paillas remet les collines au premier plan : un moulin restauré, la route du col de Paillas et un panorama sur la presqu’île de Saint-Tropez. Préparez l’accès et renseignez-vous sur les visites avant de monter.",
   "cap-taillat": "Au Cap Taillat, la Côte d’Azur retrouve son visage sauvage. Depuis l’Escalet à Ramatuelle, le sentier littoral rejoint ce cap relié à la côte par une langue de sable. Ce n’est pas un accès en voiture : vérifiez météo et restrictions de randonnée.",
