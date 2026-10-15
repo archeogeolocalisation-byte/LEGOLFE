@@ -1,6 +1,32 @@
 import type {MapPoint} from '../lib/placeMapLinks';
 // Public venue references from official sources; never inferred from a business owner’s home.
 export const placeMapPoints:Record<string,MapPoint[]> = {
+
+  "chateau-minuty":[{
+    id:"chateau-minuty-shop",label:{fr:"Château Minuty · accueil du domaine",en:"Château Minuty · winery visitor point"},
+    latitude:43.241553,longitude:6.59228,source:"https://www.cirkwi.com/fr/point-interet/1211419-chateau-minuty",checked:"2026-10-15",kind:"venue",
+    note:{fr:"Accueil du domaine au 2491 route de la Berle à Gassin. Repère publié par l'office de tourisme de Gassin ; vérifiez les visites et dégustations avant de venir.",en:"Winery visitor address at 2491 Route de la Berle, Gassin. Location published by the Gassin tourist office; check tours and tastings before visiting."},
+    directionsQuery:"2491 route de la Berle, 83580 Gassin, France"
+  }],
+  "escalet":[{
+    id:"escalet-beach",label:{fr:"Plage de l’Escalet · secteur de plage",en:"L’Escalet beach · coastal area"},
+    latitude:43.18644,longitude:6.64229,source:"https://www.openstreetmap.org/way/30585237",checked:"2026-10-15",kind:"area",
+    note:{fr:"Repère du secteur naturel de la plage, pas un accès voiture ni une place de stationnement. Vérifiez les conditions d'accès avant la balade.",en:"Natural beach-area reference, not a vehicle access point or parking space. Check current beach access before setting out."},
+    directionsQuery:"Plage de l'Escalet, 83350 Ramatuelle, France"
+  }],
+  "ramatuelle-village":[{
+    id:"ramatuelle-village-center",label:{fr:"Ramatuelle · cœur du village",en:"Ramatuelle · village centre"},
+    latitude:43.21514,longitude:6.6128,source:"https://www.openstreetmap.org/node/332057910",checked:"2026-10-15",kind:"area",
+    note:{fr:"Repère du village ancien, pas l'entrée d'un parking. Stationnement et accès piétons à vérifier en fonction de la saison.",en:"Reference for the historic village, not a car park entrance. Check seasonal parking and pedestrian access."},
+    directionsQuery:"Village de Ramatuelle, 83350 Ramatuelle, France"
+  }],
+  "bello-visto":[{
+    id:"bello-visto-hotel",label:{fr:"Bello Visto · hôtel et restaurant",en:"Bello Visto · hotel and restaurant"},
+    latitude:43.2284,longitude:6.58585,source:"https://www.openstreetmap.org/node/4307192487",checked:"2026-10-15",kind:"venue",
+    note:{fr:"Repère OpenStreetMap de l'hôtel-restaurant, place Deï Barri. Le site officiel indique une fermeture saisonnière après le 11 octobre 2026 : confirmez sa réouverture avant tout déplacement.",en:"OpenStreetMap hotel and restaurant marker at Place Deï Barri. Its official website states seasonal closure after 11 October 2026: confirm reopening before travelling."},
+    directionsQuery:"Place Deï Barri, 83580 Gassin, France"
+  }],
+
   "musee-gendarmerie-cinema":[{
     id:"musee-gendarmerie-cinema",label:{fr:"Musée de la Gendarmerie et du Cinéma",en:"Gendarmerie and Cinema Museum"},
     latitude:43.26964,longitude:6.63554,
