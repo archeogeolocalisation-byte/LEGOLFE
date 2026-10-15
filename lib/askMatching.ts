@@ -126,3 +126,33 @@ export function composeAskShortlist(question:string,items:readonly Place[],local
  }
  return choices;
 }
+
+export type AskDayPlan={
+ format:"half"|"full";
+ steps:{category:PlaceCategory;match:AskMatch;source:"requested"|"complementary"}[];
+ notes:string[];
+};
+export function buildAskDayPlan(question:string,items:readonly Place[],locale:Locale,format:"half"|"full",strictPreferences=false):AskDayPlan|null{
+ const intent=parseAskIntent(question);
+ const requested=composeAskShortlist(question,items,locale,strictPreferences);
+ // No "automatic day" for empty or purely geographic queries.
+ if(!intent.categories.length||!requested.length)return null;
+ const limit=format==="half"?2:3;
+ const selected=[...requested.slice(0,limit)].map(x=>({...x,source:"requested" as const}));
+ const used=new Set(selected.map(x=>x.match.p.id));
+ // Only suggest food as a complementary stop when the visitor explicitly
+ // asks for a day outing (not for a service, spa, nightlife or housing).
+ const outdoor=intent.categories.some(x=>["beach","sea","do","places"].includes(x));
+ const canAddFood=outdoor&&!intent.categories.includes("eat")&&!intent.excludedCategories.includes("eat")&&selected.length<limit;
+ if(canAddFood){
+  const next=rankAskPlaces(question,items.filter(p=>categoriesForPlace(p).includes("eat")),locale,12,strictPreferences,["eat"]).hits.find(x=>!used.has(x.p.id));
+  if(next)selected.push({category:"eat",match:next,source:"complementary"});
+ }
+ if(selected.length<2)return null;
+ const notes=locale==="fr"
+  ? ["Proposition éditoriale sans horaires imposés : confirmez l’ouverture et les réservations.","L’ordre des étapes ne garantit pas un trajet optimisé ni une distance à pied."]
+  : ["Editorial plan without fixed times: confirm opening hours and bookings.","The order of the stops is not an optimised route or a walking-distance promise."];
+ if(intent.mentionsTime||intent.mentionsDistance)notes.push(locale==="fr"?"La limite de trajet demandée n’est pas vérifiée : contrôlez chaque déplacement.":"Your requested travel limit has not been verified: check each journey.");
+ if(intent.exactEuroBudget||intent.maxPriceLevel!==null)notes.push(locale==="fr"?"Vérifiez les tarifs réels avant de réserver.":"Confirm actual prices before booking.");
+ return {format,steps:selected,notes};
+}
