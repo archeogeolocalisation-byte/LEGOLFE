@@ -36,7 +36,7 @@ export default function Page({params}:{params:Promise<{locale:string}>}){
   const [q,setQ]=useState(""); const [sent,setSent]=useState(false);
   const [strictPreferences,setStrictPreferences]=useState(false);
   const [planFormat,setPlanFormat]=useState<"half"|"full">("half");
-  useEffect(()=>{const sp=new URLSearchParams(window.location.search);const place=sp.get("place");const location=sp.get("location");const shortlist=sp.get("shortlist");if(shortlist)setQ(shortlist);else if(place)setQ(fr?`Je veux intégrer ${place}${location?` à ${location}`:""} à mon séjour. Que me conseilles-tu autour ?`:`I want to include ${place}${location?` in ${location}`:""} in my stay. What would you build around it?`);},[fr]);
+  useEffect(()=>{const sp=new URLSearchParams(window.location.search);const place=sp.get("place");const location=sp.get("location");const shortlist=sp.get("shortlist");const prompt=sp.get("prompt");if(shortlist)setQ(shortlist.slice(0,1500));else if(prompt)setQ(prompt.slice(0,1500));else if(place)setQ(fr?`Je veux intégrer ${place}${location?` à ${location}`:""} à mon séjour. Que me conseilles-tu autour ?`:`I want to include ${place}${location?` in ${location}`:""} in my stay. What would you build around it?`);},[fr]);
 
   const result=useMemo(()=>{
     if(!sent||!q.trim())return null;

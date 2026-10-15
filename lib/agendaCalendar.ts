@@ -43,7 +43,7 @@ export function catalogMonths(events:GolfeEvent[]):string[]{
 export function agendaPaths(events:GolfeEvent[],today:string){return [
  ...(eventsInWindow(events,dateWindow("today",today)).length?["/whats-on/today"]:[]),
  ...(eventsInWindow(events,dateWindow("weekend",today)).length?["/whats-on/this-weekend"]:[]),
- ...catalogMonths(events).map(month=>`/whats-on/${month}`),
+ ...catalogMonths(events).filter(month=>month>=today.slice(0,7)).map(month=>`/whats-on/${month}`),
 ];}
 export function formatCalendarDay(day:string,locale:"fr"|"en",short=false){return new Intl.DateTimeFormat(locale==="fr"?"fr-FR":"en-GB",{day:"numeric",month:short?"short":"long",year:"numeric",timeZone:"UTC"}).format(new Date(day+"T12:00:00Z"));}
 export function formatCalendarMonth(month:string,locale:"fr"|"en"){return new Intl.DateTimeFormat(locale==="fr"?"fr-FR":"en-GB",{month:"long",year:"numeric",timeZone:"UTC"}).format(new Date(month+"-01T12:00:00Z"));}
