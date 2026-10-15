@@ -13,6 +13,11 @@ const commons = (name: string) =>
   `https://commons.wikimedia.org/wiki/Special:Redirect/file/${encodeURIComponent(name)}`;
 
 export const placeMedia: Record<string, PlaceMedia> = {
+  "san-peire-randonnee": {
+    src:"/media/guides/san-peire-cover.webp",
+    alt:"Illustration de la randonnée de San Peïre dans les Maures",
+    credit:"LE GOLFE",license:"Illustration éditoriale",source:"/fr/guides"
+  },
   "escalet": {
     src: commons("Plage de l'Escalet - panoramio.jpg"),
     alt: "Plage de l'Escalet",
