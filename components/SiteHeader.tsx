@@ -17,15 +17,15 @@ export default function SiteHeader({light=true,locale="en",path=""}:{light?:bool
           <Link href={`${base}/local`} className="lg-link-accent">{labels.local}</Link>
           <Link href={`${base}/stay`} className="lg-link-accent">{labels.stay}</Link>
         </div>
-        <div className="flex items-center gap-3">
-          <Link href={`/${other}${path}`} hrefLang={other} lang={other} aria-label={locale === "fr" ? "Passer en anglais" : "Switch to French"} className="text-[10px] font-black uppercase tracking-[.15em]">{other}</Link>
-          <Link href={`${base}/saved`} className="text-[9px] font-black uppercase tracking-[.09em] sm:text-[10px] sm:tracking-[.15em]">{labels.saved}</Link>
+        <div className="flex min-w-0 shrink-0 items-center gap-2 sm:gap-3">
+          <Link href={`/${other}${path}`} hrefLang={other} lang={other} aria-label={locale === "fr" ? "Passer en anglais" : "Switch to French"} className="inline-flex min-h-11 min-w-8 items-center justify-center text-[10px] font-black uppercase tracking-[.15em]">{other}</Link>
+          <Link href={`${base}/saved`} className="inline-flex min-h-11 items-center text-[9px] font-black uppercase tracking-[.06em] sm:text-[10px] sm:tracking-[.15em]">{labels.saved}</Link>
           <Link href={`${base}/account`} aria-label={labels.account} className="hidden text-[10px] font-black uppercase tracking-[.15em] sm:inline">{labels.account}</Link>
-          <Link href={`${base}/ask`} className={`border px-3 py-2 text-[10px] font-black uppercase tracking-[.12em] transition-colors ${light?"border-[var(--lg-blue)] bg-[var(--lg-blue)] text-white":"border-white bg-white text-black"}`}>{labels.ask} ↗</Link>
+          <Link href={`${base}/ask`} className={`inline-flex min-h-11 items-center border px-2 py-2 text-[10px] font-black uppercase tracking-[.06em] transition-colors sm:px-3 sm:tracking-[.12em] ${light?"border-[var(--lg-blue)] bg-[var(--lg-blue)] text-white":"border-white bg-white text-black"}`}>{labels.ask} ↗</Link>
         </div>
       </div>
-      <div className="flex gap-6 overflow-x-auto border-b border-current py-3 text-[9px] font-black uppercase tracking-[.13em] xl:hidden">
-        <Link href={`${base}/explore`} className="lg-link-accent shrink-0">{labels.explore}</Link>
+      <div className="flex gap-5 overflow-x-auto border-b border-current py-1 text-[10px] font-black uppercase tracking-[.08em] [scrollbar-width:thin] xl:hidden">
+        <Link href={`${base}/explore`} className="lg-link-accent inline-flex min-h-11 shrink-0 items-center">{labels.explore}</Link>
         <Link href={`${base}/carte-touristique`} className="lg-link-accent shrink-0" aria-current={path==="/carte-touristique"?"page":undefined}>{labels.touristMap}</Link>
         <Link href={`${base}/guides`} className="lg-link-accent shrink-0">{labels.guides}</Link>
         <Link href={`${base}/whats-on`} className="lg-link-accent shrink-0">{labels.agenda}</Link>
