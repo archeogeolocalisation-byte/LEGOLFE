@@ -142,7 +142,7 @@ export function buildAskDayPlan(question:string,items:readonly Place[],locale:Lo
  // A single strong match is still a useful saved stop. Previously the entire
  // editor disappeared unless a multi-activity programme existed.
  if(!selected.length){
-  const first=rankAskPlaces(question,items,locale,1,strictPreferences).hits[0];
+  const first=rankAskPlaces(question,items,locale,items.length,strictPreferences).hits.find(hit=>!intent.categories.length||intent.categories.some(category=>categoriesForPlace(hit.p).includes(category)));
   if(first)selected.push({category:first.p.category,match:first,source:"requested"});
  }
  const used=new Set(selected.map(x=>x.match.p.id));
