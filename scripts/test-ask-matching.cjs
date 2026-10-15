@@ -2,7 +2,7 @@
 const assert=require('node:assert/strict'),fs=require('node:fs'),ts=require('typescript');
 require.extensions['.ts']=(module,filename)=>module._compile(ts.transpileModule(fs.readFileSync(filename,'utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2020}}).outputText,filename);
 const {places}=require('../data/places.ts');
-const {parseAskIntent,rankAskPlaces,composeAskShortlist}=require('../lib/askMatching.ts');
+const {parseAskIntent,rankAskPlaces,composeAskShortlist,buildAskDayPlan}=require('../lib/askMatching.ts');
 const rank=(query)=>rankAskPlaces(query,places,'fr',12).hits;
 let p=parseAskIntent('Une plage en famille à Ramatuelle, sans boîte, petit budget et à 15 minutes');
 assert.ok(p.categories.includes('beach'));
@@ -39,3 +39,15 @@ const relaxed=rankAskPlaces("Un restaurant calme à Gassin",places,"fr",12,false
 assert.ok(strict.length<=relaxed.length,"strict results are subset in size");
 assert.deepEqual(composeAskShortlist("Une plage à Ramatuelle",places,"fr"),[],"one activity is not an itinerary");
 console.log("Multi-activity suggestions and strict optional preferences passed.");
+
+const shortPlan=buildAskDayPlan("Une plage et un restaurant à Ramatuelle",places,"fr","half");
+assert.ok(shortPlan&&shortPlan.steps.length===2,"half-day multi-activity plan");
+assert.ok(shortPlan.steps.every(x=>x.match.p.location.includes("Ramatuelle")),"plan respects commune");
+assert.equal(new Set(shortPlan.steps.map(x=>x.match.p.id)).size,shortPlan.steps.length,"no repeated venues");
+assert.ok(shortPlan.notes.some(n=>n.includes("horaires")),"no implied opening hours");
+const longerPlan=buildAskDayPlan("Une plage, une visite de village et un restaurant à Ramatuelle",places,"en","full");
+assert.ok(longerPlan&&longerPlan.steps.length>=2&&longerPlan.steps.length<=3,"full-day capacity");
+assert.equal(buildAskDayPlan("Trouve une maison à Saint-Tropez",places,"fr","full"),null,"no fabricated activity plan");
+const constrainedPlan=buildAskDayPlan("Une plage et restaurant à Ramatuelle en 10 minutes et pour 60 euros",places,"fr","full");
+if(constrainedPlan){assert.ok(constrainedPlan.notes.some(n=>n.includes("trajet")));assert.ok(constrainedPlan.notes.some(n=>n.includes("tarifs")));}
+console.log("Editorial half/full-day planning and uncertainty regression tests passed.");

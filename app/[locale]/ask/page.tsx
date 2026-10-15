@@ -11,7 +11,7 @@ import { events } from "../../../data/events";
 import { localNews } from "../../../data/localNews";
 import { villas } from "../../../data/villas";
 import { mediaForPlace } from "../../../lib/placeMedia";
-import {rankAskPlaces,composeAskShortlist} from "../../../lib/askMatching";
+import {rankAskPlaces,composeAskShortlist,buildAskDayPlan} from "../../../lib/askMatching";
 
 const STOP = new Set(["le","la","les","un","une","des","de","du","au","aux","et","ou","pour","avec","dans","sur","près","proche","nous","je","veux","on","the","a","an","and","or","for","with","in","near","we","i","want","to","of","this","that"]);
 const SYNONYMS: Record<string,string[]> = {
@@ -33,12 +33,14 @@ export default function Page({params}:{params:Promise<{locale:string}>}){
   const {locale:raw}=use(params); const l=isLocale(raw)?raw:"en"; const fr=l==="fr";
   const [q,setQ]=useState(""); const [sent,setSent]=useState(false);
   const [strictPreferences,setStrictPreferences]=useState(false);
+  const [planFormat,setPlanFormat]=useState<"half"|"full">("half");
   useEffect(()=>{const sp=new URLSearchParams(window.location.search);const place=sp.get("place");const location=sp.get("location");const shortlist=sp.get("shortlist");if(shortlist)setQ(shortlist);else if(place)setQ(fr?`Je veux intégrer ${place}${location?` à ${location}`:""} à mon séjour. Que me conseilles-tu autour ?`:`I want to include ${place}${location?` in ${location}`:""} in my stay. What would you build around it?`);},[fr]);
 
   const result=useMemo(()=>{
     if(!sent||!q.trim())return null;
     const matched=rankAskPlaces(q,places,l,4,strictPreferences);const placeHits=matched.hits;
     const composition=composeAskShortlist(q,places,l,strictPreferences);
+    const dayPlan=buildAskDayPlan(q,places,l,planFormat,strictPreferences);
     const eventHits=events.map(e=>({e,s:score(q,e)})).sort((a,b)=>b.s-a.s).filter(x=>x.s>0).slice(0,3);
     const villaHits=villas.map(v=>({v,s:score(q,v)})).sort((a,b)=>b.s-a.s).filter(x=>x.s>0).slice(0,2);
     const newsHits=localNews.map(n=>({n,s:score(q,n)})).sort((a,b)=>b.s-a.s).filter(x=>x.s>0).slice(0,2);
@@ -46,8 +48,8 @@ export default function Page({params}:{params:Promise<{locale:string}>}){
     const take=fr
       ? main?`${main.name} correspond à plusieurs critères identifiés. Voici les raisons du choix et les points à confirmer avant de prévoir votre sortie.`:"Aucune adresse ne remplit suffisamment les critères reconnus. Essayez de préciser la commune ou d’assouplir une contrainte."
       : main?`${main.name} matches several identified criteria. Here is why, and what still needs checking before you go.`:"No listed place matches enough of the identified criteria. Try specifying a town or relaxing a constraint.";
-    return {placeHits,eventHits,villaHits,newsHits,take,intent:matched.intent,composition};
-  },[sent,q,fr,l,strictPreferences]);
+    return {placeHits,eventHits,villaHits,newsHits,take,intent:matched.intent,composition,dayPlan};
+  },[sent,q,fr,l,strictPreferences,planFormat]);
 
   const ex=fr?["Deux familles, cinq enfants, déjeuner au calme près de Pampelonne.","Un week-end romantique sans courir partout.","Que faire samedi soir autour de Sainte-Maxime ?","Une journée bateau pour 8 avec un bon déjeuner après."]:["Two families, five kids, calm lunch near Pampelonne.","A romantic weekend without rushing around.","What should we do Saturday night around Sainte-Maxime?","A boat day for eight with a good lunch afterwards."];
   function submit(e:FormEvent){e.preventDefault();if(q.trim())setSent(true)}
@@ -63,6 +65,26 @@ export default function Page({params}:{params:Promise<{locale:string}>}){
 
         {result.intent.hasConstraints&&<div className="mt-7 border-l-2 border-[var(--lg-blue)] pl-5 text-sm leading-6 text-white/65">{fr?"Critères reconnus":"Recognised criteria"} : {[...result.intent.categories,...result.intent.facets].join(" · ")|| (fr?"Localisation et contraintes pratiques":"Location and practical constraints")}. {result.intent.exactEuroBudget?(fr?"Le budget précis n’est pas vérifiable avec les tarifs disponibles. ":"A precise budget cannot be verified against the listed price ranges. "):""}{result.intent.mentionsTime||result.intent.mentionsDistance?(fr?"Aucun temps de trajet calculé.":"No journey times calculated."):""}</div>}
         {result.placeHits.length>0&&<div className="mt-14"><div className="flex items-end justify-between border-b border-white/30 pb-4"><div><p className="lg-kicker text-white/40">01 / {fr?"ADRESSES À CONSIDÉRER":"PLACES TO CONSIDER"}</p><h2 className="mt-3 text-5xl font-black uppercase tracking-[-.055em] md:text-7xl">{fr?"LE BON MIX.":"THE RIGHT MIX."}</h2></div><Link href={`/${l}/explore`} className="text-[10px] font-black uppercase tracking-[.12em] text-white/50">{fr?"Explorer":"Explore"} →</Link></div><div className="grid md:grid-cols-2">{result.placeHits.map(({p,reasons,cautions},i)=>{const m=mediaForPlace(p.id);return <Link key={p.id} href={`/${l}/place/${p.id}`} className={`group grid min-h-[260px] border-b border-white/30 ${i%2===0?"md:border-r":""}`}><div className="relative overflow-hidden bg-white/5">{m&&<img src={m.src} alt={m.alt} className="absolute inset-0 h-full w-full object-cover opacity-55 transition duration-700 group-hover:scale-[1.02]"/>}<div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent"/><div className="absolute bottom-0 p-5"><p className="lg-kicker text-white/55">{fr ? categoryFR[p.category].name : getCategory(p.category)?.label} · {p.location}</p><h3 className="mt-2 text-4xl font-black uppercase tracking-[-.055em]">{p.name}</h3><p className="mt-3 max-w-md text-sm font-semibold leading-6 text-white/65">{fr ? placeDescriptionFr[p.id] || p.description : p.description}</p>{reasons.length>0&&<p className="mt-3 text-xs font-bold text-[#b9e9f4]">{fr?"Pourquoi ce lieu":"Why this place"} : {reasons.join(" · ")}</p>}{cautions.length>0&&<p className="mt-2 text-xs text-white/70">{fr?"À confirmer":"To check"} : {cautions.join(" · ")}</p>}</div></div></Link>})}</div></div>}
+
+        {result.dayPlan&&<section className="mt-12 border-t border-white/30 pt-8" aria-label={fr?"Programme suggéré":"Suggested plan"}>
+          <div className="flex flex-wrap items-center justify-between gap-4">
+            <div><p className="lg-kicker text-[#b9e9f4]">{fr?"LE GOLFE / ORGANISER":"LE GOLFE / PLAN"}</p><h2 className="mt-3 text-3xl font-black uppercase tracking-[-.04em] md:text-5xl">{fr?"VOTRE PROGRAMME, SANS COURIR.":"YOUR DAY, YOUR PACE."}</h2></div>
+            <div className="flex border border-white/40 p-1" role="group" aria-label={fr?"Durée du programme":"Plan length"}>
+              <button type="button" aria-pressed={planFormat==="half"} onClick={()=>setPlanFormat("half")} className={`px-3 py-2 text-xs font-bold ${planFormat==="half"?"bg-white text-black":"text-white"}`}>{fr?"Demi-journée":"Half day"}</button>
+              <button type="button" aria-pressed={planFormat==="full"} onClick={()=>setPlanFormat("full")} className={`px-3 py-2 text-xs font-bold ${planFormat==="full"?"bg-white text-black":"text-white"}`}>{fr?"Journée":"Full day"}</button>
+            </div>
+          </div>
+          <p className="mt-4 max-w-3xl text-sm leading-6 text-white/65">{fr?"Une proposition de lieux à relier, sans horaires inventés. L’ordre est indicatif, pas un itinéraire optimisé.":"A suggested combination of places without invented times. Stop order is editorial, not route-optimised."}</p>
+          <ol className="mt-7 grid gap-3 md:grid-cols-3">{result.dayPlan.steps.map(({category,match,source},i)=><li key={match.p.id} className="border border-white/25 p-5">
+            <p className="lg-kicker text-[#b9e9f4]">{String(i+1).padStart(2,"0")} / {fr?categoryFR[category].name:category}</p>
+            <h3 className="mt-3 text-2xl font-black uppercase leading-tight"><Link href={`/${l}/place/${match.p.id}`} className="hover:underline">{match.p.name} ↗</Link></h3>
+            <p className="mt-2 text-xs text-white/60">{match.p.location}</p>
+            {source==="complementary"&&<p className="mt-3 text-xs font-semibold text-[#b9e9f4]">{fr?"Suggestion complémentaire, non demandée explicitement":"Complementary suggestion, not explicitly requested"}</p>}
+            {match.reasons.length>0&&<p className="mt-3 text-xs leading-5 text-white/70">{match.reasons.join(" · ")}</p>}
+            {match.cautions.length>0&&<p className="mt-3 text-xs leading-5 text-white/55">{fr?"À confirmer":"To check"} : {match.cautions.join(" · ")}</p>}
+          </li>)}</ol>
+          <div className="mt-6 border-l-2 border-[#b9e9f4] pl-5"><p className="text-sm font-bold">{fr?"Avant de partir":"Before you go"}</p><ul className="mt-2 list-disc space-y-1 pl-5 text-xs leading-6 text-white/65">{result.dayPlan.notes.map(note=><li key={note}>{note}</li>)}</ul></div>
+        </section>}
 
         {result.composition.length>=2&&<section className="mt-14 border-t border-white/30 pt-7"><p className="lg-kicker text-[var(--lg-blue)]">{fr?"COMPOSER VOTRE SORTIE":"BUILD YOUR OUTING"}</p><h2 className="mt-3 text-3xl font-black uppercase tracking-[-.045em] md:text-5xl">{fr?"DES IDÉES À RELIER.":"PLACES TO COMBINE."}</h2><p className="mt-4 max-w-3xl text-sm leading-6 text-white/60">{fr?"Une sélection complémentaire par activité demandée, et non un itinéraire calculé. Vérifiez séparément horaires, réservation, distance et temps de trajet.":"A complementary place for each requested activity, not a calculated route. Check opening times, bookings, distances and travel times separately."}</p><div className="mt-6 grid gap-3 md:grid-cols-2">{result.composition.map(({category,match})=><Link key={match.p.id} href={`/${l}/place/${match.p.id}`} className="border border-white/30 p-5 transition hover:bg-white/10"><p className="lg-kicker text-[#b9e9f4]">{fr?categoryFR[category].name:category}</p><h3 className="mt-3 text-2xl font-black uppercase">{match.p.name} ↗</h3><p className="mt-2 text-xs text-white/65">{match.p.location}</p>{match.reasons.length>0&&<p className="mt-3 text-xs leading-5 text-white/70">{match.reasons.join(" · ")}</p>}</Link>)}</div></section>}
 
