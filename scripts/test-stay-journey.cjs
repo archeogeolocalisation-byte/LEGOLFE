@@ -1,0 +1,15 @@
+const assert=require('node:assert/strict'),fs=require('node:fs');
+const stay=fs.readFileSync('app/[locale]/saved/page.tsx','utf8');
+assert.ok(stay.includes('id="mes-maisons"')&&stay.includes('id="mes-adresses"'));
+assert.ok(stay.includes('Create or edit my plan'));
+assert.ok(stay.includes('Find a home'));
+const plan=fs.readFileSync('components/SavedDayPlan.tsx','utf8');
+assert.ok(plan.includes('addStopsToSavedPlaces'));
+assert.ok(plan.includes('new Set([...current,...displayPlan.placeIds])'));
+assert.ok(plan.includes('new Event("le-golfe:saved-places")'));
+const host=fs.readFileSync('components/HostDesk.tsx','utf8');
+assert.ok(host.includes('Steps to publish a listing'));
+assert.ok(host.includes('onClick={openCreateProperty}'));
+assert.ok(host.includes('setView("properties")'));
+assert.ok(host.includes('setView("inquiries")'));
+console.log('My Stay, saved places, villas and host journey links passed');
