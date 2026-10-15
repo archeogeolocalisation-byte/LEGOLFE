@@ -1,0 +1,15 @@
+const assert=require('node:assert/strict'),fs=require('node:fs'),ts=require('typescript');
+require.extensions['.ts']=(m,f)=>m._compile(ts.transpileModule(fs.readFileSync(f,'utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2020}}).outputText,f);
+const {events}=require('../data/events.ts'),{qualityAgendaEvents,isValidAgendaEvent}=require('../lib/agendaQuality.ts');
+const fixture={id:'a',title:'Concert de village',start:'2026-11-06',time:'20:00',location:'Gassin',venue:'Place publique',category:'music',summary:'',summaryFr:'',why:'',whyFr:'',source:'https://example.org/calendar'};
+assert.equal(isValidAgendaEvent(fixture),true);
+assert.equal(qualityAgendaEvents([fixture,{...fixture,id:'b',title:'Concert de village',sourceCheckedAt:'2026-10-15'}]).length,1);
+assert.equal(qualityAgendaEvents([fixture,{...fixture,id:'c',start:'2026-11-07'}]).length,2);
+assert.equal(qualityAgendaEvents([fixture,{...fixture,id:'d',time:'21:00'}]).length,2);
+assert.equal(isValidAgendaEvent({...fixture,start:'2026-02-30'}),false);
+assert.equal(isValidAgendaEvent({...fixture,time:'27:00'}),false);
+assert.ok(qualityAgendaEvents(events).length>0,'published static events remain');
+const client=fs.readFileSync('app/[locale]/whats-on/AgendaClient.tsx','utf8');
+assert.ok(client.includes('countWindow(item.key)'));
+assert.ok(client.includes('value>=todayIso.slice(0,7)'));
+console.log('Agenda date quality, conservative duplicates and quick period counts passed');

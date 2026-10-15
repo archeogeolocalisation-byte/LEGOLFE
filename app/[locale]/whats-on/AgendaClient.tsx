@@ -45,7 +45,7 @@ export default function AgendaClient({ locale, events, initialDay }: Props) {
   const [range, setRange] = useState<Range>("7days");
   const [month, setMonth] = useState("");
   const selectedWindow = monthWindow(month) ?? dateWindow(range, todayIso);
-  const months = useMemo(() => catalogMonths(events), [events]);
+  const months = useMemo(() => catalogMonths(events).filter(value=>value>=todayIso.slice(0,7)), [events,todayIso]);
   const [category, setCategory] = useState<"all" | EventCategory>("all");
   const [location, setLocation] = useState("all");
   const locations = useMemo(() => Array.from(new Set(events.map((e) => e.location))).sort(), [events]);
@@ -57,6 +57,7 @@ export default function AgendaClient({ locale, events, initialDay }: Props) {
   const displayEvent=(event:GolfeEvent)=>{const session=sessionsInWindow(event,selectedWindow)[0];return session?{...event,start:session.start,end:session.end,time:session.time}:event;};
   const periodText = month ? formatCalendarMonth(month, locale) : `${formatCalendarDay(selectedWindow.from,locale,true)}${selectedWindow.to !== selectedWindow.from ? ` — ${formatCalendarDay(selectedWindow.to,locale,true)}` : ""}`;
 
+  const countWindow=(key:Range)=>eventsInWindow(events,dateWindow(key,todayIso)).filter(e=>(category==="all"||e.category===category)&&(location==="all"||e.location===location)).length;
   const rangeButtons: { key: Range; fr: string; en: string }[] = [
     { key: "today", fr: "Aujourd’hui", en: "Today" },
     { key: "tomorrow", fr: "Demain", en: "Tomorrow" },
@@ -88,8 +89,8 @@ export default function AgendaClient({ locale, events, initialDay }: Props) {
           <div className="flex max-w-full gap-2 overflow-x-auto pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
             {rangeButtons.map((item) => {
               const selected = !month && range === item.key;
-              return <button key={item.key} type="button" aria-pressed={selected} onClick={() => { setMonth(""); setRange(item.key); }} className={`shrink-0 border px-4 py-2 text-[11px] font-black uppercase tracking-[.13em] transition ${selected ? "border-transparent text-black" : "border-white/30 text-white hover:border-white"}`} style={selected ? { backgroundColor: accent } : undefined}>
-                {fr ? item.fr : item.en}
+              return <button key={item.key} type="button" aria-pressed={selected} onClick={() => { setMonth(""); setRange(item.key); }} className={`inline-flex min-h-11 shrink-0 items-center gap-2 border px-4 py-2 text-[11px] font-black uppercase tracking-[.13em] transition ${selected ? "border-transparent text-black" : "border-white/30 text-white hover:border-white"}`} style={selected ? { backgroundColor: accent } : undefined}>
+                {fr ? item.fr : item.en}<span className="font-bold opacity-75" aria-hidden="true">{countWindow(item.key)}</span>
               </button>;
             })}
           </div>

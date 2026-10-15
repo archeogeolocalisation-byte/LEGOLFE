@@ -69,6 +69,7 @@ const choose = tree => find(tree, n => n.type === 'input').props.onChange({ targ
   tree = await profile(); find(tree, n => n.type === 'button' && n.props.children === 'Retirer la photo').props.onClick(); await submit(render(Profile, props)); assert.equal(metadata.legolfe_avatar_path, '');
   tree = await profile(); const invalid = { target: { files: [{ type: 'image/svg+xml', size: 42 }], value: 'image' } }; find(tree, n => n.type === 'input').props.onChange(invalid); await submit(render(Profile, props)); assert.equal(calls.some(c => c[0] === 'upload'), false);
   reset();
+  const buttonText = n => Array.isArray(n.props?.children) ? n.props.children.find(x=>typeof x==='string') : n.props?.children;
   const agendaProps = { locale: 'fr', initialDay: '2026-10-11', events: [
     { ...base, id: 'today', start: '2026-10-11', end: undefined, sessions: undefined },
     { ...base, id: 'tomorrow', start: '2026-10-12', end: undefined, sessions: undefined },
@@ -77,15 +78,15 @@ const choose = tree => find(tree, n => n.type === 'input').props.onChange({ targ
   tree = render(Agenda, agendaProps);
   const ids = tree => nodes(tree).filter(n => n.type === 'article').map(n => n.key);
   assert.deepEqual(ids(tree), ['today', 'tomorrow']);
-  find(tree, n => n.type === 'button' && n.props.children === 'Demain').props.onClick();
+  find(tree, n => n.type === 'button' && buttonText(n) === 'Demain').props.onClick();
   tree = render(Agenda, agendaProps); assert.deepEqual(ids(tree), ['tomorrow']);
-  assert.equal(find(tree, n => n.type === 'button' && n.props.children === 'Demain').props['aria-pressed'], true);
+  assert.equal(find(tree, n => n.type === 'button' && buttonText(n) === 'Demain').props['aria-pressed'], true);
   find(tree, n => n.props?.id === 'agenda-month').props.onChange({ target: { value: '2026-11' } });
   tree = render(Agenda, agendaProps); assert.deepEqual(ids(tree), ['november']);
-  assert.equal(find(tree, n => n.type === 'button' && n.props.children === 'Demain').props['aria-pressed'], false);
+  assert.equal(find(tree, n => n.type === 'button' && buttonText(n) === 'Demain').props['aria-pressed'], false);
   const text = nodes(tree).flatMap(n => n.props?.children ?? []).filter(n => typeof n === 'string').join(' ');
   assert.ok(text.includes('19:00')); assert.ok(text.includes('20:00'));
-  find(tree, n => n.type === 'button' && n.props.children === 'Aujourd’hui').props.onClick();
+  find(tree, n => n.type === 'button' && buttonText(n) === 'Aujourd’hui').props.onClick();
   tree = render(Agenda, agendaProps); assert.deepEqual(ids(tree), ['today']);
   for(const locale of ['fr','en']){
    reset();const samples=Array.from({length:7},(_,i)=>({...base,id:`event-${i}`,start:`2026-10-${String(11+i).padStart(2,'0')}`,end:undefined,sessions:undefined,featured:[1,3].includes(i),category:i===6?'family':'culture',location:i===6?'Grimaud':'Saint-Tropez'}));
