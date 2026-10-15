@@ -1,3 +1,4 @@
+import {qualityAgendaEvents} from "./agendaQuality";
 import {getCarreProgramme} from "./carreFeed";
 import {mergeCarreProgramme} from "./carreProgramme";
 import {additionalAgendaEvents} from "../data/additionalAgendaEvents";
@@ -9,5 +10,5 @@ export const getPublicEvents = cache(async () => {
  const base=[...events.map(e=>({...e,...verifiedEventUpdates[e.id]})),...verifiedNewEvents,...additionalAgendaEvents];
  const [live,carre] = await Promise.all([getApprovedEvents(),getCarreProgramme()]);
  const refreshed=mergeCarreProgramme(base,carre);
- return [...refreshed, ...live.filter(x => !refreshed.some(e => e.id === x.id || (e.source === x.source && e.start === x.start && e.title === x.title)))];
+ return qualityAgendaEvents([...refreshed, ...live.filter(x => !refreshed.some(e => e.id === x.id || (e.source === x.source && e.start === x.start && e.title === x.title)))]);
 });
