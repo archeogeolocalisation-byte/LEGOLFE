@@ -1,0 +1,17 @@
+const assert=require('node:assert/strict'),fs=require('node:fs');
+const sql=fs.readFileSync('supabase/user-day-plans.sql','utf8');
+for(const expected of ['references auth.users(id) on delete cascade','enable row level security','auth.uid()','for select to authenticated','for insert to authenticated','for update to authenticated','for delete to authenticated','revoke all on public.user_day_plans from anon'])assert.ok(sql.includes(expected),expected);
+const cloud=fs.readFileSync('lib/cloudDayPlan.ts','utf8');
+assert.ok(cloud.includes('supabase.auth.getUser()'));
+assert.ok(cloud.includes('validateSavedDayPlan'));
+assert.ok(!cloud.includes('service_role'));
+const ask=fs.readFileSync('components/EditableAskPlan.tsx','utf8');
+assert.ok(ask.includes('localStorage.setItem(SAVED_DAY_PLAN_KEY'));
+assert.ok(ask.includes('saveCloudDayPlan(record)'));
+const saved=fs.readFileSync('components/SavedDayPlan.tsx','utf8');
+assert.ok(saved.includes('fetchCloudDayPlan()'));
+assert.ok(saved.includes('saveCloudDayPlan(plan)'));
+assert.ok(saved.includes('deleteCloudDayPlan()'));
+assert.ok(saved.includes('conflict'));
+assert.ok(saved.includes('useCloud'));
+console.log('Cloud plan RLS migration and explicit local-cloud fallback checks passed.');
