@@ -138,7 +138,7 @@ export function buildAskDayPlan(question:string,items:readonly Place[],locale:Lo
  // No "automatic day" for empty or purely geographic queries.
  if(!intent.categories.length||!requested.length)return null;
  const limit=format==="half"?2:3;
- const selected=[...requested.slice(0,limit)].map(x=>({...x,source:"requested" as const}));
+ const selected:AskDayPlan["steps"]=requested.slice(0,limit).map(x=>({...x,source:"requested"}));
  const used=new Set(selected.map(x=>x.match.p.id));
  // Only suggest food as a complementary stop when the visitor explicitly
  // asks for a day outing (not for a service, spa, nightlife or housing).
