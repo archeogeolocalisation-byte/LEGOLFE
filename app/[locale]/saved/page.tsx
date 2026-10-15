@@ -58,6 +58,11 @@ export default function SavedPage({ params }: { params: Promise<{ locale: string
       </div>
 
       <div className="mt-6 flex flex-wrap items-center justify-between gap-4"><p className="text-xs leading-5 text-black/50">{fr?"Sélection conservée sur ce navigateur, sans compte.":"Shortlist saved in this browser, no account required."}</p><Link href="/requests" className="lg-btn">{fr?"Mes demandes de séjour":"My stay requests"} →</Link></div>
+      <nav aria-label={fr?"Organiser mon séjour":"Organise My Stay"} className="mt-8 grid gap-3 sm:grid-cols-3">
+       <Link href={`/${locale}/ask`} className="flex min-h-24 flex-col justify-between border border-white/30 p-4 transition hover:bg-white/10"><span className="lg-kicker text-[#a6d8e5]">01 / {fr?"PROGRAMME":"PLAN"}</span><span className="mt-3 font-black">{fr?"Créer ou modifier mon programme":"Create or edit my plan"} ↗</span></Link>
+       <Link href={savedPlaces.length?"#mes-adresses":`/${locale}/explore`} className="flex min-h-24 flex-col justify-between border border-white/30 p-4 transition hover:bg-white/10"><span className="lg-kicker text-[#a6d8e5]">02 / {fr?"ADRESSES":"PLACES"}</span><span className="mt-3 font-black">{savedPlaces.length? (fr?`${savedPlaces.length} lieux enregistrés`:`${savedPlaces.length} saved places`) : (fr?"Trouver des lieux":"Discover places")} ↗</span></Link>
+       <Link href={savedVillas.length?"#mes-maisons":`/${locale}/stay`} className="flex min-h-24 flex-col justify-between border border-white/30 p-4 transition hover:bg-white/10"><span className="lg-kicker text-[#a6d8e5]">03 / {fr?"MAISONS":"HOMES"}</span><span className="mt-3 font-black">{savedVillas.length?(fr?`${savedVillas.length} maison(s) enregistrée(s)`:`${savedVillas.length} saved homes`):(fr?"Choisir une maison":"Find a home")} ↗</span></Link>
+      </nav>
       <SavedDayPlanSection locale={locale}/>
       {storageError&&<p role="alert" className="mt-5 border border-red-700 p-4 text-sm">{storageError}</p>}
       {!ready?<p className="mt-12" role="status">{fr?"Chargement de votre sélection…":"Loading your shortlist…"}</p>:savedPlaces.length === 0 && savedVillas.length === 0 ? <div className="mt-20 border-y border-black py-14"><p className="text-3xl font-black tracking-[-.04em]">{fr ? "Votre séjour commence ici." : "Your stay starts here."}</p><Link href={`/${locale}/explore`} className="mt-6 inline-flex lg-btn">{fr?"Explorer":"Explore"} →</Link><Link href={`/${locale}/stay`} className="lg-btn ml-3 mt-6">{fr?'Choisir une maison':'Choose a home'} →</Link></div> : <>
@@ -65,7 +70,7 @@ export default function SavedPage({ params }: { params: Promise<{ locale: string
         {savedPlaces.slice(0,4).map((p,i)=>{const m=mediaForPlace(p.id);const spans=["md:col-span-7","md:col-span-5","md:col-span-5","md:col-span-7"];return <Link key={p.id} href={`/${locale}/place/${p.id}`} className={`group relative min-h-[260px] overflow-hidden bg-black ${spans[i]||"md:col-span-6"}`}>{m?<img src={m.src} alt={m.alt} className="absolute inset-0 h-full w-full object-cover opacity-85 transition duration-700 group-hover:scale-[1.015]"/>:<div className="absolute inset-0 bg-black"/>}<div className="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-transparent"/><div className="absolute bottom-0 left-0 p-5 text-white"><p className="lg-kicker text-white/60">{p.location}</p><p className="mt-2 text-4xl font-black uppercase leading-[.88] tracking-[-.06em] md:text-5xl">{p.name}</p></div></Link>})}
       </div>
 
-      {savedVillas.length > 0 && <section className="mt-16">
+      {savedVillas.length > 0 && <section id="mes-maisons" className="mt-16 scroll-mt-24">
         <div className="flex items-end justify-between border-b border-black pb-4"><div><p className="lg-kicker text-[var(--lg-blue)]">{fr?"MAISONS / MA SÉLECTION":"STAY / SAVED"}</p><h2 className="mt-3 text-5xl font-black uppercase tracking-[-.055em] md:text-7xl">{fr ? "VOTRE MAISON." : "YOUR HOME."}</h2></div><span className="text-[10px] font-black uppercase tracking-[.12em] text-black/40">{String(savedVillas.length).padStart(2,"0")}</span></div>
         <div className="mt-6 grid gap-6 md:grid-cols-2">
           {savedVillas.map((villa)=><article key={villa.id} className="grid gap-5 border-b border-black pb-6 sm:grid-cols-[180px_1fr]">
@@ -78,7 +83,7 @@ export default function SavedPage({ params }: { params: Promise<{ locale: string
 
       <StayPlanner places={savedPlaces} villas={savedVillas} locale={locale} />
 
-      <div className="mt-14 border-t border-black">
+      <div id="mes-adresses" className="mt-14 scroll-mt-24 border-t border-black">
         {savedPlaces.map((p, i) => {
           const media = mediaForPlace(p.id);
           return <article key={p.id} className="grid gap-6 border-b border-black py-7 md:grid-cols-[150px_1fr_auto] md:items-center">
