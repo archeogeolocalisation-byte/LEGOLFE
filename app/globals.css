@@ -19,6 +19,11 @@ button,textarea,input { font:inherit; }
 .lg-rule { border-top:1px solid #000; }
 .lg-btn { display:inline-flex; align-items:center; justify-content:center; min-height:48px; border:1px solid #000; padding:0 18px; font-size:10px; font-weight:900; letter-spacing:.14em; text-transform:uppercase; transition:.2s ease; }
 .lg-btn--dark { background:#000; color:#fff; }
+/* Explicit contrast for colored actions, including active Explorer filters. */
+.lg-btn--dark:hover { background:#18394b; color:#fff; }
+.explore-search .lg-btn, .explore-search .lg-btn:hover { color:#fff; }
+.explore-themes a[aria-current="page"] { color:#fff; }
+.lg-btn[aria-pressed="true"] { background:var(--lg-blue); color:#fff; border-color:var(--lg-blue); }
 @layer components { .lg-btn { background:#fff; color:#000; } }
 .lg-btn:hover { filter:brightness(.9); }
 .lg-btn:focus-visible { outline:3px solid var(--lg-blue); outline-offset:3px; }
