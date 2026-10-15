@@ -52,8 +52,8 @@ export default async function Home({params}:{params:Promise<{locale:string}>}){
   </section>
 
   <section className="lg-shell py-16 md:py-20">
-    <div className="grid gap-10 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] lg:gap-14">
-      <div className="min-w-0">
+    <div className="grid gap-10 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)] lg:gap-14">
+      <div className="min-w-0 lg:order-2">
         <div className="mb-8 lg:mb-6">
           <p className="lg-kicker">{fr?"COMMENCER PAR UNE ENVIE":"START WITH A FEELING"}</p>
           <p className="mt-4 max-w-sm text-sm font-semibold leading-6 text-black/45">{fr?"Vous n'avez pas besoin de connaître le Golfe. Commencez par ce que vous voulez ressentir.":"You do not need to know the Golfe. Start with how you want it to feel."}</p>
@@ -68,7 +68,7 @@ export default async function Home({params}:{params:Promise<{locale:string}>}){
           </Link>)}
         </nav>
       </div>
-      <div className="hidden min-w-0 lg:block">
+      <div className="hidden min-w-0 lg:order-1 lg:block">
         <div className="mb-6 flex items-end justify-between gap-5 border-b border-black pb-4">
           <div><p className="lg-kicker text-[var(--lg-blue)]">{fr?"LA SÉLECTION LE GOLFE":"THE LE GOLFE EDIT"}</p><h2 className="mt-3 text-3xl font-black uppercase leading-none tracking-[-.055em]">{fr?"TROIS ADRESSES À EXPLORER.":"THREE PLACES TO EXPLORE."}</h2></div>
           <Link href={`/${l}/explore`} className="shrink-0 text-[10px] font-black uppercase tracking-[.12em] underline underline-offset-4">{fr?"Toutes les fiches":"All places"} ↗</Link>
