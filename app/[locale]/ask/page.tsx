@@ -11,8 +11,7 @@ import { events } from "../../../data/events";
 import { localNews } from "../../../data/localNews";
 import { villas } from "../../../data/villas";
 import { mediaForPlace } from "../../../lib/placeMedia";
-import {categoriesForPlace,facetsForPlace,placeFacetLabels} from "../../../lib/placeFacets";
-import {categoryFR as categoriesFr} from "../../../lib/i18n";
+import {rankAskPlaces} from "../../../lib/askMatching";
 
 const STOP = new Set(["le","la","les","un","une","des","de","du","au","aux","et","ou","pour","avec","dans","sur","près","proche","nous","je","veux","on","the","a","an","and","or","for","with","in","near","we","i","want","to","of","this","that"]);
 const SYNONYMS: Record<string,string[]> = {
@@ -29,32 +28,6 @@ const SYNONYMS: Record<string,string[]> = {
 function words(q:string){return q.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").split(/[^a-z0-9-]+/).filter(x=>x.length>2&&!STOP.has(x));}
 function hay(v:unknown){return JSON.stringify(v).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"");}
 function score(q:string, item:unknown){const w=words(q);const h=hay(item);let s=0;for(const x of w){if(h.includes(x))s+=3;for(const y of SYNONYMS[x]||[]){if(h.includes(y))s+=1;}}return s;}
-const facetQueries:Record<string,readonly string[]>={
- quiet:["calme","quiet","tranquille","repos"],view:["vue","panorama","view","paysage"],
- family:["enfant","enfants","famille","family","kids","children"],
- walk:["balade","randonn","hiking","walk","marcher","promenade"],heritage:["patrimoine","histor","heritage","culture"],
- nature:["nature","foret","forest"],music:["musique","music","concert","danser","sortir","club","nightlife"],
- romantic:["romantique","couple","romantic"],lunch:["dejeuner","lunch"],beachclub:["transat","club de plage","beach club"]
-};
-const categoryQueries:Record<string,readonly string[]>={
- eat:["manger","restaurant","table","dejeuner","diner","dinner","lunch"],
- beach:["plage","plages","beach","baignade"],sea:["bateau","boat","mer","nautique"],
- do:["activite","activites","visite","balade","activity"],party:["fete","club","boite","soiree","party","nightlife"],
- wellness:["sport","spa","wellness"],places:["village","heritage","patrimoine"],services:["service","chauffeur","conciergerie"]
-};
-function scorePlace(q:string,p:(typeof places)[number]){
- const normalized=hay(q),tokens=words(q),facets=facetsForPlace(p),categories=categoriesForPlace(p);
- const positive=[p.name,p.location,p.description,placeDescriptionFr[p.id]||"",...p.bestFor,...p.tags].join(" ");
- let scoreValue=score(q,positive);
- for(const facet of facets){if(facetQueries[facet].some(w=>normalized.includes(w)))scoreValue+=8;
-   const label=hay(placeFacetLabels.fr[facet]);if(normalized.includes(label))scoreValue+=8;}
- for(const category of categories){if(categoryQueries[category].some(w=>normalized.includes(w)))scoreValue+=6;
-   if(normalized.includes(hay(categoriesFr[category].name)))scoreValue+=6;}
- if(facets.includes("quiet")&&categoryQueries.party.some(w=>normalized.includes(w)))scoreValue-=3;
- if(p.category==="party"&&(normalized.includes("calme")||normalized.includes("quiet")||normalized.includes("enfant")||normalized.includes("famille")))scoreValue-=8;
- return Math.max(0,scoreValue);
-}
-
 
 export default function Page({params}:{params:Promise<{locale:string}>}){
   const {locale:raw}=use(params); const l=isLocale(raw)?raw:"en"; const fr=l==="fr";
@@ -63,16 +36,15 @@ export default function Page({params}:{params:Promise<{locale:string}>}){
 
   const result=useMemo(()=>{
     if(!sent||!q.trim())return null;
-    const placeHits=places.map(p=>({p,s:scorePlace(q,p)})).sort((a,b)=>b.s-a.s).filter(x=>x.s>0).slice(0,4);
+    const matched=rankAskPlaces(q,places,l,4);const placeHits=matched.hits;
     const eventHits=events.map(e=>({e,s:score(q,e)})).sort((a,b)=>b.s-a.s).filter(x=>x.s>0).slice(0,3);
     const villaHits=villas.map(v=>({v,s:score(q,v)})).sort((a,b)=>b.s-a.s).filter(x=>x.s>0).slice(0,2);
     const newsHits=localNews.map(n=>({n,s:score(q,n)})).sort((a,b)=>b.s-a.s).filter(x=>x.s>0).slice(0,2);
-    if(placeHits.length===0){for(const p of places.filter(p=>p.featured).slice(0,3))placeHits.push({p,s:1});}
     const main=placeHits[0]?.p;
     const take=fr
-      ? main?`Je partirais de ${main.name}. C’est le meilleur point d’ancrage dans le guide pour cette demande, puis je construirais autour plutôt que d’empiler des adresses.`:"Je construirais d’abord le rythme de la journée, puis seulement les adresses."
-      : main?`I’d start with ${main.name}. It is the strongest anchor in the guide for this request, then build around it rather than stack more places.`:"I’d build the rhythm first, then the addresses.";
-    return {placeHits,eventHits,villaHits,newsHits,take};
+      ? main?`${main.name} correspond à plusieurs critères identifiés. Voici les raisons du choix et les points à confirmer avant de prévoir votre sortie.`:"Aucune adresse ne remplit suffisamment les critères reconnus. Essayez de préciser la commune ou d’assouplir une contrainte."
+      : main?`${main.name} matches several identified criteria. Here is why, and what still needs checking before you go.`:"No listed place matches enough of the identified criteria. Try specifying a town or relaxing a constraint.";
+    return {placeHits,eventHits,villaHits,newsHits,take,intent:matched.intent};
   },[sent,q,fr]);
 
   const ex=fr?["Deux familles, cinq enfants, déjeuner au calme près de Pampelonne.","Un week-end romantique sans courir partout.","Que faire samedi soir autour de Sainte-Maxime ?","Une journée bateau pour 8 avec un bon déjeuner après."]:["Two families, five kids, calm lunch near Pampelonne.","A romantic weekend without rushing around.","What should we do Saturday night around Sainte-Maxime?","A boat day for eight with a good lunch afterwards."];
@@ -87,7 +59,8 @@ export default function Page({params}:{params:Promise<{locale:string}>}){
       {result&&<section className="mt-12 border-t border-white/35 pt-8">
         <div className="grid gap-8 md:grid-cols-[260px_1fr]"><div><p className="lg-kicker text-[var(--lg-blue)]">{fr?"LE REGARD LE GOLFE":"LE GOLFE TAKE"}</p><div className="lg-blue-rule mt-5"/></div><p className="max-w-4xl text-3xl font-black leading-[1.02] tracking-[-.04em] md:text-5xl">{result.take}</p></div>
 
-        {result.placeHits.length>0&&<div className="mt-14"><div className="flex items-end justify-between border-b border-white/30 pb-4"><div><p className="lg-kicker text-white/40">01 / {fr?"ADRESSES À CONSIDÉRER":"PLACES TO CONSIDER"}</p><h2 className="mt-3 text-5xl font-black uppercase tracking-[-.055em] md:text-7xl">{fr?"LE BON MIX.":"THE RIGHT MIX."}</h2></div><Link href={`/${l}/explore`} className="text-[10px] font-black uppercase tracking-[.12em] text-white/50">{fr?"Explorer":"Explore"} →</Link></div><div className="grid md:grid-cols-2">{result.placeHits.map(({p},i)=>{const m=mediaForPlace(p.id);return <Link key={p.id} href={`/${l}/place/${p.id}`} className={`group grid min-h-[260px] border-b border-white/30 ${i%2===0?"md:border-r":""}`}><div className="relative overflow-hidden bg-white/5">{m&&<img src={m.src} alt={m.alt} className="absolute inset-0 h-full w-full object-cover opacity-55 transition duration-700 group-hover:scale-[1.02]"/>}<div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent"/><div className="absolute bottom-0 p-5"><p className="lg-kicker text-white/55">{fr ? categoryFR[p.category].name : getCategory(p.category)?.label} · {p.location}</p><h3 className="mt-2 text-4xl font-black uppercase tracking-[-.055em]">{p.name}</h3><p className="mt-3 max-w-md text-sm font-semibold leading-6 text-white/65">{fr ? placeDescriptionFr[p.id] || p.description : p.description}</p></div></div></Link>})}</div></div>}
+        {result.intent.hasConstraints&&<div className="mt-7 border-l-2 border-[var(--lg-blue)] pl-5 text-sm leading-6 text-white/65">{fr?"Critères reconnus":"Recognised criteria"} : {[...result.intent.categories,...result.intent.facets].join(" · ")|| (fr?"Localisation et contraintes pratiques":"Location and practical constraints")}. {result.intent.exactEuroBudget?(fr?"Le budget précis n’est pas vérifiable avec les tarifs disponibles. ":"A precise budget cannot be verified against the listed price ranges. "):""}{result.intent.mentionsTime||result.intent.mentionsDistance?(fr?"Aucun temps de trajet calculé.":"No journey times calculated."):""}</div>}
+        {result.placeHits.length>0&&<div className="mt-14"><div className="flex items-end justify-between border-b border-white/30 pb-4"><div><p className="lg-kicker text-white/40">01 / {fr?"ADRESSES À CONSIDÉRER":"PLACES TO CONSIDER"}</p><h2 className="mt-3 text-5xl font-black uppercase tracking-[-.055em] md:text-7xl">{fr?"LE BON MIX.":"THE RIGHT MIX."}</h2></div><Link href={`/${l}/explore`} className="text-[10px] font-black uppercase tracking-[.12em] text-white/50">{fr?"Explorer":"Explore"} →</Link></div><div className="grid md:grid-cols-2">{result.placeHits.map(({p,reasons,cautions},i)=>{const m=mediaForPlace(p.id);return <Link key={p.id} href={`/${l}/place/${p.id}`} className={`group grid min-h-[260px] border-b border-white/30 ${i%2===0?"md:border-r":""}`}><div className="relative overflow-hidden bg-white/5">{m&&<img src={m.src} alt={m.alt} className="absolute inset-0 h-full w-full object-cover opacity-55 transition duration-700 group-hover:scale-[1.02]"/>}<div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent"/><div className="absolute bottom-0 p-5"><p className="lg-kicker text-white/55">{fr ? categoryFR[p.category].name : getCategory(p.category)?.label} · {p.location}</p><h3 className="mt-2 text-4xl font-black uppercase tracking-[-.055em]">{p.name}</h3><p className="mt-3 max-w-md text-sm font-semibold leading-6 text-white/65">{fr ? placeDescriptionFr[p.id] || p.description : p.description}</p>{reasons.length>0&&<p className="mt-3 text-xs font-bold text-[#b9e9f4]">{fr?"Pourquoi ce lieu":"Why this place"} : {reasons.join(" · ")}</p>}{cautions.length>0&&<p className="mt-2 text-xs text-white/70">{fr?"À confirmer":"To check"} : {cautions.join(" · ")}</p>}</div></div></Link>})}</div></div>}
 
         <div className="mt-14 grid gap-10 md:grid-cols-2">
           <div><div className="border-b border-white/30 pb-4"><p className="lg-kicker text-white/40">02 / {fr?"À L’AGENDA":"ON THE AGENDA"}</p><h2 className="mt-3 text-4xl font-black uppercase tracking-[-.05em]">{fr?"À NE PAS RATER.":"WORTH KNOWING."}</h2></div>{result.eventHits.length?result.eventHits.map(({e})=><a key={e.id} href={e.source} target="_blank" rel="noreferrer" className="block border-b border-white/20 py-5"><p className="lg-kicker text-[var(--lg-blue)]">{e.start} · {e.location}</p><p className="mt-2 text-2xl font-black uppercase tracking-[-.035em]">{fr&&e.titleFr?e.titleFr:e.title}</p><p className="mt-2 text-sm font-semibold leading-6 text-white/50">{fr?e.whyFr:e.why}</p></a>):<p className="py-5 text-white/45">{fr?"Aucun événement directement lié à cette demande.":"No event directly tied to this request."}</p>}</div>
