@@ -6,10 +6,12 @@ export function isValidAgendaEvent(event:GolfeEvent){
  return !!event.id&&!!event.title&&!!event.source?.startsWith("https://")&&sessions.length>0&&sessions.every(s=>isIsoDay(s.start)&&(!s.end||(isIsoDay(s.end)&&s.end>=s.start))&&(!s.time||/^([01]\d|2[0-3]):[0-5]\d$/.test(s.time)));
 }
 function identity(e:GolfeEvent){
- const session=eventSessions(e)[0],title=norm(e.titleFr||e.title),venue=norm(e.venue||e.location);
- return [title,venue,session.start,session.time||""].join("|");
+ const title=norm(e.titleFr||e.title),venue=norm(e.venue||e.location);
+ const dates=eventSessions(e).map(s=>[s.start,s.end||s.start,s.time||""].join(":")).sort().join(";");
+ return [title,venue,dates].join("|");
 }
-// Conservative: exact event/date/time/venue keys, never merge different sessions.
+// Conservative: merge only exact title/venue/full-session-set matches;
+// recurring events with different dates must not silently lose sessions.
 export function qualityAgendaEvents(events:GolfeEvent[]){
  const byKey=new Map<string,GolfeEvent>();
  for(const event of events){
