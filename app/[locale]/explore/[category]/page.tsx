@@ -1,4 +1,4 @@
-import {isExploreAddress} from "../../../../lib/exploreFilters";
+import {isExploreAddress,matchesExploreFilter} from "../../../../lib/exploreFilters";
 import { pageMetadata } from "../../../../lib/seo";
 import Link from "next/link";
 import {notFound} from "next/navigation";
@@ -9,7 +9,7 @@ import {categoryFR,isLocale,ui} from "../../../../lib/i18n";
 
 export default async function Page({params}:{params:Promise<{locale:string;category:string}>}){
  const {locale:l,category:id}=await params;if(!isLocale(l))notFound();const c=getCategory(id);if(!c)notFound();
- const name=id==="places"?(l==="fr"?"Patrimoine":"Heritage"):(l==="fr"?categoryFR[id].name:c.name),desc=id==="places"?(l==="fr"?"Sites et monuments à découvrir dans le Golfe.":"Sites and monuments to discover around the Golfe."):(l==="fr"?categoryFR[id].description:c.description);const list=places.filter(isExploreAddress).filter(p=>p.category===id);
+ const name=id==="places"?(l==="fr"?"Patrimoine":"Heritage"):(l==="fr"?categoryFR[id].name:c.name),desc=id==="places"?(l==="fr"?"Sites et monuments à découvrir dans le Golfe.":"Sites and monuments to discover around the Golfe."):(l==="fr"?categoryFR[id].description:c.description);const list=places.filter(isExploreAddress).filter(p=>matchesExploreFilter(p,id as Parameters<typeof matchesExploreFilter>[1]));
  return <main className="min-h-screen bg-white text-black"><SiteHeader locale={l} path={`/explore/${id}`}/>
   <section className="lg-shell pb-20 pt-10 md:pb-28 md:pt-16">
    <Link href={`/${l}/explore`} className="text-[10px] font-black uppercase tracking-[.14em]">← {ui[l].backGuide}</Link>
