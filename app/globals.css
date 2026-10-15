@@ -138,3 +138,13 @@ button,textarea,input { font:inherit; }
 .lg-saved-dark .lg-accent { color: #a6d8e5; }
 .lg-saved-dark input, .lg-saved-dark select, .lg-saved-dark textarea { background: #142936; color: #fff; border-color: rgba(255,255,255,.4); }
 .lg-saved-dark input::placeholder, .lg-saved-dark textarea::placeholder { color: rgba(255,255,255,.6); }
+
+/* Mobile legibility: interactive controls and long editorial labels. */
+@media(max-width:767px){
+ .lg-shell{padding-inline:18px}
+ .lg-btn{min-height:44px;max-width:100%;text-align:center;line-height:1.4;white-space:normal;overflow-wrap:anywhere;padding-block:10px}
+ .lg-saved-dark button:not(:disabled){min-height:40px}
+ .lg-saved-dark .lg-btn{min-height:44px}
+ .lg-menu-title{overflow-wrap:anywhere}
+}
+@media(prefers-reduced-motion:reduce){.lg-btn,.lg-link-accent{transition:none}}
