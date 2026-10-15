@@ -19,7 +19,10 @@ async function record(params:Props["params"]) {
 }
 export async function generateMetadata({params}:Props){
  const {locale,e}=await record(params);
- return pageMetadata({title:`${locale === "fr" ? e.titleFr || e.title : e.title} · ${e.location}`,description:locale === "fr" ? e.summaryFr : e.summary,path:`/${locale}/event/${e.id}`,locale,image:mediaForEvent(e)});
+ const hasFutureSession=eventSessions(e).some(session=>(session.end||session.start)>=parisIsoDay());
+ const metadata=pageMetadata({title:`${locale === "fr" ? e.titleFr || e.title : e.title} · ${e.location}`,description:locale === "fr" ? e.summaryFr : e.summary,path:`/${locale}/event/${e.id}`,locale,image:mediaForEvent(e)});
+ if(!hasFutureSession)metadata.robots={index:false,follow:true};
+ return metadata;
 }
 export default async function Page({params}:Props){
  const {locale,e}=await record(params);const fr=locale === "fr";const title=fr ? e.titleFr || e.title : e.title;
