@@ -51,3 +51,24 @@ assert.equal(buildAskDayPlan("Trouve une maison à Saint-Tropez",places,"fr","fu
 const constrainedPlan=buildAskDayPlan("Une plage et restaurant à Ramatuelle en 10 minutes et pour 60 euros",places,"fr","full");
 if(constrainedPlan){assert.ok(constrainedPlan.notes.some(n=>n.includes("trajet")));assert.ok(constrainedPlan.notes.some(n=>n.includes("tarifs")));}
 console.log("Editorial half/full-day planning and uncertainty regression tests passed.");
+
+const {mapAskPlan}=require('../lib/askPlanMap.ts');
+const mockPlan={format:'half',notes:[],steps:[
+ {category:'party',source:'requested',match:{p:places.find(p=>p.id==='caves-du-roy'),s:1,reasons:[],cautions:[]}},
+ {category:'beach',source:'requested',match:{p:places.find(p=>p.id==='pampelonne'),s:1,reasons:[],cautions:[]}},
+ {category:'sea',source:'complementary',match:{p:places.find(p=>p.id==='caseneuve-catamaran'),s:1,reasons:[],cautions:[]}}
+]};
+const map=mapAskPlan(mockPlan);
+assert.equal(map.total,3);
+assert.deepEqual(map.mapped.map(x=>x.id),['caves-du-roy','pampelonne'].filter(id=>map.mapped.some(x=>x.id===id)));
+assert.ok(map.missing.some(x=>x.id==='caseneuve-catamaran'),'do not invent coordinates for unmapped providers');
+assert.ok(map.mapped.every(x=>x.point.source.startsWith('https://')),'every marker has an external source');
+const bad=mapAskPlan(mockPlan,{'caves-du-roy':[{
+ id:'bad',label:{fr:'bad',en:'bad'},latitude:0,longitude:0,source:'https://example.com',checked:'2026-10-15',kind:'venue',note:{fr:'bad',en:'bad'}
+}]});
+assert.ok(bad.missing.some(x=>x.id==='caves-du-roy'),'invalid point must not be mapped');
+const mapUi=fs.readFileSync(require('node:path').join(__dirname,'../components/AskPlanMap.tsx'),'utf8');
+assert.ok(mapUi.includes('ResizeObserver'),'responsive map');
+assert.ok(mapUi.includes('OpenStreetMap'),'map attribution');
+assert.equal(mapUi.includes('google.com/maps/dir'),false,'no fabricated itinerary link');
+console.log('Ask map: sourced and unmapped points, invalid points, responsive viewport and no fake routes passed.');
