@@ -6,6 +6,17 @@ require.extensions['.ts'] = (module, filename) => module._compile(ts.transpileMo
 const { places, placeCategories } = require('../data/places.ts');
 const { matchesExploreFilter: matches, resolveExploreFilter: resolve, exploreFilterIds, exploreFilterLabels } = require('../lib/exploreFilters.ts');
 const place = id => { const row = places.find(p => p.id === id); assert.ok(row, id); return row; };
+const {categoriesForPlace,facetsForPlace,placeFilterTokens}=require('../lib/placeFacets.ts');
+for(const row of places){
+ assert.equal(categoriesForPlace(row)[0],row.category,row.id);
+ assert.ok(placeFilterTokens(row).includes(row.category),row.id);
+ for(const facet of facetsForPlace(row))assert.ok(matches(row,facet),row.id+'/'+facet);
+}
+for(const id of ['pampelonne','club-55','byblos-beach','indie-beach'])assert.ok(matches(place(id),'beachclub'),id);
+for(const id of ['pont-des-fees','san-peire-randonnee'])assert.ok(matches(place(id),'walk'),id);
+assert.ok(matches(place('pont-des-fees'),'heritage'));
+assert.ok(matches(place('caves-du-roy'),'music'));
+
 for (const row of places) { assert.ok(matches(row, 'all')); assert.ok(matches(row, row.category), row.id); }
 for (const category of placeCategories) assert.ok(exploreFilterIds.includes(category.id), category.id);
 for (const id of exploreFilterIds) { assert.ok(exploreFilterLabels.fr[id]); assert.ok(exploreFilterLabels.en[id]); }
