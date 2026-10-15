@@ -37,7 +37,6 @@ const lexFacets:Partial<Record<PlaceFacet,readonly string[]>>={
 };
 const budgetWords=["pas cher","petit budget","economique","abordable","sans se ruiner","budget serre","budget limite","low budget","affordable","cheap","budget friendly","inexpensive"];
 const highPrice=["luxe","luxury","haut de gamme","gastronomique","fine dining"];
-const localMatch=(a:string,b:string)=>a===b||a.startsWith(b+" ")||a.endsWith(" "+b)||a.includes(" "+b+" ");
 export function parseAskIntent(question:string):AskIntent{
  const q=norm(question).replace(/[-–]/g," ");
  const excludedCategories:IntentCategory[]=[];
@@ -53,7 +52,7 @@ export function parseAskIntent(question:string):AskIntent{
  const ordered=[...destinations].sort((a,b)=>b.name.length-a.name.length);
  for(const d of ordered){
   const names=[norm(d.name),norm(d.slug.replace(/-/g," "))];
-  if(names.some(name=>name.length>3&&localMatch(q,name))){town=d.slug;explicitTown=true;break;}
+  if(names.some(name=>name.length>3&&has(q,[name]))){town=d.slug;explicitTown=true;break;}
  }
  const budget=contains(q,budgetWords);
  const exactEuroBudget=/\b\d+[\s\u00a0]*(?:€|euros?|eur)\b|(?:€|eur)\s*\d+/.test(q);
