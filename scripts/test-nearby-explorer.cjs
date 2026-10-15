@@ -16,3 +16,15 @@ assert.ok(candidates.every(x=>x.place.id!=='chateau-minuty'));
 assert.ok(candidates.every((x,i)=>!i||candidates[i-1].distance<=x.distance));
 assert.deepEqual(nearbyExplorer('cecile-golmard-chef'),[],'mobile services have no fabricated anchor');
 console.log('Sourced Explorer map markers and nearby reference selection passed');
+
+for(const id of ['la-verdoyante','gassin-village','plan-de-la-tour-village']){
+ const point=placeMapPoints[id]?.[0];assert.ok(point,id);
+ assert.ok(point.source.startsWith('https://'));
+ assert.ok(point.note.fr.length>55);
+}
+assert.equal(placeMapPoints['la-verdoyante'][0].kind,'venue');
+assert.equal(placeMapPoints['gassin-village'][0].kind,'area');
+assert.ok(Math.abs(placeMapPoints['la-verdoyante'][0].latitude-(43+14/60+14.64/3600))<.00001);
+assert.ok(Math.abs(placeMapPoints['la-verdoyante'][0].longitude-(6+35/60+24.67/3600))<.00001);
+assert.ok(placeMapPoints['la-verdoyante'][0].note.fr.includes('ne concordent pas'));
+console.log('Verified village centres and official restaurant GPS/seasonal reopening passed');

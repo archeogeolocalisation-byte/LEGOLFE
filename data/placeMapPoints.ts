@@ -2,6 +2,26 @@ import type {MapPoint} from '../lib/placeMapLinks';
 // Public venue references from official sources; never inferred from a business owner’s home.
 export const placeMapPoints:Record<string,MapPoint[]> = {
 
+  "la-verdoyante":[{
+    id:"la-verdoyante",label:{fr:"La Verdoyante · restaurant",en:"La Verdoyante · restaurant"},
+    latitude:43.2374,longitude:6.5901861,source:"https://www.la-verdoyante.fr/contact",checked:"2026-10-15",kind:"venue",
+    note:{fr:"GPS et adresse publiés sur le site officiel : 866 chemin vicinal de Coste Brigade, Gassin. Les informations de réouverture sur les versions du site officiel ne concordent pas : contactez le restaurant avant de prévoir un repas.",en:"Official GPS and address: 866 Chemin Vicinal de Coste Brigade, Gassin. Reopening dates differ across versions of the official site: contact the restaurant before planning a meal."},
+    directionsQuery:"866 chemin vicinal de Coste Brigade, 83580 Gassin, France"
+  }],
+  "gassin-village":[{
+    id:"gassin-historic-village",label:{fr:"Gassin · cœur du village",en:"Gassin · historic village"},
+    latitude:43.2292,longitude:6.5855,source:"https://www.openstreetmap.org/node/26695436",checked:"2026-10-15",kind:"area",
+    note:{fr:"Repère du bourg historique sur la colline, non un parking ni un point de dépose. Stationnement périphérique et accès piéton à vérifier.",en:"Reference for the hilltop historic village, not a parking area or drop-off. Confirm parking and walking access."},
+    directionsQuery:"Village de Gassin, 83580 Gassin, France"
+  }],
+  "plan-de-la-tour-village":[{
+    id:"plan-tour-center",label:{fr:"Le Plan-de-la-Tour · village",en:"Le Plan-de-la-Tour · village centre"},
+    latitude:43.3384,longitude:6.54537,source:"https://www.openstreetmap.org/node/26697847",checked:"2026-10-15",kind:"area",
+    note:{fr:"Repère du village, pas une entrée de parking ou un accès garanti. Vérifiez les conditions de circulation lors des animations locales.",en:"Village reference, not a car park entrance or guaranteed arrival point. Check access during local events."},
+    directionsQuery:"Centre du village, 83120 Le Plan-de-la-Tour, France"
+  }],
+
+
   "chateau-minuty":[{
     id:"chateau-minuty-shop",label:{fr:"Château Minuty · accueil du domaine",en:"Château Minuty · winery visitor point"},
     latitude:43.241553,longitude:6.59228,source:"https://www.cirkwi.com/fr/point-interet/1211419-chateau-minuty",checked:"2026-10-15",kind:"venue",
