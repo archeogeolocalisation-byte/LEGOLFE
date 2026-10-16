@@ -13,3 +13,15 @@ const client=fs.readFileSync('app/[locale]/whats-on/AgendaClient.tsx','utf8');
 assert.ok(client.includes('countWindow(item.key)'));
 assert.ok(client.includes('value>=todayIso.slice(0,7)'));
 console.log('Agenda date quality, conservative duplicates and quick period counts passed');
+
+const calendar=require('../lib/agendaCalendar.ts');
+const repeated={...fixture,sessions:[{start:'2026-11-06',time:'20:00'},{start:'2026-11-13',time:'20:00'}]};
+assert.equal(qualityAgendaEvents([repeated,{...repeated,id:'other',sessions:[repeated.sessions[0],{start:'2026-11-20',time:'20:00'}]}]).length,2,'different later sessions survive');
+assert.equal(qualityAgendaEvents([repeated,{...repeated,id:'reverse',sessions:[...repeated.sessions].reverse()}]).length,1,'session order does not create duplicates');
+assert.equal(qualityAgendaEvents([fixture,{...fixture,id:'long',end:'2026-11-07'}]).length,2,'different durations survive');
+assert.equal(qualityAgendaEvents([fixture,{...fixture,id:'town',location:'Ramatuelle'}]).length,2,'same venue name in different towns survives');
+const window={from:'2026-11-06',to:'2026-11-06'};
+assert.deepEqual(calendar.eventsInWindow([{...fixture,id:'a',time:'21:00'},{...fixture,id:'z',time:'18:00'}],window).map(e=>e.id),['z','a'],'chronological times');
+assert.deepEqual(calendar.sessionsInWindow({...fixture,sessions:[{start:fixture.start,time:'21:00'},{start:fixture.start,time:'18:00'}]},window).map(s=>s.time),['18:00','21:00']);
+assert.notEqual(calendar.sessionAnchor({start:fixture.start,time:'18:00'}),calendar.sessionAnchor({start:fixture.start,time:'21:00'}),'SEO session anchors are unique');
+console.log('Multiple sessions, duration, municipality, chronological order and SEO anchors passed');

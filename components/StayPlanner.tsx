@@ -1,11 +1,13 @@
 "use client";
 
 import Link from "next/link";
+import { villaHref } from "../lib/villaPaths";
 import { useEffect, useMemo, useState } from "react";
 import type { Place } from "../data/places";
 import { getCategory } from "../data/places";
 import { categoryFR, type Locale } from "../lib/i18n";
 
+const BASE_KEY = "le-golfe-stay-base-v1";
 const PLAN_KEY = "le-golfe-stay-plan-v1";
 const PERIODS = ["morning", "lunch", "afternoon", "evening"] as const;
 type Period = (typeof PERIODS)[number];
@@ -39,12 +41,16 @@ export default function StayPlanner({ places, villas, locale }: { places: Place[
   const fr = locale === "fr";
   const [plan, setPlan] = useState<PlanItem[]>([]);
   const [loaded, setLoaded] = useState(false);
+  const [baseId,setBaseId]=useState("");
+  const [storageError,setStorageError]=useState(false);
+  const base=villas.find(v=>v.id===baseId)??villas[0];
 
   useEffect(() => {
     try {
       const raw = window.localStorage.getItem(PLAN_KEY);
       const parsed = raw ? JSON.parse(raw) : [];
-      if (Array.isArray(parsed)) setPlan(parsed.filter((x) => x && typeof x.id === "string"));
+      if (Array.isArray(parsed)) setPlan(parsed.filter((x) => x && typeof x.id === "string" && Number.isInteger(x.day) && x.day>=1 && x.day<=3 && PERIODS.includes(x.period)));
+      setBaseId(window.localStorage.getItem(BASE_KEY)||"");
     } catch {
       setPlan([]);
     } finally {
@@ -54,8 +60,12 @@ export default function StayPlanner({ places, villas, locale }: { places: Place[
 
   useEffect(() => {
     if (!loaded) return;
-    window.localStorage.setItem(PLAN_KEY, JSON.stringify(plan));
-  }, [plan, loaded]);
+    try {
+      window.localStorage.setItem(PLAN_KEY, JSON.stringify(plan));
+      window.localStorage.setItem(BASE_KEY, base?.id||"");
+      setStorageError(false);
+    } catch { setStorageError(true); }
+  }, [plan, loaded, base?.id]);
 
   const placeMap = useMemo(() => new Map(places.map((p) => [p.id, p])), [places]);
   const activePlan = useMemo(() => plan.filter((item) => placeMap.has(item.id)), [plan, placeMap]);
@@ -88,17 +98,17 @@ export default function StayPlanner({ places, villas, locale }: { places: Place[
       const periodLabel = fr ? ({ morning: "matin", lunch: "déjeuner", afternoon: "après-midi", evening: "soir" } as const)[period] : period;
       return names.length ? `${fr ? "Jour" : "Day"} ${day} — ${periodLabel}: ${names.join(", ")}` : null;
     }).filter(Boolean));
-    const base = villas[0] ? `${fr ? "Maison" : "Home base"}: ${villas[0].name} (${villas[0].location}). ` : "";
+    const home = base ? `${fr ? "Maison" : "Home base"}: ${base.name} (${base.location}). ` : "";
     return fr
-      ? `${base}Voici mon planning actuel : ${lines.join(" | ")}. Optimise-le selon les temps de trajet, le bon rythme, les meilleurs moments de la journée et les compromis. Ne surcharge pas les journées.`
-      : `${base}Here is my current plan: ${lines.join(" | ")}. Optimise it for travel time, pace, best times of day and trade-offs. Do not overload the days.`;
-  }, [activePlan, placeMap, villas, fr]);
+      ? `${home}Voici mon planning actuel : ${lines.join(" | ")}. Optimise-le selon les temps de trajet, le bon rythme, les meilleurs moments de la journée et les compromis. Ne surcharge pas les journées.`
+      : `${home}Here is my current plan: ${lines.join(" | ")}. Optimise it for travel time, pace, best times of day and trade-offs. Do not overload the days.`;
+  }, [activePlan, placeMap, base, fr]);
 
   const labels: Record<Period, string> = fr
     ? { morning: "MATIN", lunch: "DÉJEUNER", afternoon: "APRÈS-MIDI", evening: "SOIR" }
     : { morning: "MORNING", lunch: "LUNCH", afternoon: "AFTERNOON", evening: "EVENING" };
 
-  if (!places.length) return null;
+  if (!places.length && !villas.length) return null;
 
   return (
     <section className="mt-24 border-t border-black pt-8">
@@ -113,20 +123,22 @@ export default function StayPlanner({ places, villas, locale }: { places: Place[
           </p>
         </div>
         <div className="flex flex-wrap gap-2 md:justify-end">
-          <button onClick={generate} className="lg-btn lg-btn--accent">{fr ? "Générer depuis ma sélection" : "Build from shortlist"}</button>
+          <button disabled={!loaded||!places.length} onClick={generate} className="lg-btn lg-btn--accent">{fr ? "Générer depuis ma sélection" : "Build from shortlist"}</button>
           {activePlan.length > 0 && <button onClick={clear} className="lg-btn">{fr ? "Effacer" : "Clear"}</button>}
         </div>
       </div>
 
-      {villas[0] && <div className="mt-10 grid gap-3 border-y border-black py-4 md:grid-cols-[150px_1fr_auto] md:items-center">
+      {base && <div className="mt-10 grid gap-3 border-y border-black py-4 md:grid-cols-[150px_1fr_auto] md:items-center">
         <p className="lg-kicker text-black/40">{fr ? "BASE DU SÉJOUR" : "HOME BASE"}</p>
-        <div><p className="text-2xl font-black uppercase tracking-[-.035em]">{villas[0].name}</p><p className="mt-1 text-sm font-bold text-black/45">{villas[0].location}</p></div>
-        <Link href={`/villa/${villas[0].id}`} className="text-[10px] font-black uppercase tracking-[.12em] lg-link-accent">{fr ? "Voir la maison" : "View villa"} →</Link>
+        <div>{villas.length>1?<><label htmlFor="stay-base" className="sr-only">{fr?"Maison de départ":"Home base"}</label><select id="stay-base" value={base.id} onChange={e=>setBaseId(e.target.value)} className="w-full border border-black/30 bg-white p-2 text-black">{villas.map(v=><option key={v.id} value={v.id}>{v.name}</option>)}</select></>:<p className="text-2xl font-black uppercase tracking-[-.035em]">{base.name}</p>}<p className="mt-1 text-sm font-bold text-black/45">{base.location}</p></div>
+        <Link href={villaHref(base.id,locale)} className="text-[10px] font-black uppercase tracking-[.12em] lg-link-accent">{fr ? "Voir la maison" : "View villa"} →</Link>
       </div>}
 
+      {storageError&&<p role="alert" className="mt-5">{fr?"Programme non enregistré sur cet appareil. Vérifiez l’espace disponible avant de quitter la page.":"Plan not saved on this device. Check available storage before leaving."}</p>}
+      {!places.length&&<Link href={`/${locale}/explore`} className="lg-btn mt-6">{fr?"Ajouter des lieux à mon séjour":"Add places to my stay"} →</Link>}
       {activePlan.length === 0 ? (
         <div className="mt-10 border-y border-black py-12">
-          <p className="max-w-xl text-3xl font-black uppercase tracking-[-.04em]">{fr ? "Votre sélection est prête. Générez un premier planning pour voir comment les lieux s’enchaînent." : "Your shortlist is ready. Build a first plan to see how the places fit together."}</p>
+          <p className="max-w-xl text-3xl font-black uppercase tracking-[-.04em]">{!places.length?(fr?"Votre maison est choisie. Enregistrez des lieux pour composer votre programme.":"Your home base is set. Save places to build your plan."):(fr ? "Votre sélection est prête. Générez un premier planning pour voir comment les lieux s’enchaînent." : "Your shortlist is ready. Build a first plan to see how the places fit together.")}</p>
         </div>
       ) : (
         <div className="mt-10 grid gap-12 xl:grid-cols-3">

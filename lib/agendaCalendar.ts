@@ -24,11 +24,12 @@ export function dateWindow(range:AgendaRange,today:string):DateWindow {
  }
  return {from:today,to:today};
 }
-export function eventSessions(event:GolfeEvent):EventSession[]{return event.sessions?.length ? event.sessions : [{start:event.start,end:event.end,time:event.time}];}
+export function eventSessions(event:GolfeEvent):EventSession[]{return [...(event.sessions?.length ? event.sessions : [{start:event.start,end:event.end,time:event.time}])].sort((a,b)=>a.start.localeCompare(b.start)||(a.time||"00:00").localeCompare(b.time||"00:00"));}
+export function sessionAnchor(session:EventSession){return `session-${session.start}${session.time?`-${session.time.replace(":", "")}`:""}`;}
 export function sessionsInWindow(event:GolfeEvent,window:DateWindow):EventSession[]{return eventSessions(event).filter(s=>isIsoDay(s.start) && (!s.end||isIsoDay(s.end)) && (s.end||s.start)>=s.start && s.start<=window.to && (s.end||s.start)>=window.from);}
 export function eventOverlaps(event:GolfeEvent,from:string,to:string){return sessionsInWindow(event,{from,to}).length>0;}
 export function firstSessionInWindow(event:GolfeEvent,window:DateWindow){return sessionsInWindow(event,window).sort((a,b)=>a.start.localeCompare(b.start))[0];}
-export function eventsInWindow(events:GolfeEvent[],window:DateWindow):GolfeEvent[]{return events.filter(e=>sessionsInWindow(e,window).length).sort((a,b)=>firstSessionInWindow(a,window)!.start.localeCompare(firstSessionInWindow(b,window)!.start) || a.id.localeCompare(b.id));}
+export function eventsInWindow(events:GolfeEvent[],window:DateWindow):GolfeEvent[]{return events.filter(e=>sessionsInWindow(e,window).length).sort((a,b)=>firstSessionInWindow(a,window)!.start.localeCompare(firstSessionInWindow(b,window)!.start) || (firstSessionInWindow(a,window)!.time||"00:00").localeCompare(firstSessionInWindow(b,window)!.time||"00:00") || a.id.localeCompare(b.id));}
 export function catalogMonths(events:GolfeEvent[]):string[]{
  const months=new Set<string>();
  for(const e of events)for(const s of eventSessions(e)){

@@ -26,6 +26,8 @@ async function nodes(element){if(!element||typeof element!=='object')return [];i
  const nartelle=placeMapPoints['sainte-maxime-village'].find(p=>p.id==='nartelle');assert.equal(nartelle.latitude,43.322622);assert.equal(nartelle.longitude,6.664884);assert.ok(nartelle.directionsQuery.includes('Avenue'));assert.notEqual(places.find(p=>p.id==='sainte-maxime-village').latitude,nartelle.latitude);
  assert.equal(placeMapPoints['cecile-golmard-chef'],undefined);assert.notEqual(placeMapPoints['grimaud-village'][0].longitude,placeMapPoints['port-grimaud'][0].longitude);
  assert.equal(osmMapUrl({...nartelle,latitude:0}),undefined);
+ const secondaryHtml=renderToStaticMarkup(require('react').createElement(Block,{name:'Sainte-Maxime',location:'Sainte-Maxime',points:[nartelle],locale:'fr',address:'Office de tourisme, Place Louis-Blanc'}));
+ assert.ok(secondaryHtml.includes(pointDirectionsUrl(nartelle).replaceAll('&','&amp;')),'selected map reference controls directions even when the place has a main address');
  assert.equal(new URL(placeSearchUrl('A & B','Saint-Tropez')).searchParams.get('query'),'A & B, Saint-Tropez, France');
  for(const place of places)for(const locale of ['fr','en']){
   const points=placeMapPoints[place.id]??[],html=renderToStaticMarkup(require('react').createElement(Block,{name:place.name,location:place.location,points,locale}));
