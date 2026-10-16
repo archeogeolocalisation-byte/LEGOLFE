@@ -1,3 +1,4 @@
+import {grimaudPlaces} from './grimaudPlaces';
 import {sainteMaximePlaces} from './sainteMaximePlaces';
 import {planDeLaTourPlaces} from './planDeLaTourPlaces';
 import {placeMapPoints} from "./placeMapPoints";
@@ -48,6 +49,7 @@ export type Place = {
 export const places: Place[] = [
   ...planDeLaTourPlaces,
  ...sainteMaximePlaces,
+ ...grimaudPlaces,
 {
   "id": "domaine-de-la-croix",
   "name": "Domaine de La Croix",

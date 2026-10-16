@@ -47,12 +47,12 @@ export const destinations:Destination[] = [
     "name": "Grimaud",
     "villageId": "grimaud-village",
     "intro": {
-      "fr": "Le village de Grimaud et Port Grimaud sont deux façons différentes de découvrir la commune. La fiche du village donne les repères de visite ; Monroe’s apporte une piste pour sortir à Port Grimaud. Les villas et l’agenda complètent la sélection quand le catalogue en propose.",
-      "en": "Grimaud village and Port Grimaud offer different experiences within the same commune. The village guide provides ideas for a visit, while Monroe’s is an option for a night out in Port Grimaud. Villas and events complete the selection when available in the catalog."
+      "fr": "À Grimaud, reliez le château, l’église Saint-Michel, le moulin Saint-Roch et la chapelle des Pénitents pour découvrir le village à pied. Le vallon du Pont des Fées prolonge la promenade côté nature. Port Grimaud, sur le littoral, reste une autre étape de la commune.",
+      "en": "Connect the castle, Saint-Michel church, Saint-Roch mill and the Penitents’ Chapel for a walk through Grimaud village. The Pont des Fées valley extends the discovery into nature. Coastal Port Grimaud is a separate stop within the same commune."
     },
     "plan": {
-      "fr": "Commencez par la fiche du village pour préparer une visite. Pour un verre ou une soirée, regardez séparément l’ambiance de Monroe’s et l’emplacement de votre hébergement.",
-      "en": "Start with the village guide to plan a visit. For drinks or an evening out, check Monroe’s atmosphere and the location of your accommodation separately."
+      "fr": "Composez une balade depuis la chapelle des Pénitents vers Saint-Michel, puis le château si vous souhaitez monter jusqu’au panorama. Ajoutez le moulin Saint-Roch selon le temps disponible et vérifiez les ouvertures intérieures.",
+      "en": "Walk from the Penitents’ Chapel towards Saint-Michel, then up to the castle if you want the view. Add Saint-Roch mill if time allows, checking interior opening separately."
     }
   },
   {

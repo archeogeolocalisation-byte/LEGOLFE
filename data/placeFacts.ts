@@ -1,3 +1,4 @@
+import {grimaudFacts} from './grimaudPlaces';
 import {sainteMaximeFacts} from './sainteMaximePlaces';
 import {planDeLaTourFacts} from './planDeLaTourPlaces';
 import {newExperienceFacts} from "./newExperienceFacts";
@@ -8,6 +9,7 @@ export const placeFacts:Record<string,PlaceFacts> = {
   ...newExperienceFacts,
   ...planDeLaTourFacts,
  ...sainteMaximeFacts,
+ ...grimaudFacts,
   "grimaud-village": {
     "verified": "2026-10-13",
     "copy": {
@@ -129,9 +131,12 @@ export const placeFacts:Record<string,PlaceFacts> = {
       }
     ],
     "nearby": [
+      "chateau-de-grimaud",
+      "eglise-saint-michel-grimaud",
+      "moulin-saint-roch-grimaud",
+      "chapelle-des-penitents-grimaud",
       "port-grimaud",
-      "pont-des-fees",
-      "cogolin-village"
+      "pont-des-fees"
     ]
   },
   "port-grimaud": {

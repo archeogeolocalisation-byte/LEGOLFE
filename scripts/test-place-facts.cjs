@@ -18,7 +18,7 @@ const Sheet=require('../components/PlaceFactSheet.tsx').default,Page=require('..
 const {renderToStaticMarkup}=require('react-dom/server'),{GET}=require('../app/sitemap.xml/route.ts');
 const licenses=JSON.parse(fs.readFileSync(path.join(__dirname,'../public/media/place-facts/licenses.json')));
 (async()=>{
- assert.equal(Object.keys(placeFacts).length,16);
+ assert.equal(Object.keys(placeFacts).length,20);
  assert.equal(new Set(places.map(p=>p.id)).size,places.length);
  assert.ok(placesInDestination(getDestination('grimaud')).some(p=>p.id==='port-grimaud'));
  const xml=await(await GET()).text();
@@ -73,10 +73,17 @@ const licenses=JSON.parse(fs.readFileSync(path.join(__dirname,'../public/media/p
   }
  }
  // New local collections: test the rendered public flow, not just the data shape.
- const localIds=[...require('../data/planDeLaTourPlaces.ts').planDeLaTourPlaces,...require('../data/sainteMaximePlaces.ts').sainteMaximePlaces].map(p=>p.id);
- for(const slug of ['le-plan-de-la-tour','sainte-maxime']){
+ const localIds=[...require('../data/planDeLaTourPlaces.ts').planDeLaTourPlaces,...require('../data/sainteMaximePlaces.ts').sainteMaximePlaces,...require('../data/grimaudPlaces.ts').grimaudPlaces].map(p=>p.id);
+ for(const slug of ['le-plan-de-la-tour','sainte-maxime','grimaud']){
   const local=placesInDestination(getDestination(slug));
   assert.equal(local.filter(p=>localIds.includes(p.id)).length,4,`${slug}: four new places exposed by destination`);
+ }
+ const grimaudIds=require('../data/grimaudPlaces.ts').grimaudPlaces.map(p=>p.id);
+ assert.ok(grimaudIds.every(id=>placeFacts['grimaud-village'].nearby.includes(id)),'Village guide links directly to each new monument');
+ for(const id of grimaudIds){
+  const photo=photosForPlace(id)[0];
+  assert.equal(photo.contextual,undefined,`${id}: photograph depicts the monument`);
+  assert.equal(photo.license,'CC BY-SA 4.0');
  }
  const {editorialSignatures}=require('../lib/placeEditorialSignatures.ts');
  const {isExploreAddress}=require('../lib/exploreFilters.ts');
@@ -106,5 +113,5 @@ const licenses=JSON.parse(fs.readFileSync(path.join(__dirname,'../public/media/p
  }
  assert.equal(places.some(p=>/comptoir-de-la-poste|porte[s]?-verte/.test(p.id)),false,'User exclusions respected');
  process.env.VERCEL_ENV='preview';assert.equal((await Page.generateMetadata({params:Promise.resolve({locale:'fr',id:'port-grimaud'})})).robots.index,false);
- console.log('Place facts: existing licensed media/hashes plus 8 new places in FR/EN; contextual photos, sources, map markers, discovery links, metadata and sitemap passed.');
+ console.log('Place facts: existing licensed media/hashes plus 12 local places in FR/EN; contextual photos, sources, map markers, discovery links, metadata and sitemap passed.');
 })().catch(error=>{console.error(error);process.exitCode=1;});
