@@ -60,6 +60,15 @@ async function htmlFor(id,locale){const stream=await renderToReadableStream(awai
     assert.ok(html.includes('6 km'));assert.ok(html.includes('370 m'));
     assert.ok(xml.includes(`<loc>${metadata.alternates.canonical}</loc><lastmod>2026-10-16</lastmod>`));
    }
+   if(place.id==='cap-taillat'){
+    assert.ok(title.includes('Escalet')&&title.includes('Gigaro'),'Both primary trailheads are discoverable in metadata');
+    for(const word of ['Canadel','Gigaro','Camarat','Colle Basse','40 minutes','494 m'])assert.ok(html.includes(word),`Taillat/${locale}: missing route distinction ${word}`);
+    assert.ok(html.includes(locale==='fr'?'14,8 km':'14.8 km'));
+    assert.ok(html.includes(`href="/${locale}/place/gigaro-beach"`),'Gigaro has a crawlable internal link');
+    for(const source of discoveryFeatures[place.id][locale].sources)assert.ok(html.includes(source.url));
+    assert.ok(xml.includes(`<loc>${metadata.alternates.canonical}</loc><lastmod>2026-10-16</lastmod>`));
+    assert.ok(html.includes(locale==='fr'?'très fréquenté':'very busy'),'Summer crowding is visible');
+   }
    if(placeFacts[place.id])assert.equal(description,placeFacts[place.id].copy[locale].description,'Preserve curated fact sheet metadata');
   }
  }

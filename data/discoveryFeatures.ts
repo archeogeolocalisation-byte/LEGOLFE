@@ -98,73 +98,175 @@ export const discoveryFeatures:Record<string,Record<Locale,DiscoveryGuide>> = {
     }
   },
   "cap-taillat": {
-    "fr": {
-      "title": "Cap Taillat : accès depuis l’Escalet et balade",
-      "description": "Préparez votre balade au Cap Taillat entre Ramatuelle et La Croix-Valmer : départ de l’Escalet, sentier littoral et conseils avant de partir.",
-      "intro": "Entre Ramatuelle et La Croix-Valmer, le Cap Taillat invite à découvrir le littoral à pied. Choisissez cette sortie pour le paysage et la marche, en adaptant le parcours au groupe et aux conditions du jour.",
-      "sections": [
-        [
-          "Un cap entre deux baies",
-          "Ce site naturel protégé sépare les baies de Briande et de Bonporteau. Il appartient au Conservatoire du littoral. Le paysage mérite une visite attentive : restez sur les chemins et emportez vos déchets."
-        ],
-        [
-          "Partir de l’Escalet",
-          "L’office de tourisme décrit un itinéraire depuis le parking de la plage de l’Escalet, avec un retour par le même chemin. Consultez son parcours avant de partir et prévoyez le temps du retour, sans vous fier à un seul temps de marche."
-        ],
-        [
-          "Préparer la marche littorale",
-          "Chaussures adaptées, eau et protection solaire sont à prévoir. Certains passages peuvent être submergés par mer agitée. Vérifiez la météo et les restrictions d’accès du jour ; ce sentier n’est pas adapté aux fauteuils roulants."
-        ]
+  "fr": {
+    "title": "Cap Taillat : accès depuis l’Escalet et Gigaro",
+    "description": "Découvrez le majestueux Cap Taillat : accès à pied depuis l’Escalet, Canadel ou Gigaro, randonnées, plages et conseils pour éviter la foule en été.",
+    "intro": "Une langue de sable blanc, la mer de chaque côté, un cap qui s’avance dans le bleu : le Cap Taillat est l’un des paysages les plus majestueux de la presqu’île de Saint-Tropez. Entre Ramatuelle et La Croix-Valmer, on vient pour l’isthme, les criques et cette impression de Méditerranée immense. Mais sauvage ne veut pas dire désert : en juillet et août, le site est très fréquenté. Choisissez votre accès et votre horaire avant de partir.",
+    "sections": [
+      [
+        "Un site majestueux entre deux baies",
+        "Relié au rivage par un isthme de sable, le Cap Taillat dessine une silhouette reconnaissable entre les baies de Briande et de Bonporteau. Les eaux claires et la côte découpée donnent au paysage une ampleur rare. Notre conseil : gardez du temps pour contempler les perspectives depuis le sentier, au lieu de traiter le cap comme une simple plage à cocher."
       ],
-      "nearby": [
-        [
-          "escalet",
-          "Préparer le départ à l’Escalet"
-        ],
-        [
-          "ramatuelle-village",
-          "Découvrir Ramatuelle"
-        ],
-        [
-          "la-croix-valmer-village",
-          "Découvrir La Croix-Valmer"
-        ]
-      ]
-    },
-    "en": {
-      "title": "Cap Taillat: coastal walk and access from l’Escalet",
-      "description": "Plan your walk to Cap Taillat between Ramatuelle and La Croix-Valmer: access from l’Escalet, the coastal path and advice before setting out.",
-      "intro": "Between Ramatuelle and La Croix-Valmer, Cap Taillat is a place to explore the coast on foot. Choose it for the scenery and walking, adapting your route to your group and the day’s conditions.",
-      "sections": [
-        [
-          "A cape between two bays",
-          "This protected natural site separates the bays of Briande and Bonporteau and belongs to the Conservatoire du littoral. Explore it with care: stay on the paths and take your rubbish away."
-        ],
-        [
-          "Starting at l’Escalet",
-          "The tourist office describes a route from l’Escalet beach car park, returning along the same path. Consult its itinerary before setting out and allow time for the return rather than relying on a single walking-time estimate."
-        ],
-        [
-          "Preparing for the coastal path",
-          "Bring suitable shoes, water and sun protection. Some sections can be submerged in rough seas. Check the weather and access restrictions on the day; this trail is not suitable for wheelchairs."
-        ]
+      [
+        "Depuis la plage de l’Escalet, à Ramatuelle",
+        "Rejoignez le parking de la plage de l’Escalet, puis le sentier littoral vers le Cap Taillat. Ramatuelle Tourisme annonce environ 40 minutes pour rejoindre le site : c’est un repère d’approche, pas la durée d’une sortie complète avec retour, baignade et montée sur le cap. Prévoyez une marge selon votre rythme. Le stationnement reste au départ, jamais au pied de l’isthme."
       ],
-      "nearby": [
-        [
-          "escalet",
-          "Plan your start at l’Escalet"
-        ],
-        [
-          "ramatuelle-village",
-          "Explore Ramatuelle"
-        ],
-        [
-          "la-croix-valmer-village",
-          "Explore La Croix-Valmer"
-        ]
+      [
+        "Depuis Canadel : le deuxième départ côté Escalet",
+        "Le CEN PACA signale aussi un départ au bout de l’avenue Cartaya, près de la pointe de Canadel. Il évite la première portion rocheuse et exposée depuis la plage de l’Escalet, déconseillée aux jeunes enfants. Cela ne rend pas la suite accessible aux poussettes ou aux fauteuils. Vérifiez la signalisation et les possibilités de stationnement sur place."
+      ],
+      [
+        "Depuis Gigaro : le sentier côtier par le Cap Lardier",
+        "À La Croix-Valmer, partez de la plage de Gigaro, à l’entrée du domaine du Cap Lardier. Suivez le balisage jaune et la direction Cap Lardier, puis la plage de la Briande et l’isthme du Cap Taillat. C’est une vraie randonnée, nettement plus longue que l’approche depuis l’Escalet. L’office propose un retour en boucle par les pistes forestières : consultez le tracé « Les 2 Caps » pour choisir le parcours complet."
+      ],
+      [
+        "Depuis Gigaro : la boucle forestière des deux caps",
+        "Autre itinéraire officiel, le « Circuit des 2 caps » du Parc national de Port-Cros part du point d’information de Gigaro, monte par la forêt vers Colle Basse, rejoint Taillat par le chemin de la Douane et revient par le Cap Lardier, Brouis et Jovat. Le Parc annonce 14,8 km, 5 h et 494 m de dénivelé positif pour la boucle entière, hors longues pauses. Ces chiffres ne décrivent ni un aller simple vers Taillat ni l’autre boucle « Les 2 Caps ». Téléchargez le GPX correspondant."
+      ],
+      [
+        "Depuis Camarat : un prolongement pour marcheurs",
+        "Le littoral permet également d’arriver par le secteur du phare de Camarat, en passant par l’Escalet. Ramatuelle Tourisme décrit cette liaison dans sa page « Côté mer ». C’est une longue approche à préparer avec son retour, pas un raccourci vers la plage. Pour une première visite centrée sur Taillat, nous conseillons plutôt un départ côté Escalet ou un circuit balisé depuis Gigaro."
+      ],
+      [
+        "En été : un site sauvage, mais très fréquenté",
+        "En juillet et août, attendez-vous à beaucoup de monde sur les plages, les sentiers et dans les baies. Le paysage reste grandiose ; l’expérience n’est pas celle d’une crique secrète. Notre conseil : partez tôt pour limiter la chaleur et la pression sur le stationnement, sans garantie de tranquillité. Pour mieux apprécier le lieu, privilégiez si possible le printemps ou l’arrière-saison, lorsque les conditions et l’ouverture des chemins le permettent."
+      ],
+      [
+        "Baignade et préparation : garder le retour en tête",
+        "La plage de la Douane offre une belle perspective sur le cap et sa Maison des Douanes ; la baignade y est non surveillée. Prévoyez eau, chaussures adaptées et protection solaire pour toute la sortie. Par mer forte, certains passages littoraux peuvent être exposés ou submergés. Consultez la carte quotidienne d’accès aux massifs avant le départ et respectez toute fermeture. Restez sur les sentiers balisés ; ni feu, ni camping, ni prélèvement dans ce site protégé."
       ]
-    }
+    ],
+    "nearby": [
+      [
+        "escalet",
+        "Préparer le départ depuis l’Escalet"
+      ],
+      [
+        "gigaro-beach",
+        "Préparer le départ depuis Gigaro"
+      ],
+      [
+        "ramatuelle-village",
+        "Découvrir Ramatuelle"
+      ],
+      [
+        "la-croix-valmer-village",
+        "Découvrir La Croix-Valmer"
+      ]
+    ],
+    "verified": "2026-10-16",
+    "sources": [
+      {
+        "label": "Ramatuelle Tourisme · Cap Taillat et accès depuis l’Escalet",
+        "url": "https://www.ramatuelle-tourisme.com/fr/decouvrir-la-presquile/cote-mer/les-tresors-caches/le-cap-taillat/"
+      },
+      {
+        "label": "CEN PACA · départs Escalet / Canadel et protection du site",
+        "url": "https://cen-paca.org/decouvrir/les-milieux-naturels/ecosystemes-littoraux-et-marins/le-cap-taillat/"
+      },
+      {
+        "label": "La Croix-Valmer Tourisme · Les 2 Caps, par le littoral",
+        "url": "https://www.lacroixvalmertourisme.com/fr/loisirs/loisirs-sportifs/la-croix-valmer/les-2-caps-6086817"
+      },
+      {
+        "label": "Parc national de Port-Cros · Circuit des 2 caps, tracé et GPX",
+        "url": "https://destination.portcros-parcnational.fr/trek/689-Circuit-des-2-caps"
+      },
+      {
+        "label": "Ramatuelle Tourisme · Camarat, plages et Maison des Douanes",
+        "url": "https://www.ramatuelle-tourisme.com/fr/decouvrir-la-presquile/cote-mer/"
+      },
+      {
+        "label": "Carte quotidienne d’accès aux massifs du Var",
+        "url": "https://www.risque-prevention-incendie.fr/var/"
+      }
+    ]
   },
+  "en": {
+    "title": "Cap Taillat: access from l’Escalet and Gigaro",
+    "description": "Explore majestic Cap Taillat: walking access from l’Escalet, Canadel and Gigaro, coastal hikes, beaches and advice for the busy summer season.",
+    "intro": "White sand joins the headland to the shore, with blue water on both sides: Cap Taillat is one of the Saint-Tropez peninsula’s most majestic landscapes. Between Ramatuelle and La Croix-Valmer, the isthmus, coves and open Mediterranean views make the walk worthwhile. Wild scenery does not mean solitude: July and August are very busy. Choose your starting point and timing before setting out.",
+    "sections": [
+      [
+        "A majestic headland between two bays",
+        "Joined to the coast by a sandy isthmus, Cap Taillat has a distinctive outline between Briande and Bonporteau bays. Clear water and the indented shoreline create a remarkable sense of space. Our advice: leave time to enjoy the changing views from the path rather than treating the cape as another beach to tick off."
+      ],
+      [
+        "From l’Escalet beach in Ramatuelle",
+        "Start at l’Escalet beach car park and follow the coastal path towards Cap Taillat. Ramatuelle Tourism gives around 40 minutes to reach the site: an approach estimate, not a complete outing including the return, swimming and exploring the headland. Allow extra time for your pace. Parking is at the start, never beside the isthmus."
+      ],
+      [
+        "From Canadel: a second start near l’Escalet",
+        "CEN PACA also lists a start at the end of Avenue Cartaya, near Pointe de Canadel. It avoids the first rocky, exposed stretch from l’Escalet beach, which is discouraged for young children. The remaining path is still unsuitable for pushchairs and wheelchairs. Check local signs and parking arrangements."
+      ],
+      [
+        "From Gigaro: the coast via Cap Lardier",
+        "In La Croix-Valmer, start at Gigaro beach by the entrance to the Cap Lardier estate. Follow yellow waymarks towards Cap Lardier, then La Briande beach and the Cap Taillat isthmus. This is a substantial hike, much longer than the approach from l’Escalet. The tourist office’s “Les 2 Caps” route returns along forest tracks: consult its full route before choosing your outing."
+      ],
+      [
+        "From Gigaro: the forest circuit of the two capes",
+        "A separate official route, Port-Cros National Park’s “Circuit des 2 caps”, starts at Gigaro’s information point, climbs through forest towards Colle Basse, reaches Taillat via Chemin de la Douane and returns via Cap Lardier, Brouis and Jovat. The Park lists 14.8 km, 5 hours and 494 m of ascent for the entire loop, excluding long breaks. These figures apply neither to a one-way walk to Taillat nor to the other “Les 2 Caps” loop. Download the matching GPX."
+      ],
+      [
+        "From Camarat: a longer coastal approach",
+        "You can also approach along the coast from the Camarat lighthouse area via l’Escalet. Ramatuelle Tourism describes this connection on its “Côté mer” page. Plan it as a long hike with a return journey, rather than a shortcut to the beach. For a first visit focused on Taillat, we suggest starting near l’Escalet or choosing a waymarked Gigaro circuit."
+      ],
+      [
+        "Summer: wild scenery with plenty of visitors",
+        "In July and August, expect busy beaches, paths and bays. The landscape remains spectacular, but this is not a secret cove. Our advice: set off early to reduce exposure to heat and parking pressure, without expecting guaranteed peace. Spring or the shoulder season can be more rewarding when conditions and trail access allow."
+      ],
+      [
+        "Swimming and preparation: allow for the return",
+        "Plage de la Douane offers a fine view of the cape and its former customs house; swimming is unsupervised. Bring water, proper footwear and sun protection for the whole outing. Rough seas can expose or submerge sections of the coastal path. Check the daily forest-access map before leaving and respect closures. Keep to marked paths; fires, camping and removing natural material are prohibited in this protected site."
+      ]
+    ],
+    "nearby": [
+      [
+        "escalet",
+        "Plan your start at l’Escalet"
+      ],
+      [
+        "gigaro-beach",
+        "Plan your start at Gigaro"
+      ],
+      [
+        "ramatuelle-village",
+        "Explore Ramatuelle"
+      ],
+      [
+        "la-croix-valmer-village",
+        "Explore La Croix-Valmer"
+      ]
+    ],
+    "verified": "2026-10-16",
+    "sources": [
+      {
+        "label": "Ramatuelle Tourisme · Cap Taillat et accès depuis l’Escalet",
+        "url": "https://www.ramatuelle-tourisme.com/fr/decouvrir-la-presquile/cote-mer/les-tresors-caches/le-cap-taillat/"
+      },
+      {
+        "label": "CEN PACA · départs Escalet / Canadel et protection du site",
+        "url": "https://cen-paca.org/decouvrir/les-milieux-naturels/ecosystemes-littoraux-et-marins/le-cap-taillat/"
+      },
+      {
+        "label": "La Croix-Valmer Tourisme · Les 2 Caps, par le littoral",
+        "url": "https://www.lacroixvalmertourisme.com/fr/loisirs/loisirs-sportifs/la-croix-valmer/les-2-caps-6086817"
+      },
+      {
+        "label": "Parc national de Port-Cros · Circuit des 2 caps, tracé et GPX",
+        "url": "https://destination.portcros-parcnational.fr/trek/689-Circuit-des-2-caps"
+      },
+      {
+        "label": "Ramatuelle Tourisme · Camarat, plages et Maison des Douanes",
+        "url": "https://www.ramatuelle-tourisme.com/fr/decouvrir-la-presquile/cote-mer/"
+      },
+      {
+        "label": "Carte quotidienne d’accès aux massifs du Var",
+        "url": "https://www.risque-prevention-incendie.fr/var/"
+      }
+    ]
+  }
+},
   "pont-des-fees": {
     "fr": {
       "title": "Pont des Fées à Grimaud : balade et accès",

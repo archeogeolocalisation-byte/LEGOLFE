@@ -210,7 +210,7 @@ export const places: Place[] = [
   "name": "Cap Taillat",
   "category": "do",
   "location": "Ramatuelle · La Croix-Valmer",
-  "description": "Cap Taillat is the wild side of the Saint-Tropez peninsula: a protected coastal headland reached on foot from L’Escalet, not by car. Follow the coastal path and check weather and seasonal fire-access restrictions.",
+  "description": "Cap Taillat is a majestic headland between Ramatuelle and La Croix-Valmer, with a sandy isthmus and clear-water coves. Walk from l’Escalet or take the longer hike from Gigaro via Cap Lardier. Very busy in summer; check trail access before leaving.",
   "bestFor": [
     "A prepared coastal walk"
   ],
@@ -1001,7 +1001,7 @@ export const placeDescriptionFr: Record<string, string> = {
  "domaine-de-la-croix":"À La Croix-Valmer, le Domaine de La Croix raconte le Golfe côté vignoble : dégustations, boutique au 816 boulevard de Tabarin et visites commentées des chais sur réservation. Une autre façon de parcourir la presqu’île, loin du sable.",
  "san-peire-randonnee":"Au Plan-de-la-Tour, San Peïre offre une randonnée entre sous-bois, traces d’occupation ancienne et vues ouvertes sur le massif des Maures et le Golfe de Saint-Tropez. Le bon réflexe : vérifier le parcours et l’accès aux massifs avant de partir.",
   "moulin-de-paillas": "À Ramatuelle, le Moulin de Paillas remet les collines au premier plan : un moulin restauré, la route du col de Paillas et un panorama sur la presqu’île de Saint-Tropez. Préparez l’accès et renseignez-vous sur les visites avant de monter.",
-  "cap-taillat": "Au Cap Taillat, la Côte d’Azur retrouve son visage sauvage. Depuis l’Escalet à Ramatuelle, le sentier littoral rejoint ce cap relié à la côte par une langue de sable. Ce n’est pas un accès en voiture : vérifiez météo et restrictions de randonnée.",
+  "cap-taillat": "Cap Taillat : un isthme de sable et un paysage majestueux entre Ramatuelle et La Croix-Valmer. Accès à pied depuis l’Escalet ou en randonnée depuis Gigaro par le Cap Lardier. Très fréquenté en été : préparez votre départ et vérifiez l’ouverture des sentiers.",
   "pont-des-fees": "À Grimaud, le Pont des Fées n’est pas un simple pont : les vestiges d’un ancien aqueduc se découvrent au fil d’une promenade dans le vallon de la Garde. Pour y aller, cherchez le sentier, pas une adresse automobile au pied de l’ouvrage.",
 
 "cogolin-village":"Des ruelles qui montent, des savoir-faire à découvrir et un autre visage du Golfe. Cogolin se choisit pour une promenade au vieux village, une rencontre avec l’artisanat ou une étape entre les communes voisines.",
