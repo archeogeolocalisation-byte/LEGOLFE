@@ -7,7 +7,7 @@ process.env.NEXT_PUBLIC_SUPABASE_URL='https://example.supabase.co';process.env.N
 process.env.VERCEL_ENV='production';process.env.NEXT_PUBLIC_SITE_URL='https://www.legolfe.com';
 const load=Module._load;
 Module._load=function(request,parent,...rest){
- if(parent?.filename.endsWith('/sitemap.xml/route.ts')&&request.endsWith('/lib/publicEvents'))return {getPublicEvents:async()=>[]};
+ if((parent?.filename.endsWith('/sitemap.xml/route.ts')||parent?.filename.endsWith('/destinations/[town]/page.tsx'))&&request.endsWith('/lib/publicEvents'))return {getPublicEvents:async()=>[]};
  if(parent?.filename.endsWith('/sitemap.xml/route.ts')&&request.endsWith('/lib/publicNews'))return {getPublicNews:async()=>[]};if(parent?.filename.endsWith('/sitemap.xml/route.ts')&&request.endsWith('/lib/publicVillas'))return {getPublishedVillas:async()=>[]};
  return load.call(this,request,parent,...rest);
 };
@@ -18,7 +18,7 @@ const Sheet=require('../components/PlaceFactSheet.tsx').default,Page=require('..
 const {renderToStaticMarkup}=require('react-dom/server'),{GET}=require('../app/sitemap.xml/route.ts');
 const licenses=JSON.parse(fs.readFileSync(path.join(__dirname,'../public/media/place-facts/licenses.json')));
 (async()=>{
- assert.equal(Object.keys(placeFacts).length,26);
+ assert.equal(Object.keys(placeFacts).length,32);
  assert.equal(new Set(places.map(p=>p.id)).size,places.length);
  assert.ok(placesInDestination(getDestination('grimaud')).some(p=>p.id==='port-grimaud'));
  const xml=await(await GET()).text();
@@ -73,8 +73,8 @@ const licenses=JSON.parse(fs.readFileSync(path.join(__dirname,'../public/media/p
   }
  }
  // New local collections: test the rendered public flow, not just the data shape.
- const localIds=[...require('../data/planDeLaTourPlaces.ts').planDeLaTourPlaces,...require('../data/sainteMaximePlaces.ts').sainteMaximePlaces,...require('../data/grimaudPlaces.ts').grimaudPlaces,...require('../data/cavalaireMolePlaces.ts').cavalaireMolePlaces].map(p=>p.id);
- for(const [slug,count] of Object.entries({'le-plan-de-la-tour':4,'sainte-maxime':4,'grimaud':4,'cavalaire-sur-mer':4,'la-mole':2})){
+ const localIds=[...require('../data/planDeLaTourPlaces.ts').planDeLaTourPlaces,...require('../data/sainteMaximePlaces.ts').sainteMaximePlaces,...require('../data/grimaudPlaces.ts').grimaudPlaces,...require('../data/cavalaireMolePlaces.ts').cavalaireMolePlaces,...require('../data/freinetCroixPlaces.ts').freinetCroixPlaces].map(p=>p.id);
+ for(const [slug,count] of Object.entries({'le-plan-de-la-tour':4,'sainte-maxime':4,'grimaud':4,'cavalaire-sur-mer':4,'la-mole':2,'la-garde-freinet':3,'la-croix-valmer':3})){
   const local=placesInDestination(getDestination(slug));
   assert.equal(local.filter(p=>localIds.includes(p.id)).length,count,`${slug}: local collection exposed by destination`);
  }
@@ -87,7 +87,7 @@ const licenses=JSON.parse(fs.readFileSync(path.join(__dirname,'../public/media/p
  }
  const Village=require('../components/VillageFeaturePlace.tsx').default;
  const {villageFeatures}=require('../data/villageFeatures.ts');
- for(const [village,count] of [['cavalaire-village',4],['la-mole-village',2]]){
+ for(const [village,count] of [['cavalaire-village',4],['la-mole-village',2],['la-croix-valmer-village',3]]){
   assert.equal(villageFeatures[village].nearby.length,count);
   for(const locale of ['fr','en']){
    const html=renderToStaticMarkup(Village({id:village,locale}));
@@ -99,6 +99,21 @@ const licenses=JSON.parse(fs.readFileSync(path.join(__dirname,'../public/media/p
  assert.ok(corniche.sections.some(([,body])=>body.includes('pas le parcours court')));
  assert.ok(placeFacts['barrage-de-la-verne'].copy.fr.questions.some(([,body])=>body.includes('baignade')&&body.includes('interdites')));
  assert.ok(placeFacts['eglise-sainte-magdeleine-la-mole'].copy.fr.questions.some(([,body])=>body.includes('autre site')));
+ const Destination=require('../app/[locale]/destinations/[town]/page.tsx');
+ const newest=require('../data/freinetCroixPlaces.ts').freinetCroixPlaces;
+ for(const town of ['la-garde-freinet','la-croix-valmer']){
+  for(const locale of ['fr','en']){
+   const params=Promise.resolve({locale,town}),html=renderToStaticMarkup(await Destination.default({params}));
+   for(const p of newest.filter(p=>p.location===getDestination(town).name))assert.ok(html.includes(`href="/${locale}/place/${p.id}"`));
+   const metadata=await Destination.generateMetadata({params});
+   assert.equal(metadata.alternates.canonical,`https://www.legolfe.com/${locale}/destinations/${town}`);
+   assert.ok(xml.includes(`<loc>${metadata.alternates.canonical}</loc>`));
+  }
+ }
+ assert.equal(placeMapPoints['circuit-cap-lardier'][0].latitude,43.1834348,'Hike marker uses the official Gigaro GPX start');
+ assert.ok(placeFacts['fort-freinet'].copy.fr.sections.some(([,body])=>body.includes('circuit combiné')));
+ assert.ok(placeFacts['plage-de-sylvabelle'].copy.fr.facts.some(([,value])=>value.includes('non surveillée')));
+ assert.ok(placeFacts['conservatoire-patrimoine-freinet'].copy.fr.facts.some(([,value])=>value.includes('jours fériés')));
  const {editorialSignatures}=require('../lib/placeEditorialSignatures.ts');
  const {isExploreAddress}=require('../lib/exploreFilters.ts');
  for(const id of localIds){
@@ -127,5 +142,5 @@ const licenses=JSON.parse(fs.readFileSync(path.join(__dirname,'../public/media/p
  }
  assert.equal(places.some(p=>/comptoir-de-la-poste|porte[s]?-verte/.test(p.id)),false,'User exclusions respected');
  process.env.VERCEL_ENV='preview';assert.equal((await Page.generateMetadata({params:Promise.resolve({locale:'fr',id:'port-grimaud'})})).robots.index,false);
- console.log('Place facts: existing licensed media/hashes plus 18 local places in FR/EN; contextual photos, sources, map markers, discovery links, metadata and sitemap passed.');
+ console.log('Place facts: existing licensed media/hashes plus 24 local places in FR/EN; contextual photos, sources, map markers, discovery links, metadata and sitemap passed.');
 })().catch(error=>{console.error(error);process.exitCode=1;});

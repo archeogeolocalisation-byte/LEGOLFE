@@ -448,6 +448,7 @@ export const villageFeatures:Record<string,VillageFeature> = {
     }
   },
   "la-croix-valmer-village": {
+    "nearby": ["plage-debarquement-la-croix-valmer", "plage-de-sylvabelle", "circuit-cap-lardier"],
     "name": "La Croix-Valmer",
     "slug": "la-croix-valmer",
     "source": "https://www.golfe-saint-tropez-information.com/fr/villages-stations/la-croix-valmer",

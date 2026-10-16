@@ -1,3 +1,4 @@
+import {freinetCroixMapPoints} from './freinetCroixPlaces';
 import {cavalaireMoleMapPoints} from './cavalaireMolePlaces';
 import {grimaudMapPoints} from './grimaudPlaces';
 import {sainteMaximeMapPoints} from './sainteMaximePlaces';
@@ -9,6 +10,7 @@ export const placeMapPoints:Record<string,MapPoint[]> = {
  ...sainteMaximeMapPoints,
  ...grimaudMapPoints,
  ...cavalaireMoleMapPoints,
+ ...freinetCroixMapPoints,
 
   "chateau-minuty":[{
     id:"chateau-minuty-shop",label:{fr:"Château Minuty · accueil du domaine",en:"Château Minuty · winery visitor point"},
