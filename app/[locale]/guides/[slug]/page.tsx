@@ -6,6 +6,8 @@ import Breadcrumbs from "../../../../components/Breadcrumbs";
 import JsonLd from "../../../../components/JsonLd";
 import GuideImage, { mediaForGuide } from "../../../../components/GuideImage";
 import GuideLinks from "../../../../components/GuideLinks";
+import { places } from "../../../../data/places";
+import { placeName } from "../../../../lib/placeNames";
 import { getGuide, guides, relatedGuidesFor } from "../../../../data/guides";
 import { isLocale, type Locale } from "../../../../lib/i18n";
 import { guideArticleSchema } from "../../../../lib/guideSeo";
@@ -31,6 +33,7 @@ export default async function Page({ params }: Props) {
   const { locale, guide } = await resolve(params);
   const fr = locale === "fr", copy = guide.copy[locale], path = `/guides/${guide.slug}`;
   const related = relatedGuidesFor(guide);
+  const mentionedPlaces = guide.placeIds.flatMap(id => places.filter(place => place.id === id));
   const schema = guideArticleSchema(guide, locale);
   return <main className="min-h-screen bg-white text-black">
     <SiteHeader locale={locale} path={path} />
@@ -71,6 +74,14 @@ export default async function Page({ params }: Props) {
             <h2 className="text-3xl font-black">{fr ? "Passez au concret." : "Make your plan."}</h2>
             <div className="mt-6 flex flex-wrap gap-3">{copy.links.map(link => <Link key={link.path} className="lg-btn" href={`/${locale}${link.path}`}>{link.label} <span className="ml-2" aria-hidden="true">↗</span></Link>)}</div>
           </section>
+          {mentionedPlaces.length > 0 && <section className="mt-12 border-t border-black pt-7" aria-labelledby="guide-places-title">
+            <h2 id="guide-places-title" className="text-3xl font-black">{fr ? "Les lieux de ce guide." : "Places in this guide."}</h2>
+            <ul className="mt-6 grid gap-4 sm:grid-cols-2">{mentionedPlaces.map(place => <li key={place.id}>
+              <Link className="lg-link-accent block border-b border-black/20 py-3" href={`/${locale}/place/${place.id}`}>
+                <span className="font-bold">{placeName(place, locale)} →</span><span className="mt-1 block text-sm text-black/65">{place.location}</span>
+              </Link>
+            </li>)}</ul>
+          </section>}
           <section id="sources" className="mt-12 scroll-mt-8 border-t border-black pt-7">
             <h2 className="text-2xl font-black">{fr ? "Les sources. Les infos à jour." : "Sources. Current details."}</h2>
             <p className="mt-4 text-sm leading-7 text-black/70">{fr ? "Guide préparé par LE GOLFE à partir des sources ci-dessous. Les conseils de rythme et de programme sont nos propositions éditoriales. Consultez les lieux et les transporteurs pour les horaires, tarifs et disponibilités à vos dates." : "Prepared by LE GOLFE using the sources below. Suggested pace and day plans are our editorial recommendations. Check venues and transport operators for openings, prices and availability on your dates."}</p>

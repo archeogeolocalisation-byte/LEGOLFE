@@ -44,6 +44,7 @@ const {GET}=require('../app/sitemap.xml/route.ts');
    const schema=guideArticleSchema(guide,locale);assert.equal(schema.headline,copy.seoTitle);assert.equal(schema.inLanguage,locale==='fr'?'fr-FR':'en-GB');assert.ok(schema.mainEntityOfPage['@id'].includes('/'+locale+'/guides/'+guide.slug));
    const metadata=await Page.generateMetadata({params:Promise.resolve({locale,slug:guide.slug})});assert.equal(metadata.alternates.canonical,`https://www.legolfe.com/${locale}/guides/${guide.slug}`);assert.equal(metadata.alternates.languages.en,`https://www.legolfe.com/en/guides/${guide.slug}`);assert.ok(metadata.openGraph.images[0].url.startsWith('https://www.legolfe.com/'));
    const html=renderToStaticMarkup(await Page.default({params:Promise.resolve({locale,slug:guide.slug})}));assert.equal((html.match(/<h1[ >]/g)||[]).length,1);assert.ok(html.includes('application/ld+json'));for(const section of copy.sections)assert.ok(html.includes(`id="${section.id}"`));
+   for(const id of guide.placeIds)assert.ok(html.includes(`href="/${locale}/place/${id}"`),`${guide.slug}: missing server-rendered place link ${id}`);
    if(guide.slug==='marches-golfe-saint-tropez-jours'){assert.ok(html.includes('<table'));assert.ok(html.includes('scope="row"'));assert.equal(copy.sections[0].table.rows.length,7);}
   }
   assert.ok(relatedGuidesFor(guide).every(other=>other.slug!==guide.slug));

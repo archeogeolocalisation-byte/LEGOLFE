@@ -24,6 +24,16 @@ const manifest=JSON.parse(fs.readFileSync(path.join(__dirname,'../public/media/t
   for(const locale of ['fr','en'])assert.ok(p.copy[locale].description.length>30);const direction=new URL(touristDirectionsUrl(p.name));assert.equal(direction.searchParams.get('destination'),`${p.name}, Var, France`);assert.equal(direction.searchParams.has('origin'),false);
   for(const zoom of [1,1.5,2,2.5,5]){const v=touristViewForPoint(zoom,point);assert.ok(v.zoom>=1&&v.zoom<=2.5);assert.ok(Math.abs(v.panX)<=(v.zoom-1)*50&&Math.abs(v.panY)<=(v.zoom-1)*50);assert.equal(touristMapTransform(v).includes('NaN'),false);}
  }
+ for(const locale of ['fr','en']){
+  const html=renderToStaticMarkup(await Page.default({params:Promise.resolve({locale})}));
+  const Explore=require('../app/[locale]/explore/page.tsx').default;
+  const exploreHtml=renderToStaticMarkup(await Explore({params:Promise.resolve({locale}),searchParams:Promise.resolve({})}));
+  const {isExploreAddress}=require('../lib/exploreFilters.ts');
+  for(const place of places.filter(isExploreAddress))assert.ok(exploreHtml.includes(`href="/${locale}/place/${place.id}"`),`Explorer: missing unfiltered server-rendered link ${place.id}`);
+  for(const place of places)assert.ok((html+exploreHtml).includes(`href="/${locale}/place/${place.id}"`),`Orphan place: ${place.id}`);
+  const {placeMapPoints}=require('../data/placeMapPoints.ts');
+  for(const place of places){const point=placeMapPoints[place.id]?.[0];if(point&&Number.isFinite(point.latitude)&&Number.isFinite(point.longitude)&&point.latitude>=42.8&&point.latitude<=43.7&&point.longitude>=5.9&&point.longitude<=7.1)assert.ok(html.includes(`href="/${locale}/place/${place.id}"`),`Map: missing server-rendered link ${place.id}`);}
+ }
  const grimaud=touristMapPlaces.find(p=>p.id==='grimaud'),port=touristMapPlaces.find(p=>p.id==='port-grimaud'),nartelle=touristMapPlaces.find(p=>p.id==='la-nartelle');assert.notEqual(grimaud.longitude,port.longitude);assert.equal(nartelle.path,'/place/sainte-maxime-village');assert.ok(nartelle.linkLabel.fr.includes('Sainte-Maxime'));
  assert.deepEqual(clampTouristView({zoom:1,panX:200,panY:-200}),{zoom:1,panX:0,panY:0});assert.deepEqual(clampTouristView({zoom:NaN,panX:NaN,panY:Infinity}),{zoom:1,panX:0,panY:0});
  const nw=touristMapPoint(touristMapBounds.north,touristMapBounds.west),se=touristMapPoint(touristMapBounds.south,touristMapBounds.east);assert.ok(Math.abs(nw.x)<1e-8&&Math.abs(nw.y)<1e-8&&Math.abs(se.x-1000)<1e-8&&Math.abs(se.y-763)<1);
