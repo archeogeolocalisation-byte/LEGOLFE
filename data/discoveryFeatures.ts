@@ -1,6 +1,42 @@
 import type {Locale} from '../lib/i18n';
-export type DiscoveryGuide={title:string;description:string;intro:string;sections:[string,string][];nearby:[string,string][]};
+export type DiscoveryGuide={title:string;description:string;intro:string;sections:[string,string][];nearby:[string,string][];verified?:string;sources?:{label:string;url:string}[]};
 export const discoveryFeatures:Record<string,Record<Locale,DiscoveryGuide>> = {
+  "san-peire-randonnee": {
+    fr: {
+      title: "San Peïre au Plan-de-la-Tour : randonnée et panorama",
+      description: "Préparez la randonnée vers San Peïre au Plan-de-la-Tour : parcours de 6 km aller-retour, dénivelé, accès au sommet et restrictions forestières.",
+      intro: "San Peïre se découvre en marchant depuis le secteur du Plan-de-la-Tour. Cette sortie relie les collines boisées à un ancien site fortifié et à un panorama sur le Golfe. Choisissez-la pour une vraie randonnée, puis gardez une pause au village pour le retour.",
+      sections: [
+        ["Un sommet et un ancien site fortifié", "À 416 mètres d’altitude, San Peïre domine la plaine du Plan-de-la-Tour. L’office présente les vestiges d’un habitat fortifié médiéval et une vue vers le Golfe, les Maures et l’Estérel. Notre conseil : gardez du temps au sommet pour observer le paysage, puis revenez par le sentier."],
+        ["Distance, dénivelé et difficulté", "La fiche de randonnée de l’office annonce 6 km aller-retour, 370 m de dénivelé positif et une durée indicative de 2 h. Le balisage est jaune ; le terrain comporte des passages rocheux et n’est pas adapté aux poussettes. Adaptez le temps prévu à votre rythme et aux pauses."],
+        ["Préparer le départ au Plan-de-la-Tour", "Consultez le descriptif officiel, qui prolonge le sentier des Gorgues, avant de choisir votre départ. Le repère de carte situe le secteur : il ne désigne pas un parking au sommet. Prévoyez chaussures de randonnée et eau, puis vérifiez la carte d’accès aux massifs avant de partir ; une restriction peut modifier votre programme."],
+      ],
+      nearby: [["plan-de-la-tour-village", "Préparer votre étape au Plan-de-la-Tour"]],
+      verified: "2026-10-16",
+      sources: [
+        {label:"Office du Golfe · Itinéraire de San Peïre",url:"https://www.golfe-sainttropez-tourisme.fr/fiche-apidae/randonnee-chemin-vers-le-san-peire/"},
+        {label:"Office du Golfe · Patrimoine et panorama",url:"https://www.golfe-sainttropez-tourisme.fr/decouvrir/cote-nature/sites-emblematiques/san-peire/"},
+        {label:"Office du Golfe · Accès aux massifs",url:"https://www.golfe-sainttropez-tourisme.fr/sejourner/pratique/risque-incendie/"},
+      ],
+    },
+    en: {
+      title: "San Peïre, Le Plan-de-la-Tour: hike and summit views",
+      description: "Plan the San Peïre hike from Le Plan-de-la-Tour: 6 km return route, ascent, summit access and forest restrictions to check before setting out.",
+      intro: "Reach San Peïre on foot from the Le Plan-de-la-Tour area. The outing connects wooded hills with a former fortified site and views over the Golfe. Choose it for a proper hike, then leave time for a village break on your return.",
+      sections: [
+        ["A summit and former fortified settlement", "At 416 metres, San Peïre overlooks the Le Plan-de-la-Tour plain. The tourist office describes medieval fortified remains and views towards the Golfe, the Maures and the Estérel. Our suggestion: leave time at the top to take in the landscape before returning along the trail."],
+        ["Distance, ascent and difficulty", "The tourist office lists a 6 km return walk, 370 m of ascent and an indicative duration of two hours. Yellow markings guide the way; there are rocky sections and the route is unsuitable for pushchairs. Allow extra time for your own pace and breaks."],
+        ["Preparing your departure", "Read the official route, which continues from the Les Gorgues trail, before choosing your starting point. The map reference locates the area; it is not a summit car park. Bring hiking shoes and water, and check forest access restrictions before leaving: the day’s conditions may change your plans."],
+      ],
+      nearby: [["plan-de-la-tour-village", "Plan a stop in Le Plan-de-la-Tour"]],
+      verified: "2026-10-16",
+      sources: [
+        {label:"Golfe tourist office · San Peïre route",url:"https://www.golfe-sainttropez-tourisme.fr/fiche-apidae/randonnee-chemin-vers-le-san-peire/"},
+        {label:"Golfe tourist office · Heritage and views",url:"https://www.golfe-sainttropez-tourisme.fr/decouvrir/cote-nature/sites-emblematiques/san-peire/"},
+        {label:"Golfe tourist office · Forest access",url:"https://www.golfe-sainttropez-tourisme.fr/sejourner/pratique/risque-incendie/"},
+      ],
+    },
+  },
   "moulin-de-paillas": {
     "fr": {
       "title": "Moulin de Paillas à Ramatuelle : visite et panorama",
