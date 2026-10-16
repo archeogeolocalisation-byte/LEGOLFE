@@ -11,7 +11,6 @@ export default function SiteHeader({light=true,locale="en",path=""}:{light?:bool
         <BrandLogo locale={locale} light={light}/>
         <div className="hidden items-center gap-6 text-[10px] font-black uppercase tracking-[.14em] xl:flex">
           <Link href={`${base}/explore`} className="lg-link-accent">{labels.explore}</Link>
-          <Link href={`${base}/carte-touristique`} className="lg-link-accent" aria-current={path==="/carte-touristique"?"page":undefined}>{labels.touristMap}</Link>
           <Link href={`${base}/guides`} className="lg-link-accent">{labels.guides}</Link>
           <Link href={`${base}/whats-on`} className="lg-link-accent">{labels.agenda}</Link>
           <Link href={`${base}/local`} className="lg-link-accent">{labels.local}</Link>
@@ -26,7 +25,6 @@ export default function SiteHeader({light=true,locale="en",path=""}:{light?:bool
       </div>
       <div className="flex gap-5 overflow-x-auto border-b border-current py-1 text-[10px] font-black uppercase tracking-[.08em] [scrollbar-width:thin] xl:hidden">
         <Link href={`${base}/explore`} className="lg-link-accent inline-flex min-h-11 shrink-0 items-center">{labels.explore}</Link>
-        <Link href={`${base}/carte-touristique`} className="lg-link-accent shrink-0" aria-current={path==="/carte-touristique"?"page":undefined}>{labels.touristMap}</Link>
         <Link href={`${base}/guides`} className="lg-link-accent shrink-0">{labels.guides}</Link>
         <Link href={`${base}/whats-on`} className="lg-link-accent shrink-0">{labels.agenda}</Link>
         <Link href={`${base}/local`} className="lg-link-accent shrink-0">{labels.local}</Link>
