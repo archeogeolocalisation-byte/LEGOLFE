@@ -163,8 +163,8 @@ export default function HostDesk({locale}:{locale:Locale}) {
     const {error}=await supabase.auth.updateUser({data:{legolfe_host_kind:next}});
     if(error&&scope.current===actor)setStorageError(fr?"Votre choix local est conservé, mais le profil n'a pas pu être synchronisé.":"Your local choice is saved, but the profile could not be synchronized.");
   }
-  function openCreateProperty(){ setEditingProperty(null); setShowProperty(true); }
-  function openEditProperty(property:Property){ setEditingProperty(property); setShowProperty(true); }
+  function openCreateProperty(){ setStorageError(""); setEditingProperty(null); setShowProperty(true); }
+  function openEditProperty(property:Property){ setStorageError(""); setEditingProperty(property); setShowProperty(true); }
   function closeProperty(){ setEditingProperty(null); setShowProperty(false); }
 
   async function saveProperty(e:FormEvent<HTMLFormElement>){
@@ -264,10 +264,10 @@ export default function HostDesk({locale}:{locale:Locale}) {
     {view==="stays" && <div className="py-12"><div className="flex items-end justify-between"><div><p className="lg-kicker">{fr?"PROJETS SUR CET APPAREIL":"BRIEFS ON THIS DEVICE"}</p><h2 className="lg-title mt-4 text-6xl md:text-8xl">{fr?"À ORGANISER.":"TO PLAN."}</h2></div><button onClick={()=>setShowStay(true)} className="lg-btn lg-btn--dark">{fr?"Nouveau projet":"New brief"} +</button></div><div className="mt-10 border-t border-black">{stays.map(s=><article key={s.id} className="grid gap-5 border-b border-black py-7 md:grid-cols-[1.1fr_.8fr_.5fr_auto] md:items-center"><div><p className="text-3xl font-black tracking-[-.04em]">{s.guest}</p><p className="mt-1 text-sm font-bold text-black/45">{s.property}</p>{s.sourceInquiryId?.startsWith("demo:")&&<p className="mt-2 text-xs font-bold text-[var(--lg-blue)]">{fr?"EXEMPLE FICTIF":"FICTIONAL SAMPLE"}</p>}{s.message&&<details className="mt-4 text-sm"><summary className="cursor-pointer font-bold">{fr?"Attentes du voyageur":"Guest expectations"}</summary><p className="mt-3 whitespace-pre-line leading-6">{s.message}</p></details>}</div><p className="font-black">{s.arrival}<br/>→ {s.departure}</p><span className="lg-kicker text-[var(--lg-blue)]">{s.status==='brief'?(fr?'PROJET À PRÉPARER':'BRIEF TO PREPARE'):s.status==='planning'?(fr?'EN ORGANISATION':'PLANNING'):(fr?'CONFIRMÉ (DÉCLARÉ)':'CONFIRMED (DECLARED)')}</span><div className="flex flex-wrap gap-3"><Link href={`/${locale}/ask?q=${encodeURIComponent(briefAsk(s,fr))}`} className="lg-btn">{fr?'Organiser le séjour':'Plan the stay'} ↗</Link>{s.status==='brief'&&<button className="lg-btn" onClick={()=>setStays(items=>items.map(item=>item.id===s.id?{...item,status:'planning'}:item))}>{fr?'Passer en organisation':'Move to planning'}</button>}</div></article>)}</div></div>}
 
     <div hidden={view!=='inquiries'}><HostInquiryDesk openInquiry={openInquiry} fr={fr} onCreateBrief={createInquiryBrief} briefIds={stays.flatMap(s=>s.sourceInquiryId?[s.sourceInquiryId]:[])}/></div>
-    {showProperty && <>{publishing&&<div role="status" className="fixed inset-0 z-[70] flex items-center justify-center bg-white/90 text-2xl font-black">{fr?"Mise à jour en cours…":"Updating…"}</div>}<PropertyEditor fr={fr} role={role} property={editingProperty} onClose={closeProperty} onSubmit={saveProperty}/></>} 
-    {showStay && <StayEditor fr={fr} properties={properties} onClose={()=>setShowStay(false)} onSubmit={addStay}/>} 
+    {showProperty && <>{publishing&&<div role="status" className="fixed inset-0 z-[70] flex items-center justify-center bg-white/90 text-2xl font-black">{fr?"Mise à jour en cours…":"Updating…"}</div>}<PropertyEditor saveError={storageError} fr={fr} role={role} property={editingProperty} onClose={closeProperty} onSubmit={saveProperty}/></>}
+    {showStay && <StayEditor fr={fr} properties={properties} onClose={()=>setShowStay(false)} onSubmit={addStay}/>}
     {calendarProperty&&<HostAvailability key={calendarProperty.id} id={calendarProperty.id} name={calendarProperty.name} fr={fr} onClose={()=>setCalendarProperty(null)}/>}
-    {previewProperty && <PropertyPreview fr={fr} property={previewProperty} onClose={()=>setPreviewProperty(null)}/>} 
+    {previewProperty && <PropertyPreview fr={fr} property={previewProperty} onClose={()=>setPreviewProperty(null)}/>}
   </section>;
 }
 
