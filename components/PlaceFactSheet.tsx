@@ -34,6 +34,7 @@ export default function PlaceFactSheet({id,locale}:{id:string;locale:Locale}) {
    <figure className="mt-9 max-w-5xl">
     {photo ? <Image src={photo.src} alt={(photo||experiencePhoto)?.caption[locale]} width={photo.width} height={photo.height} sizes="(max-width: 768px) 100vw, 1000px" preload className="aspect-[3/2] w-full object-cover"/> : experiencePhoto ? <img src={experiencePhoto.src} alt={experiencePhoto.alt} className="aspect-[3/2] w-full object-cover" loading="eager"/> : null}
     <figcaption className="mt-3 text-xs leading-6 text-black/70">
+     {experiencePhoto?.contextual&&<span className="mb-2 inline-block bg-[#edf4f6] px-2 py-1 text-[10px] font-black uppercase text-[#0B4F6C]">{fr?'Photo du secteur':'Area photograph'}</span>}
      <span className="block font-bold">{(photo||experiencePhoto)?.caption[locale]}</span>
      <a className="underline" href={(photo||experiencePhoto)?.source} target="_blank" rel="noreferrer">{(photo||experiencePhoto)?.credit}</a> · <a className="underline" href={(photo||experiencePhoto)?.licenseUrl} target="_blank" rel="noreferrer">{(photo||experiencePhoto)?.license}</a> · {photo ? (fr?'Redimensionnement, conversion WebP et recadrage d’affichage ; image adaptée sous la même licence.':'Resized, converted to WebP and display-cropped; adapted image under the same licence.') : (fr?'Image Wikimedia Commons affichée avec recadrage CSS, licence et source créditées.':'Wikimedia Commons image shown with CSS cropping, source and licence credited.')}
     </figcaption>

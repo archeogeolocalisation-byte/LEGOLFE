@@ -125,12 +125,12 @@ export const destinations:Destination[] = [
     "name": "Le Plan-de-la-Tour",
     "villageId": "plan-de-la-tour-village",
     "intro": {
-      "fr": "Le Plan-de-la-Tour a sa propre fiche de village, avec des repères pour prendre le temps de le découvrir. Cette page réunit ce guide et les événements du catalogue qui concernent la commune, afin de préparer une visite avec un rythme plus posé.",
-      "en": "Le Plan-de-la-Tour has its own village guide with ideas for an unhurried visit. This page brings that guide together with events in the catalog that concern the commune, helping you plan a slower day."
+      "fr": "Le Plan-de-la-Tour se découvre autour de ses places, de son marché provençal et de l’église Saint-Martin. Retrouvez ici le guide du village, des tables au centre et les rendez-vous locaux pour préparer une journée entre ruelles et collines.",
+      "en": "Discover Le Plan-de-la-Tour through its squares, Provençal market and Saint-Martin church. Find the village guide, central restaurants and local events here to plan a day between the lanes and hills."
     },
     "plan": {
-      "fr": "Commencez par le guide du village, puis regardez les rendez-vous locaux pendant vos dates. Les informations de chaque événement renvoient à leur source.",
-      "en": "Start with the village guide, then check local events during your dates. Each event links to its source for practical information."
+      "fr": "Le jeudi matin, commencez par le marché place Foch, puis rejoignez l’église Saint-Martin. Gardez une table au Porche ou à La Tour du Plan pour prolonger la promenade ; confirmez l’ouverture et réservez votre repas.",
+      "en": "On Thursday mornings, start with the market on Place Foch, then head towards Saint-Martin church. Book Le Porche or La Tour du Plan to continue the outing over a meal; confirm opening before visiting."
     }
   },
   {

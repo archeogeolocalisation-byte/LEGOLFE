@@ -1,3 +1,5 @@
+import {sainteMaximePlaces} from './sainteMaximePlaces';
+import {planDeLaTourPlaces} from './planDeLaTourPlaces';
 import {placeMapPoints} from "./placeMapPoints";
 import {placeFacts} from "./placeFacts";
 export const placeCategories = [
@@ -44,6 +46,8 @@ export type Place = {
 // Facts below were desk-checked against official/tourism sources in September 2026;
 // "bestFor", "notIdealFor" and tags are LE GOLFE editorial classifications.
 export const places: Place[] = [
+  ...planDeLaTourPlaces,
+ ...sainteMaximePlaces,
 {
   "id": "domaine-de-la-croix",
   "name": "Domaine de La Croix",

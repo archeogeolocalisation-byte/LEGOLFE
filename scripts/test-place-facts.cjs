@@ -18,7 +18,7 @@ const Sheet=require('../components/PlaceFactSheet.tsx').default,Page=require('..
 const {renderToStaticMarkup}=require('react-dom/server'),{GET}=require('../app/sitemap.xml/route.ts');
 const licenses=JSON.parse(fs.readFileSync(path.join(__dirname,'../public/media/place-facts/licenses.json')));
 (async()=>{
- assert.equal(Object.keys(placeFacts).length,8);
+ assert.equal(Object.keys(placeFacts).length,16);
  assert.equal(new Set(places.map(p=>p.id)).size,places.length);
  assert.ok(placesInDestination(getDestination('grimaud')).some(p=>p.id==='port-grimaud'));
  const xml=await(await GET()).text();
@@ -72,6 +72,39 @@ const licenses=JSON.parse(fs.readFileSync(path.join(__dirname,'../public/media/p
    assert.ok(xml.includes(`https://www.legolfe.com/${locale}/place/${id}`));
   }
  }
+ // New local collections: test the rendered public flow, not just the data shape.
+ const localIds=[...require('../data/planDeLaTourPlaces.ts').planDeLaTourPlaces,...require('../data/sainteMaximePlaces.ts').sainteMaximePlaces].map(p=>p.id);
+ for(const slug of ['le-plan-de-la-tour','sainte-maxime']){
+  const local=placesInDestination(getDestination(slug));
+  assert.equal(local.filter(p=>localIds.includes(p.id)).length,4,`${slug}: four new places exposed by destination`);
+ }
+ const {editorialSignatures}=require('../lib/placeEditorialSignatures.ts');
+ const {isExploreAddress}=require('../lib/exploreFilters.ts');
+ for(const id of localIds){
+  const fact=placeFacts[id],place=places.find(p=>p.id===id),media=photosForPlace(id),point=placeMapPoints[id][0];
+  assert.ok(isExploreAddress(place),`${id}: discoverable in Explorer`);
+  assert.ok(media.length>0&&media[0].credit&&media[0].source&&media[0].licenseUrl,`${id}: attributed photograph`);
+  assert.ok(fact.sources.length>=2&&fact.nearby.every(target=>target!==id&&places.some(p=>p.id===target)));
+  assert.equal(place.latitude,point.latitude);assert.equal(place.longitude,point.longitude);
+  assert.ok(fact.sources.some(s=>s.url===point.source)||point.source.startsWith('https://www.openstreetmap.org/'));
+  for(const locale of ['fr','en']){
+   const copy=fact.copy[locale],html=renderToStaticMarkup(Sheet({id,locale}));
+   assert.ok(copy.sections.length>=4&&copy.questions.length>=2&&copy.intro.length>180);
+   assert.ok(html.includes(editorialSignatures[id][locale].subtitle.replaceAll('&','&amp;')));
+   assert.equal((html.match(/<h1[ >]/g)||[]).length,1);
+   assert.ok(html.includes(media[0].source.replaceAll('&','&amp;'))&&html.includes(media[0].licenseUrl));
+   assert.equal(html.includes(locale==='fr'?'Photo du secteur':'Area photograph'),!!media[0].contextual,`${id}: contextual image disclosure`);
+   assert.match(html,/datetime="2026-10-16"/i);
+   for(const target of fact.nearby)assert.ok(html.includes(`href="/${locale}/place/${target}"`));
+   for(const source of fact.sources)assert.ok(html.includes(source.url.replaceAll('&','&amp;')));
+   const frame=html.match(/<iframe[^>]+src="([^"]+)"/);assert.ok(frame,`${id}: visit map rendered`);
+   assert.equal(new URL(frame[1].replaceAll('&amp;','&')).searchParams.get('marker'),`${point.latitude},${point.longitude}`);
+   const metadata=await Page.generateMetadata({params:Promise.resolve({locale,id})});
+   assert.equal(metadata.description,copy.description);
+   assert.ok(xml.includes(`<loc>https://www.legolfe.com/${locale}/place/${id}</loc><lastmod>2026-10-16</lastmod>`));
+  }
+ }
+ assert.equal(places.some(p=>/comptoir-de-la-poste|porte[s]?-verte/.test(p.id)),false,'User exclusions respected');
  process.env.VERCEL_ENV='preview';assert.equal((await Page.generateMetadata({params:Promise.resolve({locale:'fr',id:'port-grimaud'})})).robots.index,false);
- console.log('Place facts: 8 FR/EN renders, licensed local images/hashes, navigation, metadata, discovery and sitemap passed.');
+ console.log('Place facts: existing licensed media/hashes plus 8 new places in FR/EN; contextual photos, sources, map markers, discovery links, metadata and sitemap passed.');
 })().catch(error=>{console.error(error);process.exitCode=1;});
