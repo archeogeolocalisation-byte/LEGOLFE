@@ -1,3 +1,4 @@
+import { seasonalEscapeGuides } from "./seasonalEscapeGuides";
 import { practicalGuides } from "./practicalGuides";
 import { hikingGuides } from "./hikingGuides";
 import type { Locale } from "../lib/i18n";
@@ -28,6 +29,7 @@ const cinemaMuseum = { id: "cinema", label: "Saint-Tropez Tourisme · Musée de 
 const butterflyMuseum = { id: "butterflies", label: "Saint-Tropez Tourisme · Maison des Papillons", url: "https://www.sainttropeztourisme.com/fr/fiche/maison-des-papillons-musee-dany-lartigue-4165778/" };
 
 export const guides: Guide[] = [
+  ...seasonalEscapeGuides,
   ...practicalGuides,
   {
     slug: "pampelonne-acces-parking-plage", category: { fr: "Plage / Ramatuelle", en: "Beach / Ramatuelle" },
