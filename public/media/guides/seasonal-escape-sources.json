@@ -1,0 +1,27 @@
+{
+  "created": "2026-10-16",
+  "credit": "LE GOLFE",
+  "method": "Original illustrations generated with the built-in image generation tool, in the style of the existing LE GOLFE vineyard illustration. Restored from the conversation visual references after the workspace reset. Resized without cropping to 1200 × 800 and converted to WebP. Tiny legolfe.com at bottom left. The previously mentioned mushroom original was unavailable; the woodland cover is a new companion illustration.",
+  "prompts": {
+    "verdon": "Recreate the Verdon cover in the conversation: 3:2 textured gouache/oil travel-poster art, turquoise Lake Sainte-Croix, pale limestone gorge mouth, small low concrete road bridge and two canoes, Mediterranean foliage framing left and foreground. Warm ochres, petrol blues and forest greens. No Saint-Tropez village or harbour, no headline or border, only tiny legolfe.com at bottom left.",
+    "mushrooms": "Recreate the mushroom cover in the conversation: 3:2 textured gouache/oil travel-poster art, autumn in Maures cork-oak woodland, winding sunlit path, wicker basket and stylised brown boletus-like and parasol-like mushrooms, leaf litter and ferns. Warm ochres, dark green and petrol blue, golden light. Atmosphere illustration, not an identification plate. No labels, no red white-spotted mushrooms, no cooking or eating; only tiny legolfe.com at bottom left."
+  },
+  "files": [
+    {
+      "guide": "journee-verdon-lac-sainte-croix-depuis-golfe",
+      "file": "/media/guides/verdon-sainte-croix-cover.webp",
+      "width": 1200,
+      "height": 800,
+      "bytes": 299316,
+      "sha256": "2404afa333f6f26ca7395cd8e4bb5f5cdaa8c2371975cd22e37b726ce323b833"
+    },
+    {
+      "guide": "champignons-golfe-saint-tropez-saison-forets",
+      "file": "/media/guides/champignons-golfe-saint-tropez-cover.webp",
+      "width": 1200,
+      "height": 800,
+      "bytes": 288232,
+      "sha256": "f81b4d06ddd19cec3d9d90e8069fbffe631a4fea24475cf44977ebdb7cba1781"
+    }
+  ]
+}

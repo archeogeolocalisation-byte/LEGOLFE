@@ -21,11 +21,29 @@ const {GET}=require('../app/sitemap.xml/route.ts');
 (async()=>{
  const manifest=JSON.parse(fs.readFileSync(path.join(__dirname,'../public/media/guides/illustration-v2-sources.json')));assert.equal(manifest.files.length,4);
  for(const file of manifest.files){const bytes=fs.readFileSync(path.join(__dirname,'../public',file.file));assert.equal(crypto.createHash('sha256').update(bytes).digest('hex'),file.sha256);assert.equal(bytes.subarray(0,4).toString(),'RIFF');assert.equal(file.width,1200);assert.equal(file.height,800);assert.ok(bytes.length<300000);assert.ok(mediaForGuide(guides.find(g=>g.slug===file.guide)).photo.src.endsWith('-cover-v2.webp'));}
+ const seasonalManifest=JSON.parse(fs.readFileSync(path.join(__dirname,'../public/media/guides/seasonal-escape-sources.json')));
+ assert.equal(seasonalManifest.files.length,2);
+ for(const file of seasonalManifest.files){
+  const bytes=fs.readFileSync(path.join(__dirname,'../public',file.file));
+  assert.equal(crypto.createHash('sha256').update(bytes).digest('hex'),file.sha256);
+  assert.equal(bytes.subarray(0,4).toString(),'RIFF');assert.ok(bytes.length<300000);
+  const guide=guides.find(g=>g.slug===file.guide);assert.ok(guide);assert.ok(mediaForGuide(guide).photo.src.endsWith(path.basename(file.file)));
+  assert.equal(mediaForGuide(guide).photo.width,1200);assert.equal(mediaForGuide(guide).photo.height,800);
+ }
  const Home=require('../app/[locale]/page.tsx').default;
  for(const locale of ['fr','en']){const html=renderToStaticMarkup(await Home({params:Promise.resolve({locale})}));for(const id of ['grimaud','saint-tropez','sainte-maxime']){assert.ok(html.includes(encodeURIComponent(`/media/tourist-map/${id}-illustration.webp`)));assert.ok(html.includes(`href="/${locale}/destinations/${id}"`));}assert.equal(html.includes('Jibi44'),false);assert.ok(html.includes(`href="/${locale}/carte-touristique"`));}
+ const GuideIndex=require('../app/[locale]/guides/page.tsx').default;
+ for(const locale of ['fr','en']){
+  const index=renderToStaticMarkup(await GuideIndex({params:Promise.resolve({locale})}));
+  const home=renderToStaticMarkup(await Home({params:Promise.resolve({locale})}));
+  for(const guide of guides.slice(0,2)){
+   assert.ok(index.includes(`href="/${locale}/guides/${guide.slug}"`));
+   assert.ok(home.includes(`href="/${locale}/guides/${guide.slug}"`));
+  }
+ }
  const slugs=new Set(guides.map(g=>g.slug));assert.equal(slugs.size,guides.length);assert.ok(guides.length>=12);
  const titles=new Set(),validDest=new Set(destinations.map(d=>d.slug)),validPlaces=new Set(places.map(p=>p.id));
- const validPaths=new Set(['/whats-on','/stay','/destinations','/explore',...placeCategories.map(c=>'/explore/'+c.id),...destinationPaths(),...guides.map(g=>'/guides/'+g.slug),...places.map(p=>'/place/'+p.id)]);
+ const validPaths=new Set(['/whats-on','/stay','/destinations','/explore','/guides',...placeCategories.map(c=>'/explore/'+c.id),...destinationPaths(),...guides.map(g=>'/guides/'+g.slug),...places.map(p=>'/place/'+p.id)]);
  for(const guide of guides){
   assert.ok(guide.published<=guide.verified);assert.ok(guide.verified<=new Date().toISOString().slice(0,10));
   assert.ok(guide.destinations.every(d=>validDest.has(d)),guide.slug+' destinations');
@@ -45,6 +63,15 @@ const {GET}=require('../app/sitemap.xml/route.ts');
    const metadata=await Page.generateMetadata({params:Promise.resolve({locale,slug:guide.slug})});assert.equal(metadata.alternates.canonical,`https://www.legolfe.com/${locale}/guides/${guide.slug}`);assert.equal(metadata.alternates.languages.en,`https://www.legolfe.com/en/guides/${guide.slug}`);assert.ok(metadata.openGraph.images[0].url.startsWith('https://www.legolfe.com/'));
    const html=renderToStaticMarkup(await Page.default({params:Promise.resolve({locale,slug:guide.slug})}));assert.equal((html.match(/<h1[ >]/g)||[]).length,1);assert.ok(html.includes('application/ld+json'));for(const section of copy.sections)assert.ok(html.includes(`id="${section.id}"`));
    for(const id of guide.placeIds)assert.ok(html.includes(`href="/${locale}/place/${id}"`),`${guide.slug}: missing server-rendered place link ${id}`);
+   if(['journee-verdon-lac-sainte-croix-depuis-golfe','champignons-golfe-saint-tropez-saison-forets'].includes(guide.slug)){
+    assert.ok(html.includes('<table'));assert.ok(copy.sections.some(section=>section.table));
+    if(guide.slug.startsWith('champignons-')){
+     assert.equal(copy.sections[0].id,'avant-panier');
+     assert.ok(guide.imageCaption[locale].includes(locale==='fr'?'identifier':'identification'));
+     assert.equal(copy.sections.find(section=>section.id==='saison').table.rows.length,6);
+     for(const id of ['anses','owner','onf','cepes','sanguins'])assert.ok(guide.sources.some(source=>source.id===id));
+    }else{assert.equal(guide.destinations.length,0);assert.equal(guide.placeIds.length,0);assert.ok(guide.sources.some(source=>source.id==='water'));}
+   }
    if(guide.slug==='marches-golfe-saint-tropez-jours'){assert.ok(html.includes('<table'));assert.ok(html.includes('scope="row"'));assert.equal(copy.sections[0].table.rows.length,7);}
   }
   assert.ok(relatedGuidesFor(guide).every(other=>other.slug!==guide.slug));

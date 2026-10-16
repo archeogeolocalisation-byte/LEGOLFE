@@ -13,7 +13,7 @@ export function generateStaticParams() { return [{ locale: "fr" }, { locale: "en
 export async function generateMetadata({ params }: Props) {
   const { locale } = await params;
   if (!isLocale(locale)) notFound();
-  return pageMetadata({ title: locale === "fr" ? "Guides pratiques du golfe de Saint-Tropez" : "Practical guides to the Golfe de Saint-Tropez", description: locale === "fr" ? "Marchés par jour, activités gratuites, sorties avec enfants, week-end d’automne, plages et randonnées : les guides pratiques du Golfe de Saint-Tropez." : "Markets by day, free activities, family outings, autumn weekends, beaches and walks: practical guides to the Golfe de Saint-Tropez.", path: `/${locale}/guides`, locale });
+  return pageMetadata({ title: locale === "fr" ? "Guides pratiques du golfe de Saint-Tropez" : "Practical guides to the Golfe de Saint-Tropez", description: locale === "fr" ? "Marchés, plages, randonnées, champignons et journée dans le Verdon : les guides pratiques pour vos sorties dans le Golfe de Saint-Tropez et ses environs." : "Markets, beaches, walks, mushrooms and a Verdon day trip: practical guides for outings in and around the Golfe de Saint-Tropez.", path: `/${locale}/guides`, locale });
 }
 export default async function Page({ params }: Props) {
   const { locale } = await params;
@@ -26,7 +26,7 @@ export default async function Page({ params }: Props) {
     <section className="lg-shell pb-20 pt-10 md:pb-28 md:pt-14">
       <p className="lg-kicker text-[var(--lg-blue)]">LE GOLFE / GUIDES</p>
       <h1 className="lg-menu-title mt-7">{fr ? <>LE BON PLAN.<br /><span className="lg-accent">LES BONS REPÈRES.</span></> : <>MAKE A PLAN.<br /><span className="lg-accent">KNOW YOUR WAY.</span></>}</h1>
-      <p className="mt-9 max-w-3xl text-lg font-bold leading-8 md:text-xl">{fr ? "Choisir un marché, sortir avec les enfants, profiter du Golfe sans billet ou préparer une randonnée. Des guides pour prendre les bonnes décisions avant de partir, avec des repères pratiques et les sources pour vérifier ce qui change." : "Choose a market, plan a family outing, explore without an entry ticket or prepare a walk. Guides to help you decide before setting off, with practical details and sources for information that changes."}</p>
+      <p className="mt-9 max-w-3xl text-lg font-bold leading-8 md:text-xl">{fr ? "Choisir un marché, sortir avec les enfants, profiter du Golfe sans billet, découvrir la forêt ou préparer une journée dans le Verdon. Des guides pour prendre les bonnes décisions avant de partir, avec des repères pratiques et les sources pour vérifier ce qui change." : "Choose a market, plan a family outing, explore woodland, enjoy free outings or plan a day in the Verdon. Guides to help you decide before setting off, with practical details and sources for information that changes."}</p>
       <div className="mt-12 md:mt-16"><GuideCards items={guides} locale={locale} /></div>
     </section>
     <SiteFooter locale={locale} />
