@@ -27,6 +27,7 @@ jobs:
       - run: node scripts/test-place-facts.cjs
       - run: node scripts/test-place-maps.cjs
       - run: node scripts/test-nearby-explorer.cjs
+      - run: node scripts/test-verified-local-catalog.cjs
       - run: node scripts/test-place-gallery.cjs
       - run: node scripts/test-tourist-map.cjs
       - run: node scripts/test-explore-filters.cjs

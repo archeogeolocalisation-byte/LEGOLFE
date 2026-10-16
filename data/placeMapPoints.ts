@@ -348,5 +348,195 @@ export const placeMapPoints:Record<string,MapPoint[]> = {
       },
       "directionsQuery": "Avenue du Général Touzet du Vigier, 83120 Sainte-Maxime, France"
     }
+  ],
+  "chateau-des-marres": [
+    {
+      "id": "chateau-des-marres-reference",
+      "label": {
+        "fr": "Château des Marres · accueil du domaine",
+        "en": "Château des Marres · winery visitor point"
+      },
+      "latitude": 43.2434,
+      "longitude": 6.64854,
+      "source": "https://www.golfe-saint-tropez-information.com/fr/animation/chateau-des-marres-4600982",
+      "checked": "2026-10-16",
+      "kind": "venue",
+      "directionsQuery": "2998 route des Plages, 83350 Ramatuelle, France",
+      "note": {
+        "fr": "Repère du domaine au 2998 route des Plages. Les horaires de vente, de visite et du bar à vin saisonnier sont différents : confirmez votre créneau avant de venir.",
+        "en": "Winery reference at 2998 Route des Plages. Shop, tour and seasonal wine-bar hours differ; confirm your visit before travelling."
+      }
+    }
+  ],
+  "base-nautique-cogolin": [
+    {
+      "id": "base-nautique-cogolin-reference",
+      "label": {
+        "fr": "Base nautique · plage des Marines de Cogolin",
+        "en": "Water sports centre · Marines de Cogolin beach"
+      },
+      "latitude": 43.2629,
+      "longitude": 6.59187,
+      "source": "https://www.golfe-saint-tropez-information.com/fr/loisirs/loisirs-sportifs/cogolin/base-nautique-municipale-2803282",
+      "checked": "2026-10-16",
+      "kind": "venue",
+      "directionsQuery": "Base nautique municipale, Plage des Marines de Cogolin, 83310 Cogolin, France",
+      "note": {
+        "fr": "La base se trouve sur la plage des Marines de Cogolin, à distinguer du centre-ville. Confirmez l’activité, l’inscription, l’âge requis et le rendez-vous auprès de la base ; les sorties dépendent des conditions sur l’eau.",
+        "en": "The centre is on Marines de Cogolin beach, separate from the town centre. Confirm the activity, registration, age requirements and meeting point with the centre; outings depend on conditions on the water."
+      }
+    }
+  ],
+  "cogolin-village": [
+    {
+      "id": "cogolin-village-reference",
+      "label": {
+        "fr": "Centre · bureau de tourisme",
+        "en": "Town centre · tourist information"
+      },
+      "latitude": 43.2508,
+      "longitude": 6.53726,
+      "source": "https://www.golfe-saint-tropez-information.com/fr/services/point-d-information/cogolin/bureau-d-information-touristique-de-cogolin-4695297",
+      "checked": "2026-10-16",
+      "kind": "area",
+      "directionsQuery": "45 avenue Georges Clemenceau, 83310 Cogolin, France",
+      "note": {
+        "fr": "Le bureau de tourisme au 45 avenue Georges Clemenceau sert de repère pour le centre de Cogolin. Les Marines de Cogolin et la base nautique sont sur le littoral, à sélectionner séparément. Ce point ne réserve pas de stationnement.",
+        "en": "The tourist office at 45 Avenue Georges Clemenceau is a reference for central Cogolin. Select Marines de Cogolin and the water sports centre separately for the coast. This marker does not reserve parking."
+      }
+    }
+  ],
+  "la-croix-valmer-village": [
+    {
+      "id": "la-croix-valmer-village-reference",
+      "label": {
+        "fr": "Village · office de tourisme",
+        "en": "Village · tourist office"
+      },
+      "latitude": 43.207,
+      "longitude": 6.56826,
+      "source": "https://www.golfe-saint-tropez-information.com/fr/services/office-de-tourisme-ou-syndicat-d-initiative/la-croix-valmer/office-de-tourisme-de-la-croix-valmer-839639",
+      "checked": "2026-10-16",
+      "kind": "area",
+      "directionsQuery": "287 rue Louis Martin, 83420 La Croix-Valmer, France",
+      "note": {
+        "fr": "L’office de tourisme, 287 rue Louis Martin, situe le village. Gigaro et la plage du Débarquement sont d’autres secteurs de la commune : choisissez votre plage avant de préparer le trajet.",
+        "en": "The tourist office at 287 Rue Louis Martin locates the village. Gigaro and Plage du Débarquement are different parts of the commune; choose your beach before planning the journey."
+      }
+    }
+  ],
+  "cavalaire-village": [
+    {
+      "id": "cavalaire-village-reference",
+      "label": {
+        "fr": "Maison de la Mer · office de tourisme",
+        "en": "Maison de la Mer · tourist office"
+      },
+      "latitude": 43.173,
+      "longitude": 6.53319,
+      "source": "https://www.golfe-saint-tropez-information.com/fr/services/office-de-tourisme-ou-syndicat-d-initiative/cavalaire-sur-mer/office-de-tourisme-de-cavalaire-sur-mer-902874",
+      "checked": "2026-10-16",
+      "kind": "area",
+      "directionsQuery": "50 rond-point Saint-Exupéry, 83240 Cavalaire-sur-Mer, France",
+      "note": {
+        "fr": "La Maison de la Mer, au 50 rond-point Saint-Exupéry, sert de repère pour le centre et le front de mer. Pour une sortie en bateau, demandez au prestataire le quai exact : le point de l’office n’est pas un lieu d’embarquement garanti.",
+        "en": "Maison de la Mer at 50 Rond-point Saint-Exupéry is a reference for the centre and waterfront. For a boat trip, ask the operator for the exact quay; the office marker does not guarantee a boarding point."
+      }
+    }
+  ],
+  "la-mole-village": [
+    {
+      "id": "la-mole-village-reference",
+      "label": {
+        "fr": "Village · rue du Clocher",
+        "en": "Village · Rue du Clocher"
+      },
+      "latitude": 43.2074,
+      "longitude": 6.46574,
+      "source": "https://www.golfe-saint-tropez-information.com/fr/services/bureau-d-accueil-et-point-d-information/la-mole/bureau-d-information-touristique-de-la-mole-5340058",
+      "checked": "2026-10-16",
+      "kind": "area",
+      "directionsQuery": "2 rue du Clocher, 83310 La Môle, France",
+      "note": {
+        "fr": "Repère du village au 2 rue du Clocher, adresse du point d’information près de la médiathèque. L’accueil touristique est saisonnier : vérifiez son ouverture avant de vous déplacer pour obtenir des renseignements.",
+        "en": "Village reference at 2 Rue du Clocher, the information point by the library. Tourist reception is seasonal; check opening before travelling there for advice."
+      }
+    }
+  ],
+  "plan-de-la-tour-village": [
+    {
+      "id": "plan-de-la-tour-village-reference",
+      "label": {
+        "fr": "Village · place Georges Clemenceau",
+        "en": "Village · Place Georges Clemenceau"
+      },
+      "latitude": 43.3391,
+      "longitude": 6.54748,
+      "source": "https://www.golfe-saint-tropez-information.com/fr/services/office-de-tourisme-ou-syndicat-d-initiative/plan-de-la-tour/bureau-d-information-touristique-du-plan-de-la-tour-5340082",
+      "checked": "2026-10-16",
+      "kind": "area",
+      "directionsQuery": "1 place Georges Clemenceau, 83120 Le Plan-de-la-Tour, France",
+      "note": {
+        "fr": "Le bureau de tourisme, 1 place Georges Clemenceau, sert de point de repère au village. Les domaines et départs de randonnée hors du centre demandent leur propre accès ; consultez la fiche de l’activité choisie.",
+        "en": "The tourist office at 1 Place Georges Clemenceau is a village reference. Wineries and walks outside the centre require their own access details; check the selected activity’s information."
+      }
+    }
+  ],
+  "rayol-canadel-village": [
+    {
+      "id": "rayol-canadel-village-reference",
+      "label": {
+        "fr": "Rayol · place Michel Goy",
+        "en": "Le Rayol · Place Michel Goy"
+      },
+      "latitude": 43.1599,
+      "longitude": 6.4794,
+      "source": "https://www.golfe-saint-tropez-information.com/fr/services/office-de-tourisme-ou-syndicat-d-initiative/rayol-canadel-sur-mer/bureau-d-information-touristique-du-rayol-canadel-sur-mer-814289",
+      "checked": "2026-10-16",
+      "kind": "area",
+      "directionsQuery": "Place Michel Goy, 83820 Rayol-Canadel-sur-Mer, France",
+      "note": {
+        "fr": "Le bureau de tourisme, place Michel Goy, situe le secteur du Rayol. Le Canadel, les plages et le Domaine du Rayol ont des accès distincts : ce repère ne remplace pas leur entrée ni un parking de plage.",
+        "en": "The tourist office on Place Michel Goy locates the Le Rayol area. Le Canadel, the beaches and Domaine du Rayol have separate access points; this marker is neither their entrance nor beach parking."
+      }
+    }
+  ],
+  "gassin-village": [
+    {
+      "id": "gassin-village-reference",
+      "label": {
+        "fr": "Village perché · office de tourisme",
+        "en": "Hilltop village · tourist office"
+      },
+      "latitude": 43.230067,
+      "longitude": 6.585567,
+      "source": "https://gassin.eu/fr/informations-pratiques/acces-a-gassin/",
+      "checked": "2026-10-16",
+      "kind": "area",
+      "directionsQuery": "Office de tourisme, Montée Saint-Joseph, 83580 Gassin, France",
+      "note": {
+        "fr": "Repère de l’office à l’entrée du village perché. Suivez Gassin village / office de tourisme ; les Marines de Gassin sont sur le littoral. Consultez le plan officiel pour choisir votre stationnement puis continuez à pied.",
+        "en": "Tourist-office reference at the hilltop village entrance. Follow signs for Gassin village / tourist office; Marines de Gassin is on the coast. Consult the official parking map, then continue on foot."
+      }
+    }
+  ],
+  "la-verdoyante": [
+    {
+      "id": "la-verdoyante-reference",
+      "label": {
+        "fr": "La Verdoyante · restaurant",
+        "en": "La Verdoyante · restaurant"
+      },
+      "latitude": 43.2374,
+      "longitude": 6.590186,
+      "source": "https://www.la-verdoyante.fr/contact-reservation",
+      "checked": "2026-10-16",
+      "kind": "venue",
+      "directionsQuery": "866 chemin vicinal de Coste Brigade, 83580 Gassin, France",
+      "note": {
+        "fr": "Le restaurant indique le 866 chemin vicinal de Coste Brigade. Depuis la D61 ou le village de Gassin, suivez les indications La Verdoyante sur ce chemin. La réservation se fait par téléphone : confirmez l’ouverture pour votre date.",
+        "en": "The restaurant gives 866 Chemin Vicinal de Coste Brigade. From the D61 or Gassin village, follow La Verdoyante signs on this road. Book by telephone and confirm opening for your date."
+      }
+    }
   ]
 };
