@@ -6,6 +6,17 @@ const fixture=fs.readFileSync(path.join(__dirname,'fixtures/carre-programme.html
 (async()=>{
  const programme=parseCarreProgramme(fixture,'2026-10-13');assert.equal(programme.length,31);assert.deepEqual(programme,carreProgrammeSnapshot);assert.equal(new Set(programme.map(e=>e.id)).size,31);
  const {mediaForEvent,eventMediaLabel}=require('../lib/eventMedia.ts');
+ const {illustrationForEvent,agendaTitleCardIds}=require('../lib/eventMedia.ts');
+ const sample={...events[0],id:'fallback-a',officialImage:undefined,title:'Local gathering',titleFr:'Rendez-vous local'};
+ for(const category of ['music','culture','sport','local','family','sailing']){
+  const media=mediaForEvent({...sample,category});assert.equal(media.kind,'illustration');assert.ok(media.src.endsWith(`/${category}.webp`));
+  const file=fs.readFileSync(path.join(__dirname,'../public',media.src));assert.equal(file.toString('ascii',8,12),'WEBP');
+ }
+ for(const [title,expected] of [['Tournoi de pétanque','petanque'],['Fête des vendanges','vineyards'],['Découverte des vignobles','vineyards'],['Dégustation de vins','vineyards'],['Vincent en concert','music']])assert.ok(illustrationForEvent({...sample,title,titleFr:title,category:'music'}).src.endsWith(`/${expected}.webp`));
+ const ordered=[sample,programme[0],{...sample,id:'fallback-b'},{...sample,id:'fallback-c'},programme[1],{...sample,id:'fallback-d'}];
+ assert.deepEqual([...agendaTitleCardIds(ordered)],['fallback-b','fallback-d']);
+ assert.deepEqual([...agendaTitleCardIds([programme[0],sample])],[]);
+ assert.deepEqual([...agendaTitleCardIds([])],[]);
  const imageManifest=require('../data/carreEventImages.ts').carreEventImages;assert.equal(imageManifest.length,31);
  for(const event of programme){const media=mediaForEvent(event);assert.equal(media.kind,'official');assert.ok(media.src.startsWith('/media/events/carre/'));const file=path.join(__dirname,'../public',media.src);assert.ok(fs.statSync(file).size>1000);const buf=fs.readFileSync(file);assert.equal(buf.toString('ascii',8,12),'WEBP');assert.equal(eventMediaLabel(media,'en'),'Official show image');}
  assert.ok(parseCarreProgramme(fixture.replaceAll('//img.mapado.net/','//untrusted.example/'),'2026-10-13').every(e=>!e.officialImage));
