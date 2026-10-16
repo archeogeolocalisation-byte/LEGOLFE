@@ -1,6 +1,10 @@
+import {sainteMaximeMapPoints} from './sainteMaximePlaces';
+import {planDeLaTourMapPoints} from './planDeLaTourPlaces';
 import type {MapPoint} from '../lib/placeMapLinks';
 // Public venue references from official sources; never inferred from a business owner’s home.
 export const placeMapPoints:Record<string,MapPoint[]> = {
+ ...planDeLaTourMapPoints,
+ ...sainteMaximeMapPoints,
 
   "chateau-minuty":[{
     id:"chateau-minuty-shop",label:{fr:"Château Minuty · accueil du domaine",en:"Château Minuty · winery visitor point"},
