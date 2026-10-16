@@ -1,5 +1,5 @@
 export type VillageCopy = {sub:string;intro:string;quote:string;body:string;moments:string[][];darkTitle:string;darkBody:string;facts:string[][];best:string[];less:string[]};
-export type VillageFeature = {name:string;slug:string;source:string;fr:VillageCopy;en:VillageCopy};
+export type VillageFeature = {name:string;slug:string;source:string;nearby?:string[];fr:VillageCopy;en:VillageCopy};
 export const villageFeatures:Record<string,VillageFeature> = {
   "sainte-maxime-village": {
     "name": "Sainte-Maxime",
@@ -113,6 +113,7 @@ export const villageFeatures:Record<string,VillageFeature> = {
     }
   },
   "cavalaire-village": {
+    "nearby": ["plage-de-bonporteau", "port-heraclea-cavalaire", "plage-centre-ville-cavalaire", "sentiers-corniche-des-maures"],
     "name": "Cavalaire-sur-Mer",
     "slug": "cavalaire-sur-mer",
     "source": "https://www.golfe-saint-tropez-information.com/fr/villages-stations/cavalaire-sur-mer",
@@ -224,6 +225,7 @@ export const villageFeatures:Record<string,VillageFeature> = {
     }
   },
   "la-mole-village": {
+    "nearby": ["barrage-de-la-verne", "eglise-sainte-magdeleine-la-mole"],
     "name": "La Môle",
     "slug": "la-mole",
     "source": "https://www.golfe-saint-tropez-information.com/fr/villages-stations/la-mole",
@@ -446,6 +448,7 @@ export const villageFeatures:Record<string,VillageFeature> = {
     }
   },
   "la-croix-valmer-village": {
+    "nearby": ["plage-debarquement-la-croix-valmer", "plage-de-sylvabelle", "circuit-cap-lardier"],
     "name": "La Croix-Valmer",
     "slug": "la-croix-valmer",
     "source": "https://www.golfe-saint-tropez-information.com/fr/villages-stations/la-croix-valmer",

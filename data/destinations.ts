@@ -3,6 +3,19 @@ import { villas } from "./villas";
 import type { Locale } from "../lib/i18n";
 export type Destination = { slug:string;name:string;villageId:string|null;intro:Record<Locale,string>;plan:Record<Locale,string> };
 export const destinations:Destination[] = [
+{
+  "slug": "la-garde-freinet",
+  "name": "La Garde-Freinet",
+  "villageId": null,
+  "intro": {
+    "fr": "Le Fort-Freinet, la Croix des Maures et le Conservatoire du Patrimoine donnent trois façons de découvrir La Garde-Freinet : vestiges dans le rocher, panorama et histoire des métiers des Maures.",
+    "en": "Fort-Freinet, Croix des Maures and the heritage museum offer three ways to explore La Garde-Freinet: rocky medieval remains, views and traditional Maures skills."
+  },
+  "plan": {
+    "fr": "Commencez au Conservatoire pour comprendre le territoire, puis choisissez la Croix ou le Fort-Freinet selon votre groupe, la météo et les conditions d’accès. Les montées se préparent comme des sorties à pied.",
+    "en": "Start at the Conservatoire to understand the area, then choose the cross or Fort-Freinet around your group, the weather and access conditions. Plan the climbs as walking outings."
+  }
+},
   {
     "slug": "saint-tropez",
     "name": "Saint-Tropez",
@@ -77,8 +90,8 @@ export const destinations:Destination[] = [
       "en": "A harbour, a long beach and Bonporteau for a different landscape. Cavalaire faces the sea and suits travellers who want it to play the leading role in their holidays."
     },
     "plan": {
-      "fr": "Le front de mer et le port forment le cœur de la station. Bonporteau apporte un autre décor, plus resserré entre les rochers et la végétation. Deux ambiances à découvrir séparément.",
-      "en": "The waterfront and harbour form the heart of the resort. Bonporteau offers a more enclosed setting between rocks and greenery. Explore them as two distinct experiences."
+      "fr": "Associez la plage du Centre-Ville au port Héracléa pour une journée près des quais. Bonporteau et les sentiers de la Corniche des Maures constituent une autre sortie : choisissez votre accès et, pour la randonnée, le parcours de 3 ou 8 km.",
+      "en": "Pair the town-centre beach with Port Héracléa for a day near the quays. Bonporteau and the Corniche des Maures trails make another outing: plan your approach and choose the 3 km or 8 km walking route."
     }
   },
   {
@@ -90,8 +103,8 @@ export const destinations:Destination[] = [
       "en": "A village in the valley, a church and the wooded Maures landscape. La Môle offers another way into the Golfe: more hills and nature, with the coast reached by car."
     },
     "plan": {
-      "fr": "La visite commence au village, autour de l’église Sainte-Marie-Madeleine. Les paysages de la Verne et les chemins des Maures prolongent cette découverte de l’intérieur des terres.",
-      "en": "Begin in the village around Sainte-Marie-Madeleine church. The Verne landscape and Maures trails extend this discovery of the inland countryside."
+      "fr": "Commencez au village autour de l’église Sainte-Magdeleine. Pour rejoindre le barrage de la Verne, consultez les accès et prévoyez environ 5 km aller-retour à pied. La retenue se découvre depuis les chemins ; la baignade y est interdite.",
+      "en": "Begin around Sainte-Magdeleine church in the village. To reach La Verne dam, check the approach and allow for around 5 km walking there and back. Enjoy the reservoir from the paths; swimming is prohibited."
     }
   },
   {
@@ -103,8 +116,8 @@ export const destinations:Destination[] = [
       "en": "A village set back from the sea, vineyards and beaches that open up the day. La Croix-Valmer gives your stay several directions: Gigaro, Le Débarquement or a prepared coastal walk."
     },
     "plan": {
-      "fr": "Le centre et la mer ne sont pas une seule étape. Gigaro attire vers la plage et les chemins côtiers ; les vignes et les villas anciennes apportent une autre lecture de la commune.",
-      "en": "The centre and the sea are separate stops. Gigaro draws you towards the beach and coastal paths; vineyards and historic villas reveal another side of the commune."
+      "fr": "Choisissez le Débarquement pour associer plage et mémoire, Sylvabelle si les marches conviennent à votre groupe, ou le circuit du Cap Lardier pour une randonnée préparée depuis Gigaro. Le Domaine de La Croix complète la découverte côté vignoble.",
+      "en": "Choose Débarquement for beach and remembrance, Sylvabelle if the steps suit your group, or the Cap Lardier circuit for a planned hike from Gigaro. Domaine de La Croix adds the vineyard side of the area."
     }
   },
   {
