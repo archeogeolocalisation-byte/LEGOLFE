@@ -1,4 +1,5 @@
 import Link from "next/link";
+import {hasExploreParameters,type PublicSearchParams} from "../../../lib/publicRouteUrls";
 import { pageMetadata } from "../../../lib/seo";
 import {notFound} from "next/navigation";
 import SiteHeader from "../../../components/SiteHeader";
@@ -9,9 +10,11 @@ import {isLocale,ui} from "../../../lib/i18n";
 
 import { isExploreAddress, resolveExploreFilter, resolveExploreSearch, exploreFilterHref } from "../../../lib/exploreFilters";
 
-export default async function Page({params,searchParams}:{params:Promise<{locale:string}>;searchParams:Promise<{filter?:string;mood?:string;q?:string;town?:string}>}){
+type Props={params:Promise<{locale:string}>;searchParams?:Promise<PublicSearchParams>};
+
+export default async function Page({params,searchParams}:Props){
  const {locale:l}=await params;if(!isLocale(l))notFound();const t=ui[l];
- const sp=await searchParams;const initialFilter=resolveExploreFilter(sp.filter,sp.mood);const {query,town}=resolveExploreSearch(sp.q,sp.town);
+ const sp=await searchParams??{};const initialFilter=resolveExploreFilter(sp.filter,sp.mood);const {query,town}=resolveExploreSearch(sp.q,sp.town);
  return <main className="min-h-screen bg-white text-black"><SiteHeader locale={l} path={exploreFilterHref(l,initialFilter,query,town).slice(3)}/>
   <section className="lg-shell explore-page">
    <div className="explore-intro">
@@ -30,7 +33,10 @@ export default async function Page({params,searchParams}:{params:Promise<{locale
  </main>
 }
 
-export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
+export async function generateMetadata({params,searchParams}:Props) {
  const { locale } = await params; if (!isLocale(locale)) notFound();
- return pageMetadata({ title: locale === "fr" ? "Explorer le Golfe de Saint-Tropez : bonnes adresses et activités" : "Explore the Golfe de Saint-Tropez: places and activities", description: locale === "fr" ? "Restaurants, plages, activités, bars et services : découvrez les adresses du Golfe de Saint-Tropez selon vos envies." : "Discover restaurants, beaches, activities, bars and useful services around the Golfe de Saint-Tropez.", path: `/${locale}/explore`, locale });
+ const metadata=pageMetadata({ title: locale === "fr" ? "Explorer le Golfe de Saint-Tropez : bonnes adresses et activités" : "Explore the Golfe de Saint-Tropez: places and activities", description: locale === "fr" ? "Restaurants, plages, activités, bars et services : découvrez les adresses du Golfe de Saint-Tropez selon vos envies." : "Discover restaurants, beaches, activities, bars and useful services around the Golfe de Saint-Tropez.", path: `/${locale}/explore`, locale });
+ // Search and filter combinations are useful navigation, not separate landing pages.
+ if(hasExploreParameters(await searchParams??{}))metadata.robots={index:false,follow:true};
+ return metadata;
 }
