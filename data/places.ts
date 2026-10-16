@@ -451,7 +451,7 @@ export const places: Place[] = [
     priceLevel: 2, bestFor: ["Casual drinks", "Karaoke", "Sports nights", "Groups"], notIdealFor: ["Dress-up club nights", "Destination cocktails"],
     tags: ["pub", "karaoke", "sport", "casual", "port-grimaud", "late"],
     goodToKnow: ["Karaoke is advertised on Thursday and Saturday nights.", "The tourism listing gives daily opening to 00:45, with annual closure in January."],
-    verified: false, featured: true, website: "https://www.golfe-saint-tropez-information.com/fr/loisirs/autres-loisirs/grimaud/monroe-s-pub-5067383", phone: "+33 4 94 56 44 11", openingHours: "Daily 10:00–00:45; annual closure in January", source: "https://www.golfe-saint-tropez-information.com/fr/loisirs/autres-loisirs/grimaud/monroe-s-pub-5067383", lastVerifiedAt: "2026-10-03"
+    verified: false, featured: true, website: "https://www.golfe-saint-tropez-information.com/fr/loisirs/autres-loisirs/grimaud/monroe-s-pub-5067383", phone: "+33 4 94 56 44 11", openingHours: "Daily 10:00–00:45; annual closure in January", source: "https://www.golfe-saint-tropez-information.com/fr/loisirs/autres-loisirs/grimaud/monroe-s-pub-5067383", lastVerifiedAt: "2026-10-16"
   },
   {
     id: "gaio-club", name: "Gaïo", category: "party", location: "Saint-Tropez",
@@ -510,9 +510,9 @@ export const places: Place[] = [
     featured: true,
     website: "https://www.chevalblanc.com/fr/maison/st-tropez/restaurants-et-bars/la-vague-d-or-st-tropez/",
     phone: "+33 4 94 55 91 00",
-    openingHours: "19:30–21:30; closed Wednesday according to Cheval Blanc",
+    openingHours: "Seasonal dinner service; confirm dates and service days directly with Cheval Blanc",
     source: "https://www.chevalblanc.com/fr/maison/st-tropez/restaurants-et-bars/la-vague-d-or-st-tropez/",
-    lastVerifiedAt: "2026-10-02",
+    lastVerifiedAt: "2026-10-16",
   },
   {
     id: "la-voile",
@@ -583,7 +583,7 @@ export const places: Place[] = [
     source: "https://www.ramatuelle-tourisme.com/fr/sorties/restaurant/ramatuelle/byblos-beach-5260740/",
     website: "https://www.byblos-beach.com/",
     phone: "+33 4 94 43 15 00",
-    lastVerifiedAt: "2026-09-29",
+    lastVerifiedAt: "2026-10-16",
   },
   {
     id: "ramatuelle-village",
@@ -748,7 +748,7 @@ export const places: Place[] = [
     featured: true,
     website: "https://www.club55.fr",
     source: "https://www.ramatuelle-tourisme.com/fr/sorties/restaurant/ramatuelle/le-club-55-4601210/",
-    lastVerifiedAt: "2026-09-29",
+    lastVerifiedAt: "2026-10-16",
   },
   {
     id: "indie-beach",
@@ -760,12 +760,12 @@ export const places: Place[] = [
     bestFor: ["Stylish beach day", "Groups of friends", "Sunset energy"],
     notIdealFor: ["Low-cost beach day", "Travellers seeking total seclusion"],
     tags: ["beach-club", "bohemian", "pampelonne", "sunset", "social", "boat-shuttle"],
-    goodToKnow: ["Ramatuelle Tourisme lists deckchairs, supervised beach facilities and a boat shuttle at anchor.", "The 2026 tourism listing shows operation from late April to early October; seasonal details can change."],
+    goodToKnow: ["Ramatuelle Tourisme lists deckchairs, supervised beach facilities and a boat shuttle at anchor.", "The venue website announces a winter closure; confirm reopening and reservations before travelling."],
     verified: false,
     featured: true,
-    website: "https://www.indiegroup.fr",
+    website: "https://www.indie-beach.fr/",
     source: "https://www.ramatuelle-tourisme.com/fr/sorties/restaurant/ramatuelle/indie-beach-5445018/",
-    lastVerifiedAt: "2026-09-29",
+    lastVerifiedAt: "2026-10-16",
   },
   {
     id: "casita-pampelonne",
@@ -782,7 +782,7 @@ export const places: Place[] = [
     featured: false,
     source: "https://www.ramatuelle-tourisme.com/fr/sorties/restaurant/ramatuelle/casita-4739267/",
     openingHours: "21/05–04/10/2026; seasonal hours vary",
-    lastVerifiedAt: "2026-10-02",
+    lastVerifiedAt: "2026-10-16",
   },
   {
     id: "bateaux-verts-excursion",
@@ -967,13 +967,13 @@ export const places: Place[] = [
     bestFor: ["Couples", "Recovery day", "Sea-view massage", "Rayol stays"],
     notIdealFor: ["Large group spa days", "Travellers wanting full pool access without staying at the hotel"],
     tags: ["spa", "massage", "wellness", "rayol", "sea-view", "esthederm"],
-    goodToKnow: ["The tourism office describes treatment cabins facing the Mediterranean and lists nearby parking.", "The hotel's FAQ says the spa operates May to October, daily 10:00–12:00 and 14:00–20:00."],
+    goodToKnow: ["The tourism office describes treatment cabins facing the Mediterranean and lists nearby parking.", "Seasonal calendars vary between sources and years; confirm the current dates and non-resident access directly with the spa."],
     verified: false,
     featured: false,
     website: "https://www.lebaillidesuffren.com/espace-bien-etre-esthederm-bailli-de-suffren/",
     source: "https://www.golfe-sainttropez-tourisme.fr/fiche-apidae/le-spa-du-bailli-2/",
-    openingHours: "May–October, daily 10:00–12:00 and 14:00–20:00",
-    lastVerifiedAt: "2026-10-02",
+    openingHours: "Seasonal opening; confirm the current season and treatment slot with the spa",
+    lastVerifiedAt: "2026-10-16",
   },
 
   {
@@ -985,8 +985,8 @@ export const places: Place[] = [
     tags:["walk","hiking","nature","forest","view","heritage","archaeology","quiet","san-peire"],
     goodToKnow:["Trail conditions and access may vary; check the route and current forest restrictions before setting off.","Bring appropriate footwear and drinking water."],
     verified:false,featured:false,
-    source:"https://www.golfe-sainttropez-tourisme.fr/",
-    lastVerifiedAt:"2026-10-15"
+    source:"https://www.golfe-sainttropez-tourisme.fr/fiche-apidae/randonnee-chemin-vers-le-san-peire/",
+    lastVerifiedAt: "2026-10-16"
   },
 ];
 

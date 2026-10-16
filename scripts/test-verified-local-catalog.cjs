@@ -5,6 +5,7 @@ require.extensions['.ts'] = (m, f) => m._compile(ts.transpileModule(fs.readFileS
   compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2020 },
 }).outputText, f);
 const {placeMapPoints} = require('../data/placeMapPoints.ts');
+const {places} = require('../data/places.ts');
 const {additionalAgendaEvents} = require('../data/additionalAgendaEvents.ts');
 const {events} = require('../data/events.ts');
 const {verifiedEventUpdates, verifiedNewEvents} = require('../data/agendaVerified.ts');
@@ -14,13 +15,15 @@ const {pointDirectionsUrl} = require('../lib/placeMapLinks.ts');
 const {validMapPoint} = require('../lib/villaMapLocation.ts');
 const newPlaces = ['chateau-des-marres', 'base-nautique-cogolin', 'cogolin-village',
   'la-croix-valmer-village', 'cavalaire-village', 'la-mole-village',
-  'plan-de-la-tour-village', 'rayol-canadel-village', 'gassin-village', 'la-verdoyante'];
+  'plan-de-la-tour-village', 'rayol-canadel-village', 'gassin-village', 'la-verdoyante',
+  'monroes-pub', 'la-vague-dor', 'byblos-beach', 'club-55', 'indie-beach',
+  'casita-pampelonne', 'spa-du-bailli', 'san-peire-randonnee'];
 for (const id of newPlaces) {
   const p = placeMapPoints[id][0];
   assert.ok(validMapPoint(p.latitude, p.longitude), id);
   assert.equal(p.checked, '2026-10-16');
   assert.ok(p.note.fr.length > 70 && p.note.en.length > 70);
-  assert.equal(new URL(pointDirectionsUrl(p)).searchParams.get('destination'), p.directionsQuery);
+  assert.equal(new URL(pointDirectionsUrl(p)).searchParams.get('destination'), p.directionsQuery || `${p.latitude},${p.longitude}`);
 }
 assert.equal(placeMapPoints['cogolin-village'][0].latitude, 43.2508, 'visitor bureau, not the administrative office');
 assert.notEqual(placeMapPoints['cogolin-village'][0].longitude, placeMapPoints['base-nautique-cogolin'][0].longitude);
@@ -44,4 +47,14 @@ for (const id of ['masters-champions-petanque-2026', 'cogolin-arts-plastiques-20
 }
 assert.ok(!eventsInWindow(catalog, dateWindow('today', '2026-11-07')).some(e => e.id === 'cogolin-arts-plastiques-2026'));
 assert.ok(eventsInWindow(catalog, dateWindow('today', '2026-11-14')).some(e => e.id === 'cogolin-arts-plastiques-2026'));
-console.log('Verified local catalog: 10 sourced map references, coordinate conversions, distinct districts and exact event sessions passed.');
+const remaining=places.filter(p=>!placeMapPoints[p.id]?.length).map(p=>p.id).sort();
+assert.deepEqual(remaining,['bateaux-verts-excursion','caseneuve-catamaran','cecile-golmard-chef','maison-laurent-conciergerie','taxi-estelle'],'every fixed venue and hiking reference is covered');
+const hike=placeMapPoints['san-peire-randonnee'][0];
+assert.equal(hike.kind,'area');assert.equal(hike.latitude,43.339115);assert.equal(hike.longitude,6.547526);
+assert.ok(hike.directionsQuery.includes('place Clemenceau'),'hike reference is at the published village address, never the summit');
+assert.ok(hike.note.fr.includes('ni le sommet')&&hike.note.en.includes('neither the summit'));
+const {guides}=require('../data/guides.ts');
+assert.ok(guides.find(g=>g.slug==='randonnee-san-peire-plan-de-la-tour').placeIds.includes('san-peire-randonnee'),'hike links to its existing route guide');
+assert.equal(new URL(pointDirectionsUrl(placeMapPoints['byblos-beach'][0])).searchParams.get('destination'),'42 boulevard Patch, 83350 Ramatuelle, France');
+assert.equal(new URL(pointDirectionsUrl(placeMapPoints['club-55'][0])).searchParams.get('destination'),'43 boulevard Patch, 83350 Ramatuelle, France');
+console.log('Verified local catalog: 18 added map references, full fixed-place coverage, village hike reference and exact event sessions passed.');

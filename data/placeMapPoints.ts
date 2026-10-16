@@ -538,5 +538,156 @@ export const placeMapPoints:Record<string,MapPoint[]> = {
         "en": "The restaurant gives 866 Chemin Vicinal de Coste Brigade. From the D61 or Gassin village, follow La Verdoyante signs on this road. Book by telephone and confirm opening for your date."
       }
     }
+  ],
+  "monroes-pub": [
+    {
+      "id": "monroes-pub-reference",
+      "label": {
+        "fr": "Monroe’s Pub · avenue de la Mer",
+        "en": "Monroe’s Pub · Avenue de la Mer"
+      },
+      "latitude": 43.2748,
+      "longitude": 6.57612,
+      "source": "https://www.golfe-saint-tropez-information.com/fr/loisirs/autres-loisirs/grimaud/monroe-s-pub-5067383",
+      "checked": "2026-10-16",
+      "kind": "venue",
+      "note": {
+        "fr": "Repère du pub au 125 avenue de la Mer, résidence Les Jardins de la Mer, près de Port Grimaud. Vérifiez la soirée choisie et les horaires avant de venir ; le repère ne désigne pas un parking du port.",
+        "en": "Pub reference at 125 Avenue de la Mer, Les Jardins de la Mer residence, near Port Grimaud. Check the chosen evening and opening hours; the marker is not a harbour car park."
+      },
+      "directionsQuery": "125 avenue de la Mer, 83310 Grimaud, France"
+    }
+  ],
+  "la-vague-dor": [
+    {
+      "id": "la-vague-dor-reference",
+      "label": {
+        "fr": "La Vague d’Or · Cheval Blanc",
+        "en": "La Vague d’Or · Cheval Blanc"
+      },
+      "latitude": 43.2667,
+      "longitude": 6.62647,
+      "source": "https://www.golfe-saint-tropez-information.com/fr/sorties/restaurant/saint-tropez/la-vague-d-or-4078045",
+      "checked": "2026-10-16",
+      "kind": "venue",
+      "note": {
+        "fr": "Repère du restaurant au Cheval Blanc, plage de la Bouillabaisse. L’accès se prépare avec la Maison, distinctement d’une visite à la plage publique. Les sources diffèrent sur les jours de service : confirmez la saison et votre réservation auprès de Cheval Blanc.",
+        "en": "Restaurant reference at Cheval Blanc on Plage de la Bouillabaisse. Arrange access with the hotel, separately from visiting the public beach. Published service days differ between sources; confirm the season and your booking with Cheval Blanc."
+      },
+      "directionsQuery": "La Vague d’Or, Cheval Blanc, Plage de la Bouillabaisse, 83990 Saint-Tropez, France"
+    }
+  ],
+  "byblos-beach": [
+    {
+      "id": "byblos-beach-reference",
+      "label": {
+        "fr": "Byblos Beach · boulevard Patch",
+        "en": "Byblos Beach · Boulevard Patch"
+      },
+      "latitude": 43.226,
+      "longitude": 6.6618,
+      "source": "https://www.golfe-saint-tropez-information.com/fr/sorties/restaurant/ramatuelle/byblos-beach-5260740",
+      "checked": "2026-10-16",
+      "kind": "venue",
+      "note": {
+        "fr": "Le restaurant de plage se trouve au 42 boulevard Patch à Pampelonne, à Ramatuelle ; ce n’est pas l’hôtel Byblos du centre de Saint-Tropez. L’ouverture est saisonnière : confirmez la date et réservez séparément table ou transats.",
+        "en": "The beach restaurant is at 42 Boulevard Patch on Pampelonne, Ramatuelle, separate from Hôtel Byblos in central Saint-Tropez. Opening is seasonal; confirm the date and book dining or sunbeds separately."
+      },
+      "directionsQuery": "42 boulevard Patch, 83350 Ramatuelle, France"
+    }
+  ],
+  "club-55": [
+    {
+      "id": "club-55-reference",
+      "label": {
+        "fr": "Le Club 55 · boulevard Patch",
+        "en": "Le Club 55 · Boulevard Patch"
+      },
+      "latitude": 43.2274,
+      "longitude": 6.66131,
+      "source": "https://www.golfe-saint-tropez-information.com/fr/sorties/restaurant/ramatuelle/le-club-55-4601210",
+      "checked": "2026-10-16",
+      "kind": "venue",
+      "note": {
+        "fr": "L’accès routier indiqué par le Club 55 est le 43 boulevard Patch. Le club annonce un parking privé avec voiturier ; confirmez les conditions et votre réservation. Le ponton et les arrivées par bateau se préparent directement avec le club.",
+        "en": "Club 55 gives its road access as 43 Boulevard Patch. It advertises a private car park with valet service; confirm conditions and your booking. Arrange pontoon access and boat arrivals directly with the club."
+      },
+      "directionsQuery": "43 boulevard Patch, 83350 Ramatuelle, France"
+    }
+  ],
+  "indie-beach": [
+    {
+      "id": "indie-beach-reference",
+      "label": {
+        "fr": "Indie Beach · accès Bonne Terrasse",
+        "en": "Indie Beach · Bonne Terrasse access"
+      },
+      "latitude": 43.214,
+      "longitude": 6.6633,
+      "source": "https://www.golfe-saint-tropez-information.com/fr/sorties/restaurant/ramatuelle/indie-beach-5445018",
+      "checked": "2026-10-16",
+      "kind": "venue",
+      "note": {
+        "fr": "La fiche touristique donne le 471 chemin Garonne avec accès par la route de Bonne Terrasse. Ce repère situe le club, pas une arrivée par bateau ni un parking garanti. Le site du lieu annonce une fermeture hivernale : confirmez la réouverture avant de partir.",
+        "en": "The tourism listing gives 471 Chemin Garonne, reached via Route de Bonne Terrasse. This marker locates the club, not a boat arrival or guaranteed parking. The venue website announces a winter closure; confirm reopening before travelling."
+      },
+      "directionsQuery": "Indie Beach, 471 chemin Garonne, route de Bonne Terrasse, 83350 Ramatuelle, France"
+    }
+  ],
+  "casita-pampelonne": [
+    {
+      "id": "casita-pampelonne-reference",
+      "label": {
+        "fr": "Casita · plage de Pampelonne",
+        "en": "Casita · Pampelonne beach"
+      },
+      "latitude": 43.2253,
+      "longitude": 6.6623,
+      "source": "https://www.golfe-saint-tropez-information.com/fr/sorties/restaurant/ramatuelle/casita-4739267",
+      "checked": "2026-10-16",
+      "kind": "venue",
+      "note": {
+        "fr": "Repère du restaurant de plage Casita publié par l’office de tourisme. La fiche ne précise pas de numéro de rue : demandez l’accès routier et le stationnement au lieu avant le trajet. L’établissement est saisonnier ; les dates 2026 publiées ne garantissent pas une ouverture actuelle.",
+        "en": "Casita beach-restaurant reference published by the tourist office. The listing gives no street number; ask the venue for road access and parking before travelling. This is a seasonal venue; its published 2026 dates do not guarantee current opening."
+      }
+    }
+  ],
+  "spa-du-bailli": [
+    {
+      "id": "spa-du-bailli-reference",
+      "label": {
+        "fr": "Spa du Bailli · hôtel Le Bailli de Suffren",
+        "en": "Spa du Bailli · Le Bailli de Suffren hotel"
+      },
+      "latitude": 43.1563,
+      "longitude": 6.47807,
+      "source": "https://www.golfe-saint-tropez-information.com/fr/services/estheticienne/rayol-canadel-sur-mer/le-spa-du-bailli-1358186",
+      "checked": "2026-10-16",
+      "kind": "venue",
+      "note": {
+        "fr": "Le spa se situe dans l’hôtel Le Bailli de Suffren, 15 avenue des Américains. Réservez votre soin et confirmez les dates de saison ainsi que l’accès si vous ne séjournez pas à l’hôtel. Un soin ne garantit pas l’accès à la piscine ou aux autres équipements.",
+        "en": "The spa is inside Le Bailli de Suffren hotel at 15 Avenue des Américains. Book your treatment and confirm seasonal dates and access for non-residents. A treatment does not guarantee access to the pool or other facilities."
+      },
+      "directionsQuery": "15 avenue des Américains, 83820 Rayol-Canadel-sur-Mer, France"
+    }
+  ],
+  "san-peire-randonnee": [
+    {
+      "id": "san-peire-randonnee-reference",
+      "label": {
+        "fr": "Préparer la randonnée · centre du village",
+        "en": "Hike preparation · village centre"
+      },
+      "latitude": 43.339115,
+      "longitude": 6.547526,
+      "source": "https://www.golfe-sainttropez-tourisme.fr/fiche-apidae/randonnee-chemin-vers-le-san-peire/",
+      "checked": "2026-10-16",
+      "kind": "area",
+      "note": {
+        "fr": "Repère au village, 1 place Clemenceau, publié avec la randonnée. Ce point n’est ni le sommet ni une trace GPS du sentier. Consultez le topoguide et le balisage jaune, préparez le retour et vérifiez les restrictions d’accès aux massifs avant de partir.",
+        "en": "Village reference at 1 Place Clemenceau, published with the hike. This point is neither the summit nor a GPS trail track. Consult the official route and yellow waymarks, allow for the return and check forest-access restrictions before setting off."
+      },
+      "directionsQuery": "1 place Clemenceau, 83120 Le Plan-de-la-Tour, France"
+    }
   ]
 };
