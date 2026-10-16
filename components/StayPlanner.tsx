@@ -44,7 +44,7 @@ export default function StayPlanner({ places, villas, locale }: { places: Place[
     try {
       const raw = window.localStorage.getItem(PLAN_KEY);
       const parsed = raw ? JSON.parse(raw) : [];
-      if (Array.isArray(parsed)) setPlan(parsed.filter((x) => x && typeof x.id === "string"));
+      if (Array.isArray(parsed)) setPlan(parsed.filter((x) => x && typeof x.id === "string" && Number.isInteger(x.day) && x.day >= 1 && x.day <= 3 && PERIODS.includes(x.period)));
     } catch {
       setPlan([]);
     } finally {
@@ -121,7 +121,7 @@ export default function StayPlanner({ places, villas, locale }: { places: Place[
       {villas[0] && <div className="mt-10 grid gap-3 border-y border-black py-4 md:grid-cols-[150px_1fr_auto] md:items-center">
         <p className="lg-kicker text-black/40">{fr ? "BASE DU SÉJOUR" : "HOME BASE"}</p>
         <div><p className="text-2xl font-black uppercase tracking-[-.035em]">{villas[0].name}</p><p className="mt-1 text-sm font-bold text-black/45">{villas[0].location}</p></div>
-        <Link href={`/villa/${villas[0].id}`} className="text-[10px] font-black uppercase tracking-[.12em] lg-link-accent">{fr ? "Voir la maison" : "View villa"} →</Link>
+        <Link href={`/${locale}/villa/${villas[0].id}`} className="text-[10px] font-black uppercase tracking-[.12em] lg-link-accent">{fr ? "Voir la maison" : "View villa"} →</Link>
       </div>}
 
       {activePlan.length === 0 ? (
