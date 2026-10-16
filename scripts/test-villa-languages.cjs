@@ -39,6 +39,15 @@ for(const locale of ['fr','en']){
  assert.ok(page.includes(locale==='fr'?'Transmettre une demande':'Send an enquiry'));
  assert.equal(page.includes('owner@example.com'),false);
 }
+const profile={id:'11111111-1111-4111-8111-111111111111',name:'Public host',avatarUrl:'https://example.com/avatar.jpg'};
+for(const locale of ['fr','en']){
+ const page=renderToStaticMarkup(createElement(VillaDetail,{villa:live,today:'2026-10-16',locale,announcerProfile:profile}));
+ assert.ok(page.indexOf('id="annonceur"')>page.indexOf('<aside'),'Contact identity is in the right sidebar');
+ assert.equal((page.match(/id="annonceur"/g)||[]).length,1);
+ assert.equal((page.match(/class="villa-direct-contact"/g)||[]).length,1,'One contact reveal panel');
+ assert.ok(page.includes(`href="/${locale}/member/${profile.id}"`));
+ assert.ok(page.includes('https://example.com/avatar.jpg'));
+}
 const {safeReturnPath}=require('../lib/security.ts');
 assert.equal(safeReturnPath('/villa/property-live'),'/villa/property-live');
 assert.equal(safeReturnPath('/villa/../../account'),'');
