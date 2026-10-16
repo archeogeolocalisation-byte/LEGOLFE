@@ -14,8 +14,10 @@ function identity(e:GolfeEvent){
 // recurring events with different dates must not silently lose sessions.
 export function qualityAgendaEvents(events:GolfeEvent[]){
  const byKey=new Map<string,GolfeEvent>();
+ const seenIds=new Set<string>();
  for(const event of events){
-  if(!isValidAgendaEvent(event))continue;
+  if(!isValidAgendaEvent(event)||seenIds.has(event.id))continue;
+  seenIds.add(event.id);
   const key=identity(event),old=byKey.get(key);
   if(!old){byKey.set(key,event);continue;}
   const score=(e:GolfeEvent)=>(e.sourceCheckedAt?2:0)+(e.sessions?.length||0)+(e.streetAddress?1:0)+(e.officialImage?1:0);
