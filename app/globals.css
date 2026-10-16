@@ -160,7 +160,7 @@ button,textarea,input { font:inherit; }
 .explore-themes .explore-theme[aria-current="page"]{background:#0b4f6c;border-color:#0b4f6c;color:#fff;}
 .explore-controls :is(a,button,input,select):focus-visible{outline:2px solid #0b4f6c;outline-offset:3px;}
 /* Maisons & villas: compact search and beige palette. */
-.stay-page{background:#f4f0e7;color:#0b3046;}
+.stay-page{background:#fdfcf9;color:#0b3046;}
 .stay-collection{padding-top:28px;padding-bottom:64px;}
 .stay-hero{display:grid;gap:28px;align-items:center;margin-bottom:32px;}
 .stay-hero-copy>.lg-kicker{color:#0b4f6c;}
@@ -264,3 +264,25 @@ button,textarea,input { font:inherit; }
 @media(max-width:479px){.account-content,.member-content,.host-workspace{padding-top:28px;padding-bottom:40px;}.account-panel,.account-settings,.member-identity,.member-contributions{padding:20px;}.profile-shortcuts{gap:10px;margin-top:22px;}.profile-shortcuts>a{padding:18px;}.account-page .lg-menu-title{font-size:clamp(38px,13vw,64px);}.host-empty{padding:20px;}}
 
 .host-role-options{display:grid;gap:18px;margin-top:28px;}.host-role-option{padding:26px;border:1px solid #c9c1b3;border-top:3px solid #0b4f6c;background:#fff;text-align:left;}.host-role-option:nth-child(2){background:#e0edf0;}.host-role-option:hover{background:#d5e8ed;}@media(min-width:768px){.host-role-options{grid-template-columns:repeat(2,minmax(0,1fr));}}
+
+/* White villa pages, with colour reserved for details and actions. */
+.villa-detail{background:#fff;color:#102d39;}
+.villa-sidebar{display:grid;gap:22px;min-width:0;}
+.villa-contact-card{background:#fff;border:1px solid #c8d8de;border-top:4px solid #0b4f6c;padding:24px;}
+.villa-contact-card>.lg-kicker{color:#0b4f6c;font-size:10px;}
+.villa-contact-identity{display:flex;align-items:center;gap:16px;margin-top:20px;}
+.villa-contact-avatar{display:flex;align-items:center;justify-content:center;flex-shrink:0;width:64px;height:64px;border-radius:50%;overflow:hidden;background:#dcecf1;color:#0b4f6c;border:1px solid #aac5d0;font-size:26px;font-weight:900;}
+.villa-contact-avatar img{width:100%;height:100%;object-fit:cover;}
+.villa-contact-kind{font-size:10px;line-height:1.5;font-weight:800;color:#385765;}
+.villa-contact-identity h2{font-size:21px;font-weight:900;letter-spacing:-.03em;line-height:1.2;margin-top:6px;overflow-wrap:anywhere;}
+.villa-profile-link{display:inline-flex;align-items:center;min-height:44px;font-size:11px;font-weight:800;text-decoration:underline;text-underline-offset:4px;color:#0b4f6c;}
+.villa-contact-note{font-size:12px;line-height:1.8;color:#385765;margin-top:20px;}
+.villa-direct-contact{margin-top:20px;padding-top:20px;border-top:1px solid #c8d8de;}
+.villa-revealed-contact{display:grid;gap:12px;background:#edf5f7;border-left:3px solid #0b4f6c;padding:16px;margin-top:16px;font-size:14px;overflow-wrap:anywhere;}
+.villa-revealed-contact a{min-height:44px;display:flex;align-items:center;}
+.villa-detail #demande-sejour,.villa-preview-panel{background:#fff;border:1px solid #c8d8de;border-top:4px solid #0b4f6c;}
+.villa-detail #equipements li{background:#f7fafb;border-color:#d5e3e8;}
+.villa-detail .lg-btn{min-height:44px;max-width:100%;background:#fff;color:#0b4f6c;border-color:#8eaaaf;white-space:normal;text-align:center;line-height:1.5;}
+.villa-detail :is(.lg-btn--dark,#demande-sejour form>button),.villa-detail .fixed>a{background:#0b4f6c;border-color:#0b4f6c;color:#fff;}
+.villa-detail :is(a,button,input,select,summary):focus-visible{outline:2px solid #0b4f6c;outline-offset:3px;}
+@media(max-width:479px){.villa-contact-card{padding:20px;}}
