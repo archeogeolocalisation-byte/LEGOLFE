@@ -20,6 +20,7 @@ export const hikingGuides: Guide[] = [
       "le-plan-de-la-tour"
     ],
     "placeIds": [
+      "san-peire-randonnee",
       "plan-de-la-tour-village"
     ],
     "related": [
