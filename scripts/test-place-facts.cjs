@@ -12,6 +12,7 @@ Module._load=function(request,parent,...rest){
  return load.call(this,request,parent,...rest);
 };
 const {placeFacts}=require('../data/placeFacts.ts'),{placeFactsMedia}=require('../data/placeFactsMedia.ts');
+const {placeMapPoints}=require('../data/placeMapPoints.ts');
 const {places}=require('../data/places.ts'),{photosForPlace}=require('../lib/curatedPlaceGallery.ts'),{placesInDestination,getDestination}=require('../data/destinations.ts');
 const Sheet=require('../components/PlaceFactSheet.tsx').default,Page=require('../app/[locale]/place/[id]/page.tsx');
 const {renderToStaticMarkup}=require('react-dom/server'),{GET}=require('../app/sitemap.xml/route.ts');
@@ -51,7 +52,18 @@ const licenses=JSON.parse(fs.readFileSync(path.join(__dirname,'../public/media/p
   for(const locale of ['fr','en']){
    const copy=fact.copy[locale],html=renderToStaticMarkup(Sheet({id,locale}));
    assert.ok(copy.intro.length>180);assert.ok(copy.sections.length>=4);assert.ok(copy.questions.length>=3);
-   assert.ok(html.includes(fact.address));assert.ok(html.includes('google.com/maps/dir/'));assert.ok(html.includes(['domaine-de-la-croix','musee-gendarmerie-cinema'].includes(id)?'openstreetmap.org/export/embed.html':'output=embed'));assert.equal((html.match(/<address/g)||[]).length,1);assert.equal(html.includes('ADRESSE DE VISITE'),false);assert.ok(html.includes(media[0].licenseUrl));
+   assert.ok(html.includes(fact.address));assert.ok(html.includes('google.com/maps/dir/'));const frame=html.match(/<iframe[^>]+src="([^"]+)"/);assert.ok(frame,`${id}/${locale}: visit map is rendered`);
+   const mapUrl=new URL(frame[1].replaceAll('&amp;','&')),point=placeMapPoints[id]?.[0];
+   if(point){
+    assert.equal(mapUrl.origin,'https://www.openstreetmap.org',`${id}/${locale}: sourced marker uses OpenStreetMap`);
+    assert.equal(mapUrl.pathname,'/export/embed.html');
+    assert.equal(mapUrl.searchParams.get('marker'),`${point.latitude},${point.longitude}`,`${id}/${locale}: displayed coordinates match the verified reference`);
+    assert.equal(mapUrl.searchParams.has('bbox'),true);
+   }else{
+    assert.equal(mapUrl.origin,'https://www.google.com');assert.equal(mapUrl.searchParams.get('output'),'embed');
+    assert.equal(mapUrl.searchParams.get('q'),fact.address,`${id}/${locale}: address fallback searches the visit address`);
+   }
+   assert.equal((html.match(/<address/g)||[]).length,1);assert.equal(html.includes('ADRESSE DE VISITE'),false);assert.ok(html.includes(media[0].licenseUrl));
    assert.match(html,/datetime="2026-10-14"/i);
    for(const source of fact.sources)assert.ok(html.includes(source.url));
    const metadata=await Page.generateMetadata({params:Promise.resolve({locale,id})});
