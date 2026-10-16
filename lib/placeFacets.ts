@@ -4,6 +4,8 @@ import type {Locale} from "./i18n";
 // A place keeps one editorial primary category and can have reviewed secondary uses.
 // These links drive Explorer, page chips and LE GOLFE recommendations consistently.
 const secondaryCategories:Record<string,readonly PlaceCategory[]>={
+ "port-heraclea-cavalaire":["do"],
+ "eglise-sainte-magdeleine-la-mole":["places"],
  "chateau-de-grimaud":["places"],
  "eglise-saint-michel-grimaud":["places"],
  "moulin-saint-roch-grimaud":["places"],

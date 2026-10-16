@@ -1,3 +1,4 @@
+import {cavalaireMoleFacts} from './cavalaireMolePlaces';
 import {grimaudFacts} from './grimaudPlaces';
 import {sainteMaximeFacts} from './sainteMaximePlaces';
 import {planDeLaTourFacts} from './planDeLaTourPlaces';
@@ -10,6 +11,7 @@ export const placeFacts:Record<string,PlaceFacts> = {
   ...planDeLaTourFacts,
  ...sainteMaximeFacts,
  ...grimaudFacts,
+ ...cavalaireMoleFacts,
   "grimaud-village": {
     "verified": "2026-10-13",
     "copy": {

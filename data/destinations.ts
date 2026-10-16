@@ -77,8 +77,8 @@ export const destinations:Destination[] = [
       "en": "A harbour, a long beach and Bonporteau for a different landscape. Cavalaire faces the sea and suits travellers who want it to play the leading role in their holidays."
     },
     "plan": {
-      "fr": "Le front de mer et le port forment le cœur de la station. Bonporteau apporte un autre décor, plus resserré entre les rochers et la végétation. Deux ambiances à découvrir séparément.",
-      "en": "The waterfront and harbour form the heart of the resort. Bonporteau offers a more enclosed setting between rocks and greenery. Explore them as two distinct experiences."
+      "fr": "Associez la plage du Centre-Ville au port Héracléa pour une journée près des quais. Bonporteau et les sentiers de la Corniche des Maures constituent une autre sortie : choisissez votre accès et, pour la randonnée, le parcours de 3 ou 8 km.",
+      "en": "Pair the town-centre beach with Port Héracléa for a day near the quays. Bonporteau and the Corniche des Maures trails make another outing: plan your approach and choose the 3 km or 8 km walking route."
     }
   },
   {
@@ -90,8 +90,8 @@ export const destinations:Destination[] = [
       "en": "A village in the valley, a church and the wooded Maures landscape. La Môle offers another way into the Golfe: more hills and nature, with the coast reached by car."
     },
     "plan": {
-      "fr": "La visite commence au village, autour de l’église Sainte-Marie-Madeleine. Les paysages de la Verne et les chemins des Maures prolongent cette découverte de l’intérieur des terres.",
-      "en": "Begin in the village around Sainte-Marie-Madeleine church. The Verne landscape and Maures trails extend this discovery of the inland countryside."
+      "fr": "Commencez au village autour de l’église Sainte-Magdeleine. Pour rejoindre le barrage de la Verne, consultez les accès et prévoyez environ 5 km aller-retour à pied. La retenue se découvre depuis les chemins ; la baignade y est interdite.",
+      "en": "Begin around Sainte-Magdeleine church in the village. To reach La Verne dam, check the approach and allow for around 5 km walking there and back. Enjoy the reservoir from the paths; swimming is prohibited."
     }
   },
   {

@@ -18,7 +18,7 @@ const Sheet=require('../components/PlaceFactSheet.tsx').default,Page=require('..
 const {renderToStaticMarkup}=require('react-dom/server'),{GET}=require('../app/sitemap.xml/route.ts');
 const licenses=JSON.parse(fs.readFileSync(path.join(__dirname,'../public/media/place-facts/licenses.json')));
 (async()=>{
- assert.equal(Object.keys(placeFacts).length,20);
+ assert.equal(Object.keys(placeFacts).length,26);
  assert.equal(new Set(places.map(p=>p.id)).size,places.length);
  assert.ok(placesInDestination(getDestination('grimaud')).some(p=>p.id==='port-grimaud'));
  const xml=await(await GET()).text();
@@ -73,10 +73,10 @@ const licenses=JSON.parse(fs.readFileSync(path.join(__dirname,'../public/media/p
   }
  }
  // New local collections: test the rendered public flow, not just the data shape.
- const localIds=[...require('../data/planDeLaTourPlaces.ts').planDeLaTourPlaces,...require('../data/sainteMaximePlaces.ts').sainteMaximePlaces,...require('../data/grimaudPlaces.ts').grimaudPlaces].map(p=>p.id);
- for(const slug of ['le-plan-de-la-tour','sainte-maxime','grimaud']){
+ const localIds=[...require('../data/planDeLaTourPlaces.ts').planDeLaTourPlaces,...require('../data/sainteMaximePlaces.ts').sainteMaximePlaces,...require('../data/grimaudPlaces.ts').grimaudPlaces,...require('../data/cavalaireMolePlaces.ts').cavalaireMolePlaces].map(p=>p.id);
+ for(const [slug,count] of Object.entries({'le-plan-de-la-tour':4,'sainte-maxime':4,'grimaud':4,'cavalaire-sur-mer':4,'la-mole':2})){
   const local=placesInDestination(getDestination(slug));
-  assert.equal(local.filter(p=>localIds.includes(p.id)).length,4,`${slug}: four new places exposed by destination`);
+  assert.equal(local.filter(p=>localIds.includes(p.id)).length,count,`${slug}: local collection exposed by destination`);
  }
  const grimaudIds=require('../data/grimaudPlaces.ts').grimaudPlaces.map(p=>p.id);
  assert.ok(grimaudIds.every(id=>placeFacts['grimaud-village'].nearby.includes(id)),'Village guide links directly to each new monument');
@@ -85,6 +85,20 @@ const licenses=JSON.parse(fs.readFileSync(path.join(__dirname,'../public/media/p
   assert.equal(photo.contextual,undefined,`${id}: photograph depicts the monument`);
   assert.equal(photo.license,'CC BY-SA 4.0');
  }
+ const Village=require('../components/VillageFeaturePlace.tsx').default;
+ const {villageFeatures}=require('../data/villageFeatures.ts');
+ for(const [village,count] of [['cavalaire-village',4],['la-mole-village',2]]){
+  assert.equal(villageFeatures[village].nearby.length,count);
+  for(const locale of ['fr','en']){
+   const html=renderToStaticMarkup(Village({id:village,locale}));
+   for(const target of villageFeatures[village].nearby)assert.ok(html.includes(`href="/${locale}/place/${target}"`),`${village}: crawlable ${target}`);
+  }
+ }
+ const corniche=placeFacts['sentiers-corniche-des-maures'].copy.fr;
+ assert.ok(corniche.facts.some(([,value])=>value.includes('3h')&&value.includes('360 m')));
+ assert.ok(corniche.sections.some(([,body])=>body.includes('pas le parcours court')));
+ assert.ok(placeFacts['barrage-de-la-verne'].copy.fr.questions.some(([,body])=>body.includes('baignade')&&body.includes('interdites')));
+ assert.ok(placeFacts['eglise-sainte-magdeleine-la-mole'].copy.fr.questions.some(([,body])=>body.includes('autre site')));
  const {editorialSignatures}=require('../lib/placeEditorialSignatures.ts');
  const {isExploreAddress}=require('../lib/exploreFilters.ts');
  for(const id of localIds){
@@ -113,5 +127,5 @@ const licenses=JSON.parse(fs.readFileSync(path.join(__dirname,'../public/media/p
  }
  assert.equal(places.some(p=>/comptoir-de-la-poste|porte[s]?-verte/.test(p.id)),false,'User exclusions respected');
  process.env.VERCEL_ENV='preview';assert.equal((await Page.generateMetadata({params:Promise.resolve({locale:'fr',id:'port-grimaud'})})).robots.index,false);
- console.log('Place facts: existing licensed media/hashes plus 12 local places in FR/EN; contextual photos, sources, map markers, discovery links, metadata and sitemap passed.');
+ console.log('Place facts: existing licensed media/hashes plus 18 local places in FR/EN; contextual photos, sources, map markers, discovery links, metadata and sitemap passed.');
 })().catch(error=>{console.error(error);process.exitCode=1;});
