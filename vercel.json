@@ -32,7 +32,8 @@
       "feature/menu-agenda-sources": false,
       "feature/agenda-show-images": false,
       "feature/local-news-journal": false,
-      "feature/local-extra-feeds": false
+      "feature/local-extra-feeds": false,
+      "design/agenda-category-art": false
     }
   }
 }
