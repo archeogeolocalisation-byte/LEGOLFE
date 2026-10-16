@@ -11,6 +11,7 @@ import AccountAuthForm from "../../../components/AccountAuthForm";
 import AccountPasswordForm from "../../../components/AccountPasswordForm";
 import AdminAccessLink from "../../../components/AdminAccessLink";
 import ProfileDetails from "../../../components/ProfileDetails";
+import ProfileShortcuts from "../../../components/ProfileShortcuts";
 import ProfileGallery from "../../../components/ProfileGallery";
 
 export default function AccountPage() {
@@ -101,12 +102,12 @@ export default function AccountPage() {
   }
 
   if (!ready) {
-    return <main className="min-h-screen bg-white"><SiteHeader locale={locale} path="/account" /><div className="lg-shell py-24"><div className="h-48 animate-pulse bg-neutral-100" /></div></main>;
+    return <main className="account-page min-h-screen"><SiteHeader locale={locale} path="/account" /><div className="lg-shell py-24"><div className="h-48 animate-pulse bg-neutral-100" /></div></main>;
   }
 
   if (!userId) {
     return (
-      <main className="min-h-screen bg-white text-black">
+      <main className="account-page min-h-screen">
         <SiteHeader locale={locale} path="/account" />
         <section className="lg-shell py-20 md:py-28">
           <p className="lg-kicker">{fr ? "COMMUNAUTÉ / COMPTE" : "COMMUNITY / ACCOUNT"}</p>
@@ -126,38 +127,16 @@ export default function AccountPage() {
   }
 
   return (
-    <main className="min-h-screen bg-white text-black">
+    <main className="account-page min-h-screen">
       <SiteHeader locale={locale} path="/account" />
-      <section className="lg-shell py-20 md:py-28">
+      <section className="lg-shell account-content">
         <p className="lg-kicker">{fr ? "COMMUNAUTÉ / COMPTE" : "COMMUNITY / ACCOUNT"}</p>
-        <h1 className="lg-menu-title mt-5">{fr ? "MON PROFIL." : "MY PROFILE."}</h1>
-        <div className="mt-12 grid gap-14 border-t border-black pt-8 md:grid-cols-[.8fr_1.2fr]">
-          <div>
-            <p className="lg-kicker">{fr ? "COMPTE" : "ACCOUNT"}</p>
-            <p className="mt-5 break-all text-xl font-black">{userEmail}</p>
-            <div className="mt-6 flex flex-wrap gap-3">
-              <AdminAccessLink locale={locale}/>
-              <Link className="lg-btn" href={"/"+locale+"/member/"+userId}>{fr ? "Voir mon profil public" : "View my public profile"} ↗</Link>
-              <Link className="lg-btn" href={"/"+locale+"/saved"}>{fr ? "Mon séjour" : "My stay"} ↗</Link>
-              <Link className="lg-btn lg-btn--dark" href={"/"+locale+"/host"}>{fr ? "Mes annonces" : "My listings / Host"} ↗</Link>
-            </div>
-            <button type="button" onClick={() => setShowPassword(value => !value)} className="mt-7 block text-sm font-bold underline underline-offset-4">{fr ? "Définir / modifier mon mot de passe" : "Set / change my password"}</button>
-            {showPassword && <AccountPasswordForm key={userId} userId={userId} fr={fr} recovery={recovery} onSaved={() => {setShowPassword(false);setRecovery(false);setMessage(fr ? "Mot de passe enregistré." : "Password saved.");}} />}
-            <button
-              className="mt-7 text-[10px] font-black uppercase tracking-[.14em] underline underline-offset-4"
-              onClick={async () => {
-                await supabase.auth.signOut();
-                location.reload();
-              }}
-            >
-              {fr ? "Se déconnecter" : "Sign out"}
-            </button>
-          </div>
-
-          <div>
-            <ProfileGallery key={"gallery-"+userId} userId={userId} fr={fr} />
-            <ProfileDetails key={userId} userId={userId} fr={fr} />
-          <form onSubmit={saveProfile}>
+        <h1 className="lg-menu-title mt-5">{fr ? "MON COMPTE." : "MY ACCOUNT."}</h1>
+        <p className="account-intro">{fr?"Votre profil, vos envies et vos maisons. Tout commence ici.":"Your profile, your plans and your homes. It all starts here."}</p>
+        <ProfileShortcuts locale={locale}/>
+        <div className="account-layout">
+          <div className="account-profile">
+          <form onSubmit={saveProfile} className="account-panel account-name">
             <p className="lg-kicker">{fr ? "NOM PUBLIC" : "PUBLIC NAME"}</p>
             <p className="mt-4 max-w-xl text-sm font-semibold leading-6 text-black/50">
               {fr
@@ -172,7 +151,7 @@ export default function AccountPage() {
               maxLength={40}
               value={displayName}
               onChange={(event) => setDisplayName(event.target.value)}
-              className="mt-7 h-14 w-full border-b border-black bg-transparent text-3xl font-black tracking-[-.04em] outline-none"
+              autoComplete="nickname" className="account-name-input"
             />
             <div className="mt-6 flex flex-wrap gap-3">
               <button disabled={saving} className="lg-btn lg-btn--dark disabled:opacity-40">{saving ? (fr ? "Enregistrement…" : "Saving…") : fr ? "Enregistrer" : "Save"}</button>
@@ -181,8 +160,29 @@ export default function AccountPage() {
             </div>
             {message && <p role="status" aria-live="polite" className="mt-4 text-sm font-bold text-black/55">{message}</p>}
           </form>
+            <div className="account-panel"><ProfileDetails key={userId} userId={userId} fr={fr} /></div>
           </div>
+          <aside className="account-settings">
+            <h2 className="lg-kicker">{fr ? "PARAMÈTRES DU COMPTE" : "ACCOUNT SETTINGS"}</h2>
+            <p className="mt-5 break-all text-xl font-black">{userEmail}</p>
+            <div className="mt-6 flex flex-wrap gap-3">
+              <AdminAccessLink locale={locale}/>
+              <Link className="lg-btn" href={"/"+locale+"/member/"+userId}>{fr ? "Voir mon profil public" : "View my public profile"} ↗</Link>
+            </div>
+            <button type="button" onClick={() => setShowPassword(value => !value)} className="mt-7 block text-sm font-bold underline underline-offset-4">{fr ? "Définir / modifier mon mot de passe" : "Set / change my password"}</button>
+            {showPassword && <AccountPasswordForm key={userId} userId={userId} fr={fr} recovery={recovery} onSaved={() => {setShowPassword(false);setRecovery(false);setMessage(fr ? "Mot de passe enregistré." : "Password saved.");}} />}
+            <button
+              className="mt-7 text-[10px] font-black uppercase tracking-[.14em] underline underline-offset-4"
+              onClick={async () => {
+                await supabase.auth.signOut();
+                location.reload();
+              }}
+            >
+              {fr ? "Se déconnecter" : "Sign out"}
+            </button>
+          </aside>
         </div>
+        <div className="account-panel account-gallery"><ProfileGallery key={"gallery-"+userId} userId={userId} fr={fr}/></div>
       </section>
       <SiteFooter locale={locale} />
     </main>
