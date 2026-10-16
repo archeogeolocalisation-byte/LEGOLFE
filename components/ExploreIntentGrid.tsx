@@ -28,7 +28,7 @@ export default function ExploreIntentGrid({ places, locale, filter = "all", quer
         <button className="lg-btn lg-btn--dark">{fr?"Rechercher":"Search"} →</button>
       </form>
       <div className="explore-themes">
-        {exploreFilterIds.map(id => <Link key={id} href={exploreFilterHref(locale, id,query,town)} scroll={false} prefetch={false} aria-current={filter === id ? "page" : undefined} className={`inline-flex items-center gap-3 border px-3 py-2 text-[10px] font-black uppercase tracking-[.08em] transition focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--lg-blue)] ${filter === id ? "border-[var(--lg-blue)] bg-[var(--lg-blue)] text-white" : "border-black/25 hover:border-[var(--lg-blue)] hover:text-[var(--lg-blue)]"}`}>
+        {exploreFilterIds.map(id => <Link key={id} href={exploreFilterHref(locale, id,query,town)} scroll={false} prefetch={false} aria-current={filter === id ? "page" : undefined} className="explore-theme">
           {labels[id]} <span className="text-[9px] opacity-60">{counts[id]}</span>
         </Link>)}
       </div>
