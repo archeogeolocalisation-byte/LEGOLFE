@@ -10,12 +10,13 @@ import {pressMedia} from './pressMedia';
 
 // Named-place photographs; contextual peninsula view only where explicitly supplied and labelled.
 export function photosForPlace(id:string):VillagePhoto[]{
+ // Supplied replacements take priority over older catalogue photographs.
+ if(suppliedPlaceMedia[id])return suppliedPlaceMedia[id];
  if(newExperienceMedia[id])return newExperienceMedia[id];
  if(id==='citadelle-saint-tropez')return citadelleMedia;
  if(id==='pampelonne')return pampelonneMedia;
  if(placeFactsMedia[id])return [placeFactsMedia[id]];
  if(discoveryPlaceMedia[id])return discoveryPlaceMedia[id];
- if(suppliedPlaceMedia[id])return suppliedPlaceMedia[id];
  if(villageMedia[id])return villageMedia[id].filter(photo=>!photo.contextual);
  if(legacyPlaceMedia[id])return legacyPlaceMedia[id].filter(photo=>!photo.contextual);
  if(pressMedia[id]){

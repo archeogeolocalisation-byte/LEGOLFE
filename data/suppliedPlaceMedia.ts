@@ -1,6 +1,35 @@
 import type {VillagePhoto} from './villageMedia';
 // Photographs supplied for these places. No photographer or licence was supplied.
 export const suppliedPlaceMedia:Record<string,VillagePhoto[]> = {
+  "casita-pampelonne": [
+  {
+    "src": "/media/places/casita-pampelonne-aerial.webp",
+    "alt": "Casita à Pampelonne : plage et parasols vus du ciel",
+    "caption": {
+      "fr": "Casita, sur la plage de Pampelonne, vue du ciel",
+      "en": "Aerial view of Casita on Pampelonne beach"
+    },
+    "credit": "",
+    "license": "",
+    "licenseUrl": "",
+    "source": ""
+  }
+],
+  "domaine-de-la-croix": [
+  {
+    "src": "/media/places/domaine-de-la-croix-vignoble.jpg",
+    "alt": "Domaine de La Croix : vignoble face à la mer à La Croix-Valmer",
+    "caption": {
+      "fr": "Le vignoble du Domaine de La Croix face à la mer",
+      "en": "Domaine de La Croix vineyards overlooking the sea"
+    },
+    "credit": "",
+    "license": "",
+    "licenseUrl": "",
+    "source": ""
+  }
+],
+
   "monroes-pub": [
     {
       "src": "/media/places/monroes-exterieur.webp",
