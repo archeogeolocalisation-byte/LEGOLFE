@@ -1,6 +1,7 @@
 import type { GolfeEvent } from "./events";
-// Facts checked on individual official source pages on 3 October 2026.
+// Individual official-source checks are dated on each record.
 export const verifiedEventUpdates:Record<string,Partial<GolfeEvent>> = {
+  "cape31-gold-cup": {sourceCheckedAt:"2026-10-16",venue:"Rade du Golfe de Saint-Tropez",practicalFr:"Du 12 au 17 octobre 2026 ; accès libre annoncé. Consultez la Société Nautique pour le programme et les conditions de course.",practical:"12–17 October 2026; free admission advertised. Consult the Société Nautique for the programme and racing conditions."},
   "maud-fontenoy": {
     "time": "18:00",
     "venue": "Cinéma Star",
