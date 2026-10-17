@@ -1,3 +1,4 @@
+import {cogolinRayolFacts} from './cogolinRayolPlaces';
 import {saintTropezFacts} from './saintTropezPlaces';
 import {ramatuelleGassinFacts} from './ramatuelleGassinPlaces';
 import {freinetCroixFacts} from './freinetCroixPlaces';
@@ -17,6 +18,7 @@ export const placeFacts:Record<string,PlaceFacts> = {
  ...cavalaireMoleFacts,
  ...freinetCroixFacts,
  ...ramatuelleGassinFacts,
+ ...cogolinRayolFacts,
  ...saintTropezFacts,
   "grimaud-village": {
     "verified": "2026-10-13",

@@ -1,3 +1,4 @@
+import {cogolinRayolMedia} from './cogolinRayolPlaces';
 import {saintTropezMedia} from './saintTropezPlaces';
 import {ramatuelleGassinMedia} from './ramatuelleGassinPlaces';
 import {freinetCroixMedia} from './freinetCroixPlaces';
@@ -13,6 +14,7 @@ export const newExperienceMedia:Record<string,VillagePhoto[]> = {
  ...cavalaireMoleMedia,
  ...freinetCroixMedia,
  ...ramatuelleGassinMedia,
+ ...cogolinRayolMedia,
  ...saintTropezMedia,
   "domaine-de-la-croix": [
     {

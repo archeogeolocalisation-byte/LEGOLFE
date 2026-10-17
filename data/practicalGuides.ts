@@ -391,7 +391,11 @@ export const practicalGuides: Guide[] = [
       "pampelonne",
       "port-de-saint-tropez",
       "eglise-notre-dame-assomption-saint-tropez",
-      "plage-des-graniers"
+      "plage-des-graniers",
+      "tour-horloge-cogolin",
+      "eglise-saint-sauveur-cogolin",
+      "pergola-patec-rayol",
+      "plage-du-canadel"
 ],
     "related": [
       "marches-golfe-saint-tropez-jours",

@@ -1,3 +1,4 @@
+import {cogolinRayolPlaces} from './cogolinRayolPlaces';
 import {saintTropezPlaces} from './saintTropezPlaces';
 import {ramatuelleGassinPlaces} from './ramatuelleGassinPlaces';
 import {freinetCroixPlaces} from './freinetCroixPlaces';
@@ -57,6 +58,7 @@ export const places: Place[] = [
  ...cavalaireMolePlaces,
  ...freinetCroixPlaces,
  ...ramatuelleGassinPlaces,
+ ...cogolinRayolPlaces,
  ...saintTropezPlaces,
 {
   "id": "domaine-de-la-croix",

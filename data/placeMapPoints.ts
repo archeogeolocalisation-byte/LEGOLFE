@@ -1,3 +1,4 @@
+import {cogolinRayolMapPoints} from './cogolinRayolPlaces';
 import {saintTropezMapPoints} from './saintTropezPlaces';
 import {ramatuelleGassinMapPoints} from './ramatuelleGassinPlaces';
 import {freinetCroixMapPoints} from './freinetCroixPlaces';
@@ -14,6 +15,7 @@ export const placeMapPoints:Record<string,MapPoint[]> = {
  ...cavalaireMoleMapPoints,
  ...freinetCroixMapPoints,
  ...ramatuelleGassinMapPoints,
+ ...cogolinRayolMapPoints,
  ...saintTropezMapPoints,
 
   "chateau-minuty":[{

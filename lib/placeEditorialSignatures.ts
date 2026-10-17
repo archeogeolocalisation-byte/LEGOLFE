@@ -1,3 +1,4 @@
+import {cogolinRayolSignatures} from '../data/cogolinRayolPlaces';
 import {saintTropezSignatures} from '../data/saintTropezPlaces';
 import {ramatuelleGassinSignatures} from '../data/ramatuelleGassinPlaces';
 import {freinetCroixSignatures} from '../data/freinetCroixPlaces';
@@ -15,6 +16,7 @@ export const editorialSignatures:Record<string,Record<Locale,Signature>>={
  ...cavalaireMoleSignatures,
  ...freinetCroixSignatures,
  ...ramatuelleGassinSignatures,
+ ...cogolinRayolSignatures,
  ...saintTropezSignatures,
  'monroes-pub':{fr:{subtitle:"LE PUB AVANT LES PAILLETTES.",quote:"À GRIMAUD, LA SOIRÉE PEUT RESTER SIMPLE.",rhythm:"SPORT. KARAOKÉ. AMIS.",dark:"PAS BESOIN DE SAINT-TROPEZ POUR SORTIR.",close:"LE BON VERRE, AU BON ENDROIT."},en:{subtitle:"A PUB NIGHT WITHOUT THE SHOW.",quote:"NEAR PORT GRIMAUD, KEEP THE NIGHT SIMPLE.",rhythm:"SPORT. KARAOKE. FRIENDS.",dark:"NOT EVERY NIGHT NEEDS A NIGHTCLUB.",close:"EASY NIGHTS, GOOD COMPANY."}},
  'bello-visto':{fr:{subtitle:"À GASSIN, LE PANORAMA PASSE À TABLE.",quote:"UNE TERRASSE, TOUT LE GOLFE EN FACE.",rhythm:"VILLAGE. TABLE. HORIZON.",dark:"LE BON MOMENT SE RÉSERVE.",close:"UNE AUTRE HAUTEUR POUR DÉJEUNER."},en:{subtitle:"IN GASSIN, THE VIEW JOINS YOU FOR LUNCH.",quote:"ONE TERRACE. THE GOLFE BELOW.",rhythm:"VILLAGE. TABLE. HORIZON.",dark:"GOOD VIEWS DESERVE GOOD PLANNING.",close:"TAKE LUNCH TO NEW HEIGHTS."}},
