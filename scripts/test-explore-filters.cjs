@@ -50,3 +50,16 @@ assert.equal(parsed.searchParams.get('q'),'roy & café');
 assert.equal(parsed.searchParams.get('filter'),'party');
 assert.equal(parsed.searchParams.get('town'),'saint-tropez');
 console.log('Explore combined search, accents, multi-town places and query preservation passed.');
+
+for(const [id,query] of [
+ ['jardin-hardy-denonain-gassin',"l'hardy"],
+ ['jardin-hardy-denonain-gassin','L’HARDY'],
+ ['plage-de-bonne-terrasse','bonne-terrasse'],
+ ['sentiers-corniche-des-maures','randonnée'],
+ ['phare-de-camarat','patrimoine'],
+ ['domaine-rayol-kids','en famille'],
+ ['phare-de-camarat','heritage'],
+])assert.ok(search(place(id),query,''),`${id}: name punctuation and bilingual intent ${query}`);
+assert.equal(search(place('caves-du-roy'),'en famille',''),false,'Negative family copy must not create an affirmative family theme');
+assert.equal(search(place('plage-de-bonne-terrasse'),'bonne-terrasse','gassin'),false,'Search still respects town');
+console.log('Explorer search includes reviewed bilingual themes, accents and punctuation variants.');

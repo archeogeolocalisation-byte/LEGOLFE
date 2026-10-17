@@ -1,3 +1,5 @@
+import PlaceCardImage from "./PlaceCardImage";
+import {exploreFilterLabels} from "../lib/exploreFilters";
 import { placeName } from "../lib/placeNames";
 import Link from "next/link";
 import type { Place } from "../data/places";
@@ -10,8 +12,8 @@ export default function PlaceCard({place,locale="en"}:{place:Place;locale?:Local
   const desc=locale==="fr"?(placeDescriptionFr[place.id]||place.description):place.description;
   const media=mediaForPlace(place.id);
   return <Link href={`/${locale}/place/${place.id}`} className="group lg-link-accent block border-t border-black py-5 md:py-7">
-    <div className="lg-image aspect-[4/3] md:aspect-[5/4]">
-      {media ? <img src={media.src} alt={media.alt}/> : <div className="flex h-full items-end bg-black p-5 text-white md:p-7"><span className="max-w-[90%] text-4xl font-black uppercase leading-[.84] tracking-[-.06em] md:text-6xl">{placeName(place,locale)}</span></div>}
+    <div className="lg-image relative aspect-[4/3] md:aspect-[5/4]">
+      <PlaceCardImage src={media?.src} alt={media?.alt} name={placeName(place,locale)} label={exploreFilterLabels[locale][place.category]} locale={locale} contextual={media?.contextual}/>
     </div>
     <div className="mt-4 flex items-start justify-between gap-6">
       <div className="min-w-0">

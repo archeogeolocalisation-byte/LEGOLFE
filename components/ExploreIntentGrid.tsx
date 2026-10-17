@@ -1,3 +1,4 @@
+import PlaceCardImage from "./PlaceCardImage";
 import { placeName } from "../lib/placeNames";
 import Link from "next/link";
 import type { Place } from "../data/places";
@@ -36,7 +37,7 @@ export default function ExploreIntentGrid({ places, locale, filter = "all", quer
     <div className="explore-results-bar">
       <p role="status" className="text-xs font-bold text-black/55">{list.length} {fr ? (list.length === 1 ? "adresse" : "adresses") : (list.length === 1 ? "place" : "places")} · {labels[filter]}{town?` · ${destinations.find(d=>d.slug===town)?.name}`:""}{query?` · « ${query} »`:""}</p>
       {(query||town||filter!=="all")&&<Link href={`/${locale}/explore`} className="text-xs font-bold underline underline-offset-4">{fr?"Tout réinitialiser":"Reset all"}</Link>}
-      {category && <Link href={`/${locale}/explore/${category}`} className="text-xs font-bold underline underline-offset-4">{fr ? "Le guide" : "The guide"} · {fr ? categoryFR[category].name : getCategory(category)?.name} →</Link>}
+      {category && <Link href={`/${locale}/explore/${category}`} className="text-xs font-bold underline underline-offset-4">{fr ? "Le guide" : "The guide"} · {labels[category]} →</Link>}
     </div>
 
     <section aria-label={fr?"Les adresses du Golfe":"Places around the Golfe"} className="explore-gallery">
@@ -47,14 +48,14 @@ export default function ExploreIntentGrid({ places, locale, filter = "all", quer
         return <article key={place.id} className="explore-card">
           <Link href={`/${locale}/place/${place.id}`} className="group explore-card-link">
             <div className="lg-image explore-card-image">
-              {media ? <><img src={media.src} alt={media.alt} loading={index<3?"eager":"lazy"} decoding="async"/>{media.contextual&&<span className="absolute bottom-3 left-3 bg-white/95 px-2 py-1 text-[9px] font-black uppercase tracking-[.08em]">{fr?"Photo du secteur":"Area photograph"}</span>}</> : <div className="explore-card-placeholder"><span aria-hidden="true" className="explore-placeholder-monogram">LG</span><span className="lg-kicker">LE GOLFE / {labels[place.category]}</span></div>}
+              <PlaceCardImage src={media?.src} alt={media?.alt} name={name} label={labels[place.category]} locale={locale} contextual={media?.contextual} eager={index<3}/>
               <span aria-hidden="true" className="explore-card-number">{String(index+1).padStart(2,"0")}</span>
               <span aria-hidden="true" className="explore-card-arrow">↗</span>
             </div>
             <div className="explore-card-copy">
               <p className="explore-card-category">{fr ? categoryFR[place.category].name : c?.name}</p>
               <h2 className="explore-card-title">{name}</h2>
-              <p className="explore-card-location">{place.location}</p><div className="mt-3 flex flex-wrap gap-1.5">{categoriesForPlace(place).slice(1).map(id=><span key={id} className="rounded-full border border-[#0B4F6C]/25 px-2 py-1 text-[9px] font-bold text-[#0B4F6C]">{fr?categoryFR[id].name:getCategory(id)?.name}</span>)}{facetsForPlace(place).slice(0,2).map(id=><span key={id} className="rounded-full bg-[#edf4f6] px-2 py-1 text-[9px] font-bold text-[#0B4F6C]">{placeFacetLabels[locale][id]}</span>)}</div>
+              <p className="explore-card-location">{place.location}</p><div className="mt-3 flex flex-wrap gap-1.5">{categoriesForPlace(place).slice(1).map(id=><span key={id} className="rounded-full border border-[#0B4F6C]/25 px-2 py-1 text-[9px] font-bold text-[#0B4F6C]">{labels[id]}</span>)}{facetsForPlace(place).slice(0,2).map(id=><span key={id} className="rounded-full bg-[#edf4f6] px-2 py-1 text-[9px] font-bold text-[#0B4F6C]">{placeFacetLabels[locale][id]}</span>)}</div>
               <p className="explore-card-description">{desc}</p>
             </div>
           </Link>
