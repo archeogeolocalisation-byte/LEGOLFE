@@ -4,6 +4,12 @@ import type {Locale} from "./i18n";
 // A place keeps one editorial primary category and can have reviewed secondary uses.
 // These links drive Explorer, page chips and LE GOLFE recommendations consistently.
 const secondaryCategories:Record<string,readonly PlaceCategory[]>={
+ "phare-de-camarat":["places"],
+ "eglise-notre-dame-ramatuelle":["places"],
+ "jardin-hardy-denonain-gassin":["places"],
+ "porte-des-sarrazins-gassin":["places"],
+ "eglise-notre-dame-assomption-gassin":["places"],
+
  "fort-freinet":["places"],
  "croix-des-maures":["places"],
  "conservatoire-patrimoine-freinet":["places"],

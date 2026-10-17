@@ -3,10 +3,25 @@ import {destinationsForLocation} from '../data/destinations';
 import {guidesForPlace, guidesForDestination} from '../data/guides';
 import {nearbyExplorer} from './nearbyExplorer';
 
+// Reviewed village stops keep each new guide reachable through ordinary HTML links.
+const villageVisits:Record<string,string[]> = {
+  "ramatuelle-village": [
+    "phare-de-camarat",
+    "plage-de-bonne-terrasse",
+    "eglise-notre-dame-ramatuelle"
+  ],
+  "gassin-village": [
+    "jardin-hardy-denonain-gassin",
+    "porte-des-sarrazins-gassin",
+    "eglise-notre-dame-assomption-gassin"
+  ]
+};
+
 export function relatedPlacesFor(place:Place, limit=3) {
  const towns=new Set(destinationsForLocation(place.location).map(town=>town.slug));
  const sameTown=(candidate:Place)=>destinationsForLocation(candidate.location).some(town=>towns.has(town.slug));
  const candidates=[
+  ...(villageVisits[place.id]??[]).flatMap(id=>places.filter(candidate=>candidate.id===id)),
   ...nearbyExplorer(place.id,limit).map(item=>item.place),
   ...places.filter(candidate=>candidate.id!==place.id&&sameTown(candidate)),
   ...places.filter(candidate=>candidate.id!==place.id&&candidate.category===place.category),

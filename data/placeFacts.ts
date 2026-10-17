@@ -1,3 +1,4 @@
+import {ramatuelleGassinFacts} from './ramatuelleGassinPlaces';
 import {freinetCroixFacts} from './freinetCroixPlaces';
 import {cavalaireMoleFacts} from './cavalaireMolePlaces';
 import {grimaudFacts} from './grimaudPlaces';
@@ -14,6 +15,7 @@ export const placeFacts:Record<string,PlaceFacts> = {
  ...grimaudFacts,
  ...cavalaireMoleFacts,
  ...freinetCroixFacts,
+ ...ramatuelleGassinFacts,
   "grimaud-village": {
     "verified": "2026-10-13",
     "copy": {

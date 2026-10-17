@@ -18,7 +18,7 @@ const Sheet=require('../components/PlaceFactSheet.tsx').default,Page=require('..
 const {renderToStaticMarkup}=require('react-dom/server'),{GET}=require('../app/sitemap.xml/route.ts');
 const licenses=JSON.parse(fs.readFileSync(path.join(__dirname,'../public/media/place-facts/licenses.json')));
 (async()=>{
- assert.equal(Object.keys(placeFacts).length,32);
+ assert.equal(Object.keys(placeFacts).length,38);
  assert.equal(new Set(places.map(p=>p.id)).size,places.length);
  assert.ok(placesInDestination(getDestination('grimaud')).some(p=>p.id==='port-grimaud'));
  const xml=await(await GET()).text();
@@ -73,8 +73,8 @@ const licenses=JSON.parse(fs.readFileSync(path.join(__dirname,'../public/media/p
   }
  }
  // New local collections: test the rendered public flow, not just the data shape.
- const localIds=[...require('../data/planDeLaTourPlaces.ts').planDeLaTourPlaces,...require('../data/sainteMaximePlaces.ts').sainteMaximePlaces,...require('../data/grimaudPlaces.ts').grimaudPlaces,...require('../data/cavalaireMolePlaces.ts').cavalaireMolePlaces,...require('../data/freinetCroixPlaces.ts').freinetCroixPlaces].map(p=>p.id);
- for(const [slug,count] of Object.entries({'le-plan-de-la-tour':4,'sainte-maxime':4,'grimaud':4,'cavalaire-sur-mer':4,'la-mole':2,'la-garde-freinet':3,'la-croix-valmer':3})){
+ const localIds=[...require('../data/planDeLaTourPlaces.ts').planDeLaTourPlaces,...require('../data/sainteMaximePlaces.ts').sainteMaximePlaces,...require('../data/grimaudPlaces.ts').grimaudPlaces,...require('../data/cavalaireMolePlaces.ts').cavalaireMolePlaces,...require('../data/freinetCroixPlaces.ts').freinetCroixPlaces,...require('../data/ramatuelleGassinPlaces.ts').ramatuelleGassinPlaces].map(p=>p.id);
+ for(const [slug,count] of Object.entries({'le-plan-de-la-tour':4,'sainte-maxime':4,'grimaud':4,'cavalaire-sur-mer':4,'la-mole':2,'la-garde-freinet':3,'la-croix-valmer':3,'ramatuelle':3,'gassin':3})){
   const local=placesInDestination(getDestination(slug));
   assert.equal(local.filter(p=>localIds.includes(p.id)).length,count,`${slug}: local collection exposed by destination`);
  }
@@ -100,8 +100,8 @@ const licenses=JSON.parse(fs.readFileSync(path.join(__dirname,'../public/media/p
  assert.ok(placeFacts['barrage-de-la-verne'].copy.fr.questions.some(([,body])=>body.includes('baignade')&&body.includes('interdites')));
  assert.ok(placeFacts['eglise-sainte-magdeleine-la-mole'].copy.fr.questions.some(([,body])=>body.includes('autre site')));
  const Destination=require('../app/[locale]/destinations/[town]/page.tsx');
- const newest=require('../data/freinetCroixPlaces.ts').freinetCroixPlaces;
- for(const town of ['la-garde-freinet','la-croix-valmer']){
+ const newest=[...require('../data/freinetCroixPlaces.ts').freinetCroixPlaces,...require('../data/ramatuelleGassinPlaces.ts').ramatuelleGassinPlaces];
+ for(const town of ['la-garde-freinet','la-croix-valmer','ramatuelle','gassin']){
   for(const locale of ['fr','en']){
    const params=Promise.resolve({locale,town}),html=renderToStaticMarkup(await Destination.default({params}));
    for(const p of newest.filter(p=>p.location===getDestination(town).name))assert.ok(html.includes(`href="/${locale}/place/${p.id}"`));
@@ -130,17 +130,29 @@ const licenses=JSON.parse(fs.readFileSync(path.join(__dirname,'../public/media/p
    assert.equal((html.match(/<h1[ >]/g)||[]).length,1);
    assert.ok(html.includes(media[0].source.replaceAll('&','&amp;'))&&html.includes(media[0].licenseUrl));
    assert.equal(html.includes(locale==='fr'?'Photo du secteur':'Area photograph'),!!media[0].contextual,`${id}: contextual image disclosure`);
-   assert.match(html,/datetime="2026-10-16"/i);
+   assert.ok(html.includes(`dateTime="${fact.verified}"`)||html.includes(`datetime="${fact.verified}"`));
    for(const target of fact.nearby)assert.ok(html.includes(`href="/${locale}/place/${target}"`));
    for(const source of fact.sources)assert.ok(html.includes(source.url.replaceAll('&','&amp;')));
    const frame=html.match(/<iframe[^>]+src="([^"]+)"/);assert.ok(frame,`${id}: visit map rendered`);
    assert.equal(new URL(frame[1].replaceAll('&amp;','&')).searchParams.get('marker'),`${point.latitude},${point.longitude}`);
    const metadata=await Page.generateMetadata({params:Promise.resolve({locale,id})});
    assert.equal(metadata.description,copy.description);
-   assert.ok(xml.includes(`<loc>https://www.legolfe.com/${locale}/place/${id}</loc><lastmod>2026-10-16</lastmod>`));
+   assert.ok(xml.includes(`<loc>https://www.legolfe.com/${locale}/place/${id}</loc><lastmod>${fact.verified}</lastmod>`));
   }
  }
  assert.equal(places.some(p=>/comptoir-de-la-poste|porte[s]?-verte/.test(p.id)),false,'User exclusions respected');
  process.env.VERCEL_ENV='preview';assert.equal((await Page.generateMetadata({params:Promise.resolve({locale:'fr',id:'port-grimaud'})})).robots.index,false);
- console.log('Place facts: existing licensed media/hashes plus 24 local places in FR/EN; contextual photos, sources, map markers, discovery links, metadata and sitemap passed.');
+ const {ramatuelleGassinPlaces,ramatuelleGassinMedia}=require('../data/ramatuelleGassinPlaces.ts');
+ const {relatedPlacesFor}=require('../lib/placeDiscovery.ts');
+ for(const [village,town] of [['ramatuelle-village','Ramatuelle'],['gassin-village','Gassin']]){
+  assert.deepEqual(relatedPlacesFor(places.find(p=>p.id===village)).map(p=>p.id),ramatuelleGassinPlaces.filter(p=>p.location===town).map(p=>p.id),'Village related cards link to all three new visits');
+ }
+ const lighthouse=placeFacts['phare-de-camarat'].copy.fr;
+ assert.ok(lighthouse.sections.some(([,body])=>body.includes('exclusivement')&&body.includes('navette')&&body.includes('stade')),'Lighthouse visit is reached by its official shuttle');
+ assert.ok(placeMapPoints['phare-de-camarat'][0].directionsQuery.includes('stade'),'Directions target the meeting point rather than the tower');
+ assert.ok(places.find(p=>p.id==='phare-de-camarat').bookingUrl.endsWith('/fr/phare/'));
+ assert.ok(lighthouse.facts.some(([,value])=>value.includes('moins de 6 ans')));
+ assert.ok(placeFacts['jardin-hardy-denonain-gassin'].copy.fr.sections.some(([,body])=>body.includes('saisonnière')&&body.includes('jeudi')));
+ assert.ok(ramatuelleGassinMedia['plage-de-bonne-terrasse'][0].caption.fr.includes('archive')&&ramatuelleGassinMedia['plage-de-bonne-terrasse'][0].caption.fr.includes('1995'),'Archive photograph is dated for visitors');
+ console.log('Place facts: existing licensed media/hashes plus 30 local places in FR/EN; contextual photos, sources, map markers, discovery links, metadata and sitemap passed.');
 })().catch(error=>{console.error(error);process.exitCode=1;});

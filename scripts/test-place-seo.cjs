@@ -30,7 +30,12 @@ async function htmlFor(id,locale){const stream=await renderToReadableStream(awai
   assert.ok(related.length>0&&related.length<=3,place.id);
   assert.equal(new Set(related.map(p=>p.id)).size,related.length);
   assert.ok(related.every(p=>p.id!==place.id&&places.includes(p)));
-  assert.deepEqual(related.slice(0,nearby.length).map(p=>p.id),nearby.map(p=>p.place.id),'Sourced neighbors have priority');
+  const reviewedVillageStops={
+   'ramatuelle-village':['phare-de-camarat','plage-de-bonne-terrasse','eglise-notre-dame-ramatuelle'],
+   'gassin-village':['jardin-hardy-denonain-gassin','porte-des-sarrazins-gassin','eglise-notre-dame-assomption-gassin'],
+  }[place.id];
+  if(reviewedVillageStops)assert.deepEqual(related.map(p=>p.id),reviewedVillageStops,'Reviewed village visits keep direct public links');
+  else assert.deepEqual(related.slice(0,nearby.length).map(p=>p.id),nearby.map(p=>p.place.id),'Sourced neighbors have priority');
   const guides=guidesForPlaceVisit(place);assert.ok(guides.length<=3);assert.equal(new Set(guides.map(g=>g.slug)).size,guides.length);
   for(const locale of ['fr','en']){
    const metadata=await Page.generateMetadata({params:Promise.resolve({locale,id:place.id})});

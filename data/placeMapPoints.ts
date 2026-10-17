@@ -1,3 +1,4 @@
+import {ramatuelleGassinMapPoints} from './ramatuelleGassinPlaces';
 import {freinetCroixMapPoints} from './freinetCroixPlaces';
 import {cavalaireMoleMapPoints} from './cavalaireMolePlaces';
 import {grimaudMapPoints} from './grimaudPlaces';
@@ -11,6 +12,7 @@ export const placeMapPoints:Record<string,MapPoint[]> = {
  ...grimaudMapPoints,
  ...cavalaireMoleMapPoints,
  ...freinetCroixMapPoints,
+ ...ramatuelleGassinMapPoints,
 
   "chateau-minuty":[{
     id:"chateau-minuty-shop",label:{fr:"Château Minuty · accueil du domaine",en:"Château Minuty · winery visitor point"},
