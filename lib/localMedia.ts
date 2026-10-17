@@ -19,6 +19,8 @@ export function mediaForLocal(id:string,location?:string):LocalMedia{
 }
 
 const localIllustrations:Record<string,{slug:string;name:string}>={
+ "Le Plan-de-la-Tour":{slug:"le-plan-de-la-tour",name:"Le Plan-de-la-Tour"},
+ "Gassin":{slug:"gassin",name:"Gassin"},
  "Golfe de Saint-Tropez":{slug:"saint-tropez",name:"Golfe de Saint-Tropez"},
  "Saint-Tropez":{slug:"saint-tropez",name:"Saint-Tropez"},
  "Sainte-Maxime":{slug:"sainte-maxime",name:"Sainte-Maxime"},

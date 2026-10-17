@@ -1,5 +1,6 @@
 import type {LocalFeedItem} from "../lib/localRss";
-/** Public RSS headlines checked 14 October 2026. Restricted sources are excluded. */
+/** Checked date is displayed when live sources are unavailable. Restricted feeds are excluded. */
+export const localFeedSnapshotChecked="2026-10-17";
 export const localFeedSnapshot:LocalFeedItem[] = [
   {
     "id": "rss-golfe-interco-2a78f6160db546cc",
@@ -27,6 +28,15 @@ export const localFeedSnapshot:LocalFeedItem[] = [
     "sourceKey": "golfe-interco",
     "sourceLabel": "Communauté de communes",
     "location": "Golfe de Saint-Tropez"
+  },
+  {
+    "id": "rss-saint-tropez-news-472a5a710bd63b56",
+    "title": "Paradis Porsche : près de 500 véhicules réunis à Saint-Tropez pour la 33e édition",
+    "date": "2026-10-15",
+    "source": "https://www.saint-tropez.fr/paradis-porsche-pres-de-500-vehicules-reunis-a-saint-tropez-pour-la-33e-edition/",
+    "sourceKey": "saint-tropez-news",
+    "sourceLabel": "Ville de Saint-Tropez",
+    "location": "Saint-Tropez"
   },
   {
     "id": "rss-saint-tropez-news-533dbc576083bdb0",
@@ -105,15 +115,6 @@ export const localFeedSnapshot:LocalFeedItem[] = [
     "title": "Une matinée au plus près de nos sapeurs pompiers",
     "date": "2026-09-24",
     "source": "https://www.saint-tropez.fr/une-matinee-au-plus-pres-de-nos-sapeurs-pompiers/",
-    "sourceKey": "saint-tropez-news",
-    "sourceLabel": "Ville de Saint-Tropez",
-    "location": "Saint-Tropez"
-  },
-  {
-    "id": "rss-saint-tropez-news-a409df292421d9fa",
-    "title": "Une victoire française pour clôturer la Longines League of Nations au Polo Club de Saint-Tropez",
-    "date": "2026-09-24",
-    "source": "https://www.saint-tropez.fr/une-victoire-francaise-pour-cloturer-la-longines-league-of-nations-au-polo-club-de-saint-tropez/",
     "sourceKey": "saint-tropez-news",
     "sourceLabel": "Ville de Saint-Tropez",
     "location": "Saint-Tropez"
