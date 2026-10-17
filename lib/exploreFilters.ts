@@ -1,5 +1,5 @@
 import { placeName } from "./placeNames";
-import { placeFacetMatch } from "./placeFacets";
+import { categoriesForPlace, facetsForPlace, placeFacetLabels, placeFacetMatch } from "./placeFacets";
 import { destinations, destinationsForLocation } from "../data/destinations";
 import { placeDescriptionFr } from "../data/places";
 import type { Place, PlaceCategory } from "../data/places";
@@ -36,11 +36,14 @@ export function matchesExploreFilter(place: Place, filter: ExploreFilter): boole
 export function resolveExploreSearch(query: unknown, town: unknown) {
   return { query: typeof query === "string" ? query.trim().slice(0,100) : "", town: typeof town === "string" && destinations.some(d=>d.slug===town) ? town : "" };
 }
-const normalizeSearch = (value: string) => value.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+const normalizeSearch = (value: string) => value.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^\p{L}\p{N}]+/gu," ").trim();
 export function matchesExploreSearch(place: Place, query: string, town: string) {
   if (town && !destinationsForLocation(place.location).some(d=>d.slug===town)) return false;
   const terms = normalizeSearch(query).split(/\s+/).filter(Boolean);
-  const text = normalizeSearch([place.name,placeName(place,"fr"),place.location,place.description,placeDescriptionFr[place.id]||""].join(" "));
+  if(terms.length===0)return true;
+  const categories=categoriesForPlace(place),facets=facetsForPlace(place);
+  const themes=[...categories.flatMap(id=>[exploreFilterLabels.fr[id],exploreFilterLabels.en[id]]),...facets.flatMap(id=>[placeFacetLabels.fr[id],placeFacetLabels.en[id]])];
+  const text = normalizeSearch([place.name,placeName(place,"fr"),place.location,place.description,placeDescriptionFr[place.id]||"",...place.tags,...themes].join(" "));
   return terms.every(term=>text.includes(term));
 }
 
