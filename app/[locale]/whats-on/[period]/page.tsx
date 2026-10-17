@@ -10,12 +10,12 @@ import { isLocale } from "../../../../lib/i18n";
 import { pageMetadata } from "../../../../lib/seo";
 import { parisIsoDay } from "../../../../lib/localCalendar";
 import { getPublicEvents } from "../../../../lib/publicEvents";
-import { dateWindow, monthWindow, eventsInWindow, catalogMonths, formatCalendarMonth, formatCalendarDay } from "../../../../lib/agendaCalendar";
+import { dateWindow, upcomingWindow, monthWindow, eventsInWindow, catalogMonths, formatCalendarMonth, formatCalendarDay } from "../../../../lib/agendaCalendar";
 type Props={params:Promise<{locale:string;period:string}>};
 export const dynamic="force-dynamic";
 async function resolve(params:Props["params"]){
  const {locale,period}=await params;if(!isLocale(locale))notFound();const fr=locale==="fr",today=parisIsoDay();
- const window=period==="today"?dateWindow("today",today):period==="this-weekend"?dateWindow("weekend",today):monthWindow(period);if(!window)notFound();
+ const window=period==="today"?dateWindow("today",today):period==="this-weekend"?upcomingWindow(dateWindow("weekend",today),today):monthWindow(period);if(!window)notFound();
  const title=period==="today"?(fr?"Que faire aujourd’hui dans le Golfe de Saint-Tropez ?":"What to do today around the Golfe de Saint-Tropez?"):period==="this-weekend"?(fr?"Que faire ce week-end dans le Golfe de Saint-Tropez ?":"What to do this weekend around the Golfe de Saint-Tropez?"):(fr?`Agenda du Golfe de Saint-Tropez · ${formatCalendarMonth(period,locale)}`:`Golfe de Saint-Tropez events · ${formatCalendarMonth(period,locale)}`);
  const catalog=await getPublicEvents(),list=eventsInWindow(catalog,window);return {locale,period,fr,today,window,title,catalog,list,path:`/${locale}/whats-on/${period}`};
 }

@@ -24,9 +24,11 @@ export function dateWindow(range:AgendaRange,today:string):DateWindow {
  }
  return {from:today,to:today};
 }
+// Quick discovery excludes finished days; explicit month archives retain their dates.
+export function upcomingWindow(window:DateWindow,today:string):DateWindow {return {...window,from:window.from<today?today:window.from};}
 export function eventSessions(event:GolfeEvent):EventSession[]{return [...(event.sessions?.length ? event.sessions : [{start:event.start,end:event.end,time:event.time}])].sort((a,b)=>a.start.localeCompare(b.start)||(a.time||"00:00").localeCompare(b.time||"00:00"));}
 export function sessionAnchor(session:EventSession){return `session-${session.start}${session.time?`-${session.time.replace(":", "")}`:""}`;}
-export function sessionsInWindow(event:GolfeEvent,window:DateWindow):EventSession[]{return eventSessions(event).filter(s=>isIsoDay(s.start) && (!s.end||isIsoDay(s.end)) && (s.end||s.start)>=s.start && s.start<=window.to && (s.end||s.start)>=window.from);}
+export function sessionsInWindow(event:GolfeEvent,window:DateWindow):EventSession[]{if(!isIsoDay(window.from)||!isIsoDay(window.to)||window.from>window.to)return [];return eventSessions(event).filter(s=>isIsoDay(s.start) && (!s.end||isIsoDay(s.end)) && (s.end||s.start)>=s.start && s.start<=window.to && (s.end||s.start)>=window.from);}
 export function eventOverlaps(event:GolfeEvent,from:string,to:string){return sessionsInWindow(event,{from,to}).length>0;}
 export function firstSessionInWindow(event:GolfeEvent,window:DateWindow){return sessionsInWindow(event,window).sort((a,b)=>a.start.localeCompare(b.start))[0];}
 export function eventsInWindow(events:GolfeEvent[],window:DateWindow):GolfeEvent[]{return events.filter(e=>sessionsInWindow(e,window).length).sort((a,b)=>firstSessionInWindow(a,window)!.start.localeCompare(firstSessionInWindow(b,window)!.start) || (firstSessionInWindow(a,window)!.time||"00:00").localeCompare(firstSessionInWindow(b,window)!.time||"00:00") || a.id.localeCompare(b.id));}
@@ -43,7 +45,7 @@ export function catalogMonths(events:GolfeEvent[]):string[]{
 }
 export function agendaPaths(events:GolfeEvent[],today:string){return [
  ...(eventsInWindow(events,dateWindow("today",today)).length?["/whats-on/today"]:[]),
- ...(eventsInWindow(events,dateWindow("weekend",today)).length?["/whats-on/this-weekend"]:[]),
+ ...(eventsInWindow(events,upcomingWindow(dateWindow("weekend",today),today)).length?["/whats-on/this-weekend"]:[]),
  ...catalogMonths(events).map(month=>`/whats-on/${month}`),
 ];}
 export function formatCalendarDay(day:string,locale:"fr"|"en",short=false){return new Intl.DateTimeFormat(locale==="fr"?"fr-FR":"en-GB",{day:"numeric",month:short?"short":"long",year:"numeric",timeZone:"UTC"}).format(new Date(day+"T12:00:00Z"));}

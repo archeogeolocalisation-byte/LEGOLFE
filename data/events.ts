@@ -1,6 +1,6 @@
 export type EventCategory = "music"|"culture"|"sport"|"local"|"family"|"sailing";
 export type EventSession = {start:string;end?:string;time?:string;endTime?:string};
-export type GolfeEvent = {officialImage?:string;sessions?:EventSession[];sourceCheckedAt?:string;streetAddress?:string;postalCode?:string;practical?:string;practicalFr?:string;id:string;title:string;titleFr?:string;start:string;end?:string;time?:string;location:string;venue?:string;category:EventCategory;featured?:boolean;summary:string;summaryFr:string;why:string;whyFr:string;source:string;sourceLabel:string;};
+export type GolfeEvent = {cancelled?:boolean;officialImage?:string;sessions?:EventSession[];sourceCheckedAt?:string;streetAddress?:string;postalCode?:string;practical?:string;practicalFr?:string;id:string;title:string;titleFr?:string;start:string;end?:string;time?:string;location:string;venue?:string;category:EventCategory;featured?:boolean;summary:string;summaryFr:string;why:string;whyFr:string;source:string;sourceLabel:string;};
 export const events:GolfeEvent[]=[
 {id:"stage-stop-motion-plan-tour-2026",title:"Autumn holiday stop-motion video workshop",titleFr:"Stage vidéo stop motion des vacances de la Toussaint",start:"2026-10-19",end:"2026-10-23",location:"Le Plan-de-la-Tour",category:"family",summary:"A hands-on stop-motion video workshop listed in Le Plan-de-la-Tour's municipal autumn holiday programme.",summaryFr:"Un atelier vidéo stop motion proposé au Plan-de-la-Tour pendant les vacances de la Toussaint.",why:"A creative local activity for the autumn holidays; contact the organiser to confirm age suitability and registration.",whyFr:"Une activité créative pendant les vacances ; vérifiez auprès de l'organisateur les âges acceptés et l'inscription.",source:"https://tourisme.leplandelatour.fr/fr/animation/1?curPage=1",sourceLabel:"Le Plan-de-la-Tour — agenda municipal",sourceCheckedAt:"2026-10-14"},
 
@@ -41,11 +41,12 @@ export const events:GolfeEvent[]=[
 
 export type AgendaSource = { name:string; area:string; type:"tourism"|"municipal"|"venue"; url:string };
 export const agendaSources:AgendaSource[] = [
+  {name:"Ville de La Môle · agenda",area:"La Môle",type:"municipal",url:"https://www.lamole.fr/systeme/agenda/"},
   {name:"Le Plan-de-la-Tour · animations municipales",area:"Le Plan-de-la-Tour",type:"municipal",url:"https://tourisme.leplandelatour.fr/fr/animation/1?curPage=1"},
   {name:"Mairie du Rayol-Canadel · manifestations",area:"Rayol-Canadel-sur-Mer",type:"municipal",url:"https://www.rayol-canadel.fr/fr/les-manifestations.htm"},
   {name:"Cinéma Le Pagnol · Carré Léon Gaumont",area:"Sainte-Maxime",type:"venue",url:"https://cinemapagnol-stemaxime.com/"},
   {name:"Domaine du Rayol",area:"Rayol-Canadel-sur-Mer",type:"venue",url:"https://www.domainedurayol.org/agenda-domaine-rayol/"},
-  {name:"La Garde-Freinet · programme officiel",area:"La Garde-Freinet",type:"tourism",url:"https://www.golfe-saint-tropez-information.com/fr/villages-stations/la-garde-freinet"},
+  {name:"La Garde-Freinet · programme officiel",area:"La Garde-Freinet",type:"tourism",url:"https://www.golfe-saint-tropez-information.com/fr/animation/2?filter1856=31"},
   {name:"Ville de Sainte-Maxime",area:"Sainte-Maxime",type:"municipal",url:"https://www.sainte-maxime.fr/agenda/"},
   {name:"Saint-Tropez Tourisme",area:"Saint-Tropez",type:"tourism",url:"https://www.sainttropeztourisme.com/fr/evenements-saint-tropez/agenda-evenements-saint-tropez/"},
   {name:"Ramatuelle Tourisme",area:"Ramatuelle",type:"tourism",url:"https://www.ramatuelle-tourisme.com/fr/animation/"},
@@ -55,6 +56,6 @@ export const agendaSources:AgendaSource[] = [
   {name:"Gassin Tourisme",area:"Gassin",type:"tourism",url:"https://gassin.eu/fr/animations/"},
   {name:"Ville de Cogolin",area:"Cogolin",type:"municipal",url:"https://www.cogolin.fr/agenda/"},
   {name:"La Croix-Valmer Tourisme",area:"La Croix-Valmer",type:"tourism",url:"https://www.lacroixvalmertourisme.com/fr/sortir-se-divertir/evenements"},
-  {name:"Ville de Cavalaire",area:"Cavalaire-sur-Mer",type:"municipal",url:"https://www.cavalaire.fr/"},
+  {name:"Cavalaire Tourisme",area:"Cavalaire-sur-Mer",type:"tourism",url:"https://www.cavalairesurmer.fr/les-ingredients-du-bonheur/le-sens-de-la-fete/tout-lagenda/"},
   {name:"Golfe de Saint-Tropez Tourisme",area:"Le Plan-de-la-Tour & territoire",type:"tourism",url:"https://www.golfe-sainttropez-tourisme.fr/"},
 ];

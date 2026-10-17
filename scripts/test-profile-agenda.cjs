@@ -97,6 +97,14 @@ const choose = tree => find(tree, n => n.type === 'input').props.onChange({ targ
    find(tree,n=>n.props?.id==='agenda-location').props.onChange({target:{value:'Saint-Tropez'}});tree=render(Agenda,props);assert.deepEqual(featured(tree),[]);assert.deepEqual(remaining(tree),[]);
    find(tree,n=>n.type==='button'&&n.props.children===(locale==='fr'?'Tout':'All')).props.onClick();tree=render(Agenda,props);assert.equal(featured(tree).length,3);assert.equal(remaining(tree).length,3);
   }
+  reset();
+  const sundayProps={locale:'fr',initialDay:'2026-10-18',events:[
+   {...base,id:'saturday-finished',start:'2026-10-17',end:undefined,sessions:undefined,location:'Gassin'},
+   {...base,id:'sunday-current',start:'2026-10-18',end:undefined,sessions:undefined,location:'Gassin'},
+  ]};
+  tree=render(Agenda,sundayProps);find(tree,n=>n.type==='button'&&buttonText(n)==='Ce week-end').props.onClick();tree=render(Agenda,sundayProps);assert.deepEqual(ids(tree),['sunday-current']);
+  assert.ok(nodes(tree).some(n=>n.props?.href==='/fr/destinations/gassin'),'Event cards offer a direct link to local places');
+  find(tree,n=>n.type==='button'&&buttonText(n)==='Ce mois').props.onClick();tree=render(Agenda,sundayProps);assert.deepEqual(ids(tree),['sunday-current'],'Current-month discovery excludes finished days');
   const header = fs.readFileSync('components/SiteHeader.tsx', 'utf8');
   assert.equal(header.includes('`${base}/host`'), false); assert.ok(header.includes('`${base}/account`'));
   console.log('Profile: persistence, namespacing, uploads, replacement, removal, failures and session changes passed. Agenda: inline periods/months and recurring sessions passed.');
