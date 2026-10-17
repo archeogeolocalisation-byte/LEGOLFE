@@ -25,8 +25,8 @@ export const destinations:Destination[] = [
       "en": "The port, Place des Lices, the Citadelle and local restaurants offer very different ways to spend a day. Start with your pace: a walk and a museum, lunch, or an evening that continues into the night. The selections below help bring that plan together."
     },
     "plan": {
-      "fr": "Associez la Citadelle ou la Maison des Papillons à une pause au village. Pour sortir, comparez le dîner-show de L’Opera et les clubs avant de choisir le type de soirée.",
-      "en": "Pair the Citadelle or Maison des Papillons with a break in the village. For a night out, compare the dinner-show at L’Opera with the clubs before choosing your evening."
+      "fr": "Commencez sur le port, puis reliez l’Annonciade à Notre-Dame-de-l’Assomption. Choisissez ensuite les Graniers pour le rivage ou Sainte-Anne pour le panorama, en préparant la montée et les ouvertures intérieures. En été, anticipez votre arrivée.",
+      "en": "Start at the harbour, then connect the Annonciade with Notre-Dame-de-l’Assomption. Choose Graniers for the shore or Sainte-Anne for the views, allowing for the climb and scheduled interior openings. Plan your summer arrival."
     }
   },
   {
@@ -129,8 +129,8 @@ export const destinations:Destination[] = [
       "en": "Uphill lanes, local crafts and another side of the Golfe. Choose Cogolin for an old-town stroll, an encounter with craftsmanship or a stop between neighbouring towns."
     },
     "plan": {
-      "fr": "Le vieux Cogolin se découvre à pied autour de Saint-Sauveur et de la Tour de l’Horloge. L’artisanat donne une autre direction à la visite : tapis, pipes et anches racontent une histoire de gestes et de matières.",
-      "en": "Explore old Cogolin on foot around Saint-Sauveur and Tour de l’Horloge. Crafts offer another route through town: carpets, pipes and reeds tell a story of skilled hands and materials."
+      "fr": "Reliez Saint-Sauveur–Saint-Étienne à la Tour de l’Horloge et aux chapelles Saint-Roch à pied. Prévoyez la montée dans le vieux village, puis vérifiez les ouvertures et les expositions avant une visite intérieure.",
+      "en": "Connect Saint-Sauveur–Saint-Étienne, the clock tower and Saint-Roch chapels on foot. Allow for the uphill old-village walk and check openings and exhibitions before an indoor visit."
     }
   },
   {
@@ -155,8 +155,8 @@ export const destinations:Destination[] = [
       "en": "Gardens, beaches and a village shaped by the hillside. Explore Rayol-Canadel by combining Domaine du Rayol, time by the water and views along the corniche."
     },
     "plan": {
-      "fr": "Le Jardin des Méditerranées donne un vrai point de départ à la visite. Les plages du Rayol et du Canadel, la pergola du Patec et les escaliers complètent cette découverte entre végétation et mer.",
-      "en": "The Jardin des Méditerranées gives your visit a starting point. Rayol and Canadel beaches, the Patec pergola and the stairways extend the discovery between greenery and sea."
+      "fr": "Choisissez le Patec pour le panorama et une portion des escaliers, ou la plage du Canadel pour le rivage et la mémoire du Débarquement. Ces deux lieux ont des accès distincts ; prévoyez la remontée et préparez séparément une visite du Domaine du Rayol.",
+      "en": "Choose the Patec for views and part of the stairway, or Canadel beach for the shore and landing history. They have separate approaches; allow for the climb back and plan any Domaine du Rayol garden visit separately."
     }
   }
 ];

@@ -339,6 +339,7 @@ export const villageFeatures:Record<string,VillageFeature> = {
   "cogolin-village": {
     "name": "Cogolin",
     "slug": "cogolin",
+    "nearby": ["tour-horloge-cogolin", "eglise-saint-sauveur-cogolin", "chapelles-saint-roch-cogolin"],
     "source": "https://www.golfe-saint-tropez-information.com/fr/villages-stations/cogolin",
     "fr": {
       "sub": "LE GOLFE A AUSSI UNE VIE DE VILLAGE.",
@@ -562,6 +563,7 @@ export const villageFeatures:Record<string,VillageFeature> = {
   "rayol-canadel-village": {
     "name": "Rayol-Canadel-sur-Mer",
     "slug": "rayol-canadel",
+    "nearby": ["pergola-patec-rayol", "plage-du-canadel"],
     "source": "https://www.golfe-saint-tropez-information.com/fr/villages-stations/rayol-canadel-sur-mer",
     "fr": {
       "sub": "LES MAURES RENCONTRENT LA MER.",
