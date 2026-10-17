@@ -25,8 +25,8 @@ export const destinations:Destination[] = [
       "en": "The port, Place des Lices, the Citadelle and local restaurants offer very different ways to spend a day. Start with your pace: a walk and a museum, lunch, or an evening that continues into the night. The selections below help bring that plan together."
     },
     "plan": {
-      "fr": "Associez la Citadelle ou la Maison des Papillons à une pause au village. Pour sortir, comparez le dîner-show de L’Opera et les clubs avant de choisir le type de soirée.",
-      "en": "Pair the Citadelle or Maison des Papillons with a break in the village. For a night out, compare the dinner-show at L’Opera with the clubs before choosing your evening."
+      "fr": "Commencez sur le port, puis reliez l’Annonciade à Notre-Dame-de-l’Assomption. Choisissez ensuite les Graniers pour le rivage ou Sainte-Anne pour le panorama, en préparant la montée et les ouvertures intérieures. En été, anticipez votre arrivée.",
+      "en": "Start at the harbour, then connect the Annonciade with Notre-Dame-de-l’Assomption. Choose Graniers for the shore or Sainte-Anne for the views, allowing for the climb and scheduled interior openings. Plan your summer arrival."
     }
   },
   {
