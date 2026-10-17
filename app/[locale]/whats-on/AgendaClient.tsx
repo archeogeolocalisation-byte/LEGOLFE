@@ -1,9 +1,11 @@
 "use client";
+/* eslint-disable @next/next/no-img-element -- Existing event media URLs retain their fallback behaviour. */
 import styles from "./AgendaClient.module.css";
 import { parisIsoDay } from "../../../lib/localCalendar";
-import { dateWindow, monthWindow, eventsInWindow, eventOverlaps, catalogMonths, formatCalendarMonth, sessionsInWindow, formatCalendarDay } from "../../../lib/agendaCalendar";
+import { dateWindow, upcomingWindow, monthWindow, eventsInWindow, eventOverlaps, catalogMonths, formatCalendarMonth, sessionsInWindow, formatCalendarDay } from "../../../lib/agendaCalendar";
 
 import Link from "next/link";
+import {agendaTownHref} from "../../../lib/agendaTownLinks";
 import { useEffect, useMemo, useState } from "react";
 import { agendaSources, type GolfeEvent, type EventCategory } from "../../../data/events";
 import { mediaForEvent, eventMediaLabel, agendaTitleCardIds } from "../../../lib/eventMedia";
@@ -47,7 +49,7 @@ function EventArtwork({event, locale, titleCard}:{event:GolfeEvent;locale:"fr"|"
     <span className={styles.titleCardTitle}>{title}</span>
     <span className={styles.titleCardSignature}>legolfe.com</span>
   </span>;
-  return <img style={image.kind==="official"?{objectFit:"contain",background:"#121212"}:undefined} src={image.src} alt={image.alt} loading="lazy" onError={()=>setFailedSource(image.src)}/>;
+  return <img ref={node=>{if(node?.complete&&node.naturalWidth===0)setFailedSource(image.src);}} width={1440} height={960} decoding="async" style={image.kind==="official"?{objectFit:"contain",background:"#121212"}:undefined} src={image.src} alt={image.alt} loading="lazy" onError={()=>setFailedSource(image.src)}/>;
 }
 
 export default function AgendaClient({ locale, events, initialDay }: Props) {
@@ -56,7 +58,7 @@ export default function AgendaClient({ locale, events, initialDay }: Props) {
   useEffect(()=>{const timer=setInterval(()=>setTodayIso(parisIsoDay()),60_000);return ()=>clearInterval(timer);},[]);
   const [range, setRange] = useState<Range>("7days");
   const [month, setMonth] = useState("");
-  const selectedWindow = monthWindow(month) ?? dateWindow(range, todayIso);
+  const selectedWindow = upcomingWindow(monthWindow(month) ?? dateWindow(range, todayIso),todayIso);
   const months = useMemo(() => catalogMonths(events).filter(value=>value>=todayIso.slice(0,7)), [events,todayIso]);
   const [category, setCategory] = useState<"all" | EventCategory>("all");
   const [location, setLocation] = useState("all");
@@ -70,7 +72,7 @@ export default function AgendaClient({ locale, events, initialDay }: Props) {
   const displayEvent=(event:GolfeEvent)=>{const session=sessionsInWindow(event,selectedWindow)[0];return session?{...event,start:session.start,end:session.end,time:session.time}:event;};
   const periodText = month ? formatCalendarMonth(month, locale) : `${formatCalendarDay(selectedWindow.from,locale,true)}${selectedWindow.to !== selectedWindow.from ? ` — ${formatCalendarDay(selectedWindow.to,locale,true)}` : ""}`;
 
-  const countWindow=(key:Range)=>eventsInWindow(events,dateWindow(key,todayIso)).filter(e=>(category==="all"||e.category===category)&&(location==="all"||e.location===location)).length;
+  const countWindow=(key:Range)=>eventsInWindow(events,upcomingWindow(dateWindow(key,todayIso),todayIso)).filter(e=>(category==="all"||e.category===category)&&(location==="all"||e.location===location)).length;
   const rangeButtons: { key: Range; fr: string; en: string }[] = [
     { key: "today", fr: "Aujourd’hui", en: "Today" },
     { key: "tomorrow", fr: "Demain", en: "Tomorrow" },
@@ -139,7 +141,7 @@ export default function AgendaClient({ locale, events, initialDay }: Props) {
        <div className="mx-auto max-w-7xl px-6 md:px-10"><p className={styles.featuredHeading}>{fr?"À L’AFFICHE":"FEATURED EVENTS"}</p><div className={styles.featuredGrid}>
         {featured.map((e,i)=>{const image=mediaForEvent(e);return <article key={e.id} data-agenda-featured={e.id} className={i===0?styles.featureLarge:styles.featureSmall}>
          <Link href={`/${locale}/event/${e.id}`} className={styles.featureImage} aria-label={fr?e.titleFr||e.title:e.title}><EventArtwork event={e} locale={locale} titleCard={titleCardIds.has(e.id)}/></Link>
-         <div className={styles.featureCopy}><p className={styles.featureMeta}>{e.location} · {categoryLabels[e.category][locale]}</p><h2><Link href={`/${locale}/event/${e.id}`}>{fr?e.titleFr||e.title:e.title}</Link></h2><p className={styles.featureDates}>{sessionsInWindow(e,selectedWindow).map(session=>`${eventDateLabel({...e,start:session.start,end:session.end},locale)}${session.time?` · ${session.time}`:''}`).join(' · ')}</p><p className={styles.featureSummary}>{fr?e.summaryFr:e.summary}</p>{i===0&&<p className={styles.featureWhy}>{fr?e.whyFr:e.why}</p>}<div className={styles.featureLinks}><Link href={`/${locale}/event/${e.id}`}>{fr?'Voir la fiche':'Event details'} →</Link><a href={e.source} target="_blank" rel="noopener noreferrer">{fr?'Infos officielles':'Official info'} ↗</a><Link href={`/${locale}/ask?prompt=${encodeURIComponent(fr?`Construis-moi un moment autour de ${e.titleFr||e.title} à ${e.location}.`:`Build me a moment around ${e.title} in ${e.location}.`)}`}>{fr?'Construire autour':'Build around it'} →</Link></div><p className={styles.credit}>{titleCardIds.has(e.id)?(fr?"Création typographique · LE GOLFE":"Typography · LE GOLFE"):<>{eventMediaLabel(image,locale)} : {image.credit} · {image.license}</>}</p></div>
+         <div className={styles.featureCopy}><p className={styles.featureMeta}>{e.location} · {categoryLabels[e.category][locale]}</p><h2><Link href={`/${locale}/event/${e.id}`}>{fr?e.titleFr||e.title:e.title}</Link></h2><p className={styles.featureDates}>{sessionsInWindow(e,selectedWindow).map(session=>`${eventDateLabel({...e,start:session.start,end:session.end},locale)}${session.time?` · ${session.time}`:''}`).join(' · ')}</p><p className={styles.featureSummary}>{fr?e.summaryFr:e.summary}</p>{i===0&&<p className={styles.featureWhy}>{fr?e.whyFr:e.why}</p>}<div className={styles.featureLinks}><Link href={`/${locale}/event/${e.id}`}>{fr?'Voir la fiche':'Event details'} →</Link><a href={e.source} target="_blank" rel="noopener noreferrer">{fr?'Infos officielles':'Official info'} ↗</a><Link href={`/${locale}/ask?prompt=${encodeURIComponent(fr?`Construis-moi un moment autour de ${e.titleFr||e.title} à ${e.location}.`:`Build me a moment around ${e.title} in ${e.location}.`)}`}>{fr?'Construire autour':'Build around it'} →</Link>{agendaTownHref(e.location,locale)&&<Link href={agendaTownHref(e.location,locale)!}>{fr?'Dans la commune':'Places in town'} →</Link>}</div><p className={styles.credit}>{titleCardIds.has(e.id)?(fr?"Création typographique · LE GOLFE":"Typography · LE GOLFE"):<>{eventMediaLabel(image,locale)} : {image.credit} · {image.license}</>}</p></div>
         </article>;})}
        </div></div>
       </section>}
@@ -162,7 +164,7 @@ export default function AgendaClient({ locale, events, initialDay }: Props) {
           <div className={styles.eventGrid} aria-label={fr?'Les autres rendez-vous':'More events'}>
            {remaining.map(e=>{const image=mediaForEvent(e);return <article key={e.id} data-agenda-event={e.id} className={styles.eventCard}>
             <Link href={`/${locale}/event/${e.id}`} className={styles.eventImage} aria-label={fr?e.titleFr||e.title:e.title}><EventArtwork event={e} locale={locale} titleCard={titleCardIds.has(e.id)}/></Link>
-            <div className={styles.eventBody}><div className={styles.eventTop}><span className={styles.day}>{dayNumber(displayEvent(e))}</span><div><p className={styles.month}>{monthLabel(displayEvent(e),locale)} · {categoryLabels[e.category][locale]}</p><p className={styles.location}>{e.location}</p></div></div><h3><Link href={`/${locale}/event/${e.id}`}>{fr?e.titleFr||e.title:e.title}</Link></h3><p className={styles.eventDates}>{sessionsInWindow(e,selectedWindow).map(session=>`${formatCalendarDay(session.start,locale,true)}${session.end&&session.end!==session.start?` — ${formatCalendarDay(session.end,locale,true)}`:''}${session.time?` · ${session.time}`:''}`).join(' · ')}</p><p className={styles.eventSummary}>{fr?e.summaryFr:e.summary}</p><p className={styles.eventWhy}>{fr?e.whyFr:e.why}</p><div className={styles.eventLinks}><Link href={`/${locale}/event/${e.id}`}>{fr?'Voir la fiche':'Event details'} →</Link><a href={e.source} target="_blank" rel="noopener noreferrer">{fr?'Infos officielles':'Official info'} ↗</a><Link href={`/${locale}/ask?prompt=${encodeURIComponent(fr?`Construis-moi un moment autour de ${e.titleFr||e.title} à ${e.location}.`:`Build me a moment around ${e.title} in ${e.location}.`)}`}>{fr?'Construire autour':'Build around it'} →</Link></div><p className={styles.credit}>{titleCardIds.has(e.id)?(fr?"Création typographique · LE GOLFE":"Typography · LE GOLFE"):<>{eventMediaLabel(image,locale)} : {image.credit} · {image.license}</>}</p></div>
+            <div className={styles.eventBody}><div className={styles.eventTop}><span className={styles.day}>{dayNumber(displayEvent(e))}</span><div><p className={styles.month}>{monthLabel(displayEvent(e),locale)} · {categoryLabels[e.category][locale]}</p><p className={styles.location}>{e.location}</p></div></div><h3><Link href={`/${locale}/event/${e.id}`}>{fr?e.titleFr||e.title:e.title}</Link></h3><p className={styles.eventDates}>{sessionsInWindow(e,selectedWindow).map(session=>`${formatCalendarDay(session.start,locale,true)}${session.end&&session.end!==session.start?` — ${formatCalendarDay(session.end,locale,true)}`:''}${session.time?` · ${session.time}`:''}`).join(' · ')}</p><p className={styles.eventSummary}>{fr?e.summaryFr:e.summary}</p><p className={styles.eventWhy}>{fr?e.whyFr:e.why}</p><div className={styles.eventLinks}><Link href={`/${locale}/event/${e.id}`}>{fr?'Voir la fiche':'Event details'} →</Link><a href={e.source} target="_blank" rel="noopener noreferrer">{fr?'Infos officielles':'Official info'} ↗</a><Link href={`/${locale}/ask?prompt=${encodeURIComponent(fr?`Construis-moi un moment autour de ${e.titleFr||e.title} à ${e.location}.`:`Build me a moment around ${e.title} in ${e.location}.`)}`}>{fr?'Construire autour':'Build around it'} →</Link>{agendaTownHref(e.location,locale)&&<Link href={agendaTownHref(e.location,locale)!}>{fr?'Dans la commune':'Places in town'} →</Link>}</div><p className={styles.credit}>{titleCardIds.has(e.id)?(fr?"Création typographique · LE GOLFE":"Typography · LE GOLFE"):<>{eventMediaLabel(image,locale)} : {image.credit} · {image.license}</>}</p></div>
            </article>;})}
           </div>
         ) : <p className="mt-8 text-sm text-white/65">{fr?'Tous les rendez-vous de cette sélection sont présentés à l’affiche ci-dessus.':'All events in this selection appear in the featured section above.'}</p>}

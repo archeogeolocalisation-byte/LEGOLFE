@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-require-imports -- CommonJS verification script */
 const assert=require('node:assert/strict'),fs=require('node:fs'),ts=require('typescript');
 require.extensions['.ts']=(m,f)=>m._compile(ts.transpileModule(fs.readFileSync(f,'utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2020}}).outputText,f);
 const {events}=require('../data/events.ts'),{qualityAgendaEvents,isValidAgendaEvent}=require('../lib/agendaQuality.ts');
@@ -25,3 +26,16 @@ assert.deepEqual(calendar.eventsInWindow([{...fixture,id:'a',time:'21:00'},{...f
 assert.deepEqual(calendar.sessionsInWindow({...fixture,sessions:[{start:fixture.start,time:'21:00'},{start:fixture.start,time:'18:00'}]},window).map(s=>s.time),['18:00','21:00']);
 assert.notEqual(calendar.sessionAnchor({start:fixture.start,time:'18:00'}),calendar.sessionAnchor({start:fixture.start,time:'21:00'}),'SEO session anchors are unique');
 console.log('Multiple sessions, duration, municipality, chronological order and SEO anchors passed');
+
+const sunday='2026-10-18',quick=calendar.upcomingWindow(calendar.dateWindow('weekend',sunday),sunday);
+assert.deepEqual(quick,{from:sunday,to:sunday});
+assert.deepEqual(calendar.eventsInWindow([{...fixture,id:'past',start:'2026-10-17'},{...fixture,id:'current',start:sunday}],quick).map(e=>e.id),['current']);
+assert.equal(calendar.eventsInWindow([{...fixture,start:'2026-10-01',end:'2026-11-30'}],{from:'2026-11-01',to:'2026-10-31'}).length,0,'Stale month selection never leaks a long event into an invalid window');
+assert.equal(isValidAgendaEvent({...fixture,sessions:[{start:fixture.start,endTime:'29:00'}]}),false);
+assert.equal(isValidAgendaEvent({...fixture,sessions:[{start:fixture.start,time:'20:00',endTime:'19:00'}]}),false);
+assert.equal(isValidAgendaEvent({...fixture,sessions:[{},{}]}),false,'Malformed sessions do not break the catalogue');
+assert.equal(isValidAgendaEvent({...fixture,source:'https://user:secret@example.org/event'}),false);
+assert.equal(isValidAgendaEvent({...fixture,category:'unknown'}),false);
+assert.equal(qualityAgendaEvents([{...fixture,sessions:[{start:fixture.start},{start:fixture.start}]}])[0].sessions.length,1,'Duplicate sessions are removed');
+const chosen=qualityAgendaEvents([fixture,{...fixture,id:'better-record',sourceCheckedAt:'2026-10-17'}])[0];assert.equal(chosen.id,fixture.id,'A richer duplicate preserves the existing event URL');
+console.log('Upcoming weekend/month windows, invalid schedule rejection, duplicate sessions and stable public URLs passed');

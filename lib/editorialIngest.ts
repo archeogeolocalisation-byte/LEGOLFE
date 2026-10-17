@@ -1,3 +1,4 @@
+import {isIsoDay} from "./agendaCalendar";
 import {parseLocalRss} from "./localRss";
 import {localFeedSources} from "../data/localFeedSources";
 import type { EditorialSource } from "../data/agendaSources";
@@ -27,8 +28,8 @@ const frMonths:Record<string,string>={janvier:"01",février:"02",fevrier:"02",ma
 function dateFromText(v:string){
   const iso=v.match(/\b(20\d{2})[-\/](\d{1,2})[-\/](\d{1,2})\b/);
   if(iso)return `${iso[1]}-${iso[2].padStart(2,"0")}-${iso[3].padStart(2,"0")}`;
-  const fr=v.toLowerCase().match(/\b(\d{1,2})\s+(janvier|février|fevrier|mars|avril|mai|juin|juillet|août|aout|septembre|octobre|novembre|décembre|decembre)(?:\s+(20\d{2}))?/);
-  if(fr)return `${fr[3]||new Date().getFullYear()}-${frMonths[fr[2]]}-${fr[1].padStart(2,"0")}`;
+  const fr=v.toLowerCase().match(/\b(\d{1,2})\s+(janvier|février|fevrier|mars|avril|mai|juin|juillet|août|aout|septembre|octobre|novembre|décembre|decembre)\s+(20\d{2})/);
+  if(fr)return `${fr[3]}-${frMonths[fr[2]]}-${fr[1].padStart(2,"0")}`;
   const compact=v.match(/\b(\d{1,2})[.\/](\d{1,2})[.\/](20\d{2})\b/);
   if(compact)return `${compact[3]}-${compact[2].padStart(2,"0")}-${compact[1].padStart(2,"0")}`;
   return null;
@@ -41,14 +42,14 @@ function fallbackAnchors(html:string,source:EditorialSource):Candidate[]{
   while((m=re.exec(html))){
     const title=strip(m[2]); if(!title||title.length<4||title.length>140)continue;
     const around=strip(html.slice(Math.max(0,m.index-260),Math.min(html.length,re.lastIndex+180)))||"";
-    const date=dateFromText(around); if(!date)continue;
+    const date=dateFromText(around); if(!date||!isIsoDay(date))continue;
     const url=absoluteUrl(m[1],source.url);
-    if(!url.startsWith("http"))continue;
+    try{const target=new URL(url);if(target.protocol!=="https:"||target.username||target.password)continue;}catch{continue;}
     const content_type: "event"|"news" = source.type==="news"?"news":"event";
     out.push({
       content_type,source_key:source.key,source_label:source.label,external_url:url,
       fingerprint:fp(source.key,url,title,date),title,title_fr:title,summary:null,summary_fr:null,
-      start_date:date,location:source.location,category:content_type==="event"?"local":"around",raw:{fallback:true,context:around}
+      start_date:content_type==="event"?null:date,location:source.location,category:content_type==="event"?"local":"around",raw:{fallback:true,context:around,proposedDate:date,requiresEventDateReview:content_type==="event"}
     });
   }
   return [...new Map(out.map(x=>[x.fingerprint,x])).values()].slice(0,80);
@@ -56,50 +57,44 @@ function fallbackAnchors(html:string,source:EditorialSource):Candidate[]{
 function decode(s:string){
   return s.replace(/&amp;/g,"&").replace(/&quot;/g,'"').replace(/&#39;/g,"'").replace(/&nbsp;/g," ");
 }
-function strip(s?:string|null){
-  if(!s)return null;
+function strip(s:unknown){
+  if(typeof s!=="string"||!s)return null;
   return decode(s.replace(/<[^>]+>/g," ").replace(/\s+/g," ").trim()).slice(0,1200);
 }
 function arr<T>(v:T|T[]|undefined|null):T[]{return v==null?[]:Array.isArray(v)?v:[v]}
-function walk(node:any,out:any[]=[]):any[]{
-  if(!node)return out;
-  if(Array.isArray(node)){node.forEach(n=>walk(n,out));return out;}
-  if(typeof node==="object"){
-    if(node["@type"])out.push(node);
-    Object.values(node).forEach(v=>{if(typeof v==="object")walk(v,out)});
-  }
-  return out;
+type SchemaNode=Record<string,unknown>;
+function object(value:unknown):SchemaNode{return value&&typeof value==='object'&&!Array.isArray(value)?value as SchemaNode:{};}
+function walk(node:unknown,out:SchemaNode[]=[]):SchemaNode[]{
+ if(Array.isArray(node)){node.forEach(n=>walk(n,out));return out;}
+ if(node&&typeof node==='object'){const value=object(node);if(value['@type'])out.push(value);Object.values(value).forEach(v=>{if(v&&typeof v==='object')walk(v,out);});}
+ return out;
 }
 function jsonLd(html:string){
-  const blocks=[...html.matchAll(/<script[^>]+type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi)];
-  const all:any[]=[];
-  for(const b of blocks){try{walk(JSON.parse(b[1]),all)}catch{}}
-  return all;
+ const blocks=[...html.matchAll(/<script[^>]+type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi)],all:SchemaNode[]=[];
+ for(const b of blocks){try{walk(JSON.parse(b[1]),all);}catch{continue;}}return all;
 }
-function typeHas(item:any,t:string){return arr(item?.["@type"]).some(x=>String(x).toLowerCase()===t.toLowerCase())}
-function dateOnly(v?:string|null){if(!v)return null;const m=String(v).match(/^\d{4}-\d{2}-\d{2}/);return m?.[0]||null}
-function timeOnly(v?:string|null){if(!v)return null;const m=String(v).match(/T(\d{2}:\d{2})/);return m?.[1]||null}
-function imageOf(v:any){const i=Array.isArray(v)?v[0]:v;return typeof i==="string"?i:(i?.url||i?.contentUrl||null)}
-function locationOf(item:any, fallback:string){
-  const loc=Array.isArray(item.location)?item.location[0]:item.location;
-  return strip(loc?.address?.addressLocality || loc?.name || fallback) || fallback;
-}
-function venueOf(item:any){
-  const loc=Array.isArray(item.location)?item.location[0]:item.location;
-  return strip(loc?.name);
-}
-function urlOf(item:any,source:EditorialSource){return item.url || item.mainEntityOfPage?.["@id"] || source.url}
+function typeHas(item:SchemaNode,t:string){return arr(item['@type']).some(x=>String(x).toLowerCase()===t.toLowerCase());}
+function dateOnly(value:unknown){if(typeof value!=='string')return null;const day=value.slice(0,10);return isIsoDay(day)?day:null;}
+function timeOnly(value:unknown){if(typeof value!=='string')return null;const m=value.match(/T([0-2]\d:[0-5]\d)/);return m?.[1]&&/^([01]\d|2[0-3]):[0-5]\d$/.test(m[1])?m[1]:null;}
+function imageOf(value:unknown){const item=Array.isArray(value)?value[0]:value,node=object(item),url=typeof item==='string'?item:node.url||node.contentUrl;return typeof url==='string'?url:null;}
+function locationOf(item:SchemaNode,fallback:string){const loc=object(Array.isArray(item.location)?item.location[0]:item.location);return strip(object(loc.address).addressLocality||loc.name||fallback)||fallback;}
+function venueOf(item:SchemaNode){return strip(object(Array.isArray(item.location)?item.location[0]:item.location).name);}
+function urlOf(item:SchemaNode,source:EditorialSource){const raw=item.url||object(item.mainEntityOfPage)['@id'];try{const u=new URL(typeof raw==='string'?raw:source.url,source.url);return u.protocol==='https:'&&!u.username&&!u.password?u.href:source.url;}catch{return source.url;}}
 function fp(source:string,url:string,title:string,date:string|null){
   return `${source}|${url}|${title}|${date||""}`.toLowerCase().replace(/\s+/g," ").slice(0,900);
 }
 
 export async function fetchSourceCandidates(source:EditorialSource):Promise<Candidate[]>{
-  const res=await fetch(source.url,{headers:{"user-agent":"LE-GOLFE/1.0 (+editorial-monitor)","accept":source.format==="rss"?"application/rss+xml,application/xml":"text/html,application/xhtml+xml"},cache:"no-store",signal:AbortSignal.timeout(10000)});
+  const res=await fetch(source.url,{headers:{"user-agent":"LE-GOLFE/1.0 (+editorial-monitor)","accept":source.format?.startsWith("rss")?"application/rss+xml,application/xml":"text/html,application/xhtml+xml"},cache:"no-store",signal:AbortSignal.timeout(10000)});
   if(!res.ok)throw new Error(`${source.label}: HTTP ${res.status}`);
   const reader=res.body?.getReader();if(!reader)throw new Error("Empty source");
   const chunks:Uint8Array[]=[];let size=0;
   for(;;){const {done,value}=await reader.read();if(done)break;size+=value.length;if(size>2*1024*1024){await reader.cancel();throw new Error("Source too large");}chunks.push(value);}
   const html=Buffer.concat(chunks).toString("utf8");
+  if(source.format==="rss-events"){
+    // RSS pubDate is a publication date, never the date of the advertised event.
+    return parseLocalRss(html,{...source,paths:['/agenda/']}).map(item=>({content_type:'event',source_key:source.key,source_label:source.label,external_url:item.source,fingerprint:fp(source.key,item.source,item.title,null),title:item.title,title_fr:item.title,start_date:null,location:source.location,category:'local',raw:{rss:true,published:item.date,requiresEventDateReview:true}}));
+  }
   if(source.format==="rss"){
     const feed=localFeedSources.find(item=>item.key===source.key);if(!feed)return [];
     return parseLocalRss(html,feed).map(item=>({content_type:"news",source_key:source.key,source_label:source.label,external_url:item.source,fingerprint:fp(source.key,item.source,item.title,item.date),title:item.title,title_fr:item.title,summary:null,summary_fr:null,start_date:item.date,location:item.location,category:"around",raw:{rss:true,published:item.date,requiresReusePermission:feed.publicHeadlines===false}}));

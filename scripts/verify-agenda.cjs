@@ -8,7 +8,7 @@ equal(c.dateWindow('7days','2026-12-29'),{from:'2026-12-29',to:'2027-01-04'});
 equal(c.monthWindow('2028-02'),{from:'2028-02-01',to:'2028-02-29'});equal(c.monthWindow('2027-02'),{from:'2027-02-01',to:'2027-02-28'});equal(c.monthWindow('2026-13'),undefined);equal(c.isIsoDay('2026-02-29'),false);
 equal(local.parisIsoDay(new Date('2026-10-24T22:30:00Z')),'2026-10-25');equal(local.parisIsoDay(new Date('2026-10-25T23:30:00Z')),'2026-10-26');
 const recurring={id:'repeat',start:'2026-10-01',end:'2027-03-01',sessions:[{start:'2026-10-10'},{start:'2026-11-07'}]};
-equal(c.eventOverlaps(recurring,'2026-10-11','2026-10-11'),false);equal(c.eventOverlaps(recurring,'2026-11-07','2026-11-07'),true);equal(c.catalogMonths([recurring]),['2026-10','2026-11']);equal(c.agendaPaths([recurring],'2026-10-11'),['/whats-on/this-weekend','/whats-on/2026-10','/whats-on/2026-11']);
+equal(c.eventOverlaps(recurring,'2026-10-11','2026-10-11'),false);equal(c.eventOverlaps(recurring,'2026-11-07','2026-11-07'),true);equal(c.catalogMonths([recurring]),['2026-10','2026-11']);equal(c.agendaPaths([recurring],'2026-10-11'),['/whats-on/2026-10','/whats-on/2026-11']);
 const continuous={id:'long',start:'2026-12-31',end:'2027-01-02'};equal(c.eventOverlaps(continuous,'2027-01-01','2027-01-01'),true);
 equal(c.eventOverlaps({id:'bad',start:'2026-02-30'},'2026-02-01','2026-03-01'),false);
 const all=Object.values(v).flatMap(x=>Array.isArray(x)?x:Object.values(x));
