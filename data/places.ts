@@ -1,3 +1,4 @@
+import {ramatuelleGassinPlaces} from './ramatuelleGassinPlaces';
 import {freinetCroixPlaces} from './freinetCroixPlaces';
 import {cavalaireMolePlaces} from './cavalaireMolePlaces';
 import {grimaudPlaces} from './grimaudPlaces';
@@ -54,6 +55,7 @@ export const places: Place[] = [
  ...grimaudPlaces,
  ...cavalaireMolePlaces,
  ...freinetCroixPlaces,
+ ...ramatuelleGassinPlaces,
 {
   "id": "domaine-de-la-croix",
   "name": "Domaine de La Croix",

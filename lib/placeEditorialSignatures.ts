@@ -1,3 +1,4 @@
+import {ramatuelleGassinSignatures} from '../data/ramatuelleGassinPlaces';
 import {freinetCroixSignatures} from '../data/freinetCroixPlaces';
 import {cavalaireMoleSignatures} from '../data/cavalaireMolePlaces';
 import {grimaudSignatures} from '../data/grimaudPlaces';
@@ -12,6 +13,7 @@ export const editorialSignatures:Record<string,Record<Locale,Signature>>={
  ...grimaudSignatures,
  ...cavalaireMoleSignatures,
  ...freinetCroixSignatures,
+ ...ramatuelleGassinSignatures,
  'monroes-pub':{fr:{subtitle:"LE PUB AVANT LES PAILLETTES.",quote:"À GRIMAUD, LA SOIRÉE PEUT RESTER SIMPLE.",rhythm:"SPORT. KARAOKÉ. AMIS.",dark:"PAS BESOIN DE SAINT-TROPEZ POUR SORTIR.",close:"LE BON VERRE, AU BON ENDROIT."},en:{subtitle:"A PUB NIGHT WITHOUT THE SHOW.",quote:"NEAR PORT GRIMAUD, KEEP THE NIGHT SIMPLE.",rhythm:"SPORT. KARAOKE. FRIENDS.",dark:"NOT EVERY NIGHT NEEDS A NIGHTCLUB.",close:"EASY NIGHTS, GOOD COMPANY."}},
  'bello-visto':{fr:{subtitle:"À GASSIN, LE PANORAMA PASSE À TABLE.",quote:"UNE TERRASSE, TOUT LE GOLFE EN FACE.",rhythm:"VILLAGE. TABLE. HORIZON.",dark:"LE BON MOMENT SE RÉSERVE.",close:"UNE AUTRE HAUTEUR POUR DÉJEUNER."},en:{subtitle:"IN GASSIN, THE VIEW JOINS YOU FOR LUNCH.",quote:"ONE TERRACE. THE GOLFE BELOW.",rhythm:"VILLAGE. TABLE. HORIZON.",dark:"GOOD VIEWS DESERVE GOOD PLANNING.",close:"TAKE LUNCH TO NEW HEIGHTS."}},
  'la-verdoyante':{fr:{subtitle:"UNE TABLE ENTRE LES VIGNES.",quote:"À GASSIN, LA PROVENCE SE SAVOURE AU VERT.",rhythm:"TERRASSE. VIGNES. CUISINE.",dark:"ICI, LE TEMPS CHANGE DE RYTHME.",close:"UNE PAUSE LOIN DES QUAIS."},en:{subtitle:"A TABLE AMONG THE VINES.",quote:"BEYOND THE HARBOUR, A TASTE OF PROVENCE.",rhythm:"TERRACE. VINES. FOOD.",dark:"SLOW DOWN FOR THE SETTING.",close:"GASSIN BEYOND THE POSTCARD."}},

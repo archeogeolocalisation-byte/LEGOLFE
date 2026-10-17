@@ -38,8 +38,8 @@ export const destinations:Destination[] = [
       "en": "Connect Ramatuelle village with Pampelonne and L’Escalet. A beach day, a gastronomic meal and a quiet stay call for different places. This selection brings together the catalog’s places and services to help build a coherent visit."
     },
     "plan": {
-      "fr": "Choisissez d’abord entre une plage et un beach club, puis regardez les tables et les services utiles au séjour. Le village mérite aussi une visite à part entière.",
-      "en": "Choose between a beach and a beach club first, then explore restaurants and services for your stay. Set aside time to visit the village itself."
+      "fr": "Commencez par Notre-Dame et les ruelles du village, puis choisissez Bonne Terrasse pour une pause au bord de l’eau ou une visite réservée du phare de Camarat. Pour le phare, suivez les consignes de navette depuis le stade ; ne rejoignez pas la tour en voiture.",
+      "en": "Start with Notre-Dame church and the village lanes, then choose Bonne Terrasse for the shore or a booked Camarat lighthouse visit. For the lighthouse, follow the stadium shuttle instructions rather than driving to the tower."
     }
   },
   {
@@ -51,8 +51,8 @@ export const destinations:Destination[] = [
       "en": "Gassin’s restaurants, village and Château Minuty offer different starting points for exploring this part of the Golfe. Plan where to stay and where to eat together, using the villas already in the catalog."
     },
     "plan": {
-      "fr": "Comparez Bello Visto et La Verdoyante selon l’ambiance recherchée, puis consultez la fiche du village ou celle du Château Minuty pour compléter votre journée.",
-      "en": "Compare Bello Visto and La Verdoyante for the atmosphere you want, then explore the village or Château Minuty guide to complete your day."
+      "fr": "Reliez la porte des Sarrazins à Notre-Dame-de-l’Assomption et au jardin L’Hardy-Denonain selon son ouverture saisonnière. Complétez la journée par une table du village ou une étape au Château Minuty, en préparant les réservations séparément.",
+      "en": "Connect Porte des Sarrazins with Notre-Dame-de-l’Assomption and L’Hardy-Denonain garden when seasonally open. Extend the day with a village restaurant or Château Minuty, arranging reservations separately."
     }
   },
   {

@@ -1,3 +1,4 @@
+import {ramatuelleGassinMedia} from './ramatuelleGassinPlaces';
 import {freinetCroixMedia} from './freinetCroixPlaces';
 import {cavalaireMoleMedia} from './cavalaireMolePlaces';
 import {grimaudMedia} from './grimaudPlaces';
@@ -10,6 +11,7 @@ export const newExperienceMedia:Record<string,VillagePhoto[]> = {
  ...grimaudMedia,
  ...cavalaireMoleMedia,
  ...freinetCroixMedia,
+ ...ramatuelleGassinMedia,
   "domaine-de-la-croix": [
     {
       "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/14/Domaine_de_La_Croix_b%C3%A2timent_actuel_%28La_Croix-Valmer%29-1220558.jpg/1280px-Domaine_de_La_Croix_b%C3%A2timent_actuel_%28La_Croix-Valmer%29-1220558.jpg",
