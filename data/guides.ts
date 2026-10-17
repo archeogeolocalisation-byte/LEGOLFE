@@ -167,7 +167,7 @@ export const guides: Guide[] = [
     slug: "golfe-saint-tropez-quand-il-pleut", category: { fr: "Culture / Plan de repli", en: "Culture / A change of plan" }, image: "rainy-day-cover",
     imageAlt: {"fr": "Illustration du port de Saint-Tropez sous la pluie", "en": "Illustration of Saint-Tropez harbour in the rain"},
     imageCaption: {"fr": "Illustration éditoriale · LE GOLFE · Générée par IA", "en": "Editorial illustration · LE GOLFE · AI-generated"},
-    destinations: ["saint-tropez", "ramatuelle", "sainte-maxime", "cogolin"], placeIds: ["maison-des-papillons", "citadelle-saint-tropez"],
+    destinations: ["saint-tropez", "ramatuelle", "sainte-maxime", "cogolin"], placeIds: ["maison-des-papillons", "citadelle-saint-tropez", "musee-annonciade-saint-tropez"],
     related: ["saint-tropez-sans-voiture", "ramatuelle-a-pied"], published: "2026-10-11", verified: "2026-10-11",
     sources: [cinemaMuseum, butterflyMuseum, maritimeMuseum, { id: "rain", label: "Office de tourisme de Ramatuelle · Sorties par temps de pluie", url: "https://www.ramatuelle-tourisme.com/fr/faq/" }],
     copy: {

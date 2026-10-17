@@ -18,7 +18,7 @@ const Sheet=require('../components/PlaceFactSheet.tsx').default,Page=require('..
 const {renderToStaticMarkup}=require('react-dom/server'),{GET}=require('../app/sitemap.xml/route.ts');
 const licenses=JSON.parse(fs.readFileSync(path.join(__dirname,'../public/media/place-facts/licenses.json')));
 (async()=>{
- assert.equal(Object.keys(placeFacts).length,38);
+ assert.equal(Object.keys(placeFacts).length,43);
  assert.equal(new Set(places.map(p=>p.id)).size,places.length);
  assert.ok(placesInDestination(getDestination('grimaud')).some(p=>p.id==='port-grimaud'));
  const xml=await(await GET()).text();
@@ -73,8 +73,8 @@ const licenses=JSON.parse(fs.readFileSync(path.join(__dirname,'../public/media/p
   }
  }
  // New local collections: test the rendered public flow, not just the data shape.
- const localIds=[...require('../data/planDeLaTourPlaces.ts').planDeLaTourPlaces,...require('../data/sainteMaximePlaces.ts').sainteMaximePlaces,...require('../data/grimaudPlaces.ts').grimaudPlaces,...require('../data/cavalaireMolePlaces.ts').cavalaireMolePlaces,...require('../data/freinetCroixPlaces.ts').freinetCroixPlaces,...require('../data/ramatuelleGassinPlaces.ts').ramatuelleGassinPlaces].map(p=>p.id);
- for(const [slug,count] of Object.entries({'le-plan-de-la-tour':4,'sainte-maxime':4,'grimaud':4,'cavalaire-sur-mer':4,'la-mole':2,'la-garde-freinet':3,'la-croix-valmer':3,'ramatuelle':3,'gassin':3})){
+ const localIds=[...require('../data/planDeLaTourPlaces.ts').planDeLaTourPlaces,...require('../data/sainteMaximePlaces.ts').sainteMaximePlaces,...require('../data/grimaudPlaces.ts').grimaudPlaces,...require('../data/cavalaireMolePlaces.ts').cavalaireMolePlaces,...require('../data/freinetCroixPlaces.ts').freinetCroixPlaces,...require('../data/ramatuelleGassinPlaces.ts').ramatuelleGassinPlaces,...require('../data/saintTropezPlaces.ts').saintTropezPlaces].map(p=>p.id);
+ for(const [slug,count] of Object.entries({'le-plan-de-la-tour':4,'sainte-maxime':4,'grimaud':4,'cavalaire-sur-mer':4,'la-mole':2,'la-garde-freinet':3,'la-croix-valmer':3,'ramatuelle':3,'gassin':3,'saint-tropez':5})){
   const local=placesInDestination(getDestination(slug));
   assert.equal(local.filter(p=>localIds.includes(p.id)).length,count,`${slug}: local collection exposed by destination`);
  }
@@ -100,8 +100,8 @@ const licenses=JSON.parse(fs.readFileSync(path.join(__dirname,'../public/media/p
  assert.ok(placeFacts['barrage-de-la-verne'].copy.fr.questions.some(([,body])=>body.includes('baignade')&&body.includes('interdites')));
  assert.ok(placeFacts['eglise-sainte-magdeleine-la-mole'].copy.fr.questions.some(([,body])=>body.includes('autre site')));
  const Destination=require('../app/[locale]/destinations/[town]/page.tsx');
- const newest=[...require('../data/freinetCroixPlaces.ts').freinetCroixPlaces,...require('../data/ramatuelleGassinPlaces.ts').ramatuelleGassinPlaces];
- for(const town of ['la-garde-freinet','la-croix-valmer','ramatuelle','gassin']){
+ const newest=[...require('../data/freinetCroixPlaces.ts').freinetCroixPlaces,...require('../data/ramatuelleGassinPlaces.ts').ramatuelleGassinPlaces,...require('../data/saintTropezPlaces.ts').saintTropezPlaces];
+ for(const town of ['la-garde-freinet','la-croix-valmer','ramatuelle','gassin','saint-tropez']){
   for(const locale of ['fr','en']){
    const params=Promise.resolve({locale,town}),html=renderToStaticMarkup(await Destination.default({params}));
    for(const p of newest.filter(p=>p.location===getDestination(town).name))assert.ok(html.includes(`href="/${locale}/place/${p.id}"`));
@@ -140,6 +140,14 @@ const licenses=JSON.parse(fs.readFileSync(path.join(__dirname,'../public/media/p
    assert.ok(xml.includes(`<loc>https://www.legolfe.com/${locale}/place/${id}</loc><lastmod>${fact.verified}</lastmod>`));
   }
  }
+ // These additions must be reachable from rendered articles, not only search or a map.
+ const Guide=require('../app/[locale]/guides/[slug]/page.tsx');
+ for(const [slug,ids] of [['golfe-saint-tropez-quand-il-pleut',['musee-annonciade-saint-tropez']],['activites-gratuites-golfe-saint-tropez',['port-de-saint-tropez','eglise-notre-dame-assomption-saint-tropez','plage-des-graniers']],['week-end-automne-golfe-saint-tropez',['chapelle-sainte-anne-saint-tropez']]]){
+  for(const locale of ['fr','en']){
+   const html=renderToStaticMarkup(await Guide.default({params:Promise.resolve({locale,slug})}));
+   for(const id of ids)assert.ok(html.includes(`href="/${locale}/place/${id}"`),`${slug}: crawlable link to ${id}`);
+  }
+ }
  assert.equal(places.some(p=>/comptoir-de-la-poste|porte[s]?-verte/.test(p.id)),false,'User exclusions respected');
  process.env.VERCEL_ENV='preview';assert.equal((await Page.generateMetadata({params:Promise.resolve({locale:'fr',id:'port-grimaud'})})).robots.index,false);
  const {ramatuelleGassinPlaces,ramatuelleGassinMedia}=require('../data/ramatuelleGassinPlaces.ts');
@@ -154,5 +162,5 @@ const licenses=JSON.parse(fs.readFileSync(path.join(__dirname,'../public/media/p
  assert.ok(lighthouse.facts.some(([,value])=>value.includes('moins de 6 ans')));
  assert.ok(placeFacts['jardin-hardy-denonain-gassin'].copy.fr.sections.some(([,body])=>body.includes('saisonnière')&&body.includes('jeudi')));
  assert.ok(ramatuelleGassinMedia['plage-de-bonne-terrasse'][0].caption.fr.includes('archive')&&ramatuelleGassinMedia['plage-de-bonne-terrasse'][0].caption.fr.includes('1995'),'Archive photograph is dated for visitors');
- console.log('Place facts: existing licensed media/hashes plus 30 local places in FR/EN; contextual photos, sources, map markers, discovery links, metadata and sitemap passed.');
+ console.log('Place facts: existing licensed media/hashes plus 35 local places in FR/EN; contextual photos, sources, map markers, discovery links, metadata and sitemap passed.');
 })().catch(error=>{console.error(error);process.exitCode=1;});

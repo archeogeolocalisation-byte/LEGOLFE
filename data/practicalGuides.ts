@@ -388,8 +388,11 @@ export const practicalGuides: Guide[] = [
       "place-des-lices",
       "ramatuelle-village",
       "grimaud-village",
-      "pampelonne"
-    ],
+      "pampelonne",
+      "port-de-saint-tropez",
+      "eglise-notre-dame-assomption-saint-tropez",
+      "plage-des-graniers"
+],
     "related": [
       "marches-golfe-saint-tropez-jours",
       "golfe-saint-tropez-avec-enfants",
@@ -979,8 +982,9 @@ export const practicalGuides: Guide[] = [
       "saint-tropez-village",
       "ramatuelle-village",
       "domaine-rayol-kids",
-      "gigaro-beach"
-    ],
+      "gigaro-beach",
+      "chapelle-sainte-anne-saint-tropez"
+],
     "related": [
       "marches-golfe-saint-tropez-jours",
       "golfe-saint-tropez-avec-enfants",

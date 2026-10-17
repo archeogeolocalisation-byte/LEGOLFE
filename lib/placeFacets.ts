@@ -4,6 +4,11 @@ import type {Locale} from "./i18n";
 // A place keeps one editorial primary category and can have reviewed secondary uses.
 // These links drive Explorer, page chips and LE GOLFE recommendations consistently.
 const secondaryCategories:Record<string,readonly PlaceCategory[]>={
+ "musee-annonciade-saint-tropez":["places"],
+ "eglise-notre-dame-assomption-saint-tropez":["places"],
+ "chapelle-sainte-anne-saint-tropez":["places"],
+ "port-de-saint-tropez":["do"],
+
  "phare-de-camarat":["places"],
  "eglise-notre-dame-ramatuelle":["places"],
  "jardin-hardy-denonain-gassin":["places"],
