@@ -1,3 +1,4 @@
+import {localPlacePhoto} from './placeImage';
 import {newExperienceMedia} from "../data/newExperienceMedia";
 import {citadelleMedia} from '../data/citadelleMedia';
 import {pampelonneMedia} from '../data/pampelonneMedia';
@@ -9,7 +10,7 @@ import {villageMedia,type VillagePhoto} from '../data/villageMedia';
 import {pressMedia} from './pressMedia';
 
 // Named-place photographs; contextual peninsula view only where explicitly supplied and labelled.
-export function photosForPlace(id:string):VillagePhoto[]{
+function sourcePhotosForPlace(id:string):VillagePhoto[]{
  // Supplied replacements take priority over older catalogue photographs.
  if(suppliedPlaceMedia[id])return suppliedPlaceMedia[id];
  if(newExperienceMedia[id])return newExperienceMedia[id];
@@ -25,4 +26,8 @@ export function photosForPlace(id:string):VillagePhoto[]{
  if(id==='domaine-rayol-kids')return [villageMedia['rayol-canadel-village'][3]];
  if(id==='gigaro-beach')return [villageMedia['la-croix-valmer-village'][0]];
  return [];
+}
+
+export function photosForPlace(id:string):VillagePhoto[]{
+ return sourcePhotosForPlace(id).map(localPlacePhoto);
 }
