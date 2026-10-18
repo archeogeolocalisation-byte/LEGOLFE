@@ -42,3 +42,6 @@ next-env.d.ts
 
 # Track the deployment template, never local secrets
 !.env.example
+
+# Browser regression reports
+/test-results/

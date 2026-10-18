@@ -286,3 +286,16 @@ button,textarea,input { font:inherit; }
 .villa-detail :is(.lg-btn--dark,#demande-sejour form>button),.villa-detail .fixed>a{background:#0b4f6c;border-color:#0b4f6c;color:#fff;}
 .villa-detail :is(a,button,input,select,summary):focus-visible{outline:2px solid #0b4f6c;outline-offset:3px;}
 @media(max-width:479px){.villa-contact-card{padding:20px;}}
+
+/* Place pages: content must fit the viewport before any decorative clipping. */
+.place-page { width:100%; min-width:0; }
+.place-page :where(.grid,.flex)>* { min-width:0; }
+.place-page :where(h1,h2,h3,p,blockquote,figcaption,dd,address,summary,a) { overflow-wrap:anywhere; }
+.place-page :where(img,iframe,video) { max-width:100%; }
+.place-page .lg-shell .lg-shell { width:100%; padding-inline:0; }
+@media(max-width:767px){
+ .place-page :where(.text-5xl,.text-4xl) { font-size:clamp(1.75rem,7.8vw,2.4rem); }
+ .place-page .lg-quote-box { padding:20px; }
+ .place-page .mobile-edge { margin-inline:-18px; }
+ .place-page :where(figcaption,.lg-credit) { line-height:1.6; }
+}

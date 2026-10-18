@@ -1,3 +1,4 @@
+import {localPlacePhoto} from './placeImage';
 import {photosForPlace} from "./curatedPlaceGallery";
 
 export type PlaceMedia = {
@@ -203,5 +204,6 @@ export const siteMedia = {
 
 export function mediaForPlace(id: string): PlaceMedia | undefined {
   // Prefer the actual venue; otherwise use an explicitly labelled area view.
-  return photosForPlace(id)[0] ?? placeMedia[id] ?? contextualMedia[id];
+  const photo=photosForPlace(id)[0] ?? placeMedia[id] ?? contextualMedia[id];
+  return photo?localPlacePhoto(photo):undefined;
 }
