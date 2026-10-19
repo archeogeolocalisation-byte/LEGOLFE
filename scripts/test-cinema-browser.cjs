@@ -13,7 +13,8 @@ const server=spawn(process.execPath,[require.resolve('next/dist/bin/next'),'star
   const panel=page.getByRole('region',{name:fr?'Les cinémas du Golfe':'Cinemas around the Golfe'});assert.equal(await panel.isVisible(),true);assert.equal(await panel.locator('a').count(),4);
   await page.locator('img').evaluateAll(images=>images.forEach(i=>{i.loading='eager';}));await page.waitForTimeout(750);
   const bounds=await page.evaluate(()=>({width:innerWidth,scroll:document.documentElement.scrollWidth}));assert.ok(bounds.width<=width+1&&bounds.scroll<=width+1,JSON.stringify(bounds));
-  await page.screenshot({path:path.join(out,`cinema-${locale}-${width}.png`),fullPage:true});
+  await panel.scrollIntoViewIfNeeded();await page.screenshot({path:path.join(out,`cinema-${locale}-${width}.png`)});
+  const firstCard=page.locator("[data-agenda-featured],[data-agenda-event]").first();if(await firstCard.count()){await firstCard.scrollIntoViewIfNeeded();await page.screenshot({path:path.join(out,`film-${locale}-${width}.png`)});}
   await page.locator('#agenda-location').selectOption('Cogolin');assert.equal(await panel.locator('a').count(),1);assert.match(await panel.innerText(),/Raimu/);
   await page.getByRole('button',{name:new RegExp(fr?'Aujourd’hui':'Today')}).click();
   const cards=page.locator('[data-agenda-featured],[data-agenda-event]');for(const card of await cards.all())assert.match(await card.innerText(),/Cogolin/);
