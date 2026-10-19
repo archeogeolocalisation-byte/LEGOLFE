@@ -1,0 +1,41 @@
+[
+  {
+    "id": 7459,
+    "mediaid": {
+      "id": 1396
+    },
+    "cinemaid": "cavalaireecranbleu",
+    "showtime": "2026-10-19T17:00:00.000+0200",
+    "deleted": false,
+    "canceled": false,
+    "draft": false,
+    "school": false,
+    "languagemediaoptionsid": 16
+  },
+  {
+    "id": 7461,
+    "mediaid": {
+      "id": 1402
+    },
+    "cinemaid": "cavalaireecranbleu",
+    "showtime": "2026-10-19T14:30:00.000+0200",
+    "deleted": false,
+    "canceled": false,
+    "draft": false,
+    "school": false,
+    "languagemediaoptionsid": 16
+  },
+  {
+    "id": 7462,
+    "mediaid": {
+      "id": 1402
+    },
+    "cinemaid": "cavalaireecranbleu",
+    "showtime": "2026-10-20T19:00:00.000+0200",
+    "deleted": false,
+    "canceled": false,
+    "draft": false,
+    "school": false,
+    "languagemediaoptionsid": 16
+  }
+]

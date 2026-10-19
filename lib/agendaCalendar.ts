@@ -27,7 +27,7 @@ export function dateWindow(range:AgendaRange,today:string):DateWindow {
 // Quick discovery excludes finished days; explicit month archives retain their dates.
 export function upcomingWindow(window:DateWindow,today:string):DateWindow {return {...window,from:window.from<today?today:window.from};}
 export function eventSessions(event:GolfeEvent):EventSession[]{return [...(event.sessions?.length ? event.sessions : [{start:event.start,end:event.end,time:event.time}])].sort((a,b)=>a.start.localeCompare(b.start)||(a.time||"00:00").localeCompare(b.time||"00:00"));}
-export function sessionAnchor(session:EventSession){return `session-${session.start}${session.time?`-${session.time.replace(":", "")}`:""}`;}
+export function sessionAnchor(session:EventSession){return `session-${session.start}${session.time?`-${session.time.replace(":", "")}`:""}${session.version?`-${session.version.toLowerCase()}`:""}`;}
 export function sessionsInWindow(event:GolfeEvent,window:DateWindow):EventSession[]{if(!isIsoDay(window.from)||!isIsoDay(window.to)||window.from>window.to)return [];return eventSessions(event).filter(s=>isIsoDay(s.start) && (!s.end||isIsoDay(s.end)) && (s.end||s.start)>=s.start && s.start<=window.to && (s.end||s.start)>=window.from);}
 export function eventOverlaps(event:GolfeEvent,from:string,to:string){return sessionsInWindow(event,{from,to}).length>0;}
 export function firstSessionInWindow(event:GolfeEvent,window:DateWindow){return sessionsInWindow(event,window).sort((a,b)=>a.start.localeCompare(b.start))[0];}

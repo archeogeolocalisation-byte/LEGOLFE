@@ -5,6 +5,7 @@ import type { Locale } from "../lib/i18n";
 import { firstSessionInWindow, formatCalendarDay, type DateWindow } from "../lib/agendaCalendar";
 
 const eventLabels: Record<EventCategory, Record<Locale, string>> = {
+  cinema: {fr:"Cinéma",en:"Cinema"},
   music: { fr: "Musique", en: "Music" }, culture: { fr: "Culture", en: "Culture" },
   sport: { fr: "Sport", en: "Sport" }, local: { fr: "Vie locale", en: "Local life" },
   family: { fr: "En famille", en: "Family" }, sailing: { fr: "Voile", en: "Sailing" },

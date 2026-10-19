@@ -11,7 +11,7 @@ export async function getApprovedEvents():Promise<GolfeEvent[]>{
   return data.filter(x=>x.start_date).map((x:any)=>({
     id:`live-${x.id}`,title:x.title,titleFr:x.title_fr||x.title,start:x.start_date,end:x.end_date||undefined,
     time:x.event_time||undefined,location:x.location||"Golfe de Saint-Tropez",venue:x.venue||undefined,
-    category:(["music","culture","sport","local","family","sailing"].includes(x.category)?x.category:"local"),
+    category:(["music","culture","sport","local","family","sailing","cinema"].includes(x.category)?x.category:"local"),
     summary:x.summary||"",summaryFr:x.summary_fr||x.summary||"",
     why:x.why||"Selected from an official local source.",whyFr:x.why_fr||"Sélectionné depuis une source locale officielle.",
     source:x.external_url,sourceLabel:x.source_label

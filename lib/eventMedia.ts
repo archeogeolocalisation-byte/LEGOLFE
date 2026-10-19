@@ -1,8 +1,10 @@
+import {cinemaPoster} from "./cinemaPoster";
 import {carreEventImages as carreImages} from "../data/carreEventImages";
 import type { GolfeEvent } from "../data/events";
 
 export type EventMedia = { kind?:"illustration"|"official"; src:string; alt:string; credit:string; license:string; source:string };
 const illustrationLabels = {
+  cinema: "Sortie au cinéma dans le Golfe",
   music: "Concert dans le Golfe", culture: "Exposition et patrimoine provençal",
   sport: "Course sur les sentiers du Golfe", local: "Marché provençal et vie locale",
   family: "Sortie en famille au bord de la mer", sailing: "Voiliers dans le Golfe",
@@ -13,7 +15,7 @@ export function illustrationForEvent(event:GolfeEvent):EventMedia {
   const subject = `${event.titleFr ?? ""} ${event.title} ${event.venue ?? ""}`.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
   // Specific subjects take precedence over the broad agenda category.
   const key = /\b(petanque|boules?|bouliste\w*)\b/.test(subject) ? "petanque"
-    : /\b(vign\w*|vendange\w*|oenolog\w*|viticol\w*|vins?|wine\w*)\b/.test(subject) ? "vineyards" : event.category;
+    : /\b(vign\w*|vendange\w*|oenolog\w*|viticol\w*|vins?|wine\w*)\b/.test(subject) ? "vineyards" : event.category=== "cinema"?"culture":event.category;
   return {src:`/media/events/illustrations/${key}.webp`,alt:illustrationLabels[key],credit:"LE GOLFE",license:"Illustration originale",source:"/media/events/illustrations/sources.json",kind:"illustration"};
 }
 
@@ -24,6 +26,7 @@ export function agendaTitleCardIds(events:readonly GolfeEvent[]):Set<string> {
 }
 
 export function mediaForEvent(event:GolfeEvent):EventMedia{
+  if(event.category==="cinema"&&event.officialImage&&cinemaPoster(event.officialImage))return {src:event.officialImage,alt:`${event.titleFr||event.title} · affiche du film`,credit:event.sourceLabel+" · distributeur du film",license:"Affiche promotionnelle · droits réservés",source:event.source,kind:"official"};
   const recorded=carreImages.find(image=>image.eventId===event.id);
   const officialImage=event.officialImage??recorded?.original;
   if(officialImage&&/^https:\/\/img\.mapado\.net\/[a-zA-Z0-9_./%-]+\.(?:jpe?g|png|webp)$/i.test(officialImage)){
@@ -35,5 +38,6 @@ export function mediaForEvent(event:GolfeEvent):EventMedia{
 
 export function eventMediaLabel(image:EventMedia,locale:string){
  const fr=locale==='fr';
+ if(image.kind==='official'&&cinemaPoster(image.src))return fr?'Affiche du film':'Film poster';
  return image.kind==='official'?(fr?'Visuel officiel du spectacle':'Official show image'):image.kind==='illustration'?(fr?'Illustration de contexte':'Context illustration'):(fr?'Photo de contexte':'Context photo');
 }

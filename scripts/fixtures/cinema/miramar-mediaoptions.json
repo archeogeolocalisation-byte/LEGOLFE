@@ -1,0 +1,98 @@
+[
+  {
+    "id": 2,
+    "label": "SOUND_71"
+  },
+  {
+    "id": 3,
+    "label": "SOUND_ATMOS"
+  },
+  {
+    "id": 4,
+    "label": "SOUND_DTSX"
+  },
+  {
+    "id": 5,
+    "label": "SOUND_AURO3D"
+  },
+  {
+    "id": 6,
+    "label": "SOUND_DBOX"
+  },
+  {
+    "id": 7,
+    "label": "SOUND_HI"
+  },
+  {
+    "id": 8,
+    "label": "SOUND_VI"
+  },
+  {
+    "id": 11,
+    "label": "SUBTITLE_CCAP"
+  },
+  {
+    "id": 1,
+    "label": "PICTURE_HFR"
+  },
+  {
+    "id": 21,
+    "label": "PICTURE_HDR"
+  },
+  {
+    "id": 14,
+    "label": "PICTURE_4K"
+  },
+  {
+    "id": 15,
+    "label": "PICTURE_IMAX"
+  },
+  {
+    "id": 13,
+    "label": "PICTURE_35MM"
+  },
+  {
+    "id": 20,
+    "label": "PICTURE_3D"
+  },
+  {
+    "id": 10,
+    "label": "SUBTITLE_OCAP"
+  },
+  {
+    "id": 12,
+    "label": "PICTURE_2K"
+  },
+  {
+    "id": 19,
+    "label": "VERSION_MUET"
+  },
+  {
+    "id": 18,
+    "label": "VERSION_ORIGINAL_LOCAL"
+  },
+  {
+    "id": 17,
+    "label": "VERSION_ORIGINAL"
+  },
+  {
+    "id": 16,
+    "label": "VERSION_LOCAL"
+  },
+  {
+    "id": 23,
+    "label": "SOUND_51"
+  },
+  {
+    "id": 25,
+    "label": "PICTURE_SCREENX"
+  },
+  {
+    "id": 24,
+    "label": "PASS_SANITAIRE"
+  },
+  {
+    "id": 9,
+    "label": "SUBTITLE_NORMAL"
+  }
+]
