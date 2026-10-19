@@ -113,7 +113,7 @@ export default function AgendaClient({ locale, events, initialDay }: Props) {
           </div>
           <div className="mt-3 flex items-center gap-3">
             <label htmlFor="agenda-month" className="text-[10px] font-black uppercase tracking-[.13em]">{fr ? "Choisir un mois" : "Choose a month"}</label>
-            <select id="agenda-month" value={month} onChange={event => setMonth(event.target.value)} className="max-w-full border border-white/30 bg-[#111111] px-3 py-2 text-xs font-bold text-white">
+            <select id="agenda-month" value={month} onChange={event => setMonth(event.target.value)} className={styles.filterSelect+" max-w-full border border-white/30 bg-[#111111] px-3 py-2 text-xs font-bold text-white"}>
               <option value="">{fr ? "Période rapide" : "Quick dates"}</option>
               {months.map(value => <option key={value} value={value}>{formatCalendarMonth(value, locale)}</option>)}
             </select>
@@ -129,7 +129,7 @@ export default function AgendaClient({ locale, events, initialDay }: Props) {
                   </div>
                   <div>
                     <label htmlFor="agenda-location" className="block text-[10px] font-black uppercase tracking-[.18em] text-white/55">{fr ? "OÙ ?" : "WHERE?"}</label>
-                    <select id="agenda-location" value={location} onChange={(e) => setLocation(e.target.value)} className="mt-2 min-w-52 border-0 border-b-2 border-[#8BDCF2] bg-[#111111] px-2 py-2 text-sm font-bold text-white focus-visible:outline-2 focus-visible:outline-[#8BDCF2]">
+                    <select id="agenda-location" value={location} onChange={(e) => setLocation(e.target.value)} className={styles.filterSelect+" mt-2 min-w-52 border-0 border-b-2 border-[#8BDCF2] bg-[#111111] px-2 py-2 text-sm font-bold text-white focus-visible:outline-2 focus-visible:outline-[#8BDCF2]"}>
                       <option value="all">{fr ? "Tout le Golfe" : "Across the Golfe"}</option>
                       {locations.map((loc) => <option key={loc} value={loc}>{loc}</option>)}
                     </select>
@@ -141,7 +141,7 @@ export default function AgendaClient({ locale, events, initialDay }: Props) {
 
       {category==="cinema"&&<section className="mx-auto max-w-7xl px-6 pt-8 text-white md:px-10" aria-label={fr?"Les cinémas du Golfe":"Cinemas around the Golfe"}>
        <h2 className="text-xl font-black">{fr?"LES CINÉMAS DU GOLFE":"CINEMAS AROUND THE GOLFE"}</h2>
-       <p className="mt-3 max-w-3xl text-sm leading-6 text-white/70">{fr?"Les films ci-dessous correspondent aux séances publiées pour la période choisie. Horaires susceptibles de changer : vérifiez le programme du cinéma avant de partir. Toutes les salles ne disposent pas d’un programme importable.":"Films below have published screenings within your selected dates. Schedules can change: check the cinema’s programme before travelling. Not every cinema has an importable programme."}</p>
+       <p className="mt-3 max-w-3xl text-sm leading-6 text-white/70">{fr?"Les films ci-dessous correspondent aux séances publiées pour la période choisie. Horaires susceptibles de changer : vérifiez le programme du cinéma avant de partir. Les séances de certaines salles sont à consulter directement sur leur site.":"Films below have published screenings within your selected dates. Schedules can change: check the cinema’s programme before travelling. For some cinemas, screenings are listed directly on their own website."}</p>
        <ul className="mt-4 flex flex-wrap gap-3">{cinemas.filter(c=>location==="all"||c.town===location).map(c=><li key={c.id}><a className="inline-block border border-white/30 px-3 py-3 text-xs font-bold underline underline-offset-4" href={c.url} target="_blank" rel="noopener noreferrer">{c.name} · {c.town} ↗{!c.imported&&<span className="mt-1 block text-white/65">{fr?"Programme sur le site officiel":"Programme on the official website"}</span>}</a></li>)}</ul>
       </section>}
 
