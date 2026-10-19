@@ -17,7 +17,7 @@ const server=spawn(process.execPath,[require.resolve('next/dist/bin/next'),'star
   const firstCard=page.locator("[data-agenda-featured],[data-agenda-event]").first();if(await firstCard.count()){await firstCard.scrollIntoViewIfNeeded();await page.screenshot({path:path.join(out,`film-${locale}-${width}.png`)});}
   await page.locator('#agenda-location').selectOption('Cogolin');assert.equal(await panel.locator('a').count(),1);assert.match(await panel.innerText(),/Raimu/);
   await page.getByRole('button',{name:new RegExp(fr?'Aujourd’hui':'Today')}).click();
-  const cards=page.locator('[data-agenda-featured],[data-agenda-event]');for(const card of await cards.all())assert.match(await card.innerText(),/Cogolin/);
+  const cards=page.locator('[data-agenda-featured],[data-agenda-event]');for(const card of await cards.all())assert.match(await card.innerText(),/Cogolin/i);
   await context.close();
  }
  console.log('Cinema mobile WebKit: FR/EN at 375/390px, inline category, four official programme links, town/date filters and horizontal bounds passed.');
