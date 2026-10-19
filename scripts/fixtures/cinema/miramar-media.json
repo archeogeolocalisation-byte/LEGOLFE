@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1402,
+    "title": "DIGGER",
+    "posterpath": "https://cinemedia.cine.digital/medias/1/a5/a5c5c2ee-11cf-477d-9c9e-6126d73ea681.jpeg",
+    "duration": 7800,
+    "active": true,
+    "deleted": false,
+    "excludefrominternet": false
+  },
+  {
+    "id": 1396,
+    "title": "JUSTIN LE JUSTE",
+    "posterpath": "https://cinemedia.cine.digital/medias/1/16/1660c264-5a1f-42a9-bfab-6a8b735df8e7.jpeg",
+    "duration": 6600,
+    "active": true,
+    "deleted": false,
+    "excludefrominternet": false
+  }
+]

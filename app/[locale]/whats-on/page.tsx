@@ -25,5 +25,5 @@ export default async function WhatsOn({ params }: { params: Promise<{ locale: st
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
  const { locale } = await params; if (!isLocale(locale)) notFound();
- return pageMetadata({ title: locale === "fr" ? "Agenda du Golfe de Saint-Tropez : sorties et événements" : "Golfe de Saint-Tropez events and things to do", description: locale === "fr" ? "Concerts, culture, régates et sorties en famille : consultez l’agenda de Saint-Tropez, Ramatuelle et des communes du Golfe." : "Concerts, culture, sailing and family outings: explore events in Saint-Tropez, Ramatuelle and around the Golfe.", path: `/${locale}/whats-on`, locale });
+ return pageMetadata({ title: locale === "fr" ? "Agenda du Golfe de Saint-Tropez : sorties et événements" : "Golfe de Saint-Tropez events and things to do", description: locale === "fr" ? "Cinéma, concerts, culture, régates et sorties en famille : consultez l’agenda de Saint-Tropez, Ramatuelle et des communes du Golfe." : "Cinema, concerts, culture, sailing and family outings: explore events in Saint-Tropez, Ramatuelle and around the Golfe.", path: `/${locale}/whats-on`, locale });
 }
