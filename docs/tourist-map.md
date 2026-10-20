@@ -43,3 +43,12 @@ Douze communes présentées sous la carte dans une grille de trois colonnes dès
 Explorer masque les onze fiches communales existantes et Port Grimaud dans ses résultats, compteurs et pages de catégorie. Les fiches et URL ne sont pas supprimées. Le filtre historique `places` devient Patrimoine / Heritage et conserve le Moulin de Paillas ; la recherche par commune reste disponible. Les liens de communes en bas d'Explorer sont retirés au profit de l'accès à Découvrir le Golfe. Les textes d'introduction et métadonnées d'Explorer correspondent désormais aux adresses et activités.
 
 Validation étendue : douze cartes, illustrations et liens FR/EN ; absence des fiches village dans tous les filtres d'Explorer et sa catégorie Patrimoine ; conservation des sites à visiter. TypeScript, ESLint et CI. Vérification navigateur des trois/deux/une colonnes à faire après publication. Aucune migration ou variable requise, preview publique désactivée pour design/commune-grid.
+
+
+## Aperçus sur la carte — 20 octobre 2026
+
+La carte des adresses affiche maintenant un aperçu directement dans la carte : premier média de la fiche (avec crédit et mention de vue de secteur le cas échéant), titre et lien vers la fiche. La sélection recentre le repère pour laisser la place au visuel. La fenêtre reste dans les limites du plan, se ferme par la croix, Échap, clic sur le fond ou changement de catégorie. Les liens SSR de toutes les fiches restent disponibles sous la carte. Aucun service cartographique supplémentaire.
+
+Le point San Peïre est déplacé du village au sommet, aux coordonnées 43.3111428, 6.5611339 publiées par l’Office de Tourisme Communautaire du Golfe de Saint-Tropez sur Cirkwi : https://www.cirkwi.com/fr/point-interet/3041300-san-peire (consulté le 20 octobre 2026). Le lien Google Maps demande un trajet à pied ; le texte distingue le sommet du stationnement et du départ de randonnée. Les coordonnées partagées sont reprises par la fiche et la carte des adresses.
+
+Explorer et Maisons/Villas partagent le même fond #fdfcf9 ; les panneaux de recherche restent blancs et les boutons beiges. Test navigateur ajouté en CI : scripts/test-discovery-map-browser.cjs, FR/EN à 375 et 1280 px, captures dans discovery-map-webkit.

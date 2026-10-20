@@ -71,6 +71,19 @@ jobs:
           NEXT_PUBLIC_SUPABASE_URL: https://example.supabase.co
           NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: sb_publishable_ci_dummy
           NEXT_PUBLIC_SITE_URL: https://legolfe.com
+      - name: Verify map previews on mobile and desktop Safari
+        run: node scripts/test-discovery-map-browser.cjs
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: https://example.supabase.co
+          NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: sb_publishable_ci_dummy
+          NEXT_PUBLIC_SITE_URL: https://legolfe.com
+      - name: Save map preview screenshots
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: discovery-map-webkit
+          path: test-results/discovery-map
+          if-no-files-found: ignore
       - name: Save cinema screenshots
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
