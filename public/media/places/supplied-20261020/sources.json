@@ -1,0 +1,61 @@
+{
+  "note": "Photos fournies par l’utilisateur le 20 octobre 2026. Aucun nom de photographe ou licence fourni. Copies WebP sans métadonnées EXIF. Sénéquier : images préparées, fiche à identifier.",
+  "files": [
+    {
+      "uploaded_name": "IMG-20261020-WA0092.jpg",
+      "file": "/media/places/supplied-20261020/senequier-terrasse.webp",
+      "width": 1280,
+      "height": 960,
+      "bytes": 181466,
+      "sha256": "123dba493a00ef2b416c843862b8a2603923f041a10debff2af475ea3e262b5b"
+    },
+    {
+      "uploaded_name": "IMG-20261020-WA0093.jpg",
+      "file": "/media/places/supplied-20261020/senequier-facade.webp",
+      "width": 1280,
+      "height": 960,
+      "bytes": 158200,
+      "sha256": "f3a7e5b7c76d395f2ae043c44f9bc21c61ca567c009e7a20521e563002c0a19f"
+    },
+    {
+      "uploaded_name": "IMG-20261020-WA0074.jpg",
+      "file": "/media/places/supplied-20261020/camarat-phare.webp",
+      "width": 1280,
+      "height": 960,
+      "bytes": 121474,
+      "sha256": "fba4bcb2cb36c5209b34a124ab3127d1bd83bafc9d23d7b9c2325965c4e3e50f"
+    },
+    {
+      "uploaded_name": "IMG-20261020-WA0064.jpg",
+      "file": "/media/places/supplied-20261020/camarat-tour.webp",
+      "width": 960,
+      "height": 1280,
+      "bytes": 131484,
+      "sha256": "0b2bdb751f9c3500ed419f0a673f3ed79d0cfc415c38c73d8a36ac04cebf2f4c"
+    },
+    {
+      "uploaded_name": "IMG-20261020-WA0066.jpg",
+      "file": "/media/places/supplied-20261020/camarat-panorama.webp",
+      "width": 1280,
+      "height": 960,
+      "bytes": 192494,
+      "sha256": "8e7233179befa0c6735445f9c94e4c2f3b385713179a4272d7ae8713b9d93aae"
+    },
+    {
+      "uploaded_name": "IMG-20261020-WA0070.jpg",
+      "file": "/media/places/supplied-20261020/camarat-sentier.webp",
+      "width": 960,
+      "height": 1280,
+      "bytes": 254402,
+      "sha256": "b3063a4c3c826d1c615c2d381412a4d2086728c834660e1ba07ace54dc3a6468"
+    },
+    {
+      "uploaded_name": "IMG-20261020-WA0087.jpg",
+      "file": "/media/places/supplied-20261020/minuty-vignes.webp",
+      "width": 1280,
+      "height": 960,
+      "bytes": 236952,
+      "sha256": "fdd7420a642d8cc451df13eec5202bfc8d0c5bb5ef254b961f84b7c515809280"
+    }
+  ]
+}

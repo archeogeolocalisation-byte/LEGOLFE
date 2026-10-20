@@ -40,8 +40,15 @@ const licenses=JSON.parse(fs.readFileSync(path.join(__dirname,'../public/media/p
   }
  }
  const experienceIds=['domaine-de-la-croix','chateau-des-marres','base-nautique-cogolin','musee-gendarmerie-cinema'];
+ for(const locale of ['fr','en']){
+  const {suppliedPlaceMedia}=require('../data/suppliedPlaceMedia.ts'),{mediaForPlace}=require('../lib/placeMedia.ts');
+  const photos=suppliedPlaceMedia['phare-de-camarat'];assert.equal(photos.length,4);
+  const html=renderToStaticMarkup(Sheet({id:'phare-de-camarat',locale}));for(const photo of photos)assert.ok(html.includes(photo.src),'all four supplied Camarat photos render');
+  for(const id of ['phare-de-camarat','chateau-minuty']){const metadata=await Page.generateMetadata({params:Promise.resolve({locale,id})});assert.ok(metadata.openGraph.images[0].url.endsWith(mediaForPlace(id).src),'sharing image matches supplied cover');}
+ }
  const {newExperienceFacts}=require('../data/newExperienceFacts.ts');
  const {newExperienceMedia}=require('../data/newExperienceMedia.ts');
+ const {suppliedPlaceMedia}=require('../data/suppliedPlaceMedia.ts');
  for(const id of experienceIds){
   assert.ok(placeFacts[id],id);assert.ok(places.some(p=>p.id===id),id);
   const fact=newExperienceFacts[id],media=newExperienceMedia[id];
@@ -63,7 +70,7 @@ const licenses=JSON.parse(fs.readFileSync(path.join(__dirname,'../public/media/p
     assert.equal(mapUrl.origin,'https://www.google.com');assert.equal(mapUrl.searchParams.get('output'),'embed');
     assert.equal(mapUrl.searchParams.get('q'),fact.address,`${id}/${locale}: address fallback searches the visit address`);
    }
-   assert.equal((html.match(/<address/g)||[]).length,1);assert.equal(html.includes('ADRESSE DE VISITE'),false);assert.ok(html.includes(media[0].licenseUrl));
+   assert.equal((html.match(/<address/g)||[]).length,1);assert.equal(html.includes('ADRESSE DE VISITE'),false);const displayed=suppliedPlaceMedia[id]??media;if(displayed[0].licenseUrl)assert.ok(html.includes(displayed[0].licenseUrl));for(const photo of suppliedPlaceMedia[id]??[])assert.ok(html.includes(photo.src));
    assert.match(html,/datetime="2026-10-14"/i);
    for(const source of fact.sources)assert.ok(html.includes(source.url));
    const metadata=await Page.generateMetadata({params:Promise.resolve({locale,id})});
@@ -119,7 +126,7 @@ const licenses=JSON.parse(fs.readFileSync(path.join(__dirname,'../public/media/p
  for(const id of localIds){
   const fact=placeFacts[id],place=places.find(p=>p.id===id),media=photosForPlace(id),point=placeMapPoints[id][0];
   assert.ok(isExploreAddress(place),`${id}: discoverable in Explorer`);
-  assert.ok(media.length>0&&media[0].credit&&media[0].source&&media[0].licenseUrl,`${id}: attributed photograph`);
+  assert.ok(media.length>0&&(suppliedPlaceMedia[id]||(media[0].credit&&media[0].source&&media[0].licenseUrl)),`${id}: supplied or attributed photograph`);
   assert.ok(fact.sources.length>=2&&fact.nearby.every(target=>target!==id&&places.some(p=>p.id===target)));
   assert.equal(place.latitude,point.latitude);assert.equal(place.longitude,point.longitude);
   assert.ok(fact.sources.some(s=>s.url===point.source)||point.source.startsWith('https://www.openstreetmap.org/'));
@@ -128,7 +135,7 @@ const licenses=JSON.parse(fs.readFileSync(path.join(__dirname,'../public/media/p
    assert.ok(copy.sections.length>=4&&copy.questions.length>=2&&copy.intro.length>180);
    assert.ok(html.includes(editorialSignatures[id][locale].subtitle.replaceAll('&','&amp;')));
    assert.equal((html.match(/<h1[ >]/g)||[]).length,1);
-   assert.ok(html.includes(media[0].source.replaceAll('&','&amp;'))&&html.includes(media[0].licenseUrl));
+   if(suppliedPlaceMedia[id]){for(const photo of suppliedPlaceMedia[id])assert.ok(html.includes(photo.src));}else assert.ok(html.includes(media[0].source.replaceAll('&','&amp;'))&&html.includes(media[0].licenseUrl));
    assert.equal(html.includes(locale==='fr'?'Photo du secteur':'Area photograph'),!!media[0].contextual,`${id}: contextual image disclosure`);
    assert.ok(html.includes(`dateTime="${fact.verified}"`)||html.includes(`datetime="${fact.verified}"`));
    for(const target of fact.nearby)assert.ok(html.includes(`href="/${locale}/place/${target}"`));

@@ -119,5 +119,69 @@ export const suppliedPlaceMedia:Record<string,VillagePhoto[]> = {
       "licenseUrl": "",
       "source": ""
     }
-  ]
+  ],
+  "phare-de-camarat": [
+  {
+    "src": "/media/places/supplied-20261020/camarat-phare.webp",
+    "alt": "Le phare de Camarat et ses bâtiments à Ramatuelle",
+    "caption": {
+      "fr": "Le phare de Camarat et ses bâtiments à Ramatuelle",
+      "en": "Camarat lighthouse and its buildings in Ramatuelle"
+    },
+    "credit": "",
+    "license": "",
+    "licenseUrl": "",
+    "source": ""
+  },
+  {
+    "src": "/media/places/supplied-20261020/camarat-tour.webp",
+    "alt": "La tour du phare de Camarat",
+    "caption": {
+      "fr": "La tour du phare de Camarat",
+      "en": "Camarat lighthouse tower"
+    },
+    "credit": "",
+    "license": "",
+    "licenseUrl": "",
+    "source": ""
+  },
+  {
+    "src": "/media/places/supplied-20261020/camarat-panorama.webp",
+    "alt": "Le littoral et la mer depuis les hauteurs du cap Camarat",
+    "caption": {
+      "fr": "Le littoral et la mer depuis les hauteurs du cap Camarat",
+      "en": "Coastal panorama from the heights of Cap Camarat"
+    },
+    "credit": "",
+    "license": "",
+    "licenseUrl": "",
+    "source": ""
+  },
+  {
+    "src": "/media/places/supplied-20261020/camarat-sentier.webp",
+    "alt": "Le phare de Camarat vu depuis le sentier dans les pins",
+    "caption": {
+      "fr": "Le phare de Camarat vu depuis le sentier dans les pins",
+      "en": "Camarat lighthouse seen from the pine-lined path"
+    },
+    "credit": "",
+    "license": "",
+    "licenseUrl": "",
+    "source": ""
+  }
+],
+  "chateau-minuty": [
+  {
+    "src": "/media/places/supplied-20261020/minuty-vignes.webp",
+    "alt": "Les vignes et les bâtiments de Château Minuty à Gassin",
+    "caption": {
+      "fr": "Les vignes et les bâtiments de Château Minuty à Gassin",
+      "en": "Château Minuty vineyards and buildings in Gassin"
+    },
+    "credit": "",
+    "license": "",
+    "licenseUrl": "",
+    "source": ""
+  }
+],
 };
