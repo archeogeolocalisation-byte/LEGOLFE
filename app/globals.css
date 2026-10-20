@@ -149,17 +149,17 @@ button,textarea,input { font:inherit; }
 }
 @media(prefers-reduced-motion:reduce){.lg-btn,.lg-link-accent{transition:none}}
 
-/* Explorer: beige search panel with LE GOLFE blue accents. */
-.explore-controls{background:#eee7da;color:#0b3046;border-color:#c7bba8;padding:24px;}
+/* Explorer: white search panel, beige filter buttons and LE GOLFE blue accents. */
+.explore-controls{background:#fff;color:#0b3046;border-color:#c7bba8;padding:24px;}
 .explore-controls .lg-accent{color:#0b4f6c;}
 .explore-search input,.explore-search select{background:#fff;color:#0b3046;border-color:#b9ad99;}
 .explore-search input::placeholder{color:#536570;opacity:1;}
 .explore-search .lg-btn{background:#0b4f6c;border-color:#0b4f6c;color:#fff;}
-.explore-themes .explore-theme{display:inline-flex;align-items:center;gap:10px;min-height:44px;padding:9px 12px;border:1px solid #aa9e8b;background:transparent;color:#0b3046;font-size:10px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;transition:background .15s,color .15s;}
+.explore-themes .explore-theme{display:inline-flex;align-items:center;gap:10px;min-height:44px;padding:9px 12px;border:1px solid #aa9e8b;background:#eee7da;color:#0b3046;font-size:10px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;transition:background .15s,color .15s;}
 .explore-themes .explore-theme:hover{background:#e1d6c4;border-color:#867a67;}
 .explore-themes .explore-theme[aria-current="page"]{background:#0b4f6c;border-color:#0b4f6c;color:#fff;}
 .explore-controls :is(a,button,input,select):focus-visible{outline:2px solid #0b4f6c;outline-offset:3px;}
-/* Maisons & villas: compact search and beige palette. */
+/* Maisons & villas: compact white search panel with beige filter buttons. */
 .stay-page{background:#fdfcf9;color:#0b3046;}
 .stay-collection{padding-top:28px;padding-bottom:64px;}
 .stay-hero{display:grid;gap:28px;align-items:center;margin-bottom:32px;}
@@ -169,12 +169,12 @@ button,textarea,input { font:inherit; }
 .stay-hero-image{position:relative;overflow:hidden;background:#dce9ed;}
 .stay-hero-image img{width:100%;height:100%;aspect-ratio:16/10;object-fit:cover;}
 .stay-hero-image figcaption{position:absolute;bottom:0;left:0;right:0;background:#0b3046e8;color:#fff;padding:12px 16px;font-size:10px;line-height:1.5;}
-.stay-search{background:#eee7da;color:#0b3046;border:1px solid #c7bba8;padding:22px;}
+.stay-search{background:#fff;color:#0b3046;border:1px solid #c7bba8;padding:22px;}
 .stay-search-heading{display:flex;align-items:center;justify-content:space-between;gap:16px;}
-.stay-search-heading .lg-btn{background:#0b4f6c;color:#fff;border-color:#0b4f6c;}
+.stay-search-heading .lg-btn{background:#eee7da;color:#0b3046;border-color:#aa9e8b;}
 .stay-filter-panel{margin-top:18px;}
 .stay-distances{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:18px;}
-.stay-distances .lg-btn{min-height:44px;padding:8px 12px;background:transparent;color:#0b3046;border-color:#aa9e8b;font-size:9px;letter-spacing:.06em;}
+.stay-distances .lg-btn{min-height:44px;padding:8px 12px;background:#eee7da;color:#0b3046;border-color:#aa9e8b;font-size:9px;letter-spacing:.06em;}
 .stay-distances .lg-btn:hover,.stay-distances .lg-btn[aria-current="page"]{background:#0b4f6c;color:#fff;border-color:#0b4f6c;}
 .stay-fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;}
 .stay-fields label{min-width:0;}
@@ -184,7 +184,7 @@ button,textarea,input { font:inherit; }
 .stay-essentials{margin-top:18px;}
 .stay-essentials legend{font-size:9px;color:#385765;}
 .stay-amenities{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;}
-.stay-amenity{display:flex;align-items:center;gap:8px;min-height:44px;padding:8px 10px;border:1px solid #aa9e8b;font-size:12px;font-weight:600;cursor:pointer;}
+.stay-amenity{display:flex;align-items:center;gap:8px;min-height:44px;padding:8px 10px;border:1px solid #aa9e8b;background:#eee7da;font-size:12px;font-weight:600;cursor:pointer;}
 .stay-amenity:has(input:checked){background:#0b4f6c;color:#fff;border-color:#0b4f6c;}
 .stay-amenity input{accent-color:#0b4f6c;flex-shrink:0;}
 .stay-more{margin-top:14px;padding-top:4px;border-top:1px solid #c7bba8;}
