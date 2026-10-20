@@ -1,3 +1,4 @@
+import {suppliedPlaceMedia} from '../data/suppliedPlaceMedia';
 import {localPlacePhoto} from '../lib/placeImage';
 import {newExperienceMedia} from '../data/newExperienceMedia';
 import PlaceTaxonomy from './PlaceTaxonomy';
@@ -16,7 +17,7 @@ import { placeFactsMedia } from '../data/placeFactsMedia';
 import type { Locale } from '../lib/i18n';
 
 export default function PlaceFactSheet({id,locale}:{id:string;locale:Locale}) {
- const sheet=placeFacts[id],copy=sheet.copy[locale],photo=placeFactsMedia[id],experiencePhotos=(newExperienceMedia[id]||[]).map(localPlacePhoto),experiencePhoto=experiencePhotos[0],place=places.find(p=>p.id===id)!;
+ const sheet=placeFacts[id],copy=sheet.copy[locale],suppliedPhotos=suppliedPlaceMedia[id],photo=suppliedPhotos?undefined:placeFactsMedia[id],experiencePhotos=(suppliedPhotos??newExperienceMedia[id]??[]).map(localPlacePhoto),experiencePhoto=experiencePhotos[0],place=places.find(p=>p.id===id)!;
  const fr=locale==='fr',signature=editorialSignatures[id]?.[locale]??fallbackSignature(place.name,locale);
  const chapters=copy.sections;
  const visitAddress=newExperienceFacts[id]?.address??copy.facts.find(([label])=>/^(adresse|address)$/i.test(label.trim()))?.[1];
@@ -37,10 +38,10 @@ export default function PlaceFactSheet({id,locale}:{id:string;locale:Locale}) {
     <figcaption className="mt-3 text-xs leading-6 text-black/70">
      {experiencePhoto?.contextual&&<span className="mb-2 inline-block bg-[#edf4f6] px-2 py-1 text-[10px] font-black uppercase text-[#0B4F6C]">{fr?'Photo du secteur':'Area photograph'}</span>}
      <span className="block font-bold">{(photo||experiencePhoto)?.caption[locale]}</span>
-     <a className="underline" href={(photo||experiencePhoto)?.source} target="_blank" rel="noreferrer">{(photo||experiencePhoto)?.credit}</a> · <a className="underline" href={(photo||experiencePhoto)?.licenseUrl} target="_blank" rel="noreferrer">{(photo||experiencePhoto)?.license}</a> · {photo||experiencePhoto?.src.startsWith('/media/') ? (fr?'Redimensionnement, conversion WebP et recadrage d’affichage ; image adaptée sous la même licence.':'Resized, converted to WebP and display-cropped; adapted image under the same licence.') : (fr?'Image Wikimedia Commons affichée avec recadrage CSS, licence et source créditées.':'Wikimedia Commons image shown with CSS cropping, source and licence credited.')}
+     {((photo||experiencePhoto)?.credit||(photo||experiencePhoto)?.license)&&<><a className="underline" href={(photo||experiencePhoto)?.source} target="_blank" rel="noreferrer">{(photo||experiencePhoto)?.credit}</a> · <a className="underline" href={(photo||experiencePhoto)?.licenseUrl} target="_blank" rel="noreferrer">{(photo||experiencePhoto)?.license}</a> · </>}{suppliedPhotos?(fr?'Photo fournie · recadrage d’affichage':'Supplied photograph · display crop'):photo||experiencePhoto?.src.startsWith('/media/') ? (fr?'Redimensionnement, conversion WebP et recadrage d’affichage ; image adaptée sous la même licence.':'Resized, converted to WebP and display-cropped; adapted image under the same licence.') : (fr?'Image Wikimedia Commons affichée avec recadrage CSS, licence et source créditées.':'Wikimedia Commons image shown with CSS cropping, source and licence credited.')}
     </figcaption>
    </figure>
-   {experiencePhotos.length>1&&<div className="mt-5 grid gap-5 md:grid-cols-2">{experiencePhotos.slice(1).map(image=><figure key={image.source}><img src={image.src} alt={image.alt} className="aspect-[4/3] w-full object-cover" loading="lazy"/><figcaption className="mt-2 text-xs leading-5 text-black/60">{image.caption[locale]} · <a href={image.source} target="_blank" rel="noreferrer" className="underline">{image.credit}</a> · <a href={image.licenseUrl} target="_blank" rel="noreferrer" className="underline">{image.license}</a></figcaption></figure>)}</div>}
+   {experiencePhotos.length>1&&<div className="mt-5 grid gap-5 md:grid-cols-2">{experiencePhotos.slice(1).map(image=><figure key={image.src}><img src={image.src} alt={image.alt} className={suppliedPhotos?"h-auto w-full":"aspect-[4/3] w-full object-cover"} loading="lazy"/><figcaption className="mt-2 text-xs leading-5 text-black/60">{image.caption[locale]}{(image.credit||image.license)&&<> · <a href={image.source} target="_blank" rel="noreferrer" className="underline">{image.credit}</a> · <a href={image.licenseUrl} target="_blank" rel="noreferrer" className="underline">{image.license}</a></>}</figcaption></figure>)}</div>}
 
   </article>
   <section className="lg-shell py-16 md:py-24">
