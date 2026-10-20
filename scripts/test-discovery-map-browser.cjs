@@ -16,7 +16,7 @@ const server=spawn(process.execPath,[require.resolve('next/dist/bin/next'),'star
   const popup=section.locator('#discovery-map-preview');await popup.waitFor({state:'visible'});
   assert.match(await popup.getByRole('heading').innerText(),/Domaine de La Croix/i);
   const link=popup.getByRole('link',{name:fr?'Voir la fiche':'View place'});assert.equal(await link.getAttribute('href'),'/'+locale+'/place/domaine-de-la-croix');
-  await popup.locator('img').evaluate(img=>img.decode());
+  await page.waitForFunction(()=>{const img=document.querySelector('#discovery-map-preview img');return img?.complete&&img.naturalWidth>0;});
   assert.ok(await popup.locator('img').evaluate(img=>img.complete&&img.naturalWidth>0));
   const box=await popup.boundingBox(),mapBox=await map.boundingBox(),linkBox=await link.boundingBox();
   assert.ok(box.x>=mapBox.x&&box.x+box.width<=mapBox.x+mapBox.width+1&&box.y>=mapBox.y&&box.y+box.height<=mapBox.y+mapBox.height+1,JSON.stringify({box,mapBox}));
