@@ -21,7 +21,7 @@ const newPlaces = ['chateau-des-marres', 'base-nautique-cogolin', 'cogolin-villa
 for (const id of newPlaces) {
   const p = placeMapPoints[id][0];
   assert.ok(validMapPoint(p.latitude, p.longitude), id);
-  assert.equal(p.checked, '2026-10-16');
+  assert.equal(p.checked, id==='san-peire-randonnee'?'2026-10-20':'2026-10-16');
   assert.ok(p.note.fr.length > 70 && p.note.en.length > 70);
   assert.equal(new URL(pointDirectionsUrl(p)).searchParams.get('destination'), p.directionsQuery || `${p.latitude},${p.longitude}`);
 }
@@ -50,11 +50,13 @@ assert.ok(eventsInWindow(catalog, dateWindow('today', '2026-11-14')).some(e => e
 const remaining=places.filter(p=>!placeMapPoints[p.id]?.length).map(p=>p.id).sort();
 assert.deepEqual(remaining,['bateaux-verts-excursion','caseneuve-catamaran','cecile-golmard-chef','maison-laurent-conciergerie','taxi-estelle'],'every fixed venue and hiking reference is covered');
 const hike=placeMapPoints['san-peire-randonnee'][0];
-assert.equal(hike.kind,'area');assert.equal(hike.latitude,43.339115);assert.equal(hike.longitude,6.547526);
-assert.ok(hike.directionsQuery.includes('place Clemenceau'),'hike reference is at the published village address, never the summit');
-assert.ok(hike.note.fr.includes('ni le sommet')&&hike.note.en.includes('neither the summit'));
+assert.equal(hike.kind,'area');assert.equal(hike.latitude,43.3111428);assert.equal(hike.longitude,6.5611339);
+assert.equal(hike.source,'https://www.cirkwi.com/fr/point-interet/3041300-san-peire');
+assert.equal(new URL(pointDirectionsUrl(hike)).searchParams.get('destination'),'43.3111428,6.5611339');
+assert.equal(new URL(pointDirectionsUrl(hike)).searchParams.get('travelmode'),'walking');
+assert.ok(hike.note.fr.includes('sommet')&&hike.note.en.includes('summit'));
 const {guides}=require('../data/guides.ts');
 assert.ok(guides.find(g=>g.slug==='randonnee-san-peire-plan-de-la-tour').placeIds.includes('san-peire-randonnee'),'hike links to its existing route guide');
 assert.equal(new URL(pointDirectionsUrl(placeMapPoints['byblos-beach'][0])).searchParams.get('destination'),'42 boulevard Patch, 83350 Ramatuelle, France');
 assert.equal(new URL(pointDirectionsUrl(placeMapPoints['club-55'][0])).searchParams.get('destination'),'43 boulevard Patch, 83350 Ramatuelle, France');
-console.log('Verified local catalog: 18 added map references, full fixed-place coverage, village hike reference and exact event sessions passed.');
+console.log('Verified local catalog: 18 added map references, full fixed-place coverage, summit hiking reference, walking directions and exact event sessions passed.');

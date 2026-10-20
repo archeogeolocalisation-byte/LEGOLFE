@@ -689,21 +689,18 @@ export const placeMapPoints:Record<string,MapPoint[]> = {
   ],
   "san-peire-randonnee": [
     {
-      "id": "san-peire-randonnee-reference",
-      "label": {
-        "fr": "Préparer la randonnée · centre du village",
-        "en": "Hike preparation · village centre"
-      },
-      "latitude": 43.339115,
-      "longitude": 6.547526,
-      "source": "https://www.golfe-sainttropez-tourisme.fr/fiche-apidae/randonnee-chemin-vers-le-san-peire/",
-      "checked": "2026-10-16",
-      "kind": "area",
-      "note": {
-        "fr": "Repère au village, 1 place Clemenceau, publié avec la randonnée. Ce point n’est ni le sommet ni une trace GPS du sentier. Consultez le topoguide et le balisage jaune, préparez le retour et vérifiez les restrictions d’accès aux massifs avant de partir.",
-        "en": "Village reference at 1 Place Clemenceau, published with the hike. This point is neither the summit nor a GPS trail track. Consult the official route and yellow waymarks, allow for the return and check forest-access restrictions before setting off."
-      },
-      "directionsQuery": "1 place Clemenceau, 83120 Le Plan-de-la-Tour, France"
+      id:"san-peire-sommet",
+      label:{fr:"San Peïre · sommet",en:"San Peïre · summit"},
+      latitude:43.3111428,
+      longitude:6.5611339,
+      source:"https://www.cirkwi.com/fr/point-interet/3041300-san-peire",
+      checked:"2026-10-20",
+      kind:"area",
+      travelMode:"walking",
+      note:{
+        fr:"Repère du sommet publié par l’Office de Tourisme Communautaire du Golfe de Saint-Tropez sur Cirkwi. Le sommet se rejoint à pied : ce n’est ni un parking ni un accès voiture. Préparez le départ au Plan-de-la-Tour avec le topoguide officiel, suivez le balisage jaune et vérifiez l’ouverture des massifs avant de partir.",
+        en:"Summit reference published on Cirkwi by the Golfe de Saint-Tropez community tourist office. The summit is reached on foot: this is neither a car park nor vehicle access. Prepare your trailhead at Le Plan-de-la-Tour using the official route, follow yellow waymarks and check forest-access restrictions before setting off."
+      }
     }
   ]
 };

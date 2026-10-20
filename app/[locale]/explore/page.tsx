@@ -15,7 +15,7 @@ type Props={params:Promise<{locale:string}>;searchParams?:Promise<PublicSearchPa
 export default async function Page({params,searchParams}:Props){
  const {locale:l}=await params;if(!isLocale(l))notFound();const t=ui[l];
  const sp=await searchParams??{};const initialFilter=resolveExploreFilter(sp.filter,sp.mood);const {query,town}=resolveExploreSearch(sp.q,sp.town);
- return <main className="min-h-screen bg-white text-black"><SiteHeader locale={l} path={exploreFilterHref(l,initialFilter,query,town).slice(3)}/>
+ return <main className="explore-background min-h-screen text-black"><SiteHeader locale={l} path={exploreFilterHref(l,initialFilter,query,town).slice(3)}/>
   <section className="lg-shell explore-page">
    <div className="explore-intro">
     <div>

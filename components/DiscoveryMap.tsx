@@ -1,9 +1,12 @@
 'use client';
 import Link from 'next/link';
+import Image from 'next/image';
+import type {PlaceMedia} from '../lib/placeMedia';
+import styles from './DiscoveryMap.module.css';
 import {useEffect,useMemo,useRef,useState,type PointerEvent,type WheelEvent} from 'react';
 import type {Locale} from '../lib/i18n';
 
-export type DiscoveryMapPlace={id:string;name:string;category:string;location:string;lat:number;lon:number;kind:'area'|'venue'};
+export type DiscoveryMapPlace={id:string;name:string;category:string;location:string;lat:number;lon:number;kind:'area'|'venue';media?:PlaceMedia};
 const TILE=256;
 const initial={lat:43.245,lon:6.563,zoom:11};
 const clamp=(n:number,min:number,max:number)=>Math.min(max,Math.max(min,n));
@@ -29,6 +32,8 @@ export default function DiscoveryMap({locale,places}:{locale:Locale;places:Disco
  const [map,setMap]=useState(initial);
  const [category,setCategory]=useState('all');
  const [selected,setSelected]=useState<string|null>(null);
+ const [failedImage,setFailedImage]=useState<string|null>(null);
+ const markerRefs=useRef(new Map<string,HTMLButtonElement>());
  const [size,setSize]=useState({w:1000,h:520});
  const root=useRef<HTMLDivElement|null>(null);
  const drag=useRef<{id:number;x:number;y:number;startX:number;startY:number;zoom:number;moved:boolean}|null>(null);
@@ -52,11 +57,14 @@ export default function DiscoveryMap({locale,places}:{locale:Locale;places:Disco
   }
   return list;
  },[base,map.zoom,center.x,center.y,size.w,size.h]);
- const focus=(p:DiscoveryMapPlace)=>{
-  setMap(v=>({...v,lat:p.lat,lon:p.lon,zoom:Math.max(v.zoom,12)}));setSelected(p.id);
+ const viewFor=(p:DiscoveryMapPlace,zoom:number)=>{
+  const point=world(p.lat,p.lon,zoom);
+  return {...fromWorld(point.x,point.y-Math.min(150,size.h/2-40),zoom),zoom};
  };
+ const focus=(p:DiscoveryMapPlace)=>{setMap(v=>viewFor(p,Math.max(v.zoom,12)));setSelected(p.id);};
+ const close=()=>{setSelected(null);if(selected)markerRefs.current.get(selected)?.focus({preventScroll:true});};
  const changeZoom=(next:number)=>{
-  setMap(v=>({...v,zoom:clamp(next,9,16)}));
+  setMap(v=>{const zoom=clamp(next,9,16),p=places.find(p=>p.id===selected);return p?viewFor(p,zoom):{...v,zoom};});
  };
  function start(e:PointerEvent<HTMLDivElement>){
   if(e.button!==0||(e.target as HTMLElement).closest('button,a,select'))return;
@@ -82,6 +90,10 @@ export default function DiscoveryMap({locale,places}:{locale:Locale;places:Disco
   e.preventDefault();changeZoom(map.zoom+(e.deltaY<0?1:-1));
  }
  const chosen=places.find(p=>p.id===selected&&visible.includes(p))||null;
+ const imageCredit=chosen?.media?[chosen.media.contextual?(fr?'Vue du secteur':'Area view'):'',chosen.media.credit,chosen.media.license].filter(Boolean).join(' · '):'';
+ const chosenPoint=chosen?world(chosen.lat,chosen.lon,map.zoom):null;
+ const popupBottom=chosenPoint?clamp(size.h/2+center.y-chosenPoint.y+40,36,size.h-160):36;
+ const popupLeft=chosenPoint?clamp(chosenPoint.x-center.x+size.w/2-150,12,Math.max(12,size.w-312)):12;
  return <section className="mt-14 border-t border-black/20 pt-10" aria-label={fr?'Carte interactive des adresses du Golfe':'Interactive map of Golfe places'}>
   <div className="flex flex-wrap items-end justify-between gap-5">
    <div><p className="lg-kicker text-[var(--lg-blue)]">{fr?'LE GOLFE SUR LA CARTE':'THE GOLFE ON THE MAP'}</p>
@@ -97,28 +109,34 @@ export default function DiscoveryMap({locale,places}:{locale:Locale;places:Disco
    {types.filter(type=>type==='all'||places.some(p=>p.category===type)).map(type=><button key={type} type="button" aria-pressed={category===type} onClick={()=>{setCategory(type);setSelected(null)}} className={`border px-3 py-2 text-[10px] font-black uppercase tracking-wider ${category===type?'border-[#0B4F6C] bg-[#0B4F6C] text-white':'border-black/20 bg-white hover:border-[#0B4F6C]'}`}>{labels[type][fr?0:1]}</button>)}
   </div>
   <div className="mt-4 overflow-hidden border border-black/20 bg-[#dde9e6]">
+   <div className="relative" onKeyDown={e=>{if(e.key==='Escape'&&chosen){e.preventDefault();e.stopPropagation();close();}}}>
    <div ref={root} role="region" aria-label={fr?'Carte déplaçable, utiliser les boutons plus et moins pour zoomer':'Pannable map, use plus and minus to zoom'} className="relative h-[410px] cursor-grab touch-none overflow-hidden active:cursor-grabbing sm:h-[530px]" onPointerDown={start} onPointerMove={move} onPointerUp={end} onPointerCancel={end} onWheel={wheel} onClick={()=>{if(suppressClick.current){suppressClick.current=false;return;}setSelected(null)}}>
     {tiles.map(tile=><img key={`${base}-${map.zoom}-${tile.x}-${tile.y}`} src={tile.url} alt="" draggable={false} aria-hidden="true" className="pointer-events-none absolute max-w-none select-none" style={{left:tile.left,top:tile.top,width:TILE,height:TILE}}/>)}
     {visible.map(p=>{const pt=world(p.lat,p.lon,map.zoom);const left=pt.x-center.x+size.w/2,top=pt.y-center.y+size.h/2;
       if(left< -20||top< -20||left>size.w+20||top>size.h+20)return null;
       const active=selected===p.id;
-      return <button key={p.id} type="button" onPointerDown={e=>e.stopPropagation()} onClick={e=>{e.stopPropagation();setSelected(p.id)}} title={p.name} aria-label={`${p.name}, ${p.location}`} aria-pressed={active} className={`absolute z-10 flex h-8 w-8 -translate-x-1/2 -translate-y-full items-center justify-center rounded-full border-2 border-white text-sm font-black shadow-md transition-transform hover:scale-125 focus-visible:outline-4 focus-visible:outline-[#0B4F6C] ${active?'scale-125 bg-[#071D2B] text-white':'bg-[#0B4F6C] text-white'}`} style={{left,top}}><span className="sr-only">{p.name}</span><span aria-hidden="true">{p.category==='eat'?'●':p.category==='beach'?'≈':p.category==='party'?'♫':'•'}</span></button>;
+      return <button key={p.id} type="button" onPointerDown={e=>e.stopPropagation()} ref={node=>{if(node)markerRefs.current.set(p.id,node);else markerRefs.current.delete(p.id);}} onClick={e=>{e.stopPropagation();focus(p)}} title={p.name} aria-label={`${p.name}, ${p.location}`} aria-pressed={active} aria-expanded={active} aria-controls={active?'discovery-map-preview':undefined} data-map-place={p.id} className={`absolute z-10 flex h-8 w-8 -translate-x-1/2 -translate-y-full items-center justify-center rounded-full border-2 border-white text-sm font-black shadow-md transition-transform hover:scale-125 focus-visible:outline-4 focus-visible:outline-[#0B4F6C] ${active?'scale-125 bg-[#071D2B] text-white':'bg-[#0B4F6C] text-white'}`} style={{left,top}}><span className="sr-only">{p.name}</span><span aria-hidden="true">{p.category==='eat'?'●':p.category==='beach'?'≈':p.category==='party'?'♫':'•'}</span></button>;
     })}
-    <div className="absolute right-3 top-3 z-20 flex flex-col overflow-hidden border border-black/20 bg-white shadow" role="group" aria-label={fr?'Zoom de la carte':'Map zoom'}>
+    <div className="absolute right-3 top-3 z-20 flex flex-col overflow-hidden border border-black/20 bg-white shadow" role="group" onClick={e=>e.stopPropagation()} aria-label={fr?'Zoom de la carte':'Map zoom'}>
      <button type="button" className="h-11 w-11 text-2xl font-black hover:bg-neutral-100" disabled={map.zoom>=16} onClick={()=>changeZoom(map.zoom+1)} aria-label={fr?'Zoomer':'Zoom in'}>+</button>
      <button type="button" className="h-11 w-11 border-t border-black/20 text-2xl font-black hover:bg-neutral-100" disabled={map.zoom<=9} onClick={()=>changeZoom(map.zoom-1)} aria-label={fr?'Dézoomer':'Zoom out'}>−</button>
      <button type="button" className="h-11 w-11 border-t border-black/20 text-lg font-black hover:bg-neutral-100" onClick={()=>{setMap(initial);setSelected(null)}} aria-label={fr?'Recentrer sur le Golfe':'Reset map center'}>⌖</button>
     </div>
     <div className="absolute bottom-2 left-2 z-20 bg-white/90 px-2 py-1 text-[9px] font-semibold">{base==='road'?<>© <a href="https://www.openstreetmap.org/copyright" rel="noopener noreferrer" target="_blank" className="underline">OpenStreetMap</a> contributors</>:<>Imagery © Esri, Maxar, Earthstar Geographics and the GIS User Community</>}</div>
    </div>
+    {chosen&&<article id="discovery-map-preview" className={styles.popup} style={{left:popupLeft,bottom:popupBottom,maxHeight:size.h-popupBottom-12}} aria-label={chosen.name} aria-live="polite" onPointerDown={e=>e.stopPropagation()} onClick={e=>e.stopPropagation()}>
+     <button type="button" className={styles.close} onClick={close} aria-label={fr?'Fermer l’aperçu':'Close preview'}>×</button>
+     <figure>
+      <div className={styles.photo}>{chosen.media&&failedImage!==chosen.id?<Image key={chosen.id} src={chosen.media.src} alt={chosen.media.alt} fill sizes="300px" onError={()=>setFailedImage(chosen.id)}/>:<span>{fr?'Visuel indisponible':'Image unavailable'}</span>}</div>
+      {imageCredit&&<figcaption className={styles.credit}>{chosen.media?.source?<a href={chosen.media.source} target="_blank" rel="noopener noreferrer">{imageCredit}</a>:imageCredit}</figcaption>}
+     </figure>
+     <div className={styles.copy}><p className={styles.category}>{labels[chosen.category]?.[fr?0:1]||chosen.category} · {chosen.location}</p><h3>{chosen.name}</h3><Link href={`/${locale}/place/${encodeURIComponent(chosen.id)}`} prefetch={false} className={styles.action}>{fr?'Voir la fiche':'View place'} ↗</Link></div>
+    </article>}
+   </div>
    <div className="flex flex-wrap items-center justify-between gap-3 border-t border-black/15 bg-white px-4 py-3 text-xs">
     <p role="status" className="font-bold">{visible.length} {fr?'fiches géolocalisées':'mapped places'}</p>
     <p className="text-black/55">{fr?'Zoom avec + / − ; glisser pour déplacer.':'Zoom with + / −; drag to pan.'}</p>
    </div>
-   {chosen&&<div className="flex flex-wrap items-center justify-between gap-4 border-t border-black/20 bg-[#f4f0e7] px-5 py-5" aria-live="polite">
-    <div><p className="text-[10px] font-black uppercase tracking-[.13em] text-[#0B4F6C]">{labels[chosen.category]?.[fr?0:1]||chosen.category} · {chosen.kind==='area'?(fr?'Repère de secteur':'Area marker'):chosen.location}</p><h3 className="mt-2 text-xl font-black">{chosen.name}</h3><p className="mt-1 text-sm text-black/60">{chosen.location}</p></div>
-    <div className="flex flex-wrap gap-2"><Link href={`/${locale}/place/${encodeURIComponent(chosen.id)}`} className="lg-btn lg-btn--dark">{fr?'Voir la fiche':'View place'} ↗</Link><button type="button" onClick={()=>focus(chosen)} className="lg-btn">{fr?'Recentrer':'Center here'}</button></div>
-   </div>}
   </div>
   <p className="mt-3 text-xs leading-6 text-black/55">{fr?'Les repères de secteur ne constituent pas un point d’entrée ni une adresse de stationnement. Vérifiez l’itinéraire depuis la fiche.':'Area references are not guaranteed entrances or parking locations. Check directions on each place page.'}</p>
  </section>;

@@ -160,7 +160,8 @@ button,textarea,input { font:inherit; }
 .explore-themes .explore-theme[aria-current="page"]{background:#0b4f6c;border-color:#0b4f6c;color:#fff;}
 .explore-controls :is(a,button,input,select):focus-visible{outline:2px solid #0b4f6c;outline-offset:3px;}
 /* Maisons & villas: compact white search panel with beige filter buttons. */
-.stay-page{background:#fdfcf9;color:#0b3046;}
+.explore-background,.stay-page{background:#fdfcf9;}
+.stay-page{color:#0b3046;}
 .stay-collection{padding-top:28px;padding-bottom:64px;}
 .stay-hero{display:grid;gap:28px;align-items:center;margin-bottom:32px;}
 .stay-hero-copy>.lg-kicker{color:#0b4f6c;}
