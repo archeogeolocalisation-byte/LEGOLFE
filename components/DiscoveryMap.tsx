@@ -90,6 +90,7 @@ export default function DiscoveryMap({locale,places}:{locale:Locale;places:Disco
   e.preventDefault();changeZoom(map.zoom+(e.deltaY<0?1:-1));
  }
  const chosen=places.find(p=>p.id===selected&&visible.includes(p))||null;
+ const imageCredit=chosen?.media?[chosen.media.contextual?(fr?'Vue du secteur':'Area view'):'',chosen.media.credit,chosen.media.license].filter(Boolean).join(' · '):'';
  const chosenPoint=chosen?world(chosen.lat,chosen.lon,map.zoom):null;
  const popupBottom=chosenPoint?clamp(size.h/2+center.y-chosenPoint.y+40,36,size.h-160):36;
  const popupLeft=chosenPoint?clamp(chosenPoint.x-center.x+size.w/2-150,12,Math.max(12,size.w-312)):12;
@@ -127,7 +128,7 @@ export default function DiscoveryMap({locale,places}:{locale:Locale;places:Disco
      <button type="button" className={styles.close} onClick={close} aria-label={fr?'Fermer l’aperçu':'Close preview'}>×</button>
      <figure>
       <div className={styles.photo}>{chosen.media&&failedImage!==chosen.id?<Image key={chosen.id} src={chosen.media.src} alt={chosen.media.alt} fill sizes="300px" onError={()=>setFailedImage(chosen.id)}/>:<span>{fr?'Visuel indisponible':'Image unavailable'}</span>}</div>
-      {chosen.media&&<figcaption className={styles.credit}><a href={chosen.media.source} target="_blank" rel="noopener noreferrer">{chosen.media.contextual?(fr?'Vue du secteur · ':'Area view · '):''}{chosen.media.credit} · {chosen.media.license}</a></figcaption>}
+      {imageCredit&&<figcaption className={styles.credit}>{chosen.media?.source?<a href={chosen.media.source} target="_blank" rel="noopener noreferrer">{imageCredit}</a>:imageCredit}</figcaption>}
      </figure>
      <div className={styles.copy}><p className={styles.category}>{labels[chosen.category]?.[fr?0:1]||chosen.category} · {chosen.location}</p><h3>{chosen.name}</h3><Link href={`/${locale}/place/${encodeURIComponent(chosen.id)}`} prefetch={false} className={styles.action}>{fr?'Voir la fiche':'View place'} ↗</Link></div>
     </article>}
