@@ -57,12 +57,14 @@ export default function DiscoveryMap({locale,places}:{locale:Locale;places:Disco
   }
   return list;
  },[base,map.zoom,center.x,center.y,size.w,size.h]);
- const focus=(p:DiscoveryMapPlace)=>{
-  setMap(v=>{const zoom=Math.max(v.zoom,12),point=world(p.lat,p.lon,zoom);return {...fromWorld(point.x,point.y-Math.min(150,size.h/2-40),zoom),zoom};});setSelected(p.id);
+ const viewFor=(p:DiscoveryMapPlace,zoom:number)=>{
+  const point=world(p.lat,p.lon,zoom);
+  return {...fromWorld(point.x,point.y-Math.min(150,size.h/2-40),zoom),zoom};
  };
+ const focus=(p:DiscoveryMapPlace)=>{setMap(v=>viewFor(p,Math.max(v.zoom,12)));setSelected(p.id);};
  const close=()=>{setSelected(null);if(selected)markerRefs.current.get(selected)?.focus({preventScroll:true});};
  const changeZoom=(next:number)=>{
-  setMap(v=>({...v,zoom:clamp(next,9,16)}));
+  setMap(v=>{const zoom=clamp(next,9,16),p=places.find(p=>p.id===selected);return p?viewFor(p,zoom):{...v,zoom};});
  };
  function start(e:PointerEvent<HTMLDivElement>){
   if(e.button!==0||(e.target as HTMLElement).closest('button,a,select'))return;
