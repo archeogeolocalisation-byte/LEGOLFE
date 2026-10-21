@@ -22,3 +22,10 @@ The initial checked snapshot contains 44 film/cinema records and 136 screenings 
 `node scripts/test-cinema.cjs` covers real reduced source fixtures, weekdays and explicit dates, versions, DST, cancelled/private screenings, safe poster hosts, expired fallback, failed HTTP/changed HTML, duplicate films, and real FR/EN client category/town handlers. Fixtures retain only public programme fields and contain no public widget identifier.
 
 After a production build and installing Playwright WebKit, `node scripts/test-cinema-browser.cjs` checks mobile category/date/town interactions and horizontal bounds at 375 and 390 pixels in FR/EN. CI saves mobile screenshots. This is automated WebKit coverage, not a physical iPhone test.
+
+
+## Guide pluie et lien direct — 21 octobre 2026
+
+Le guide pluie relie les musées dans les sections de lecture et propose les quatre programmes officiels depuis la même liste `data/cinemas.ts` que l’agenda. Le lien `/fr/whats-on?category=cinema` (et sa version anglaise) ouvre directement la catégorie Cinéma, même si aucune séance n’est importée. La valeur de la requête est limitée à `cinema`, toute autre valeur conserve Tout. Le canonical reste celui de l’agenda.
+
+Le contenu FR/EN conserve l’URL du guide, sa date de publication et la structure Article ; mise à jour du 21 octobre, nouvelle illustration fournie, cinq musées reliés, programmes souples et journée à la maison. Pas de liste de films ou d’horaires figée dans le guide. Test WebKit existant étendu au parcours guide → catégorie Cinéma, à la couverture et aux limites horizontales du guide, FR/EN à 375/390 px.

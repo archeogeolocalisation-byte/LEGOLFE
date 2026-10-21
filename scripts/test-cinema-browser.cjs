@@ -8,8 +8,15 @@ const server=spawn(process.execPath,[require.resolve('next/dist/bin/next'),'star
  for(const width of [375,390])for(const locale of ['fr','en']){
   const fr=locale==='fr',context=await browser.newContext({viewport:{width,height:844},isMobile:true,hasTouch:true,deviceScaleFactor:2,reducedMotion:'reduce'});
   await context.route('**/*',route=>{const u=new URL(route.request().url());return u.origin===origin||['images.monnaie-services.com','fr.web.img3.acsta.net','fr.web.img6.acsta.net','cinemedia.cine.digital'].includes(u.hostname)?route.continue():route.abort();});
-  const page=await context.newPage();await page.goto(origin+'/'+locale+'/whats-on',{waitUntil:'networkidle'});
-  await page.getByRole('button',{name:fr?'Cinéma':'Cinema',exact:true}).click();
+  const page=await context.newPage();await page.goto(origin+'/'+locale+'/guides/golfe-saint-tropez-quand-il-pleut',{waitUntil:'networkidle'});
+  await page.waitForFunction(()=>{const img=document.querySelector('article figure img');return img?.complete&&img.naturalWidth>0;});
+  assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'rainy-day guide stays within mobile width');
+  const guideImage=page.locator('article figure').first();await guideImage.scrollIntoViewIfNeeded();await page.screenshot({path:path.join(out,`rainy-guide-cover-${locale}-${width}.png`)});
+  const museumLinks=page.locator('#musees').getByRole('link');assert.equal(await museumLinks.count(),2);
+  await page.locator('#seances-cinema').scrollIntoViewIfNeeded();await page.screenshot({path:path.join(out,`rainy-guide-cinema-${locale}-${width}.png`)});
+  await page.getByRole('link',{name:fr?'Voir les films et séances dans l’agenda':'Films and screenings in the calendar'}).click();
+  await page.waitForURL('**/whats-on?category=cinema');
+  assert.equal(await page.getByRole('button',{name:fr?'Cinéma':'Cinema',exact:true}).getAttribute('aria-pressed'),'true');
   const panel=page.getByRole('region',{name:fr?'Les cinémas du Golfe':'Cinemas around the Golfe'});assert.equal(await panel.isVisible(),true);assert.equal(await panel.locator('a').count(),4);
   await page.locator('img').evaluateAll(images=>images.forEach(i=>{i.loading='eager';}));await page.waitForTimeout(750);
   const controls=await page.locator('#agenda-location,#agenda-month').evaluateAll(nodes=>nodes.map(n=>({background:getComputedStyle(n).backgroundColor,color:getComputedStyle(n).color,appearance:getComputedStyle(n).appearance})));for(const control of controls){assert.equal(control.appearance,'none');assert.equal(control.color,'rgb(255, 255, 255)');assert.equal(control.background,'rgb(17, 17, 17)');}
@@ -21,5 +28,5 @@ const server=spawn(process.execPath,[require.resolve('next/dist/bin/next'),'star
   const cards=page.locator('[data-agenda-featured],[data-agenda-event]');for(const card of await cards.all())assert.match(await card.innerText(),/Cogolin/i);
   await context.close();
  }
- console.log('Cinema mobile WebKit: FR/EN at 375/390px, inline category, four official programme links, town/date filters and horizontal bounds passed.');
+ console.log('Cinema mobile WebKit: FR/EN at 375/390px, rainy-day guide cover and direct cinema link, four official programme links, town/date filters and horizontal bounds passed.');
 }finally{if(browser)await browser.close();server.kill('SIGTERM');}})().catch(e=>{console.error(e);process.exitCode=1;});

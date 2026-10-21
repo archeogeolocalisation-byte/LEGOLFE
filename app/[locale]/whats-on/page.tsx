@@ -9,16 +9,18 @@ import { getPublicEvents } from "../../../lib/publicEvents";
 
 export const dynamic = "force-dynamic";
 
-export default async function WhatsOn({ params }: { params: Promise<{ locale: string }> }) {
+export default async function WhatsOn({ params,searchParams }: { params: Promise<{ locale: string }>;searchParams?:Promise<Record<string,string|string[]|undefined>> }) {
   const { locale } = await params;
   if (!isLocale(locale)) notFound();
 
+  const query=await searchParams??{};
+  const initialCategory=query.category==="cinema"?"cinema":"all";
   const merged = await getPublicEvents();
 
   return (
     <main className="min-h-screen bg-[#050505] text-[#f5f5f2]">
       <SiteHeader light={false} locale={locale} path="/whats-on" />
-      <AgendaClient locale={locale} events={merged} initialDay={parisIsoDay()} /><SiteFooter locale={locale} dark/>
+      <AgendaClient locale={locale} events={merged} initialDay={parisIsoDay()} initialCategory={initialCategory} /><SiteFooter locale={locale} dark/>
     </main>
   );
 }

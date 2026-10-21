@@ -159,7 +159,7 @@ const licenses=JSON.parse(fs.readFileSync(path.join(__dirname,'../public/media/p
  assert.ok(placeMapPoints['tour-horloge-cogolin'][0].directionsQuery.includes('Montée des Aloès'),'Clock-tower directions use the official visit address');
  // These additions must be reachable from rendered articles, not only search or a map.
  const Guide=require('../app/[locale]/guides/[slug]/page.tsx');
- for(const [slug,ids] of [['golfe-saint-tropez-quand-il-pleut',['musee-annonciade-saint-tropez','chapelles-saint-roch-cogolin']],['activites-gratuites-golfe-saint-tropez',['port-de-saint-tropez','eglise-notre-dame-assomption-saint-tropez','plage-des-graniers','tour-horloge-cogolin','eglise-saint-sauveur-cogolin','pergola-patec-rayol','plage-du-canadel']],['week-end-automne-golfe-saint-tropez',['chapelle-sainte-anne-saint-tropez']]]){
+ for(const [slug,ids] of [['golfe-saint-tropez-quand-il-pleut',['musee-annonciade-saint-tropez','musee-gendarmerie-cinema','maison-des-papillons','citadelle-saint-tropez','conservatoire-patrimoine-freinet']],['activites-gratuites-golfe-saint-tropez',['port-de-saint-tropez','eglise-notre-dame-assomption-saint-tropez','plage-des-graniers','tour-horloge-cogolin','eglise-saint-sauveur-cogolin','pergola-patec-rayol','plage-du-canadel']],['week-end-automne-golfe-saint-tropez',['chapelle-sainte-anne-saint-tropez']]]){
   for(const locale of ['fr','en']){
    const html=renderToStaticMarkup(await Guide.default({params:Promise.resolve({locale,slug})}));
    for(const id of ids)assert.ok(html.includes(`href="/${locale}/place/${id}"`),`${slug}: crawlable link to ${id}`);

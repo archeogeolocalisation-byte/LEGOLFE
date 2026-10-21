@@ -1,10 +1,11 @@
+import {rainyDayGuide} from './rainyDayGuide';
 import { seasonalEscapeGuides } from "./seasonalEscapeGuides";
 import { practicalGuides } from "./practicalGuides";
 import { hikingGuides } from "./hikingGuides";
 import type { Locale } from "../lib/i18n";
 
 export type GuideSource = { id: string; label: string; url: string };
-export type GuideSection = { id: string; title: string; paragraphs: string[]; sourceIds?: string[]; table?: { caption: string; headers: string[]; rows: string[][] } };
+export type GuideSection = { id: string; title: string; paragraphs: string[]; sourceIds?: string[]; links?: {label:string;path:string}[]; externalLinks?: {label:string;url:string}[]; table?: { caption: string; headers: string[]; rows: string[][] } };
 export type GuideCopy = {
   title: string; accent: string; seoTitle: string; description: string; intro: string; verdict: string;
   facts: { label: string; value: string }[];
@@ -26,7 +27,6 @@ const ramatuelleVillage = { id: "village", label: "Office de tourisme de Ramatue
 const boats = { id: "boats", label: "Les Bateaux Verts · Liaisons et horaires", url: "https://www.bateauxverts.com/" };
 const maritimeMuseum = { id: "citadelle", label: "Saint-Tropez Tourisme · Citadelle et musée maritime", url: "https://www.sainttropeztourisme.com/fr/fiche/la-citadelle-musee-d-histoire-maritime-4171083/" };
 const cinemaMuseum = { id: "cinema", label: "Saint-Tropez Tourisme · Musée de la Gendarmerie et du Cinéma", url: "https://www.sainttropeztourisme.com/fr/fiche/musee-de-la-gendarmerie-et-du-cinema-4082975/" };
-const butterflyMuseum = { id: "butterflies", label: "Saint-Tropez Tourisme · Maison des Papillons", url: "https://www.sainttropeztourisme.com/fr/fiche/maison-des-papillons-musee-dany-lartigue-4165778/" };
 
 export const guides: Guide[] = [
   ...seasonalEscapeGuides,
@@ -163,48 +163,7 @@ export const guides: Guide[] = [
       },
     },
   },
-  {
-    slug: "golfe-saint-tropez-quand-il-pleut", category: { fr: "Culture / Plan de repli", en: "Culture / A change of plan" }, image: "rainy-day-cover",
-    imageAlt: {"fr": "Illustration du port de Saint-Tropez sous la pluie", "en": "Illustration of Saint-Tropez harbour in the rain"},
-    imageCaption: {"fr": "Illustration éditoriale · LE GOLFE · Générée par IA", "en": "Editorial illustration · LE GOLFE · AI-generated"},
-    destinations: ["saint-tropez", "ramatuelle", "sainte-maxime", "cogolin"], placeIds: ["maison-des-papillons", "citadelle-saint-tropez", "musee-annonciade-saint-tropez", "chapelles-saint-roch-cogolin"],
-    related: ["saint-tropez-sans-voiture", "ramatuelle-a-pied"], published: "2026-10-11", verified: "2026-10-11",
-    sources: [cinemaMuseum, butterflyMuseum, maritimeMuseum, { id: "rain", label: "Office de tourisme de Ramatuelle · Sorties par temps de pluie", url: "https://www.ramatuelle-tourisme.com/fr/faq/" }],
-    copy: {
-      fr: {
-        title: "IL PLEUT.", accent: "ON FAIT QUOI ?", seoTitle: "Que faire dans le golfe de Saint-Tropez quand il pleut ?",
-        description: "Des idées concrètes pour une journée pluvieuse dans le golfe de Saint-Tropez : musées, cinéma, expositions et programme adapté aux ouvertures.",
-        intro: "La plage attendra. Un musée, une séance de cinéma, une exposition et un vrai déjeuner peuvent donner une autre forme à la journée. Le bon réflexe : vérifier ce qui ouvre avant de prendre la route.",
-        verdict: "Choisissez une activité principale près de votre point de départ. Ajoutez une pause et gardez le reste souple.",
-        facts: [{ label: "À privilégier", value: "Une visite intérieure et une pause" }, { label: "Avant de partir", value: "Ouvertures, séances et réservation éventuelle" }, { label: "Avec des enfants", value: "Un programme court, adapté à leurs intérêts" }],
-        sections: [
-          { id: "cinema", title: "Le cinéma, côté musée", paragraphs: ["À Saint-Tropez, le musée de la Gendarmerie et du Cinéma relie l’histoire du bâtiment, la gendarmerie et les films tournés sur la presqu’île. Choisissez cette visite si vous aimez les décors, les archives et les coulisses du cinéma.", "Pour une sortie en famille, présentez le sujet aux enfants avant le départ et gardez la visite à leur rythme. Consultez la fiche officielle pour les horaires et les conditions d’accueil ; une journée de pluie peut aussi attirer d’autres visiteurs."], sourceIds: ["cinema"] },
-          { id: "papillons", title: "Une collection qui change de sujet", paragraphs: ["La Maison des Papillons présente les collections et l’univers de Dany Lartigue. C’est une piste pour ceux qui préfèrent une visite centrée sur un sujet singulier plutôt qu’une grande sortie.", "Son calendrier comporte des jours de fermeture et une fermeture saisonnière. Regardez l’ouverture de votre date précise avant de traverser le Golfe. Le fait qu’un musée figure dans une sélection ne garantit pas qu’il soit ouvert aujourd’hui."], sourceIds: ["butterflies"] },
-          { id: "maritime", title: "La Citadelle, si les conditions s’y prêtent", paragraphs: ["Le musée d’histoire maritime est installé dans la Citadelle. Le sujet donne une autre lecture de Saint-Tropez, tournée vers les marins et les voyages. La visite du musée se prépare avec son approche extérieure et la montée jusqu’au site.", "Nous la garderions pour une météo qui permet ces déplacements confortablement. Pour un programme entièrement à l’abri, choisissez plutôt une activité accessible directement depuis votre point d’arrivée."], sourceIds: ["citadelle"] },
-          { id: "proximite", title: "Le bon plan peut être tout près", paragraphs: ["L’office de Ramatuelle cite aussi les expositions au village et les cinémas de Saint-Tropez, Sainte-Maxime ou Cogolin parmi les pistes par temps de pluie. Consultez les programmes en cours, puis choisissez selon votre lieu de séjour.", "Une séance près de la maison peut être plus agréable qu’un long trajet pour une visite courte. Notre proposition : réserver l’activité principale, déjeuner dans le même secteur et décider du reste après la pause."], sourceIds: ["rain"] },
-          { id: "programme", title: "Deux programmes, à adapter", paragraphs: ["Si vous êtes déjà à Saint-Tropez : un musée dont l’ouverture est confirmée, un déjeuner au centre et une promenade courte si la météo le permet. Pas besoin d’enchaîner toutes les collections.", "Si vous logez ailleurs dans le Golfe : une séance de cinéma ou une exposition proche, puis du temps au calme. Vérifiez la programmation de la semaine dans l’agenda et auprès du lieu concerné. Une bonne journée se mesure aussi au temps que vous n’avez pas passé à vous déplacer."] },
-        ],
-        questions: [{ question: "Quel musée choisir avec des enfants ?", answer: "Le musée de la Gendarmerie et du Cinéma est une piste si le cinéma et les décors les intéressent. La Maison des Papillons propose un autre sujet. Vérifiez l’ouverture et adaptez la durée à leur âge." }, { question: "Les musées sont-ils ouverts toute l’année ?", answer: "Les calendriers diffèrent selon les établissements. La Maison des Papillons annonce notamment une fermeture saisonnière : consultez chaque fiche officielle pour votre date." }],
-        links: [{ label: "La Maison des Papillons", path: "/place/maison-des-papillons" }, { label: "La Citadelle et son musée", path: "/place/citadelle-saint-tropez" }, { label: "Les événements à vos dates", path: "/whats-on" }, { label: "Les visites du catalogue", path: "/explore/do" }],
-      },
-      en: {
-        title: "RAIN TODAY.", accent: "WHAT’S THE PLAN?", seoTitle: "What to do in the Golfe de Saint-Tropez when it rains",
-        description: "Practical ideas for a rainy day in the Golfe de Saint-Tropez: museums, cinema, exhibitions and plans shaped around current openings.",
-        intro: "The beach can wait. A museum, a film, an exhibition and a proper lunch can give the day a different shape. Start by checking what is open before travelling.",
-        verdict: "Choose one main activity near your starting point. Add a break and keep the rest flexible.",
-        facts: [{ label: "Good starting point", value: "An indoor visit and a break" }, { label: "Check first", value: "Openings, screenings and any booking" }, { label: "With children", value: "A short plan matching their interests" }],
-        sections: [
-          { id: "cinema", title: "Explore film through a museum", paragraphs: ["In Saint-Tropez, the Musée de la Gendarmerie et du Cinéma connects the building’s history, the gendarmerie and films made on the peninsula. Choose it for film sets, archives and a look behind the scenes.", "For a family visit, introduce the subject before leaving and let children set the pace. Check the official listing for opening and visitor information; other visitors may have the same rainy-day idea."], sourceIds: ["cinema"] },
-          { id: "papillons", title: "A collection with a different focus", paragraphs: ["Maison des Papillons presents Dany Lartigue’s collections and creative world. It offers a focused subject for visitors who prefer a smaller-scale outing.", "Its calendar includes closed days and a seasonal closure. Check your exact date before crossing the Golfe. Being listed in a guide does not mean a museum is open today."], sourceIds: ["butterflies"] },
-          { id: "maritime", title: "The Citadelle, when conditions suit", paragraphs: ["The maritime history museum is inside the Citadelle. It shows a side of Saint-Tropez shaped by sailors and voyages. Plan for the outdoor approach and the uphill journey as well as the museum itself.", "We would keep this option for weather that makes those parts comfortable. For a fully sheltered plan, choose an activity reached more directly from your arrival point."], sourceIds: ["citadelle"] },
-          { id: "proximite", title: "Your best option may be nearby", paragraphs: ["Ramatuelle’s tourist office also suggests village exhibitions and cinemas in Saint-Tropez, Sainte-Maxime or Cogolin for rainy weather. Check current programmes, then choose according to where you are staying.", "A film near your accommodation can be more enjoyable than a long journey for a short visit. Our suggestion: book the main activity, have lunch in the same area and decide the rest afterwards."], sourceIds: ["rain"] },
-          { id: "programme", title: "Two flexible day plans", paragraphs: ["Already in Saint-Tropez? Pick a museum with confirmed opening, lunch in the centre and a short walk if weather allows. There is no need to see every collection.", "Staying elsewhere? Choose a nearby screening or exhibition, then leave time to relax. Check this week’s events and confirm details with the venue. Less time travelling can make a better day."] },
-        ],
-        questions: [{ question: "Which museum works for children?", answer: "The Gendarmerie and Cinema museum is an option for children interested in films and sets. Maison des Papillons offers a different subject. Check opening and adapt the visit to their age." }, { question: "Are the museums open year-round?", answer: "Calendars differ. Maison des Papillons lists a seasonal closure: consult each official listing for your date." }],
-        links: [{ label: "Maison des Papillons", path: "/place/maison-des-papillons" }, { label: "The Citadelle and its museum", path: "/place/citadelle-saint-tropez" }, { label: "Events on your dates", path: "/whats-on" }, { label: "Visits in the catalogue", path: "/explore/do" }],
-      },
-    },
-  },
+  rainyDayGuide,
   {
     slug: "ou-dormir-golfe-saint-tropez", category: { fr: "Séjour / Choisir sa base", en: "Stay / Choose your base" }, image: "where-to-stay-cover",
     imageAlt: {"fr": "Illustration d’une terrasse provençale face au Golfe pour choisir où séjourner", "en": "Illustration of a Provençal terrace overlooking the Golfe, for choosing a holiday base"},
