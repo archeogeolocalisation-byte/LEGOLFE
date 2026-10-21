@@ -12,7 +12,7 @@ const server=spawn(process.execPath,[require.resolve('next/dist/bin/next'),'star
   await page.waitForFunction(()=>{const img=document.querySelector('article figure img');return img?.complete&&img.naturalWidth>0;});
   assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'rainy-day guide stays within mobile width');
   const guideImage=page.locator('article figure').first();await guideImage.scrollIntoViewIfNeeded();await page.screenshot({path:path.join(out,`rainy-guide-cover-${locale}-${width}.png`)});
-  const museumLinks=page.locator('#musees').getByRole('link');assert.equal(await museumLinks.count(),2);
+  const museumLinks=page.locator('#musees a[href*="/place/"]');assert.equal(await museumLinks.count(),2);
   await page.locator('#seances-cinema').scrollIntoViewIfNeeded();await page.screenshot({path:path.join(out,`rainy-guide-cinema-${locale}-${width}.png`)});
   await page.getByRole('link',{name:fr?'Voir les films et séances dans l’agenda':'Films and screenings in the calendar'}).click();
   await page.waitForURL('**/whats-on?category=cinema');
