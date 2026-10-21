@@ -8,7 +8,7 @@ export default function SiteHeader({light=true,locale="en",path=""}:{light?:bool
   return <header className={`relative z-40 ${tone}`}>
     <nav aria-label={locale === "fr" ? "Navigation principale" : "Main navigation"} className="mx-auto max-w-[1500px] px-5 pt-5 md:px-8 md:pt-7">
       <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-2 border-b border-current pb-5">
-        <BrandLogo locale={locale} light={light} compact/>
+        <BrandLogo locale={locale} light={false} compact/>
         <div className="hidden items-center gap-6 text-[10px] font-black uppercase tracking-[.14em] xl:flex">
           <Link href={`${base}/explore`} className="lg-link-accent">{labels.explore}</Link>
           <Link href={`${base}/guides`} className="lg-link-accent">{labels.guides}</Link>
