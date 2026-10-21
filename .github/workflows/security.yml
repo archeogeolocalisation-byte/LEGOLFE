@@ -60,6 +60,12 @@ jobs:
 
       - name: Install Safari test engine
         run: npx playwright install --with-deps webkit
+      - name: Verify global footer and information pages
+        run: node scripts/test-footer-browser.cjs
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: https://example.supabase.co
+          NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: sb_publishable_ci_dummy
+          NEXT_PUBLIC_SITE_URL: https://legolfe.com
       - name: Verify place pages at iPhone widths
         run: npm run test:mobile
         env:
@@ -74,12 +80,6 @@ jobs:
           NEXT_PUBLIC_SITE_URL: https://legolfe.com
       - name: Verify map previews on mobile and desktop Safari
         run: node scripts/test-discovery-map-browser.cjs
-        env:
-          NEXT_PUBLIC_SUPABASE_URL: https://example.supabase.co
-          NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: sb_publishable_ci_dummy
-          NEXT_PUBLIC_SITE_URL: https://legolfe.com
-      - name: Verify global footer and information pages
-        run: node scripts/test-footer-browser.cjs
         env:
           NEXT_PUBLIC_SUPABASE_URL: https://example.supabase.co
           NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: sb_publishable_ci_dummy
