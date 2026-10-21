@@ -6,7 +6,6 @@ import { pageMetadata } from "../../lib/seo";
 import Link from "next/link";
 import {notFound} from "next/navigation";
 import SiteHeader from "../../components/SiteHeader";
-import SiteFooter from "../../components/SiteFooter";
 import {localNews} from "../../data/localNews";
 import {isLocale} from "../../lib/i18n";
 import Image from "next/image";
@@ -108,7 +107,7 @@ export default async function Home({params}:{params:Promise<{locale:string}>}){
     <div className="mb-10 flex flex-wrap items-end justify-between gap-6 border-b border-black pb-6"><div><p className="lg-kicker text-[var(--lg-blue)]">LE GOLFE / GUIDES</p><h2 className="lg-title mt-4 text-[12vw] uppercase md:text-[72px]">{fr?"PRÉPAREZ LE TERRAIN.":"MAKE YOUR PLAN."}</h2></div><Link href={`/${l}/guides`} className="lg-btn">{fr?"Tous les guides":"All guides"} ↗</Link></div>
     <GuideCards items={guides.slice(0,2)} locale={l}/>
   </section>
-  <SiteFooter locale={l}/>
+
  </main>
 }
 

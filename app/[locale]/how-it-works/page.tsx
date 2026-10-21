@@ -1,6 +1,5 @@
 import {notFound} from 'next/navigation';
 import SiteHeader from '../../../components/SiteHeader';
-import SiteFooter from '../../../components/SiteFooter';
 import PilotNotice from '../../../components/PilotNotice';
 import {isLocale} from '../../../lib/i18n';
 import {pageMetadata} from '../../../lib/seo';
@@ -25,5 +24,5 @@ export default async function Page({params}:{params:Promise<{locale:string}>}){
  ['A problem with a listing','Contact the advertiser first to check details or address a rental dispute. You may also report content to LE GOLFE using the link below when available. This page describes the service; it does not remove user rights or LE GOLFE’s own obligations.']
  ];
  const email=process.env.LEGOLFE_CONTACT_EMAIL;
- return <main className="bg-white text-black"><SiteHeader locale={locale} path="/how-it-works"/><section className="lg-shell py-14"><p className="lg-kicker lg-accent">LE GOLFE / {fr?'LE SERVICE':'THE SERVICE'}</p><h1 className="lg-title mt-5 text-5xl md:text-7xl">{fr?'Comment ça fonctionne.':'How it works.'}</h1><div className="max-w-3xl"><PilotNotice locale={locale}/>{sections.map(([title,body])=><section key={title} className="border-t border-black/20 py-7"><h2 className="text-2xl font-black">{title}</h2><p className="mt-4 text-sm leading-7 text-black/70">{body}</p></section>)}{email&&/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)&&<a className="lg-btn" href={`mailto:${encodeURIComponent(email)}?subject=LE%20GOLFE%20-%20Signalement`}>{fr?'Signaler une annonce':'Report a listing'} →</a>}</div></section><SiteFooter locale={locale}/></main>;
+ return <main className="bg-white text-black"><SiteHeader locale={locale} path="/how-it-works"/><section className="lg-shell py-14"><p className="lg-kicker lg-accent">LE GOLFE / {fr?'LE SERVICE':'THE SERVICE'}</p><h1 className="lg-title mt-5 text-5xl md:text-7xl">{fr?'Comment ça fonctionne.':'How it works.'}</h1><div className="max-w-3xl"><PilotNotice locale={locale}/>{sections.map(([title,body])=><section key={title} className="border-t border-black/20 py-7"><h2 className="text-2xl font-black">{title}</h2><p className="mt-4 text-sm leading-7 text-black/70">{body}</p></section>)}{email&&/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)&&<a className="lg-btn" href={`mailto:${encodeURIComponent(email)}?subject=LE%20GOLFE%20-%20Signalement`}>{fr?'Signaler une annonce':'Report a listing'} →</a>}</div></section></main>;
 }

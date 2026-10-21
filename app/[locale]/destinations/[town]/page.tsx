@@ -6,7 +6,6 @@ import { parisIsoDay } from "../../../../lib/localCalendar";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import SiteHeader from "../../../../components/SiteHeader";
-import SiteFooter from "../../../../components/SiteFooter";
 import PlaceCard from "../../../../components/PlaceCard";
 import VillaCard from "../../../../components/VillaCard";
 import Breadcrumbs from "../../../../components/Breadcrumbs";
@@ -33,5 +32,5 @@ export default async function Page({params}:Props){
  {placeCategories.filter(c=>list.some(x=>x.category===c.id && x.id!==t.villageId)).map(c=><section key={c.id} className="mt-16"><h2 className="text-3xl font-black">{fr?categoryFR[c.id].name:c.name} {fr?"à":"in"} {t.name}</h2><div className="mt-6 grid gap-x-8 md:grid-cols-2">{list.filter(x=>x.category===c.id && x.id!==t.villageId).map(x=><PlaceCard key={x.id} place={x} locale={locale}/>)}</div></section>)}
  {houses.length>0 && <section className="mt-16"><h2 className="text-3xl font-black">{fr?"Villas":"Villas"} {fr?"à":"in"} {t.name}</h2><div className="mt-6 grid gap-8 md:grid-cols-2">{houses.map(v=><VillaCard key={v.id} villa={v} locale={locale}/>)}</div><Link href={`/${locale}/stay`} className="lg-btn mt-6">{fr?"Comparer les villas du Golfe":"Compare villas around the Golfe"} →</Link></section>}
  {upcoming.length>0 && <section className="mt-16 border-t border-black pt-8"><h2 className="text-3xl font-black">{fr?"En cours et à venir":"Current and upcoming"} · {t.name}</h2><div className="mt-6 grid gap-6 md:grid-cols-2">{upcoming.map(e=><Link className="border-t py-5" key={e.id} href={`/${locale}/event/${e.id}`}><time className="text-xs font-bold" dateTime={nextSession(e).start}>{new Intl.DateTimeFormat(fr?"fr-FR":"en-GB",{dateStyle:"medium",timeZone:"Europe/Paris"}).format(new Date(nextSession(e).start+"T12:00:00Z"))}</time><h3 className="mt-3 text-xl font-black">{fr?e.titleFr||e.title:e.title} →</h3><p className="mt-3 text-sm leading-6 text-black/60">{fr?e.summaryFr:e.summary}</p></Link>)}</div></section>}
- <section className="mt-16 border-t border-black pt-8"><h2 className="text-2xl font-black">{fr?"Découvrir les autres communes":"Explore other destinations"}</h2><div className="mt-6 flex flex-wrap gap-3">{destinations.filter(x=>x.slug!==t.slug).map(x=><Link className="lg-btn" key={x.slug} href={`/${locale}/destinations/${x.slug}`}>{x.name}</Link>)}</div></section></section><GuideLinks items={guidesForDestination(t.slug)} locale={locale}/><SiteFooter locale={locale}/></main>;
+ <section className="mt-16 border-t border-black pt-8"><h2 className="text-2xl font-black">{fr?"Découvrir les autres communes":"Explore other destinations"}</h2><div className="mt-6 flex flex-wrap gap-3">{destinations.filter(x=>x.slug!==t.slug).map(x=><Link className="lg-btn" key={x.slug} href={`/${locale}/destinations/${x.slug}`}>{x.name}</Link>)}</div></section></section><GuideLinks items={guidesForDestination(t.slug)} locale={locale}/></main>;
 }

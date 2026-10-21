@@ -4,7 +4,6 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
 import SiteHeader from "../../../components/SiteHeader";
-import SiteFooter from "../../../components/SiteFooter";
 import { supabase } from "../../../lib/supabase";
 import { editorialSources } from "../../../data/agendaSources";
 
@@ -112,6 +111,6 @@ export default function EditorialDesk(){
         </div>}
       </>}
     </section>
-    <SiteFooter locale={locale}/>
+
   </main>
 }

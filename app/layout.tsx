@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { headers } from "next/headers";
 import { siteOrigin } from "../lib/seo";
 import SiteIdentity from "../components/SiteIdentity";
+import GlobalFooter from "../components/GlobalFooter";
 import DocumentLanguage from "../components/DocumentLanguage";
 import "./globals.css";
 export const metadata: Metadata = {
@@ -13,5 +14,5 @@ export const metadata: Metadata = {
 };
 export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   const locale = (await headers()).get("x-le-golfe-locale") === "fr" ? "fr" : "en";
-  return <html lang={locale}><body><SiteIdentity/><DocumentLanguage/>{children}</body></html>;
+  return <html lang={locale}><body><SiteIdentity/><DocumentLanguage/>{children}<GlobalFooter initialLocale={locale}/></body></html>;
 }

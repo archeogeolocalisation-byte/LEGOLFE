@@ -1,6 +1,5 @@
 import { notFound } from "next/navigation";
 import SiteHeader from "../../../components/SiteHeader";
-import SiteFooter from "../../../components/SiteFooter";
 import Breadcrumbs from "../../../components/Breadcrumbs";
 import CollectionSchema from "../../../components/CollectionSchema";
 import GuideCards from "../../../components/GuideCards";
@@ -29,6 +28,6 @@ export default async function Page({ params }: Props) {
       <p className="mt-9 max-w-3xl text-lg font-bold leading-8 md:text-xl">{fr ? "Choisir un marché, sortir avec les enfants, profiter du Golfe sans billet, découvrir la forêt ou préparer une journée dans le Verdon. Des guides pour prendre les bonnes décisions avant de partir, avec des repères pratiques et les sources pour vérifier ce qui change." : "Choose a market, plan a family outing, explore woodland, enjoy free outings or plan a day in the Verdon. Guides to help you decide before setting off, with practical details and sources for information that changes."}</p>
       <div className="mt-12 md:mt-16"><GuideCards items={guides} locale={locale} /></div>
     </section>
-    <SiteFooter locale={locale} />
+
   </main>;
 }

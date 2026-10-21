@@ -1,7 +1,6 @@
 import Link from "next/link";
 import {notFound} from "next/navigation";
 import SiteHeader from "../../../../components/SiteHeader";
-import SiteFooter from "../../../../components/SiteFooter";
 import MemberPrivateLinks from "../../../../components/MemberPrivateLinks";
 import MemberCoverSlider from "../../../../components/MemberCoverSlider";
 import {getPublicContributions,getPublicMembers,memberIdPattern} from "../../../../lib/publicMembers";
@@ -47,6 +46,6 @@ export default async function MemberPage({params}:{params:Promise<{locale:string
       </div>
       <div className="member-gallery"><MemberCoverSlider photos={member.galleryUrls} fr={fr}/></div>
       <Link href={`/${locale}/explore`} className="lg-btn mt-10">← {fr?"Explorer les adresses":"Explore places"}</Link>
-    </section><SiteFooter locale={locale}/>
+    </section>
   </main>;
 }

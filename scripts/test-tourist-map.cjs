@@ -25,7 +25,7 @@ const manifest=JSON.parse(fs.readFileSync(path.join(__dirname,'../public/media/t
   for(const zoom of [1,1.5,2,2.5,5]){const v=touristViewForPoint(zoom,point);assert.ok(v.zoom>=1&&v.zoom<=2.5);assert.ok(Math.abs(v.panX)<=(v.zoom-1)*50&&Math.abs(v.panY)<=(v.zoom-1)*50);assert.equal(touristMapTransform(v).includes('NaN'),false);}
  }
  for(const locale of ['fr','en']){
-  const html=renderToStaticMarkup(await Page.default({params:Promise.resolve({locale})}));
+  const html=(renderToStaticMarkup(await Page.default({params:Promise.resolve({locale})}))+renderToStaticMarkup(require('react').createElement(require('../components/SiteFooter.tsx').default,{locale})));
   const Explore=require('../app/[locale]/explore/page.tsx').default;
   const exploreHtml=renderToStaticMarkup(await Explore({params:Promise.resolve({locale}),searchParams:Promise.resolve({})}));
   const {isExploreAddress}=require('../lib/exploreFilters.ts');
@@ -40,7 +40,7 @@ const manifest=JSON.parse(fs.readFileSync(path.join(__dirname,'../public/media/t
  for(const file of manifest.files){const bytes=fs.readFileSync(path.join(__dirname,'../public',file.file));assert.equal(crypto.createHash('sha256').update(bytes).digest('hex'),file.sha256);assert.ok(bytes.length<100000);}
  for(const locale of ['fr','en']){
   const metadata=await Page.generateMetadata({params:Promise.resolve({locale})});assert.equal(metadata.alternates.canonical,`https://www.legolfe.com/${locale}/carte-touristique`);assert.ok(metadata.openGraph.images[0].url.endsWith('/tourist-map/cover.webp'));
-  const html=renderToStaticMarkup(await Page.default({params:Promise.resolve({locale})}));assert.equal((html.match(/<h1[ >]/g)||[]).length,1);assert.equal((html.match(/<option /g)||[]).length,14);assert.ok((html.match(/aria-pressed="true"/g)||[]).length>=3);assert.ok(html.includes('aria-label="La Nartelle"'));assert.ok(html.includes('openstreetmap.org/copyright'));assert.ok(html.includes('tilezen/joerd'));
+  const html=(renderToStaticMarkup(await Page.default({params:Promise.resolve({locale})}))+renderToStaticMarkup(require('react').createElement(require('../components/SiteFooter.tsx').default,{locale})));assert.equal((html.match(/<h1[ >]/g)||[]).length,1);assert.equal((html.match(/<option /g)||[]).length,14);assert.ok((html.match(/aria-pressed="true"/g)||[]).length>=3);assert.ok(html.includes('aria-label="La Nartelle"'));assert.ok(html.includes('openstreetmap.org/copyright'));assert.ok(html.includes('tilezen/joerd'));
   assert.ok(html.includes(`href="/${locale}/carte-touristique"`));assert.ok(html.includes(`href="/${locale}/destinations/grimaud"`));assert.ok(html.includes('aria-current="page"'));assert.equal((html.match(/data-commune=/g)||[]).length,0);assert.ok(html.includes(locale==='fr'?'LE GOLFE SUR LA CARTE':'THE GOLFE ON THE MAP'));assert.ok(html.includes('server.arcgisonline.com')===false);assert.ok(html.includes('tile.openstreetmap.org'));assert.ok(html.includes('aria-label="Fond cartographique"')||html.includes('aria-label="Map style"'));assert.ok(html.includes('layer=traffic'));assert.ok(html.includes('Itinéraire · Google Maps')||html.includes('Directions · Google Maps'));assert.equal(html.includes('<iframe'),false);assert.equal(html.includes('nominatim.openstreetmap.org'),false);
  }
  const ExplorePage=require('../app/[locale]/explore/page.tsx'),CategoryPage=require('../app/[locale]/explore/[category]/page.tsx'),Grid=require('../components/ExploreIntentGrid.tsx').default;
