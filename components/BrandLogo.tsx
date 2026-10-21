@@ -1,10 +1,12 @@
+import Image from "next/image";
 import Link from "next/link";
 import type { Locale } from "../lib/i18n";
 
+const logo = "/media/brand/legolfe-saint-tropez-v2.webp";
+
 export function BrandLogo({locale="en",light=true,compact=false}:{locale?:Locale;light?:boolean;compact?:boolean}){
-  return <Link href={`/${locale}`} aria-label="LE GOLFE" className={`inline-flex items-end gap-3 ${light?"text-black":"text-white"}`}>
-    <span className={`${compact?"text-[24px] md:text-[30px]":"text-[30px] md:text-[38px]"} font-black uppercase leading-[.78] tracking-[-.075em]`}>LE GOLFE</span>
-    {!compact&&<span className="hidden pb-[2px] text-[7px] font-black uppercase leading-none tracking-[.22em] opacity-55 lg:block">Saint-Tropez<br/>{locale === "fr" ? "Villages · Plages" : "Villages · Beaches"}</span>}
+  return <Link href={`/${locale}`} aria-label="LE GOLFE — Saint-Tropez" className={`inline-flex min-h-11 shrink-0 items-center rounded-sm focus-visible:outline-2 focus-visible:outline-offset-4 ${light?"text-[#0b3046]":"text-white"}`}>
+    <Image src={logo} width={1200} height={274} alt="LEGOLFE — SAINT-TROPEZ" unoptimized loading="eager" className={`block h-auto ${compact?"w-32 sm:w-[170px] md:w-[200px]":"w-[210px] md:w-[260px]"} ${light?"":"brightness-0 invert"}`}/>
   </Link>
 }
 

@@ -16,11 +16,18 @@ const server=spawn(process.execPath,[require.resolve('next/dist/bin/next'),'star
     if(['/contact','/a-propos'].includes(route)){await footer.scrollIntoViewIfNeeded();assert.equal(await footer.evaluate(el=>getComputedStyle(el).backgroundColor),'rgb(11, 48, 70)');await footer.screenshot({path:path.join(out,`footer-${route.slice(1)}-${locale}-${width}.png`)});await page.locator('h1').scrollIntoViewIfNeeded();await page.screenshot({path:path.join(out,`${route.slice(1)}-${locale}-${width}.png`)});}
    }
   }
+  for(const route of ['/fr/contact','/fr/whats-on']){
+   await page.goto(origin+route,{waitUntil:'networkidle'});
+   const logos=page.locator('img[alt="LEGOLFE — SAINT-TROPEZ"]');assert.equal(await logos.count(),2);
+   for(const logo of await logos.all()){assert.ok(await logo.evaluate(el=>el.complete&&el.naturalWidth===1200));const box=await logo.boundingBox();assert.ok(box&&box.width>=128&&box.x>=0&&box.x+box.width<=width);}
+   await page.screenshot({path:path.join(out,`brand-${route.split('/').pop()}-${width}.png`)});
+  }
   await page.goto(origin+'/fr/contact',{waitUntil:'networkidle'});await page.getByRole('contentinfo').getByRole('link',{name:'English',exact:true}).click();await page.waitForURL('**/en/contact');await page.getByRole('contentinfo').getByRole('link',{name:'About us',exact:true}).waitFor();await page.waitForFunction(()=>document.documentElement.lang==='en');assert.equal(await page.getByRole('contentinfo').getByRole('link',{name:'About us',exact:true}).count(),1);assert.equal(await page.locator('html').getAttribute('lang'),'en');
   await page.getByRole('contentinfo').getByRole('link',{name:'Français',exact:true}).click();await page.waitForURL('**/fr/contact');await page.getByRole('contentinfo').getByRole('link',{name:'À propos',exact:true}).waitFor();assert.equal(await page.getByRole('contentinfo').getByRole('link',{name:'À propos',exact:true}).count(),1);
   for(const route of ['/match','/requests']){await page.goto(origin+route,{waitUntil:'networkidle'});assert.equal(await page.getByRole('contentinfo').count(),1);assert.equal(await page.getByRole('contentinfo').getByRole('link',{name:'À propos',exact:true}).count(),1);checks++;}
   await context.close();
  }
+ const narrow=await browser.newContext({viewport:{width:320,height:800}});const narrowPage=await narrow.newPage();await narrowPage.goto(origin+'/fr/contact',{waitUntil:'networkidle'});const headerBounds=await narrowPage.locator('header').evaluate(el=>[...el.querySelector('nav > div').querySelectorAll('a')].filter(a=>a.getBoundingClientRect().width>0).map(a=>a.getBoundingClientRect()).every(b=>b.x>=0&&b.right<=320));assert.ok(headerBounds,'Header links fit a 320px screen');await narrowPage.screenshot({path:path.join(out,'brand-contact-320.png')});await narrow.close();
  const noJs=await browser.newContext({javaScriptEnabled:false,viewport:{width:375,height:900}});await noJs.route('**/*',route=>new URL(route.request().url()).origin===origin?route.continue():route.abort());const page=await noJs.newPage();await page.goto(origin+'/fr/explore',{waitUntil:'networkidle'});const footer=page.getByRole('contentinfo');assert.equal(await footer.count(),1);assert.ok(await footer.locator('a[href="/fr/contact"]').count()>0);await noJs.close();
  console.log(`Footer WebKit: ${checks} route/width checks, one footer per page, FR/EN navigation, mail/contact/about links, legacy routes, responsive bounds and server-rendered footer without JavaScript passed.`);
 }finally{if(browser)await browser.close();server.kill('SIGTERM');}})().catch(error=>{console.error(error);process.exitCode=1;});
