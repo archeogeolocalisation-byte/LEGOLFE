@@ -10,6 +10,9 @@ import {isLocale,ui} from "../../../lib/i18n";
 
 import { isExploreAddress, resolveExploreFilter, resolveExploreSearch, exploreFilterHref } from "../../../lib/exploreFilters";
 
+// A fresh server render gives each visit a new order, including filtered searches.
+export const dynamic = "force-dynamic";
+
 type Props={params:Promise<{locale:string}>;searchParams?:Promise<PublicSearchParams>};
 
 export default async function Page({params,searchParams}:Props){

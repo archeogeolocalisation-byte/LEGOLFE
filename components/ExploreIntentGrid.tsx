@@ -1,3 +1,4 @@
+import {shuffleExplorePlaces} from '../lib/shuffleExplorePlaces';
 import { placeName } from "../lib/placeNames";
 import Link from "next/link";
 import type { Place } from "../data/places";
@@ -13,7 +14,7 @@ export default function ExploreIntentGrid({ places, locale, filter = "all", quer
   const fr = locale === "fr";
   const labels = exploreFilterLabels[locale];
   const candidates=places.filter(isExploreAddress).filter(place=>matchesExploreSearch(place,query,town));
-  const list = candidates.filter(place => matchesExploreFilter(place, filter));
+  const list = shuffleExplorePlaces(candidates.filter(place => matchesExploreFilter(place, filter)));
   const counts = Object.fromEntries(exploreFilterIds.map(id => [id, candidates.filter(place => matchesExploreFilter(place, id)).length]));
   const category = exploreFilterCategory(filter);
 
