@@ -53,6 +53,7 @@ button,textarea,input { font:inherit; }
 .lg-quote-box .lg-kicker { color:var(--lg-blue); }
 .lg-link-accent { transition:color .18s ease,border-color .18s ease; }
 .lg-link-accent:hover { color:var(--lg-blue); border-color:var(--lg-blue); }
+.site-header--navy .lg-link-accent:hover,.site-header--navy .lg-link-accent:focus-visible { color:#e9d9bb; border-color:#e9d9bb; }
 .lg-blue-rule { height:6px; width:64px; background:var(--lg-blue); }
 @media (min-width:768px){ .lg-quote-box{padding:44px;} }
 
