@@ -43,7 +43,7 @@ const {GET}=require('../app/sitemap.xml/route.ts');
  }
  const slugs=new Set(guides.map(g=>g.slug));assert.equal(slugs.size,guides.length);assert.ok(guides.length>=12);
  const titles=new Set(),validDest=new Set(destinations.map(d=>d.slug)),validPlaces=new Set(places.map(p=>p.id));
- const validPaths=new Set(['/whats-on','/stay','/destinations','/explore','/guides',...placeCategories.map(c=>'/explore/'+c.id),...destinationPaths(),...guides.map(g=>'/guides/'+g.slug),...places.map(p=>'/place/'+p.id)]);
+ const validPaths=new Set(['/whats-on','/stay','/destinations','/explore','/guides','/contact','/a-propos',...placeCategories.map(c=>'/explore/'+c.id),...destinationPaths(),...guides.map(g=>'/guides/'+g.slug),...places.map(p=>'/place/'+p.id)]);
  for(const guide of guides){
   assert.ok(guide.published<=guide.verified);assert.ok(guide.verified<=new Date().toISOString().slice(0,10));
   assert.ok(guide.destinations.every(d=>validDest.has(d)),guide.slug+' destinations');
@@ -86,6 +86,7 @@ const {GET}=require('../app/sitemap.xml/route.ts');
  const xml=await (await GET()).text();assert.equal(xml.includes('<loc>https://www.legolfe.com/match</loc>'),false);assert.equal(xml.includes('/admin'),false);assert.equal(xml.includes('/host'),false);
  for(const month of ['2026-10','2026-09'])for(const locale of ['fr','en'])assert.ok(xml.includes(`<loc>https://www.legolfe.com/${locale}/local/archives/${month}</loc>`));
  for(const guide of guides)for(const locale of ['fr','en'])assert.ok(xml.includes(`<loc>https://www.legolfe.com/${locale}/guides/${guide.slug}</loc>`));
+ for(const locale of ['fr','en'])for(const route of ['contact','a-propos'])assert.ok(xml.includes(`<loc>https://www.legolfe.com/${locale}/${route}</loc>`));
  const match=require('../app/match/layout.tsx').metadata;assert.equal(match.robots.index,false);
  process.env.VERCEL_ENV='preview';assert.equal(guideArticleSchema(guides[0],'fr'),null);
  console.log(`Guides/SEO: ${guides.length} bilingual guides rendered, references/media/links checked, metadata/schema and sitemap validated.`);

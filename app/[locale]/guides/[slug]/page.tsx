@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import SiteHeader from "../../../../components/SiteHeader";
-import SiteFooter from "../../../../components/SiteFooter";
 import Breadcrumbs from "../../../../components/Breadcrumbs";
 import JsonLd from "../../../../components/JsonLd";
 import GuideImage, { mediaForGuide } from "../../../../components/GuideImage";
@@ -92,6 +91,6 @@ export default async function Page({ params }: Props) {
       </div>
     </article>
     <GuideLinks items={related} locale={locale} />
-    <SiteFooter locale={locale} />
+
   </main>;
 }

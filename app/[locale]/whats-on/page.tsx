@@ -1,4 +1,3 @@
-import SiteFooter from "../../../components/SiteFooter";
 import { parisIsoDay } from "../../../lib/localCalendar";
 import { pageMetadata } from "../../../lib/seo";
 import { notFound } from "next/navigation";
@@ -20,7 +19,7 @@ export default async function WhatsOn({ params,searchParams }: { params: Promise
   return (
     <main className="min-h-screen bg-[#050505] text-[#f5f5f2]">
       <SiteHeader light={false} locale={locale} path="/whats-on" />
-      <AgendaClient locale={locale} events={merged} initialDay={parisIsoDay()} initialCategory={initialCategory} /><SiteFooter locale={locale} dark/>
+      <AgendaClient locale={locale} events={merged} initialDay={parisIsoDay()} initialCategory={initialCategory} />
     </main>
   );
 }

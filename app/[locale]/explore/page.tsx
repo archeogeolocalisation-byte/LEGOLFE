@@ -3,7 +3,6 @@ import {hasExploreParameters,type PublicSearchParams} from "../../../lib/publicR
 import { pageMetadata } from "../../../lib/seo";
 import {notFound} from "next/navigation";
 import SiteHeader from "../../../components/SiteHeader";
-import SiteFooter from "../../../components/SiteFooter";
 import ExploreIntentGrid from "../../../components/ExploreIntentGrid";
 import {places} from "../../../data/places";
 import {isLocale,ui} from "../../../lib/i18n";
@@ -32,7 +31,7 @@ export default async function Page({params,searchParams}:Props){
    <ExploreIntentGrid places={places} locale={l} filter={initialFilter} query={query} town={town}/>
    <details className="explore-about"><summary>{l==="fr"?"Comment nous choisissons ces adresses":"How we select these places"}</summary><p>{l==="fr"?"Des adresses et des activités pour préparer vos sorties. Pour découvrir les communes et leurs paysages, rendez-vous dans Découvrir le Golfe.":"Places and activities to plan your outings. Find the towns and landscapes in Discover the Golfe."}</p></details>
   </section>
-  <SiteFooter locale={l}/>
+
  </main>
 }
 

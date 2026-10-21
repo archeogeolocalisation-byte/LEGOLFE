@@ -5,7 +5,6 @@ import Link from "next/link";
 import { FormEvent, useEffect, useRef, useState } from "react";
 import { useParams } from "next/navigation";
 import SiteHeader from "../../../components/SiteHeader";
-import SiteFooter from "../../../components/SiteFooter";
 import { supabase } from "../../../lib/supabase";
 import AccountAuthForm from "../../../components/AccountAuthForm";
 import AccountPasswordForm from "../../../components/AccountPasswordForm";
@@ -121,7 +120,7 @@ export default function AccountPage() {
             <AccountAuthForm locale={locale} onAuthenticated={() => {void hydrate();}} />
           </div>
         </section>
-        <SiteFooter locale={locale} />
+
       </main>
     );
   }
@@ -184,7 +183,7 @@ export default function AccountPage() {
         </div>
         <div className="account-panel account-gallery"><ProfileGallery key={"gallery-"+userId} userId={userId} fr={fr}/></div>
       </section>
-      <SiteFooter locale={locale} />
+
     </main>
   );
 }

@@ -1,0 +1,24 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
+const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),{spawn}=require('node:child_process'),{webkit}=require('playwright');
+const origin='http://127.0.0.1:3112',out=path.join(__dirname,'../test-results/footer');fs.mkdirSync(out,{recursive:true});
+const server=spawn(process.execPath,[require.resolve('next/dist/bin/next'),'start','--hostname','127.0.0.1','--port','3112'],{stdio:['ignore','pipe','pipe'],env:{...process.env,NEXT_TELEMETRY_DISABLED:'1'}});let logs='';for(const stream of [server.stdout,server.stderr])stream.on('data',c=>{logs=(logs+c).slice(-6000);});
+(async()=>{let browser;let checks=0;try{
+ for(let i=0;i<60;i++){if(server.exitCode!==null)throw new Error(logs);try{if((await fetch(origin+'/fr/contact')).ok)break;}catch{}if(i===59)throw new Error('Server not ready: '+logs);await new Promise(r=>setTimeout(r,500));}
+ browser=await webkit.launch();
+ for(const width of [375,1280]){
+  const context=await browser.newContext({viewport:{width,height:900},isMobile:width<600,hasTouch:width<600,reducedMotion:'reduce'});await context.route('**/*',route=>new URL(route.request().url()).origin===origin?route.continue():route.abort());
+  const page=await context.newPage();
+  for(const locale of ['fr','en']){
+   const routes=width===375?['','/explore','/explore/eat','/place/phare-de-camarat','/guides/golfe-saint-tropez-quand-il-pleut','/whats-on','/stay','/villa/villa-eden','/villa/villa-eden/contact','/account','/host','/local','/contact','/a-propos']:['/contact','/a-propos','/explore/eat'];
+   for(const route of routes){await page.goto(origin+'/'+locale+route,{waitUntil:'networkidle'});const footer=page.getByRole('contentinfo');assert.equal(await footer.count(),1,locale+route);assert.equal(await footer.locator(`a[href="/${locale}/contact"]`).count(),2);assert.equal(await footer.locator(`a[href="/${locale}/a-propos"]`).count(),1);assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),locale+route+' horizontal bounds');checks++;
+    if(['/contact','/a-propos'].includes(route)){await footer.scrollIntoViewIfNeeded();assert.equal(await footer.evaluate(el=>getComputedStyle(el).backgroundColor),'rgb(11, 48, 70)');await footer.screenshot({path:path.join(out,`footer-${route.slice(1)}-${locale}-${width}.png`)});await page.locator('h1').scrollIntoViewIfNeeded();await page.screenshot({path:path.join(out,`${route.slice(1)}-${locale}-${width}.png`)});}
+   }
+  }
+  await page.goto(origin+'/fr/contact',{waitUntil:'networkidle'});await page.getByRole('contentinfo').getByRole('link',{name:'English',exact:true}).click();await page.waitForURL('**/en/contact');await page.getByRole('contentinfo').getByRole('link',{name:'About us',exact:true}).waitFor();await page.waitForFunction(()=>document.documentElement.lang==='en');assert.equal(await page.getByRole('contentinfo').getByRole('link',{name:'About us',exact:true}).count(),1);assert.equal(await page.locator('html').getAttribute('lang'),'en');
+  await page.getByRole('contentinfo').getByRole('link',{name:'Français',exact:true}).click();await page.waitForURL('**/fr/contact');await page.getByRole('contentinfo').getByRole('link',{name:'À propos',exact:true}).waitFor();assert.equal(await page.getByRole('contentinfo').getByRole('link',{name:'À propos',exact:true}).count(),1);
+  for(const route of ['/match','/requests']){await page.goto(origin+route,{waitUntil:'networkidle'});assert.equal(await page.getByRole('contentinfo').count(),1);assert.equal(await page.getByRole('contentinfo').getByRole('link',{name:'À propos',exact:true}).count(),1);checks++;}
+  await context.close();
+ }
+ const noJs=await browser.newContext({javaScriptEnabled:false,viewport:{width:375,height:900}});await noJs.route('**/*',route=>new URL(route.request().url()).origin===origin?route.continue():route.abort());const page=await noJs.newPage();await page.goto(origin+'/fr/explore',{waitUntil:'networkidle'});const footer=page.getByRole('contentinfo');assert.equal(await footer.count(),1);assert.ok(await footer.locator('a[href="/fr/contact"]').count()>0);await noJs.close();
+ console.log(`Footer WebKit: ${checks} route/width checks, one footer per page, FR/EN navigation, mail/contact/about links, legacy routes, responsive bounds and server-rendered footer without JavaScript passed.`);
+}finally{if(browser)await browser.close();server.kill('SIGTERM');}})().catch(error=>{console.error(error);process.exitCode=1;});

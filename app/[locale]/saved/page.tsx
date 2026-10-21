@@ -4,7 +4,6 @@ import { villaHref } from "../../../lib/villaPaths";
 import Link from "next/link";
 import { use, useEffect, useMemo, useState } from "react";
 import SiteHeader from "../../../components/SiteHeader";
-import SiteFooter from "../../../components/SiteFooter";
 import { places, getCategory, placeDescriptionFr } from "../../../data/places";
 import { villas } from "../../../data/villas";
 import { categoryFR, isLocale } from "../../../lib/i18n";
@@ -94,6 +93,6 @@ export default function SavedPage({ params }: { params: Promise<{ locale: string
         })}
       </div></>}
     </section>
-    <SiteFooter locale={locale}/>
+
   </main>;
 }

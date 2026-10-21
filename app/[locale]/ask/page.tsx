@@ -4,7 +4,6 @@ import { villaHref } from "../../../lib/villaPaths";
 import Link from "next/link";
 import { FormEvent, use, useEffect, useMemo, useState } from "react";
 import SiteHeader from "../../../components/SiteHeader";
-import SiteFooter from "../../../components/SiteFooter";
 import { categoryFR, isLocale } from "../../../lib/i18n";
 import { places, getCategory, placeDescriptionFr } from "../../../data/places";
 import { events } from "../../../data/events";
@@ -93,5 +92,5 @@ export default function Page({params}:{params:Promise<{locale:string}>}){
       </section>}
 
       {!sent&&<><p className="lg-kicker mt-16 text-white/35">{fr?"ESSAYEZ":"TRY ASKING"}</p><div className="mt-5 grid border-t border-white/30 md:grid-cols-2">{ex.map((x,i)=><button key={x} onClick={()=>{setQ(x);setSent(false)}} className={`min-h-28 border-b border-white/30 p-5 text-left text-sm font-semibold text-white/65 hover:bg-white hover:text-black md:p-6 ${i%2===0?"md:border-r":""}`}>“{x}”</button>)}</div></>}
-    </section><SiteFooter locale={l}/></main>
+    </section></main>
 }
