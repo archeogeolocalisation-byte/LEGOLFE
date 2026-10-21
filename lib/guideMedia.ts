@@ -2,7 +2,7 @@ import type { StaticImageData } from "next/image";
 import pampelonne from "../public/media/guides/pampelonne-cover.webp";
 import ramatuelle from "../public/media/guides/ramatuelle-cover.webp";
 import saintTropez from "../public/media/guides/saint-tropez-car-free-cover.webp";
-import rainyDay from "../public/media/guides/rainy-day-cover.webp";
+import rainyDay from "../public/media/guides/rainy-day-cover-v2.webp";
 import whereToStay from "../public/media/guides/where-to-stay-cover.webp";
 import sanPeire from "../public/media/guides/san-peire-cover.webp";
 import capLardier from "../public/media/guides/cap-lardier-cover.webp";

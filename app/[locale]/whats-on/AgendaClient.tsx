@@ -11,7 +11,7 @@ import { useEffect, useMemo, useState } from "react";
 import { agendaSources, type GolfeEvent, type EventCategory } from "../../../data/events";
 import { mediaForEvent, eventMediaLabel, agendaTitleCardIds } from "../../../lib/eventMedia";
 
-type Props = { locale: "fr" | "en"; events: GolfeEvent[]; initialDay:string };
+type Props = { locale: "fr" | "en"; events: GolfeEvent[]; initialDay:string;initialCategory?:"all"|"cinema" };
 type Range = "today" | "tomorrow" | "weekend" | "7days" | "month";
 
 const categoryLabels: Record<EventCategory, { fr: string; en: string }> = {
@@ -54,7 +54,7 @@ function EventArtwork({event, locale, titleCard}:{event:GolfeEvent;locale:"fr"|"
   return <img ref={node=>{if(node?.complete&&node.naturalWidth===0)setFailedSource(image.src);}} width={1440} height={960} decoding="async" style={image.kind==="official"?{objectFit:"contain",background:"#121212"}:undefined} src={image.src} alt={image.alt} loading="lazy" onError={()=>setFailedSource(image.src)}/>;
 }
 
-export default function AgendaClient({ locale, events, initialDay }: Props) {
+export default function AgendaClient({ locale, events, initialDay,initialCategory="all" }: Props) {
   const fr = locale === "fr";
   const [todayIso,setTodayIso]=useState(initialDay);
   useEffect(()=>{const timer=setInterval(()=>setTodayIso(parisIsoDay()),60_000);return ()=>clearInterval(timer);},[]);
@@ -62,7 +62,7 @@ export default function AgendaClient({ locale, events, initialDay }: Props) {
   const [month, setMonth] = useState("");
   const selectedWindow = upcomingWindow(monthWindow(month) ?? dateWindow(range, todayIso),todayIso);
   const months = useMemo(() => catalogMonths(events).filter(value=>value>=todayIso.slice(0,7)), [events,todayIso]);
-  const [category, setCategory] = useState<"all" | EventCategory>("all");
+  const [category, setCategory] = useState<"all" | EventCategory>(initialCategory);
   const [location, setLocation] = useState("all");
   const locations = useMemo(() => Array.from(new Set([...events.map((e) => e.location),...cinemas.map(c=>c.town)])).sort(), [events]);
   const filtered=useMemo(()=>eventsInWindow(events,{from:selectedWindow.from,to:selectedWindow.to}).filter(e=>(category==="all"||e.category===category)&&(location==="all"||e.location===location)),[events,selectedWindow.from,selectedWindow.to,category,location]);

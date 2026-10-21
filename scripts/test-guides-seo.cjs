@@ -56,9 +56,9 @@ const {GET}=require('../app/sitemap.xml/route.ts');
   for(const locale of ['fr','en']){
    const copy=guide.copy[locale];assert.ok(copy.description.length>=80&&copy.description.length<=200,guide.slug+' description');
    assert.equal(titles.has(copy.seoTitle),false);titles.add(copy.seoTitle);
-   assert.ok(copy.links.every(l=>validPaths.has(l.path)),guide.slug+' links');
+   assert.ok(copy.links.every(l=>validPaths.has(l.path.split('?')[0])),guide.slug+' links');
    const ids=new Set(copy.sections.map(s=>s.id));assert.equal(ids.size,copy.sections.length);
-   for(const section of copy.sections){assert.ok(section.paragraphs.length);assert.ok((section.sourceIds||[]).every(id=>sourceIds.has(id)));if(section.table){assert.ok(section.table.rows.every(row=>row.length===section.table.headers.length));}}
+   for(const section of copy.sections){assert.ok((section.links||[]).every(l=>validPaths.has(l.path.split('?')[0])));for(const l of section.externalLinks||[])assert.equal(new URL(l.url).protocol,'https:');assert.ok(section.paragraphs.length);assert.ok((section.sourceIds||[]).every(id=>sourceIds.has(id)));if(section.table){assert.ok(section.table.rows.every(row=>row.length===section.table.headers.length));}}
    const schema=guideArticleSchema(guide,locale);assert.equal(schema.headline,copy.seoTitle);assert.equal(schema.inLanguage,locale==='fr'?'fr-FR':'en-GB');assert.ok(schema.mainEntityOfPage['@id'].includes('/'+locale+'/guides/'+guide.slug));
    const metadata=await Page.generateMetadata({params:Promise.resolve({locale,slug:guide.slug})});assert.equal(metadata.alternates.canonical,`https://www.legolfe.com/${locale}/guides/${guide.slug}`);assert.equal(metadata.alternates.languages.en,`https://www.legolfe.com/en/guides/${guide.slug}`);assert.ok(metadata.openGraph.images[0].url.startsWith('https://www.legolfe.com/'));
    const html=renderToStaticMarkup(await Page.default({params:Promise.resolve({locale,slug:guide.slug})}));assert.equal((html.match(/<h1[ >]/g)||[]).length,1);assert.ok(html.includes('application/ld+json'));for(const section of copy.sections)assert.ok(html.includes(`id="${section.id}"`));
@@ -71,6 +71,13 @@ const {GET}=require('../app/sitemap.xml/route.ts');
      assert.equal(copy.sections.find(section=>section.id==='saison').table.rows.length,6);
      for(const id of ['anses','owner','onf','cepes','sanguins'])assert.ok(guide.sources.some(source=>source.id===id));
     }else{assert.equal(guide.destinations.length,0);assert.equal(guide.placeIds.length,0);assert.ok(guide.sources.some(source=>source.id==='water'));}
+   }
+   if(guide.slug==='golfe-saint-tropez-quand-il-pleut'){
+    assert.ok(copy.sections.some(s=>s.id==='maison'));assert.ok(copy.questions.length>=5);
+    for(const id of ['musee-gendarmerie-cinema','musee-annonciade-saint-tropez','maison-des-papillons','citadelle-saint-tropez','conservatoire-patrimoine-freinet'])assert.ok(copy.sections.some(s=>s.links?.some(l=>l.path==='/place/'+id)),id+' link in its editorial section');
+    assert.ok(html.includes(`href="/${locale}/whats-on?category=cinema"`));
+    for(const cinema of require('../data/cinemas.ts').cinemas)assert.ok(html.includes(cinema.url.replaceAll('&','&amp;')));
+    assert.ok(metadata.openGraph.images[0].url.includes('rainy-day-cover-v2'));assert.equal(schema.dateModified,'2026-10-21T12:00:00+02:00');
    }
    if(guide.slug==='marches-golfe-saint-tropez-jours'){assert.ok(html.includes('<table'));assert.ok(html.includes('scope="row"'));assert.equal(copy.sections[0].table.rows.length,7);}
   }
