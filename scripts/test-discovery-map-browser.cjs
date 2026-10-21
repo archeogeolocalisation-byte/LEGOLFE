@@ -29,6 +29,9 @@ const server=spawn(process.execPath,[require.resolve('next/dist/bin/next'),'star
   assert.ok((await section.locator('[data-map-place]').count())>0);
   assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));
   await page.goto(origin+'/'+locale+'/explore',{waitUntil:'networkidle'});const exploreColor=await page.locator('main').evaluate(el=>getComputedStyle(el).backgroundColor);
+  const order=()=>page.locator('.explore-card-link').evaluateAll(nodes=>nodes.map(n=>n.getAttribute('href')));
+  const firstOrder=await order();assert.ok(firstOrder.length>50);await page.reload({waitUntil:'networkidle'});const nextOrder=await order();assert.deepEqual([...firstOrder].sort(),[...nextOrder].sort());assert.notDeepEqual(firstOrder,nextOrder,'Explorer reload shuffles the same linked places');
+
   await page.goto(origin+'/'+locale+'/stay',{waitUntil:'networkidle'});const stayColor=await page.locator('main').evaluate(el=>getComputedStyle(el).backgroundColor);assert.equal(exploreColor,stayColor);assert.equal(stayColor,'rgb(253, 252, 249)');
   await context.close();
  }

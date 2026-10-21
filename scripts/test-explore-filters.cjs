@@ -50,3 +50,16 @@ assert.equal(parsed.searchParams.get('q'),'roy & café');
 assert.equal(parsed.searchParams.get('filter'),'party');
 assert.equal(parsed.searchParams.get('town'),'saint-tropez');
 console.log('Explore combined search, accents, multi-town places and query preservation passed.');
+
+const {shuffleExplorePlaces}=require('../lib/shuffleExplorePlaces.ts');
+const {isExploreAddress}=require('../lib/exploreFilters.ts');
+const original=places.filter(isExploreAddress),ids=original.map(p=>p.id),orders=new Set();
+for(let i=0;i<10;i++){
+ const shuffled=shuffleExplorePlaces(original),shuffledIds=shuffled.map(p=>p.id);
+ assert.notEqual(shuffled,original);assert.deepEqual([...shuffledIds].sort(),[...ids].sort());
+ assert.deepEqual(original.map(p=>p.id),ids,'shared catalogue order stays unchanged');
+ orders.add(shuffledIds.join(','));
+}
+assert.ok(orders.size>1,'successive server renders use varied orders');
+assert.deepEqual(shuffleExplorePlaces([]),[]);assert.deepEqual(shuffleExplorePlaces([original[0]]),[original[0]]);
+console.log('Explore random order: all addresses retained, no shared catalogue mutation, repeated variation and empty/single results passed.');
