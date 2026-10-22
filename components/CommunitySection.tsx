@@ -197,7 +197,7 @@ export default function CommunitySection({ placeId, locale }: { placeId: string;
               return (
                 <figure key={post.id} className={`${index === 0 ? "col-span-2 row-span-2" : ""} group overflow-hidden bg-neutral-100`}>
                   <Link href={`/${locale}/member/${post.user_id}`} aria-label={fr?`Voir le profil de ${author(post)}`:`View ${author(post)} profile`} className="block overflow-hidden"><CommunityPhoto path={post.image_path!} alt={post.comment || (fr?"Photo partagée":"Shared photo")} className="h-full min-h-52 w-full object-cover transition duration-500 group-hover:scale-[1.02]" /></Link>
-                  <figcaption className="bg-white px-3 py-3"><Link href={`/${locale}/member/${post.user_id}`} className="inline-flex items-center gap-2 text-xs font-bold hover:text-[var(--lg-blue)]">{profiles[post.user_id]?.avatarUrl ? <img src={profiles[post.user_id].avatarUrl!} alt="" className="h-8 w-8 rounded-full object-cover"/> : <span aria-hidden="true" className="flex h-8 w-8 items-center justify-center rounded-full bg-[#0B4F6C] text-[10px] text-white">LG</span>}{author(post)} ↗</Link></figcaption>
+                  <figcaption className="bg-white px-3 py-3"><Link href={`/${locale}/member/${post.user_id}`} className="inline-flex items-center gap-2 text-xs font-bold hover:text-[var(--lg-blue)]">{profiles[post.user_id]?.avatarUrl ? <img src={profiles[post.user_id].avatarUrl!} alt="" className="h-8 w-8 rounded-full object-cover"/> : <span aria-hidden="true" className="flex h-8 w-8 items-center justify-center rounded-full bg-[var(--lg-blue)] text-[10px] text-white">LG</span>}{author(post)} ↗</Link></figcaption>
                 </figure>
               );
             })}
@@ -217,7 +217,7 @@ export default function CommunitySection({ placeId, locale }: { placeId: string;
                   <blockquote key={post.id} className="border-b border-black py-5">
                     <p className="text-base font-semibold leading-7 text-black/70">“{post.comment}”</p>
                     <footer className="mt-4 flex items-center gap-3 text-[10px] font-black uppercase tracking-[.08em] text-black/55">
-                      <Link href={`/${locale}/member/${post.user_id}`} className="inline-flex items-center gap-2 hover:text-[var(--lg-blue)]">{profiles[post.user_id]?.avatarUrl ? <img src={profiles[post.user_id].avatarUrl!} alt="" className="h-10 w-10 rounded-full object-cover"/> : <span aria-hidden="true" className="flex h-10 w-10 items-center justify-center rounded-full bg-[#0B4F6C] text-white">LG</span>}{author(post)} ↗</Link>
+                      <Link href={`/${locale}/member/${post.user_id}`} className="inline-flex items-center gap-2 hover:text-[var(--lg-blue)]">{profiles[post.user_id]?.avatarUrl ? <img src={profiles[post.user_id].avatarUrl!} alt="" className="h-10 w-10 rounded-full object-cover"/> : <span aria-hidden="true" className="flex h-10 w-10 items-center justify-center rounded-full bg-[var(--lg-blue)] text-white">LG</span>}{author(post)} ↗</Link>
                       <span>· {new Intl.DateTimeFormat(locale === "fr" ? "fr-FR" : "en-GB", { month: "short", year: "numeric" }).format(new Date(post.created_at))}</span>
                     </footer>
                   </blockquote>

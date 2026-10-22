@@ -15,6 +15,6 @@ export default function MemberCoverSlider({photos,fr}:{photos:string[];fr:boolea
         <button type="button" aria-label={fr?"Photo suivante":"Next image"} onClick={()=>setIndex(i=>(i+1)%images.length)} className="absolute right-3 top-1/2 -translate-y-1/2 bg-white/90 px-4 py-3 font-black">›</button>
       </>}
     </div>
-    {images.length>1&&<div className="mt-3 flex justify-center gap-3">{images.map((_,i)=><button type="button" aria-label={fr?`Afficher la photo ${i+1}`:`Show photo ${i+1}`} aria-current={active===i?"true":undefined} onClick={()=>setIndex(i)} className={`h-2.5 w-2.5 rounded-full ${active===i?"bg-[#0B4F6C]":"bg-neutral-300"}`} key={i}/>)}</div>}
+    {images.length>1&&<div className="mt-3 flex justify-center gap-3">{images.map((_,i)=><button type="button" aria-label={fr?`Afficher la photo ${i+1}`:`Show photo ${i+1}`} aria-current={active===i?"true":undefined} onClick={()=>setIndex(i)} className={`h-2.5 w-2.5 rounded-full ${active===i?"bg-[var(--lg-blue)]":"bg-neutral-300"}`} key={i}/>)}</div>}
   </section>;
 }

@@ -20,7 +20,7 @@ export default async function MemberPage({params}:{params:Promise<{locale:string
     <section className="lg-shell member-content">
       <p className="lg-kicker lg-accent">{fr?"COMMUNAUTÉ / MEMBRE":"COMMUNITY / MEMBER"}</p>
       <div className="member-identity">
-        <div className="flex h-28 w-28 shrink-0 items-center justify-center overflow-hidden rounded-full bg-[#0B4F6C] text-3xl font-black text-white">
+        <div className="flex h-28 w-28 shrink-0 items-center justify-center overflow-hidden rounded-full bg-[var(--lg-blue)] text-3xl font-black text-white">
           {member.avatarUrl?<img src={member.avatarUrl} alt={fr?"Photo de profil":"Profile photo"} className="h-full w-full object-cover"/>:<span aria-hidden="true">LG</span>}
         </div>
         <div className="min-w-0">

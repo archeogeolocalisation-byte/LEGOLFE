@@ -32,10 +32,10 @@ export default async function Home({params}:{params:Promise<{locale:string}>}){
   {label:fr?"BIEN MANGER":"EAT WELL",sub:fr?"La bonne table pour le bon moment":"The right table for the right moment",mood:"eat"},
   {label:fr?"SORTIR":"PARTYING",sub:fr?"Bars, clubs et soirées qui se prolongent":"Bars, clubs and nights that go on",mood:"party"},
  ];
- return <main className="min-h-screen bg-white text-black"><SiteHeader locale={l}/>
+ return <main className="home-page min-h-screen bg-white text-black"><SiteHeader locale={l}/>
   <section className="lg-shell pb-14 pt-10 md:pb-20 md:pt-16">
    <p className="lg-kicker">Golfe de Saint-Tropez / {fr?"Le guide local":"Local intelligence"}</p>
-   <h1 className="lg-menu-title mt-7 max-w-full">{fr?<>LE GOLFE.<br/><span className="lg-accent">AUTREMENT.</span></>:<>THE GOLFE.<br/><span className="lg-accent">DIFFERENTLY.</span></>}</h1>
+   <h1 className="lg-menu-title mt-7 max-w-full text-[var(--lg-blue)]">{fr?<>LE GOLFE.<br/><span className="lg-accent">AUTREMENT.</span></>:<>THE GOLFE.<br/><span className="lg-accent">DIFFERENTLY.</span></>}</h1>
    <div className="mt-9 grid gap-7 border-t border-black pt-6 md:grid-cols-[1fr_auto] md:items-start">
     <p className="max-w-2xl text-[18px] font-bold leading-7 md:text-[21px] md:leading-8">{fr?"Le bon village. La bonne table. La bonne plage. La bonne maison. Pas plus de choix — de meilleurs choix.":"The right village. The right table. The right beach. The right stay. Not more choice — better choices."}</p>
     <div className="flex gap-2"><Link href={`/${l}/ask`} className="lg-btn bg-[var(--lg-blue)] text-white !border-[var(--lg-blue)]">{fr?"Demander à LE GOLFE":"Ask Le Golfe"}</Link><Link href={`/${l}/explore`} className="lg-btn">{fr?"Explorer":"Explore"}</Link></div>
@@ -92,8 +92,8 @@ export default async function Home({params}:{params:Promise<{locale:string}>}){
     </div>
   </section>
 
-  <section className="bg-black text-white"><div className="lg-shell py-20 md:py-28">
-    <div className="grid gap-10 md:grid-cols-[.9fr_1.1fr] md:items-end"><div><p className="lg-kicker text-white/55">{fr?"DEMANDER À LE GOLFE":"ASK LE GOLFE"}</p><h2 className="lg-title mt-4 text-[14vw] uppercase md:text-[86px]">{fr?<>DITES-NOUS <span className="text-[var(--lg-blue)]">LE SÉJOUR</span> QUE VOUS VOULEZ.</>:<>TELL US <span className="text-[var(--lg-blue)]">THE STAY</span> YOU WANT.</>}</h2></div><div className="border-t border-white pt-6"><p className="max-w-xl text-lg font-bold leading-7 text-white/70">{fr?"Deux enfants, une plage facile, un bon déjeuner et pas envie de passer la journée dans la voiture ? C'est exactement le type de demande que LE GOLFE doit comprendre.":"Two children, an easy beach, a great lunch and no desire to spend the day in the car? That is exactly the kind of brief LE GOLFE should understand."}</p><Link href={`/${l}/ask`} className="mt-7 inline-flex min-h-12 items-center bg-[var(--lg-blue)] px-5 text-[10px] font-black uppercase tracking-[.14em] text-white">{fr?"Demander à LE GOLFE":"Ask Le Golfe"} →</Link></div></div>
+  <section className="home-ask lg-dark"><div className="lg-shell py-20 md:py-28">
+    <div className="grid gap-10 md:grid-cols-[.9fr_1.1fr] md:items-end"><div><p className="lg-kicker text-white/55">{fr?"DEMANDER À LE GOLFE":"ASK LE GOLFE"}</p><h2 className="lg-title mt-4 text-[14vw] uppercase md:text-[86px]">{fr?<>DITES-NOUS <span className="text-[var(--lg-sky)]">LE SÉJOUR</span> QUE VOUS VOULEZ.</>:<>TELL US <span className="text-[var(--lg-sky)]">THE STAY</span> YOU WANT.</>}</h2></div><div className="border-t border-white pt-6"><p className="max-w-xl text-lg font-bold leading-7 text-white/70">{fr?"Deux enfants, une plage facile, un bon déjeuner et pas envie de passer la journée dans la voiture ? C'est exactement le type de demande que LE GOLFE doit comprendre.":"Two children, an easy beach, a great lunch and no desire to spend the day in the car? That is exactly the kind of brief LE GOLFE should understand."}</p><Link href={`/${l}/ask`} className="home-ask-button mt-7 inline-flex min-h-12 items-center px-5 text-[10px] font-black uppercase tracking-[.14em] text-white">{fr?"Demander à LE GOLFE":"Ask Le Golfe"} →</Link></div></div>
   </div></section>
 
   <section className="lg-shell py-20 md:py-28">
