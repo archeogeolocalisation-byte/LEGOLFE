@@ -28,6 +28,17 @@ const server=spawn(process.execPath,[require.resolve('next/dist/bin/next'),'star
   await context.close();
  }
  const narrow=await browser.newContext({viewport:{width:320,height:800}});const narrowPage=await narrow.newPage();await narrowPage.goto(origin+'/fr/contact',{waitUntil:'networkidle'});const headerBounds=await narrowPage.locator('header').evaluate(el=>[...el.querySelector('nav > div').querySelectorAll('a')].filter(a=>a.getBoundingClientRect().width>0).map(a=>a.getBoundingClientRect()).every(b=>b.x>=0&&b.right<=320));assert.ok(headerBounds,'Header links fit a 320px screen');await narrowPage.screenshot({path:path.join(out,'brand-contact-320.png')});await narrow.close();
- const noJs=await browser.newContext({javaScriptEnabled:false,viewport:{width:375,height:900}});await noJs.route('**/*',route=>new URL(route.request().url()).origin===origin?route.continue():route.abort());const page=await noJs.newPage();await page.goto(origin+'/fr/explore',{waitUntil:'networkidle'});const footer=page.getByRole('contentinfo');assert.equal(await footer.count(),1);assert.ok(await footer.locator('a[href="/fr/contact"]').count()>0);await noJs.close();
+ const noJs=await browser.newContext({javaScriptEnabled:false,viewport:{width:375,height:900}});await noJs.route('**/*',route=>new URL(route.request().url()).origin===origin?route.continue():route.abort());const page=await noJs.newPage();await page.goto(origin+'/fr/explore',{waitUntil:'networkidle'});const footer=page.getByRole('contentinfo');assert.equal(await footer.count(),1);assert.ok(await footer.locator('a[href="/fr/contact"]').count()>0);
+ for(const locale of ['fr','en']){
+  await page.goto(origin+'/'+locale+'/explore',{waitUntil:'networkidle'});
+  assert.ok(await page.locator('.explore-gallery a[href^="/'+locale+'/place/"]').count()>70,'Explorer cards are available without JavaScript');
+  for(const route of ['/local','/local/archives/2026-10']){
+   await page.goto(origin+'/'+locale+route,{waitUntil:'networkidle'});
+   const gigaro=page.locator('article[data-local-news="gigaro-protection-2026"] a[href="/'+locale+'/place/gigaro-beach"]');
+   assert.equal(await gigaro.count(),1,'Contextual place link exists without JavaScript');
+   await gigaro.click();await page.waitForURL('**/'+locale+'/place/gigaro-beach');assert.equal(await page.locator('main h1').count(),1);
+  }
+ }
+ await noJs.close();
  console.log(`Footer WebKit: ${checks} route/width checks, one footer per page, FR/EN navigation, mail/contact/about links, legacy routes, responsive bounds and server-rendered footer without JavaScript passed.`);
 }finally{if(browser)await browser.close();server.kill('SIGTERM');}})().catch(error=>{console.error(error);process.exitCode=1;});

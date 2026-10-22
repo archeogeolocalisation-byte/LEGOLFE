@@ -24,6 +24,7 @@ jobs:
       - run: npm audit --omit=dev --audit-level=high
       - run: node scripts/test-seo.cjs
       - run: node scripts/test-public-routes.cjs
+      - run: node scripts/test-place-crawlability.cjs
       - run: node scripts/test-guides-seo.cjs
       - run: node scripts/test-place-facts.cjs
       - run: node scripts/test-place-seo.cjs
