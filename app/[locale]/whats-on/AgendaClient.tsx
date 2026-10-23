@@ -24,7 +24,7 @@ const categoryLabels: Record<EventCategory, { fr: string; en: string }> = {
   sailing: { fr: "Nautisme", en: "Sailing" },
 };
 
-const accent = "#8BDCF2";
+const accent = "var(--lg-sky)";
 
 function parseDay(value: string) {
   return new Date(`${value}T12:00:00Z`);
@@ -51,7 +51,7 @@ function EventArtwork({event, locale, titleCard}:{event:GolfeEvent;locale:"fr"|"
     <span className={styles.titleCardTitle}>{title}</span>
     <span className={styles.titleCardSignature}>legolfe.com</span>
   </span>;
-  return <img ref={node=>{if(node?.complete&&node.naturalWidth===0)setFailedSource(image.src);}} width={1440} height={960} decoding="async" style={image.kind==="official"?{objectFit:"contain",background:"#121212"}:undefined} src={image.src} alt={image.alt} loading="lazy" onError={()=>setFailedSource(image.src)}/>;
+  return <img ref={node=>{if(node?.complete&&node.naturalWidth===0)setFailedSource(image.src);}} width={1440} height={960} decoding="async" style={image.kind==="official"?{objectFit:"contain",background:"var(--lg-navy-deep)"}:undefined} src={image.src} alt={image.alt} loading="lazy" onError={()=>setFailedSource(image.src)}/>;
 }
 
 export default function AgendaClient({ locale, events, initialDay,initialCategory="all" }: Props) {
@@ -85,7 +85,7 @@ export default function AgendaClient({ locale, events, initialDay,initialCategor
 
   return (
     <>
-      <section className="border-b border-white/20 bg-[#050505] text-white">
+      <section className="border-b border-white/20 bg-[var(--lg-blue)] text-white">
         <div className="mx-auto max-w-7xl px-6 py-8 md:px-10 md:py-12">
           <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
             <div>
@@ -101,19 +101,19 @@ export default function AgendaClient({ locale, events, initialDay,initialCategor
         </div>
       </section>
 
-      <section className="relative z-30 border-b border-white/20 bg-[#050505] text-white" aria-label={fr ? "Filtrer l’agenda" : "Filter the agenda"}>
+      <section className="relative z-30 border-b border-white/20 bg-[var(--lg-blue)] text-white" aria-label={fr ? "Filtrer l’agenda" : "Filter the agenda"}>
         <div className="mx-auto max-w-7xl px-6 py-4 md:px-10">
           <div className="flex max-w-full gap-2 overflow-x-auto pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
             {rangeButtons.map((item) => {
               const selected = !month && range === item.key;
-              return <button key={item.key} type="button" aria-pressed={selected} onClick={() => { setMonth(""); setRange(item.key); }} className={`inline-flex min-h-11 shrink-0 items-center gap-2 border px-4 py-2 text-[11px] font-black uppercase tracking-[.13em] transition ${selected ? "border-transparent text-black" : "border-white/30 text-white hover:border-white"}`} style={selected ? { backgroundColor: accent } : undefined}>
+              return <button key={item.key} type="button" aria-pressed={selected} onClick={() => { setMonth(""); setRange(item.key); }} className={`inline-flex min-h-11 shrink-0 items-center gap-2 border px-4 py-2 text-[11px] font-black uppercase tracking-[.13em] transition ${selected ? "border-transparent text-[var(--lg-blue)]" : "border-white/30 text-white hover:border-white"}`} style={selected ? { backgroundColor: accent } : undefined}>
                 {fr ? item.fr : item.en}<span className="font-bold opacity-75" aria-hidden="true">{countWindow(item.key)}</span>
               </button>;
             })}
           </div>
           <div className="mt-3 flex items-center gap-3">
             <label htmlFor="agenda-month" className="text-[10px] font-black uppercase tracking-[.13em]">{fr ? "Choisir un mois" : "Choose a month"}</label>
-            <select id="agenda-month" value={month} onChange={event => setMonth(event.target.value)} className={styles.filterSelect+" max-w-full border border-white/30 bg-[#111111] px-3 py-2 text-xs font-bold text-white"}>
+            <select id="agenda-month" value={month} onChange={event => setMonth(event.target.value)} className={styles.filterSelect+" max-w-full border border-white/30 bg-[var(--lg-navy-surface)] px-3 py-2 text-xs font-bold text-white"}>
               <option value="">{fr ? "Période rapide" : "Quick dates"}</option>
               {months.map(value => <option key={value} value={value}>{formatCalendarMonth(value, locale)}</option>)}
             </select>
@@ -123,13 +123,13 @@ export default function AgendaClient({ locale, events, initialDay,initialCategor
                   <div>
                     <p className="text-[10px] font-black uppercase tracking-[.22em] text-white/55">{fr ? "AFFINER" : "REFINE"}</p>
                     <div className="mt-3 flex max-w-full flex-wrap gap-2">
-                      <button aria-pressed={category === "all"} onClick={() => setCategory("all")} className={`px-3 py-2 text-[10px] font-black uppercase tracking-[.14em] ${category === "all" ? "bg-[#8BDCF2] text-black" : "border border-white/35 text-white hover:border-white"}`}>{fr ? "Tout" : "All"}</button>
-                      {(Object.keys(categoryLabels) as EventCategory[]).map((key) => <button key={key} aria-pressed={category === key} onClick={() => setCategory(key)} className={`px-3 py-2 text-[10px] font-black uppercase tracking-[.14em] ${category === key ? "bg-[#0B4F6C] text-white" : "border border-[#c5d4d7] text-[#8BDCF2]"}`}>{fr ? categoryLabels[key].fr : categoryLabels[key].en}</button>)}
+                      <button aria-pressed={category === "all"} onClick={() => setCategory("all")} className={`px-3 py-2 text-[10px] font-black uppercase tracking-[.14em] ${category === "all" ? "bg-[var(--lg-sky)] text-[var(--lg-blue)]" : "border border-white/35 text-white hover:border-white"}`}>{fr ? "Tout" : "All"}</button>
+                      {(Object.keys(categoryLabels) as EventCategory[]).map((key) => <button key={key} aria-pressed={category === key} onClick={() => setCategory(key)} className={`px-3 py-2 text-[10px] font-black uppercase tracking-[.14em] ${category === key ? "bg-[var(--lg-sky)] text-[var(--lg-blue)]" : "border border-[#c5d4d7] text-[var(--lg-sky)]"}`}>{fr ? categoryLabels[key].fr : categoryLabels[key].en}</button>)}
                     </div>
                   </div>
                   <div>
                     <label htmlFor="agenda-location" className="block text-[10px] font-black uppercase tracking-[.18em] text-white/55">{fr ? "OÙ ?" : "WHERE?"}</label>
-                    <select id="agenda-location" value={location} onChange={(e) => setLocation(e.target.value)} className={styles.filterSelect+" mt-2 min-w-52 border-0 border-b-2 border-[#8BDCF2] bg-[#111111] px-2 py-2 text-sm font-bold text-white focus-visible:outline-2 focus-visible:outline-[#8BDCF2]"}>
+                    <select id="agenda-location" value={location} onChange={(e) => setLocation(e.target.value)} className={styles.filterSelect+" mt-2 min-w-52 border-0 border-b-2 border-[var(--lg-sky)] bg-[var(--lg-navy-surface)] px-2 py-2 text-sm font-bold text-white focus-visible:outline-2 focus-visible:outline-[var(--lg-sky)]"}>
                       <option value="all">{fr ? "Tout le Golfe" : "Across the Golfe"}</option>
                       {locations.map((loc) => <option key={loc} value={loc}>{loc}</option>)}
                     </select>
@@ -154,7 +154,7 @@ export default function AgendaClient({ locale, events, initialDay,initialCategor
        </div></div>
       </section>}
 
-      <section className="mx-auto max-w-7xl bg-[#050505] px-6 py-10 text-white md:px-10 md:py-14">
+      <section className="mx-auto max-w-7xl bg-[var(--lg-blue)] px-6 py-10 text-white md:px-10 md:py-14">
         <div className="mt-12 flex items-end justify-between gap-5">
           <div>
             <p className="text-[10px] font-black uppercase tracking-[.22em]" style={{ color: accent }}>{periodText}</p>
@@ -164,7 +164,7 @@ export default function AgendaClient({ locale, events, initialDay,initialCategor
         </div>
 
         {filtered.length === 0 ? (
-          <div className="my-16 border border-white/30 bg-[#111111] px-6 py-16 text-center">
+          <div className="my-16 border border-white/30 bg-[var(--lg-navy-surface)] px-6 py-16 text-center">
             <p className="text-3xl font-black">{fr ? "Rien dans ce filtre." : "Nothing in this filter."}</p>
             <p className="mt-3 text-sm text-white/60">{fr ? "Élargissez la période ou changez de catégorie." : "Widen the dates or change category."}</p>
           </div>
@@ -178,30 +178,30 @@ export default function AgendaClient({ locale, events, initialDay,initialCategor
         ) : <p className="mt-8 text-sm text-white/65">{fr?'Tous les rendez-vous de cette sélection sont présentés à l’affiche ci-dessus.':'All events in this selection appear in the featured section above.'}</p>}
       </section>
 
-      <section className="border-t border-white/20 bg-[#050505] text-white">
+      <section className="border-t border-white/20 bg-[var(--lg-blue)] text-white">
         <div className="mx-auto max-w-7xl px-6 py-14 md:px-10 md:py-20">
           <div className="grid gap-10 lg:grid-cols-[.72fr_1.28fr]">
             <div>
-              <p className="text-[10px] font-black uppercase tracking-[.22em] text-[#0B4F6C]">{fr ? "PROGRAMMES & SOURCES" : "PROGRAMMES & SOURCES"}</p>
+              <p className="text-[10px] font-black uppercase tracking-[.22em] text-[var(--lg-sky)]">{fr ? "PROGRAMMES & SOURCES" : "PROGRAMMES & SOURCES"}</p>
               <h2 className="mt-4 text-4xl font-black leading-[.93] tracking-[-.04em] md:text-6xl">{fr ? "UN AGENDA DU GOLFE. PAS D'UNE SEULE VILLE." : "THE WHOLE GOLFE. NOT JUST ONE TOWN."}</h2>
               <p className="mt-6 max-w-lg text-sm leading-7 text-white/65">{fr ? "LE GOLFE croise les agendas municipaux, offices de tourisme et salles de spectacle. On ne republie pas tout : on sélectionne ce qui mérite vraiment votre temps." : "LE GOLFE cross-checks municipal calendars, tourism offices and cultural venues. We do not republish everything; we select what is genuinely worth your time."}</p>
             </div>
             <div className="grid border-t border-white/25 sm:grid-cols-2">
               {agendaSources.map((source) => <a key={source.name} href={source.url} target="_blank" rel="noreferrer" className="group border-b border-white/20 py-5 sm:odd:pr-6 sm:even:border-l sm:even:border-white/20 sm:even:pl-6">
-                <div className="flex items-start justify-between gap-4"><div><p className="text-[9px] font-black uppercase tracking-[.18em] text-[#0B4F6C]">{source.area}</p><p className="mt-2 text-lg font-black leading-tight group-hover:text-[#8BDCF2]">{source.name}</p></div><span className="text-sm">↗</span></div>
+                <div className="flex items-start justify-between gap-4"><div><p className="text-[9px] font-black uppercase tracking-[.18em] text-[var(--lg-sky)]">{source.area}</p><p className="mt-2 text-lg font-black leading-tight group-hover:text-[var(--lg-sky)]">{source.name}</p></div><span className="text-sm">↗</span></div>
               </a>)}
             </div>
           </div>
         </div>
       </section>
 
-      <section className="border-t border-white/20 bg-[#050505] text-white">
+      <section className="border-t border-white/20 bg-[var(--lg-blue)] text-white">
         <div className="mx-auto max-w-7xl px-6 py-14 md:flex md:items-end md:justify-between md:px-10 md:py-20">
           <div>
             <p className="text-[10px] font-black uppercase tracking-[.22em] text-white/55">{fr?"DEMANDER À LE GOLFE":"ASK LE GOLFE"}</p>
             <h2 className="mt-4 max-w-3xl text-4xl font-black leading-[.95] tracking-[-.035em] md:text-6xl">{fr ? "VOUS AVEZ UNE SOIRÉE. ON VOUS FAIT LE PLAN." : "YOU HAVE ONE EVENING. WE'LL MAKE THE PLAN."}</h2>
           </div>
-          <Link href={`/${locale}/ask?prompt=${encodeURIComponent(fr ? "Que faire ce soir dans le Golfe ? Propose-moi un programme cohérent avec un événement, un dîner et le bon endroit pour finir la soirée." : "What should we do tonight in the Golfe? Build a coherent plan with an event, dinner and the right place to end the evening.")}`} className="mt-8 inline-block bg-[#8BDCF2] px-6 py-4 text-xs font-black uppercase tracking-[.15em] text-black md:mt-0">{fr ? "FAIRE MON PLAN" : "BUILD MY PLAN"} →</Link>
+          <Link href={`/${locale}/ask?prompt=${encodeURIComponent(fr ? "Que faire ce soir dans le Golfe ? Propose-moi un programme cohérent avec un événement, un dîner et le bon endroit pour finir la soirée." : "What should we do tonight in the Golfe? Build a coherent plan with an event, dinner and the right place to end the evening.")}`} className="mt-8 inline-block bg-[var(--lg-sky)] px-6 py-4 text-xs font-black uppercase tracking-[.15em] text-black md:mt-0">{fr ? "FAIRE MON PLAN" : "BUILD MY PLAN"} →</Link>
         </div>
       </section>
     </>

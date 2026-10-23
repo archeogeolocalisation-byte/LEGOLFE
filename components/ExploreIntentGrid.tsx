@@ -55,7 +55,7 @@ export default function ExploreIntentGrid({ places, locale, filter = "all", quer
             <div className="explore-card-copy">
               <p className="explore-card-category">{fr ? categoryFR[place.category].name : c?.name}</p>
               <h2 className="explore-card-title">{name}</h2>
-              <p className="explore-card-location">{place.location}</p><div className="mt-3 flex flex-wrap gap-1.5">{categoriesForPlace(place).slice(1).map(id=><span key={id} className="rounded-full border border-[#0B4F6C]/25 px-2 py-1 text-[9px] font-bold text-[#0B4F6C]">{fr?categoryFR[id].name:getCategory(id)?.name}</span>)}{facetsForPlace(place).slice(0,2).map(id=><span key={id} className="rounded-full bg-[#edf4f6] px-2 py-1 text-[9px] font-bold text-[#0B4F6C]">{placeFacetLabels[locale][id]}</span>)}</div>
+              <p className="explore-card-location">{place.location}</p><div className="mt-3 flex flex-wrap gap-1.5">{categoriesForPlace(place).slice(1).map(id=><span key={id} className="rounded-full border border-[var(--lg-blue)]/25 px-2 py-1 text-[9px] font-bold text-[var(--lg-blue)]">{fr?categoryFR[id].name:getCategory(id)?.name}</span>)}{facetsForPlace(place).slice(0,2).map(id=><span key={id} className="rounded-full bg-[#edf4f6] px-2 py-1 text-[9px] font-bold text-[var(--lg-blue)]">{placeFacetLabels[locale][id]}</span>)}</div>
               <p className="explore-card-description">{desc}</p>
             </div>
           </Link>

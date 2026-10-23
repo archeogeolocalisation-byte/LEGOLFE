@@ -45,7 +45,7 @@ export default function SavedPage({ params }: { params: Promise<{ locale: string
   const askQuery = [...savedPlaces.map((p) => p.name), ...savedVillas.map((v) => v.name)].join(", ");
   const prompt = fr ? `Construis-moi un séjour autour de cette sélection : ${askQuery}. Propose le bon rythme, les meilleurs moments de la journée et les compromis à connaître.` : `Build me a stay around this shortlist: ${askQuery}. Suggest the right rhythm, best times of day and trade-offs I should know.`;
 
-  return <main className="lg-saved-dark min-h-screen bg-[#08131d] text-white">
+  return <main className="lg-saved-dark min-h-screen bg-[var(--lg-blue)] text-white">
     <SiteHeader light={false} locale={locale} path="/saved" />
     <section className="lg-shell pb-20 pt-12 md:pt-20">
       <p className="lg-kicker">{fr?"MON SÉJOUR":"MY STAY"} / {String(savedPlaces.length + savedVillas.length).padStart(2, "0")}</p>

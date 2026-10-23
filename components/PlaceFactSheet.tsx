@@ -25,18 +25,18 @@ export default function PlaceFactSheet({id,locale}:{id:string;locale:Locale}) {
   <SiteHeader light locale={locale} path={`/place/${id}`}/>
   <article className="lg-shell py-10 md:py-16">
    <Link className="text-sm font-bold underline underline-offset-4" href={`/${locale}/explore/${place.category}`}>← {fr?'Explorer les adresses':'Explore places'}</Link>
-   <p className="lg-kicker mt-9 text-[#0B4F6C]">{place.location} · {fr?'LE GOLFE / DÉCOUVRIR':'LE GOLFE / DISCOVER'}</p>
-   <h1 className="lg-menu-title mt-6 max-w-full text-[#0B4F6C]">{place.name}</h1>
+   <p className="lg-kicker mt-9 text-[var(--lg-blue)]">{place.location} · {fr?'LE GOLFE / DÉCOUVRIR':'LE GOLFE / DISCOVER'}</p>
+   <h1 className="lg-menu-title mt-6 max-w-full text-[var(--lg-blue)]">{place.name}</h1>
    <PlaceTaxonomy place={place} locale={locale}/>
    <div className="mt-10 grid gap-8 border-t border-black pt-7 md:grid-cols-2">
     <h2 className="max-w-3xl text-4xl font-black uppercase leading-[.94] tracking-[-.055em] md:text-6xl">{signature.subtitle}</h2>
     <p className="max-w-xl text-lg font-bold leading-8 text-black/65">{copy.intro}</p>
    </div>
-   <nav aria-label={fr?'Dans cette fiche':'On this page'} className="mt-7 flex flex-wrap gap-x-5 gap-y-3 text-xs font-bold text-[#0B4F6C]">{chapters.map(([title],i)=><a className="underline underline-offset-4" key={title} href={`#visit-${i+1}`}>{title}</a>)}<a href="#questions" className="underline underline-offset-4">{fr?'Questions fréquentes':'Common questions'}</a></nav>
+   <nav aria-label={fr?'Dans cette fiche':'On this page'} className="mt-7 flex flex-wrap gap-x-5 gap-y-3 text-xs font-bold text-[var(--lg-blue)]">{chapters.map(([title],i)=><a className="underline underline-offset-4" key={title} href={`#visit-${i+1}`}>{title}</a>)}<a href="#questions" className="underline underline-offset-4">{fr?'Questions fréquentes':'Common questions'}</a></nav>
    <figure className="mx-auto mt-9 max-w-5xl">
     {photo ? <Image src={photo.src} alt={(photo||experiencePhoto)?.caption[locale]} width={photo.width} height={photo.height} sizes="(max-width: 768px) 100vw, 1000px" preload className="aspect-[3/2] w-full object-cover"/> : experiencePhoto ? <img src={experiencePhoto.src} alt={experiencePhoto.alt} className="aspect-[3/2] w-full object-cover" loading="eager"/> : null}
     <figcaption className="mt-3 text-xs leading-6 text-black/70">
-     {experiencePhoto?.contextual&&<span className="mb-2 inline-block bg-[#edf4f6] px-2 py-1 text-[10px] font-black uppercase text-[#0B4F6C]">{fr?'Photo du secteur':'Area photograph'}</span>}
+     {experiencePhoto?.contextual&&<span className="mb-2 inline-block bg-[#edf4f6] px-2 py-1 text-[10px] font-black uppercase text-[var(--lg-blue)]">{fr?'Photo du secteur':'Area photograph'}</span>}
      <span className="block font-bold">{(photo||experiencePhoto)?.caption[locale]}</span>
      {((photo||experiencePhoto)?.credit||(photo||experiencePhoto)?.license)&&<><a className="underline" href={(photo||experiencePhoto)?.source} target="_blank" rel="noreferrer">{(photo||experiencePhoto)?.credit}</a> · <a className="underline" href={(photo||experiencePhoto)?.licenseUrl} target="_blank" rel="noreferrer">{(photo||experiencePhoto)?.license}</a> · </>}{suppliedPhotos?(fr?'Photo fournie · recadrage d’affichage':'Supplied photograph · display crop'):photo||experiencePhoto?.src.startsWith('/media/') ? (fr?'Redimensionnement, conversion WebP et recadrage d’affichage ; image adaptée sous la même licence.':'Resized, converted to WebP and display-cropped; adapted image under the same licence.') : (fr?'Image Wikimedia Commons affichée avec recadrage CSS, licence et source créditées.':'Wikimedia Commons image shown with CSS cropping, source and licence credited.')}
     </figcaption>
@@ -46,22 +46,22 @@ export default function PlaceFactSheet({id,locale}:{id:string;locale:Locale}) {
   </article>
   <section className="lg-shell py-16 md:py-24">
    <div className="lg-quote-box grid gap-10 bg-[#edf4f6] md:grid-cols-[.35fr_1.65fr]">
-    <div><p className="lg-kicker text-[#0B4F6C]">{fr?'LE REGARD LE GOLFE':'THE LE GOLFE VIEW'}</p><div className="lg-blue-rule mt-5"/></div>
-    <div><p className="max-w-4xl text-4xl font-black uppercase leading-[.95] tracking-[-.055em] text-[#0B4F6C] md:text-7xl">“{signature.quote}”</p><p className="mt-8 max-w-2xl text-lg leading-8 text-black/65">{copy.intro}</p></div>
+    <div><p className="lg-kicker text-[var(--lg-blue)]">{fr?'LE REGARD LE GOLFE':'THE LE GOLFE VIEW'}</p><div className="lg-blue-rule mt-5"/></div>
+    <div><p className="max-w-4xl text-4xl font-black uppercase leading-[.95] tracking-[-.055em] text-[var(--lg-blue)] md:text-7xl">“{signature.quote}”</p><p className="mt-8 max-w-2xl text-lg leading-8 text-black/65">{copy.intro}</p></div>
    </div>
   </section>
   <section className="border-t border-black">
-   <div className="lg-shell py-20"><p className="lg-kicker text-[#0B4F6C]">{fr?'LE BON RYTHME':'FIND YOUR RHYTHM'}</p>
+   <div className="lg-shell py-20"><p className="lg-kicker text-[var(--lg-blue)]">{fr?'LE BON RYTHME':'FIND YOUR RHYTHM'}</p>
     <h2 className="mt-5 max-w-5xl text-5xl font-black uppercase leading-[.9] tracking-[-.055em] md:text-[5rem]">{signature.rhythm}</h2>
-    <div className="mt-14 grid border-t border-black md:grid-cols-3">{chapters.slice(0,3).map(([title,body],i)=><article id={`visit-${i+1}`} key={title} className="scroll-mt-24 border-b border-black/25 py-8 md:border-b-0 md:border-r md:px-8 first:md:pl-0 last:md:border-r-0"><p className="lg-kicker text-[#0B4F6C]">0{i+1}</p><h3 className="mt-5 text-2xl font-black leading-tight tracking-[-.04em] md:text-3xl">{title}</h3><p className="mt-5 text-sm leading-7 text-black/65">{body}</p></article>)}</div>
+    <div className="mt-14 grid border-t border-black md:grid-cols-3">{chapters.slice(0,3).map(([title,body],i)=><article id={`visit-${i+1}`} key={title} className="scroll-mt-24 border-b border-black/25 py-8 md:border-b-0 md:border-r md:px-8 first:md:pl-0 last:md:border-r-0"><p className="lg-kicker text-[var(--lg-blue)]">0{i+1}</p><h3 className="mt-5 text-2xl font-black leading-tight tracking-[-.04em] md:text-3xl">{title}</h3><p className="mt-5 text-sm leading-7 text-black/65">{body}</p></article>)}</div>
    </div>
   </section>
-  <section id="visit-4" className="lg-shell scroll-mt-24 pb-20 md:pb-24"><div className="grid gap-10 border-t border-black pt-10 md:grid-cols-[.7fr_1.3fr]"><p className="lg-kicker text-[#0B4F6C]">{fr?'POUR ALLER PLUS LOIN':'BEYOND THE FIRST LOOK'}</p><div><h2 className="text-4xl font-black uppercase leading-[.92] tracking-[-.055em] md:text-7xl">{chapters[3]?.[0]??signature.close}</h2><p className="mt-7 max-w-2xl text-lg leading-8 text-black/65">{chapters[3]?.[1]??copy.intro}</p></div></div></section>
-  <section className="bg-[#0B4F6C] text-white"><div className="lg-shell py-20 md:py-28"><p className="lg-kicker text-white/75">{fr?'LE BON CONSEIL':'THE USEFUL DISTINCTION'}</p><div className="mt-5 h-1 w-16 bg-[#a5def0]"/><div className="mt-9 grid gap-12 md:grid-cols-[1.15fr_.85fr]"><h2 className="text-5xl font-black uppercase leading-[.9] tracking-[-.055em] md:text-[5rem]">{signature.dark}</h2><p className="max-w-xl text-lg leading-8 text-white/85">{chapters[1]?.[1]??copy.intro}</p></div></div></section>
-  <section className="lg-shell py-20 md:py-24"><p className="lg-kicker text-[#0B4F6C]">{fr?'PRÉPARER LA VISITE':'PLAN YOUR VISIT'}</p>
+  <section id="visit-4" className="lg-shell scroll-mt-24 pb-20 md:pb-24"><div className="grid gap-10 border-t border-black pt-10 md:grid-cols-[.7fr_1.3fr]"><p className="lg-kicker text-[var(--lg-blue)]">{fr?'POUR ALLER PLUS LOIN':'BEYOND THE FIRST LOOK'}</p><div><h2 className="text-4xl font-black uppercase leading-[.92] tracking-[-.055em] md:text-7xl">{chapters[3]?.[0]??signature.close}</h2><p className="mt-7 max-w-2xl text-lg leading-8 text-black/65">{chapters[3]?.[1]??copy.intro}</p></div></div></section>
+  <section className="bg-[var(--lg-blue)] text-white"><div className="lg-shell py-20 md:py-28"><p className="lg-kicker text-white/75">{fr?'LE BON CONSEIL':'THE USEFUL DISTINCTION'}</p><div className="mt-5 h-1 w-16 bg-[#a5def0]"/><div className="mt-9 grid gap-12 md:grid-cols-[1.15fr_.85fr]"><h2 className="text-5xl font-black uppercase leading-[.9] tracking-[-.055em] md:text-[5rem]">{signature.dark}</h2><p className="max-w-xl text-lg leading-8 text-white/85">{chapters[1]?.[1]??copy.intro}</p></div></div></section>
+  <section className="lg-shell py-20 md:py-24"><p className="lg-kicker text-[var(--lg-blue)]">{fr?'PRÉPARER LA VISITE':'PLAN YOUR VISIT'}</p>
    <h2 className="mt-5 max-w-5xl text-5xl font-black uppercase leading-[.92] tracking-[-.055em] md:text-[5rem]">{signature.close}</h2>
    <p className="mt-7 max-w-2xl text-lg leading-8 text-black/65">{copy.description}</p>
-   <dl className="mt-14 grid gap-7 border-y border-black py-8 sm:grid-cols-2 lg:grid-cols-4">{copy.facts.filter(([label])=>!(visitAddress&&/^(adresse|address)$/i.test(label.trim()))).map(([label,value])=><div key={label}><dt className="lg-kicker text-[#0B4F6C]">{label}</dt><dd className="mt-3 text-sm font-semibold leading-7 text-black/70">{value}</dd></div>)}</dl>
+   <dl className="mt-14 grid gap-7 border-y border-black py-8 sm:grid-cols-2 lg:grid-cols-4">{copy.facts.filter(([label])=>!(visitAddress&&/^(adresse|address)$/i.test(label.trim()))).map(([label,value])=><div key={label}><dt className="lg-kicker text-[var(--lg-blue)]">{label}</dt><dd className="mt-3 text-sm font-semibold leading-7 text-black/70">{value}</dd></div>)}</dl>
 
    <PlaceMapBlock name={placeName(place,locale)} location={place.location} points={placeMapPoints[id]??[]} address={visitAddress} locale={locale}/>
 
