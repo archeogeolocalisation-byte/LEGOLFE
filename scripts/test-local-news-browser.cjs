@@ -11,7 +11,7 @@ const server=spawn(process.execPath,[require.resolve('next/dist/bin/next'),'star
   const page=await context.newPage();await page.goto(origin+'/'+locale+'/local',{waitUntil:'networkidle'});
   const fresh=page.locator('[data-local-news="croix-mediatheque-travaux-2026"]');assert.equal(await fresh.count(),1);
   await page.getByRole('button',{name:fr?'Du nouveau':'What’s new',exact:true}).click();
-  await page.getByLabel(fr?'Commune':'Place',{exact:true}).selectOption('La Croix-Valmer');
+  await page.getByLabel(fr?'Commune':'Place').selectOption('La Croix-Valmer');
   assert.equal(await page.locator('[data-local-news]').count(),1);assert.equal(await fresh.isVisible(),true);
   await fresh.scrollIntoViewIfNeeded();await page.screenshot({path:path.join(out,`local-filters-${locale}-${width}.png`)});
   assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'filtered news fits iPhone width');
