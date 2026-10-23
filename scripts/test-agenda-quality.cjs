@@ -39,3 +39,22 @@ assert.equal(isValidAgendaEvent({...fixture,category:'unknown'}),false);
 assert.equal(qualityAgendaEvents([{...fixture,sessions:[{start:fixture.start},{start:fixture.start}]}])[0].sessions.length,1,'Duplicate sessions are removed');
 const chosen=qualityAgendaEvents([fixture,{...fixture,id:'better-record',sourceCheckedAt:'2026-10-17'}])[0];assert.equal(chosen.id,fixture.id,'A richer duplicate preserves the existing event URL');
 console.log('Upcoming weekend/month windows, invalid schedule rejection, duplicate sessions and stable public URLs passed');
+
+const selection=[{...fixture,id:'exhibition',start:'2026-10-01',end:'2026-11-30'},fixture,{...fixture,id:'editorial',featured:true,start:'2026-10-01',end:'2026-11-30'},{...fixture,id:'expired',start:'2026-11-05'}];
+const original=selection.map(e=>e.id);
+assert.deepEqual(calendar.featuredEventsInWindow(selection,window).map(e=>e.id),['editorial','a','exhibition']);
+assert.deepEqual(selection.map(e=>e.id),original,'selection does not mutate the catalogue');
+const {verifiedEventUpdates}=require('../data/agendaVerified.ts');
+const {officialAgendaSnapshot}=require('../data/officialAgendaSnapshot.ts');
+const {mergeOfficialAgenda}=require('../lib/agendaQuality.ts');
+const merged=qualityAgendaEvents(mergeOfficialAgenda(events.map(e=>({...e,...verifiedEventUpdates[e.id]})),officialAgendaSnapshot));
+assert.equal(merged.filter(e=>e.source.includes('7951129')).length,1,'official documentary source merges with the editorial card');
+assert.ok(merged.some(e=>e.id==='baleines'&&e.sessions.some(s=>s.endTime==='22:00')),'existing public URL and verified times survive');
+assert.equal(events.some(e=>e.id==='plan-circuit-decouverte'),false,'undated village discovery is not a scheduled event');
+const magic=merged.find(e=>e.id==='magic-show-maxime');
+assert.deepEqual(calendar.sessionsInWindow(magic,{from:'2026-10-24',to:'2026-10-24'}).map(s=>s.time),['14:30','21:30']);
+console.log('Editorial priority, dated appointments, catalogue source deduplication and verified showtimes passed');
+
+const verifiedDoc=merged.find(e=>e.id==='baleines');
+const laterDoc={...officialAgendaSnapshot.find(e=>e.source.includes('7951129')),sourceCheckedAt:'2026-10-24',sessions:[{start:'2026-10-23',time:'21:00'}]};
+assert.equal(mergeOfficialAgenda([verifiedDoc],[laterDoc])[0].sessions[0].time,'21:00','newer provider corrections still replace verified dates');

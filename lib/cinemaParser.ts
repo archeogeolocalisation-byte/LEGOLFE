@@ -55,11 +55,13 @@ export function parseRaimu(html:string,checked:string):GolfeEvent[]{
   const h=first(block,'h2'),link=h&&first(h,'a');if(!link)return [];
   const source=link.attrs.href,key=source?.match(/^https:\/\/www\.cineode\.fr\/le-raimu\/film\/(\d+)\/$/)?.[1];if(!key)return [];
   const days=all(block,n=>cls(n,'hr_jour'));
-  // Cineode's columns begin on the response's Paris date. Reject cached/mismatched headings instead of guessing a month.
-  const dayLabel=days[0]&&text(days[0]);const weekday=['dim','lun','mar','mer','jeu','ven','sam'][new Date(checked+'T12:00:00Z').getUTCDay()];
-  if(!dayLabel||!dayLabel.toLowerCase().startsWith(weekday)||!new RegExp(`\\b${Number(checked.slice(8))}$`).test(dayLabel))throw new Error('Cinema date headings mismatch');
+  // The published timetable may start earlier this week. Anchor both weekday and day
+  // to the response date, then validate every column before importing any sessions.
+  const matches=(label:string,day:string)=>label.toLowerCase().startsWith(['dim','lun','mar','mer','jeu','ven','sam'][new Date(day+'T12:00:00Z').getUTCDay()])&&new RegExp(`\\b${Number(day.slice(8))}$`).test(label);
+  const anchor=Array.from({length:7},(_,offset)=>addDays(checked,-offset)).find(day=>days[0]&&matches(text(days[0]),day));
+  if(!anchor||days.some((heading,index)=>!matches(text(heading),addDays(anchor,index))))throw new Error('Cinema date headings mismatch');
   const sessions=all(block,n=>cls(n,'tab_seances')).flatMap(tab=>{const index=Number(tab.attrs.class.match(/\bjour(\d+)\b/)?.[1])-1;if(index<0||index>=days.length)return [];
-   const day=addDays(checked,index);if(!new RegExp(`\\b${Number(day.slice(8))}$`).test(text(days[index])))return [];
+   const day=addDays(anchor,index);
    return all(tab,n=>cls(n,'frow')).flatMap(row=>{const tags=all(row,n=>n.tag==='img').map(n=>n.attrs.class+' '+n.attrs.alt).join(' ');const v=version(tags.replace(/tag-/g,''));return all(row,n=>cls(n,'hor')).flatMap(n=>{const time=clock(text(n));return time?[{start:day,time,version:v}]:[];});});});
   const poster=all(block,n=>cls(n,'hr_aff'))[0]?.attrs.src,duration=text(block).match(/Durée\s*:\s*(\d+)h(\d{2})/i);
   const result=event(cinemas[1],key,text(link),sessions,source,checked,poster,duration?+duration[1]*60+ +duration[2]:undefined);return result?[result]:[];

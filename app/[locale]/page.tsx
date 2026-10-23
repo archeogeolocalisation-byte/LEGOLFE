@@ -1,7 +1,7 @@
 import HomeUpdates from "../../components/HomeUpdates";
 import { getPublicEvents } from "../../lib/publicEvents";
 import { parisIsoDay } from "../../lib/localCalendar";
-import { eventsInWindow, dateWindow } from "../../lib/agendaCalendar";
+import { eventsInWindow, featuredEventsInWindow, dateWindow } from "../../lib/agendaCalendar";
 import { pageMetadata } from "../../lib/seo";
 import Link from "next/link";
 import {notFound} from "next/navigation";
@@ -23,7 +23,7 @@ export default async function Home({params}:{params:Promise<{locale:string}>}){
  ];
  const window=dateWindow("7days",parisIsoDay());
  const upcoming=eventsInWindow(await getPublicEvents(),window);
- const now=[...upcoming.filter(e=>e.featured),...upcoming.filter(e=>!e.featured)].slice(0,3),news=localNews.filter(n=>n.featured).sort((a,b)=>b.date.localeCompare(a.date)).slice(0,3);
+ const now=featuredEventsInWindow(upcoming,window),news=localNews.filter(n=>n.featured).sort((a,b)=>b.date.localeCompare(a.date)).slice(0,3);
  const intents=[
   {label:fr?"AU CALME":"QUIET",sub:fr?"Villages, collines, rythme lent":"Villages, hills, slower rhythm",mood:"quiet"},
   {label:fr?"PLAGE":"BEACH DAY",sub:fr?"Choisir la bonne plage, pas juste la plus connue":"The right beach, not just the famous one",mood:"beach"},

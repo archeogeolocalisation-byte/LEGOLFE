@@ -3,7 +3,7 @@
 import {cinemas} from "../../../data/cinemas";
 import styles from "./AgendaClient.module.css";
 import { parisIsoDay } from "../../../lib/localCalendar";
-import { dateWindow, upcomingWindow, monthWindow, eventsInWindow, eventOverlaps, catalogMonths, formatCalendarMonth, sessionsInWindow, formatCalendarDay } from "../../../lib/agendaCalendar";
+import { dateWindow, upcomingWindow, monthWindow, eventsInWindow, featuredEventsInWindow, catalogMonths, formatCalendarMonth, sessionsInWindow, formatCalendarDay } from "../../../lib/agendaCalendar";
 
 import Link from "next/link";
 import {agendaTownHref} from "../../../lib/agendaTownLinks";
@@ -66,8 +66,7 @@ export default function AgendaClient({ locale, events, initialDay,initialCategor
   const [location, setLocation] = useState("all");
   const locations = useMemo(() => Array.from(new Set([...events.map((e) => e.location),...cinemas.map(c=>c.town)])).sort(), [events]);
   const filtered=useMemo(()=>eventsInWindow(events,{from:selectedWindow.from,to:selectedWindow.to}).filter(e=>(category==="all"||e.category===category)&&(location==="all"||e.location===location)),[events,selectedWindow.from,selectedWindow.to,category,location]);
-  const upcoming=filtered.filter(e=>eventOverlaps(e,todayIso,selectedWindow.to));
-  const featured=[...upcoming.filter(e=>e.featured),...upcoming.filter(e=>!e.featured)].slice(0,3);
+  const featured=featuredEventsInWindow(filtered,upcomingWindow(selectedWindow,todayIso));
   const featuredIds=new Set(featured.map(e=>e.id));
   const remaining=filtered.filter(e=>!featuredIds.has(e.id));
   const titleCardIds=agendaTitleCardIds([...featured,...remaining]);
