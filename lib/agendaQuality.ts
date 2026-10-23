@@ -36,6 +36,8 @@ export function mergeOfficialAgenda(base:GolfeEvent[],official:GolfeEvent[]){
   const provider=agendaProviderId(e);
   const update=[...updates.values()].find(candidate=>(!!provider&&agendaProviderId(candidate)===provider)||candidate.source.replace(/\/$/,'')===e.source.replace(/\/$/,''));
   if(!update)return e;updates.delete(update.id);
+  // An unavailable provider can return an older snapshot: retain a newer verified schedule.
+  if(e.sourceCheckedAt&&update.sourceCheckedAt&&e.sourceCheckedAt>update.sourceCheckedAt)return e;
   return {...e,...update,id:e.id,title:e.title,titleFr:e.titleFr,summary:e.summary,summaryFr:e.summaryFr,why:e.why,whyFr:e.whyFr,category:e.category,featured:e.featured,venue:update.venue??e.venue};
  });
  return [...merged,...updates.values()];
