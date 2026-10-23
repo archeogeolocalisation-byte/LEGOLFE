@@ -94,6 +94,12 @@ jobs:
           NEXT_PUBLIC_SUPABASE_URL: https://example.supabase.co
           NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: sb_publishable_ci_dummy
           NEXT_PUBLIC_SITE_URL: https://legolfe.com
+      - name: Verify local news on mobile Safari
+        run: node scripts/test-local-news-browser.cjs
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: https://example.supabase.co
+          NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: sb_publishable_ci_dummy
+          NEXT_PUBLIC_SITE_URL: https://legolfe.com
       - name: Verify map previews on mobile and desktop Safari
         run: node scripts/test-discovery-map-browser.cjs
         env:
@@ -127,4 +133,11 @@ jobs:
         with:
           name: place-mobile-webkit
           path: test-results/place-mobile
+          if-no-files-found: ignore
+      - name: Save local news screenshots
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: local-news-mobile-webkit
+          path: test-results/local-news
           if-no-files-found: ignore
