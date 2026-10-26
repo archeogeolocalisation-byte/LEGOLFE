@@ -8,15 +8,23 @@ function nodes(tree,predicate){const found=[];function walk(value){if(Array.isAr
 function text(tree){if(Array.isArray(tree))return tree.map(text).join('');if(typeof tree==='string'||typeof tree==='number')return String(tree);return tree?.props?text(tree.props.children):'';}
 function button(tree,label){return nodes(tree,n=>n.type==='button'&&text(n).includes(label))[0];}
 
+const previousFetch=global.fetch;
 (async()=>{
 let rows=[],fail=false,calendarBlocks=[];const service={from(table){if(table==='villa_calendars')return {select(){return {in(){return {abortSignal:async()=>({data:calendarBlocks.length?[{listing_id:'property-test',enabled:true,blocks:calendarBlocks,updated_at:'2026-10-05T00:00:00Z'}]:[],error:null})};}};}};return {insert(row){rows.push({table,row});return {abortSignal:async()=>({error:fail?{message:'failure'}:null})};}}}};
+// Contact submissions use the server endpoint; never make a network request in this harness.
+global.fetch=async(url,options)=>{equal(url,'/api/inquiries');rows.push({url,row:JSON.parse(options.body)});return {ok:!fail,json:async()=>({error:'TEST_FAILURE'})};};
 const props={villa:{id:'property-test',name:'Villa test',location:'Gassin',price:0,guests:1,image:'',live:true},today:'2026-10-04',initialDates:{arrival:'2026-11-01',departure:'2026-11-08',guests:'1'}};
 const h=harness('app/villa/[id]/contact/ContactForm.tsx',service);let tree=h.render(props);
 for(const [field,value] of [['name','Guest test'],['email','guest@example.test'],['message','Un séjour de test.']]){nodes(tree,n=>n.props.name===field)[0].props.onChange({target:{value}});tree=h.render(props);}
 nodes(tree,n=>n.type==='form')[0].props.onSubmit({preventDefault(){}});tree=h.render(props);assert.ok(button(tree,'Envoyer ma demande'));checks++;
 fail=true;button(tree,'Envoyer ma demande').props.onClick();await new Promise(r=>setTimeout(r,0));tree=h.render(props);assert.ok(text(tree).includes('n’a pas pu être confirmé'));assert.ok(button(tree,'Envoyer ma demande'));checks+=2;
-fail=false;button(tree,'Envoyer ma demande').props.onClick();await new Promise(r=>setTimeout(r,0));tree=h.render(props);assert.ok(text(tree).includes('DEMANDE ENVOYÉE'));equal(rows[1].table,'villa_inquiries');equal(rows[1].row.listing_id,'property-test');equal(rows[1].row.guests,1);equal(rows[1].row.arrival,'2026-11-01');assert.ok(!('villa_id' in rows[1].row));checks++;
+fail=false;button(tree,'Envoyer ma demande').props.onClick();await new Promise(r=>setTimeout(r,0));tree=h.render(props);assert.ok(text(tree).includes('DEMANDE ENVOYÉE'));equal(rows[1].url,'/api/inquiries');equal(rows[1].row.villaId,'property-test');equal(rows[1].row.guests,1);equal(rows[1].row.arrival,'2026-11-01');assert.ok(!('villa_id' in rows[1].row));checks++;
 calendarBlocks=[{start:'2026-11-01',end:'2026-11-08'}];const blocked=harness('app/villa/[id]/contact/ContactForm.tsx',service);tree=blocked.render(props);for(const [field,value] of [['name','Guest test'],['email','guest@example.test'],['message','Test']]){nodes(tree,n=>n.props.name===field)[0].props.onChange({target:{value}});tree=blocked.render(props);}nodes(tree,n=>n.type==='form')[0].props.onSubmit({preventDefault(){}});tree=blocked.render(props);const before=rows.length;button(tree,'Envoyer ma demande').props.onClick();await new Promise(r=>setTimeout(r,0));tree=blocked.render(props);equal(rows.length,before);assert.ok(text(tree).includes('viennent d’être bloquées'));checks++;
-const previousWindow=global.window;let navigation='';global.window={location:{assign(href){navigation=href;}}};try{const panel=harness('components/VillaStayPanel.tsx',service);const panelProps={villa:props.villa,today:props.today,askHref:'/fr/ask'};tree=panel.render(panelProps);nodes(tree,n=>n.props.name==='arrival')[0].props.onChange({target:{value:'2026-11-01'}});nodes(tree,n=>n.props.name==='departure')[0].props.onChange({target:{value:'2026-11-08'}});tree=panel.render(panelProps);nodes(tree,n=>n.type==='form')[0].props.onSubmit({preventDefault(){}});await new Promise(r=>setImmediate(r));tree=panel.render(panelProps);equal(navigation,'');equal(text(tree).includes('Choisissez une autre période'),true);nodes(tree,n=>n.props.name==='arrival')[0].props.onChange({target:{value:'2026-11-08'}});nodes(tree,n=>n.props.name==='departure')[0].props.onChange({target:{value:'2026-11-10'}});tree=panel.render(panelProps);nodes(tree,n=>n.type==='form')[0].props.onSubmit({preventDefault(){}});await new Promise(r=>setImmediate(r));equal(navigation,'/villa/property-test/contact?arrival=2026-11-08&departure=2026-11-10&guests=1');}finally{global.window=previousWindow;}
+// The sidebar no longer starts an enquiry; the separate contact route remains covered above.
+const panel=harness('components/VillaStayPanel.tsx',service);
+tree=panel.render({villa:props.villa,askHref:'/fr/ask'});
+equal(nodes(tree,n=>n.type==='form').length,0);
+equal(nodes(tree,n=>n.type==='input').length,0);
+
 console.log(JSON.stringify({result:'PASS',checks,includes:'public listing enquiry, capacity-one dates, retained review on failure, confirmed success only'}));
-})().catch(e=>{console.error(e);process.exitCode=1;});
+})().catch(e=>{console.error(e);process.exitCode=1;}).finally(()=>{global.fetch=previousFetch;});

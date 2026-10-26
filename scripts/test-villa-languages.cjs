@@ -41,9 +41,12 @@ assert.equal(validateStayDates({arrival:'2026-11-05',departure:'2026-11-01',gues
 const live={...villas[0],id:'property-live',live:true,photos:[{src:'https://example.com/photo.jpg',alt:'House'}],amenities:[],highlights:[]};
 for(const locale of ['fr','en']){
  const page=renderToStaticMarkup(createElement(VillaDetail,{villa:live,today:'2026-10-12',locale}));
- assert.ok(page.includes(`action="${villaHref(live.id,locale,true)}"`));
+ assert.equal(page.includes("<form"),false);
+ assert.equal(page.includes('type="date"'),false);
  assert.ok(page.includes(`/${locale}/account?next=/villa/property-live`));
- assert.ok(page.includes(locale==='fr'?'Transmettre une demande':'Send an enquiry'));
+ assert.equal(page.includes(locale==='fr'?'Transmettre une demande':'Send an enquiry'),false);
+ assert.ok(page.includes(locale==='fr'?'+ Mon séjour':'+ My stay'));
+ assert.ok(page.includes(locale==='fr'?'Partager':'Share'));
  assert.equal(page.includes('owner@example.com'),false);
 }
 const Actions=require('../components/VillaActions.tsx').default;
