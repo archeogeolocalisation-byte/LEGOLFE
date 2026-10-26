@@ -1,6 +1,20 @@
 import type {VillagePhoto} from './villageMedia';
 // Photographs supplied for these places. No photographer or licence was supplied.
 export const suppliedPlaceMedia:Record<string,VillagePhoto[]> = {
+  "villa-romaine-pardigon": [
+  {
+    "src": "/media/places/supplied-20261026/pardigon-vestiges.webp",
+    "alt": "Les vestiges du site archéologique de Pardigon II à La Croix-Valmer",
+    "caption": {
+      "fr": "Les vestiges de la villa gallo-romaine de Pardigon II à La Croix-Valmer",
+      "en": "Remains of the Pardigon II Roman villa in La Croix-Valmer"
+    },
+    "credit": "",
+    "license": "",
+    "licenseUrl": "",
+    "source": ""
+  }
+],
   "eglise-saint-sauveur-cogolin": [
   {
     "src": "/media/places/supplied-20261026/saint-sauveur-cogolin.webp",
