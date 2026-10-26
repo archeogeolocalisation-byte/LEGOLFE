@@ -10,7 +10,7 @@ const Page=require('../app/[locale]/place/[id]/page.tsx'),Journal=require('../co
 const {renderToReadableStream,renderToStaticMarkup}=require('react-dom/server');
 const manifest=JSON.parse(fs.readFileSync(path.join(__dirname,'../public/media/associations/sources.json')));
 (async()=>{
- assert.equal(associationPlaces.length,5);assert.equal(places.filter(p=>matchesExploreFilter(p,'associations')).length,5);
+ assert.equal(associationPlaces.length,5);assert.equal(places.filter(p=>matchesExploreFilter(p,'associations')).length,9);
  for(const p of associationPlaces){
   const sheet=associationFacts[p.id],image=associationMedia[p.id][0],file=path.join(__dirname,'../public',image.src),entry=manifest.find(f=>f.id===p.id);
   assert.equal(sheet.verified,'2026-10-26');assert.ok(sheet.sources.length>=2);assert.ok(sheet.nearby.every(id=>id!==p.id&&places.some(p=>p.id===id)));
