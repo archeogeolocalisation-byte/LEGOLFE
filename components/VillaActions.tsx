@@ -18,27 +18,36 @@ type Props = {
 export default function VillaActions({ id, name, contactHref, askHref, hideContact, locale="fr" }: Props) {
  const fr=locale==="fr",t=(a:string,b:string)=>fr?a:b;
   const [saved, setSaved] = useState(false);
+  const [saveError,setSaveError]=useState(false);
   const [shared, setShared] = useState(false);
 
   useEffect(() => {
-    try {
-      const current = JSON.parse(window.localStorage.getItem(STORAGE_KEY) || "[]");
-      setSaved(Array.isArray(current) && current.includes(id));
-    } catch {
-      setSaved(false);
+    function refresh(){
+      try {
+        const current=JSON.parse(window.localStorage.getItem(STORAGE_KEY)||"[]");
+        setSaved(Array.isArray(current)&&current.includes(id));
+      } catch {setSaved(false);}
     }
+    refresh();
+    window.addEventListener('le-golfe:saved-villas',refresh);
+    window.addEventListener('storage',refresh);
+    return ()=>{
+      window.removeEventListener('le-golfe:saved-villas',refresh);
+      window.removeEventListener('storage',refresh);
+    };
   }, [id]);
 
   function toggleSaved() {
     try {
       const current = JSON.parse(window.localStorage.getItem(STORAGE_KEY) || "[]");
-      const ids = Array.isArray(current) ? current : [];
+      const ids = Array.isArray(current) ? current.filter((item:unknown):item is string=>typeof item==='string') : [];
       const next = ids.includes(id) ? ids.filter((item: string) => item !== id) : [...ids, id];
       window.localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
       setSaved(next.includes(id));
+      setSaveError(false);
       window.dispatchEvent(new Event("le-golfe:saved-villas"));
     } catch {
-      // localStorage can be unavailable in private browsing; the rest of the page still works.
+      setSaveError(true);
     }
   }
 
@@ -60,18 +69,20 @@ export default function VillaActions({ id, name, contactHref, askHref, hideConta
   return (
     <div className="space-y-3">
       {!hideContact&&<Link href={contactHref} className="lg-btn w-full border-[var(--lg-blue)] bg-[var(--lg-blue)] text-white">
-        Demander les disponibilités →
+        {t("Demander les disponibilités →","Request availability →")}
       </Link>}
       <div className="grid grid-cols-2 gap-3">
-        <button type="button" onClick={toggleSaved} className="lg-btn w-full">
-          {saved ? "✓ Sauvegardée" : "+ Mon séjour"}
+        <button type="button" onClick={toggleSaved} aria-pressed={saved} className="lg-btn w-full">
+          {saved ? t("✓ Sauvegardée","✓ Saved") : t("+ Mon séjour","+ My stay")}
         </button>
         <button type="button" onClick={shareVilla} className="lg-btn w-full">
-          {shared ? "Lien copié" : "Partager ↗"}
+          {shared ? t("Lien copié","Link copied") : t("Partager ↗","Share ↗")}
         </button>
       </div>
+      {saveError&&<p role="alert" className="text-sm leading-6 text-red-700">{t("L’enregistrement est indisponible dans ce navigateur. Réessayez après avoir autorisé le stockage local.","Saving is unavailable in this browser. Allow local storage and try again.")}</p>}
+      {saved&&<Link href={`/${locale}/saved`} className="block py-3 text-sm font-bold underline underline-offset-4">{t("Retrouver la maison dans Mon séjour →","View this home in My stay →")}</Link>}
       <Link href={askHref} className="block border-t border-black pt-4 text-[10px] font-black uppercase tracking-[.14em] lg-link-accent">
-        Demander à LE GOLFE si elle vous correspond →
+        {t("Demander à LE GOLFE si elle vous correspond →","Ask LE GOLFE if this home suits you →")}
       </Link>
     </div>
   );
