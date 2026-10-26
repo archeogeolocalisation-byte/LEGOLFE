@@ -1,3 +1,4 @@
+import {localLifeFacts} from './localLifePlaces';
 import {associationFacts} from './associationPlaces';
 import {cogolinRayolFacts} from './cogolinRayolPlaces';
 import {saintTropezFacts} from './saintTropezPlaces';
@@ -13,6 +14,7 @@ export type PlaceFactCopy={title:string;description:string;intro:string;facts:[s
 export type PlaceFacts={verified:string;copy:Record<Locale,PlaceFactCopy>;sources:{label:string;url:string}[];nearby:string[]};
 export const placeFacts:Record<string,PlaceFacts> = {
  ...associationFacts,
+ ...localLifeFacts,
   ...newExperienceFacts,
   ...planDeLaTourFacts,
  ...sainteMaximeFacts,

@@ -1,3 +1,4 @@
+import {localLifePlaces} from './localLifePlaces';
 import {associationPlaces} from './associationPlaces';
 import {cogolinRayolPlaces} from './cogolinRayolPlaces';
 import {saintTropezPlaces} from './saintTropezPlaces';
@@ -54,6 +55,7 @@ export type Place = {
 // "bestFor", "notIdealFor" and tags are LE GOLFE editorial classifications.
 export const places: Place[] = [
  ...associationPlaces,
+ ...localLifePlaces,
   ...planDeLaTourPlaces,
  ...sainteMaximePlaces,
  ...grimaudPlaces,
