@@ -24,7 +24,13 @@ export default async function Page({params}:Props){
  const today=parisIsoDay();
  const upcoming=(await getPublicEvents()).filter(e=>destinationForLocation(e.location)?.slug===t.slug && eventOverlaps(e,today,addDays(today,365))).sort((a,b)=>a.start.localeCompare(b.start)).slice(0,4);
  const nextSession=(e:typeof upcoming[number])=>firstSessionInWindow(e,{from:today,to:addDays(today,365)})!;
- const image=t.villageId?mediaForPlace(t.villageId):undefined;
+ const villageImage=t.villageId?mediaForPlace(t.villageId):undefined;
+ const image=t.slug==="saint-tropez" && villageImage?{
+  ...villageImage,
+  src:"/media/destinations/saint-tropez-port-retouche.webp",
+  alt:fr?"Vue aérienne du port et du village de Saint-Tropez":"Aerial view of Saint-Tropez harbour and village",
+  credit:`${villageImage.credit} · ${fr?"Retouche assistée par IA : LE GOLFE":"AI-assisted retouching: LE GOLFE"}`,
+ }:villageImage;
  return <main><SiteHeader locale={locale} path={`/destinations/${t.slug}`}/><Breadcrumbs locale={locale} items={[{name:"LE GOLFE",path:`/${locale}`},{name:fr?"Communes":"Destinations",path:`/${locale}/destinations`},{name:t.name,path}]}/><CollectionSchema name={t.name} path={path} items={[...list.map(x=>({name:x.name,path:`/${locale}/place/${x.id}`})),...houses.map(x=>({name:x.name,path:villaHref(x.id,locale)})),...upcoming.map(x=>({name:fr?x.titleFr||x.title:x.title,path:`/${locale}/event/${x.id}`}))]}/>
  <section className="lg-shell py-12"><p className="lg-kicker">LE GOLFE / {fr?"ADRESSES & SÉJOUR":"PLACES & STAYS"}</p><h1 className="mt-6 text-6xl font-black md:text-8xl">{t.villageId?(fr?`Autour de ${t.name}`:`Around ${t.name}`):t.name}</h1><p className="mt-8 max-w-3xl text-xl leading-8">{t.intro[locale]}</p>{t.villageId && <Link className="lg-btn mt-8" href={`/${locale}/place/${t.villageId}`}>{fr?`Lire la fiche de ${t.name}`:`Read the ${t.name} guide`} →</Link>}{image && <figure className="mt-10"><div className="lg-image aspect-[16/9]"><img src={image.src} alt={image.alt}/></div><figcaption className="lg-credit">{image.credit} · {image.license}</figcaption></figure>}
  <div className="mt-10 border-l-4 border-[var(--lg-blue)] pl-6"><h2 className="text-2xl font-black">{fr?"Composer votre journée":"Plan your day"}</h2><p className="mt-4 max-w-3xl leading-7 text-black/65">{t.plan[locale]}</p></div>
