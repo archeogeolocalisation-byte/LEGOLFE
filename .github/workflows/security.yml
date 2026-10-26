@@ -2,11 +2,45 @@ name: Security and build checks
 on:
   pull_request:
   push:
-    branches: [main, security/phase-1-hardening]
+    branches: [security/phase-1-hardening]
+  workflow_dispatch:
+    inputs:
+      full_suite:
+        description: Run the full audit including Safari journeys
+        type: boolean
+        default: false
 permissions:
   contents: read
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
 jobs:
+  # Check PRs before merging; Vercel already builds the resulting main deployment.
   verify:
+    if: ${{ github.event_name != 'workflow_dispatch' || !inputs.full_suite }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '24'
+          cache: npm
+      - run: npm ci --prefer-offline --no-audit
+      - run: npm run test:security
+      - run: npm audit --omit=dev --audit-level=high
+      - run: npx tsc --noEmit
+      - name: Check place content and SEO
+        run: node scripts/test-place-seo.cjs
+      - run: npm run build
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: https://example.supabase.co
+          NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: sb_publishable_ci_dummy
+          NEXT_PUBLIC_SITE_URL: https://legolfe.com
+  full_review:
+    if: ${{ github.event_name == 'workflow_dispatch' && inputs.full_suite }}
     runs-on: ubuntu-latest
     # Keep this image aligned with the exact Playwright version in package.json.
     container:
