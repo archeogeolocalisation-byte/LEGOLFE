@@ -4,6 +4,7 @@ for(const ext of ['.ts','.tsx'])require.extensions[ext]=(m,f)=>m._compile(ts.tra
 require.extensions['.css']=m=>{m.exports=new Proxy({},{get:(_,key)=>key==='__esModule'?false:String(key)});};
 process.env.NEXT_PUBLIC_SUPABASE_URL='https://example.supabase.co';process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY='sb_publishable_ci_dummy';process.env.VERCEL_ENV='production';process.env.NEXT_PUBLIC_SITE_URL='https://www.legolfe.com';
 const {associationPlaces,associationFacts,associationSignatures}=require('../data/associationPlaces.ts');
+const {suppliedPlaceMedia}=require('../data/suppliedPlaceMedia.ts');
 const {places}=require('../data/places.ts'),{associationMedia}=require('../data/associationMedia.ts');
 const {matchesExploreFilter}=require('../lib/exploreFilters.ts'),{mediaForPlace}=require('../lib/placeMedia.ts');
 const Page=require('../app/[locale]/place/[id]/page.tsx'),Journal=require('../components/LocalJournal.tsx').default;
@@ -12,11 +13,12 @@ const manifest=JSON.parse(fs.readFileSync(path.join(__dirname,'../public/media/a
 (async()=>{
  assert.equal(associationPlaces.length,5);assert.equal(places.filter(p=>matchesExploreFilter(p,'associations')).length,9);
  for(const p of associationPlaces){
-  const sheet=associationFacts[p.id],image=associationMedia[p.id][0],file=path.join(__dirname,'../public',image.src),entry=manifest.find(f=>f.id===p.id);
+  const sheet=associationFacts[p.id],archivedImage=associationMedia[p.id][0],image=suppliedPlaceMedia[p.id]?.[0]??archivedImage,file=path.join(__dirname,'../public',archivedImage.src),entry=manifest.find(f=>f.id===p.id);
   assert.equal(sheet.verified,'2026-10-26');assert.ok(sheet.sources.length>=2);assert.ok(sheet.nearby.every(id=>id!==p.id&&places.some(p=>p.id===id)));
   assert.equal(crypto.createHash('sha256').update(fs.readFileSync(file)).digest('hex'),entry.sha256);assert.ok(fs.statSync(file).size<400000);
-  assert.equal(image.license,entry.license);assert.equal(image.licenseUrl,entry.licenseUrl);assert.equal(mediaForPlace(p.id).src,image.src);
-  assert.match(image.license,/^CC BY(?:-SA)? /);assert.equal(new URL(image.source).hostname,'commons.wikimedia.org');
+  assert.equal(archivedImage.license,entry.license);assert.equal(archivedImage.licenseUrl,entry.licenseUrl);assert.equal(mediaForPlace(p.id).src,image.src);
+  if(suppliedPlaceMedia[p.id]){assert.ok(fs.existsSync(path.join(__dirname,'../public',image.src)));assert.equal(image.license,'');assert.equal(image.credit,'');}
+  else{assert.match(image.license,/^CC BY(?:-SA)? /);assert.equal(new URL(image.source).hostname,'commons.wikimedia.org');}
   for(const locale of ['fr','en']){
    const stream=await renderToReadableStream(await Page.default({params:Promise.resolve({id:p.id,locale})}));await stream.allReady;const html=await new Response(stream).text();
    assert.equal((html.match(/<h1[ >]/g)||[]).length,1);

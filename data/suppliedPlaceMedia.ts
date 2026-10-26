@@ -1,6 +1,50 @@
 import type {VillagePhoto} from './villageMedia';
 // Photographs supplied for these places. No photographer or licence was supplied.
 export const suppliedPlaceMedia:Record<string,VillagePhoto[]> = {
+  "eglise-saint-sauveur-cogolin": [
+  {
+    "src": "/media/places/supplied-20261026/saint-sauveur-cogolin.webp",
+    "alt": "L’église Saint-Sauveur à Cogolin",
+    "caption": {
+      "fr": "L’église Saint-Sauveur à Cogolin",
+      "en": "Saint-Sauveur church in Cogolin"
+    },
+    "credit": "",
+    "license": "",
+    "licenseUrl": "",
+    "source": ""
+  }
+],
+  "chapelles-saint-roch-cogolin": [
+  {
+    "src": "/media/places/supplied-20261026/chapelle-saint-roch-cogolin.webp",
+    "alt": "L’entrée de la chapelle Saint-Roch à Cogolin",
+    "caption": {
+      "fr": "L’entrée de la chapelle Saint-Roch à Cogolin",
+      "en": "Entrance to Saint-Roch chapel in Cogolin"
+    },
+    "credit": "",
+    "license": "",
+    "licenseUrl": "",
+    "source": ""
+  }
+],
+  "agda-chats-du-golfe": [
+  {
+    "src": "/media/places/supplied-20261026/agda-chat-horizontal.webp",
+    "alt": "Chat — photo fournie pour illustrer la fiche de l’AGDA",
+    "caption": {
+      "fr": "Chat — photo fournie pour illustrer la fiche de l’AGDA",
+      "en": "Cat — supplied photograph illustrating the AGDA profile"
+    },
+    "credit": "",
+    "license": "",
+    "licenseUrl": "",
+    "source": "",
+    "contextual": true,
+    "illustrative": true
+  }
+],
   "plage-des-elephants": [
     {
         "src": "/media/places/supplied-20261023/plage-des-elephants.webp",
