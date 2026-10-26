@@ -1,0 +1,9 @@
+# Modèle de fiche villa — Villa Eden
+
+La première présentation éditoriale est limitée à `villa-eden` via `data/villaEditorialModels.ts`. Les cinq autres exemples et les annonces propriétaires gardent leur contenu actuel. Le modèle ajoute des points forts visibles dès l’en-tête, une introduction spécifique, une accroche et trois liens contextualisés vers Pampelonne, le village de Ramatuelle et le Moulin de Paillas. Les capacités ne sont plus répétées en grand dans le corps.
+
+La maison reste une démonstration : mention visible dès l’en-tête, aucun formulaire ni contact de location, aucune nouvelle possibilité de réservation ou d’enregistrement de cet exemple. Les distances du catalogue sont masquées pour ce modèle, faute d’adresse réelle vérifiée. Les lieux sont présentés dans la commune, sans affirmation de proximité piétonne. Aucun nouveau temps de trajet ni emplacement n’est inventé.
+
+Les actions partagées des vraies annonces sont traduites en FR/EN. Après sauvegarde, un lien mène à Mon séjour ; l’état est synchronisé par les événements existants et entre onglets. Le bouton expose aria-pressed et une erreur de stockage s’affiche au lieu de rester silencieuse. Le mécanisme d’enregistrement et la clé de stockage restent compatibles avec Mon séjour.
+
+Validation limitée : TypeScript et script existant `test-villa-languages.cjs`, enrichi pour vérifier le modèle Eden, ses trois liens, l’absence de distances, le maintien des autres présentations et les boutons anglais. Les contrôles existants sur les parcours contact public et les exemples non réservables passent. Revue React : hooks inconditionnels, écouteurs nettoyés, contenu éditorial rendu côté serveur et aucune dépendance ajoutée. Aucun audit navigateur complet lancé ; le rendu visuel mobile reste à apprécier sur la preview.

@@ -20,6 +20,13 @@ for (const villa of villas) {
     assert.equal(detail.includes("<form"),false);
     assert.ok(detail.includes(locale==='fr'?'Exemple de présentation':'Presentation example'));
 
+    if(villa.id==='villa-eden'){
+      assert.ok(detail.includes(locale==='fr'?'Trois idées dans la commune':'Three ideas in the town'));
+      for(const id of ['pampelonne','ramatuelle-village','moulin-de-paillas'])assert.ok(detail.includes(`href="/${locale}/place/${id}"`));
+      assert.ok(detail.includes(locale==='fr'?'Maison de démonstration':'Demonstration home'));
+      assert.equal(detail.includes('8 km'),false,'No unverified model distance');
+      assert.equal(detail.includes(locale==='fr'?'Voyageurs maximum':'Maximum guests'),false,'Capacity is already in the header');
+    }else assert.equal(detail.includes(locale==='fr'?'Trois idées dans la commune':'Three ideas in the town'),false,'Only Eden receives the editorial model');
     if(locale==='en')assert.equal(detail.includes('Choisir mes dates'),false);
   }
 }
@@ -39,6 +46,10 @@ for(const locale of ['fr','en']){
  assert.ok(page.includes(locale==='fr'?'Transmettre une demande':'Send an enquiry'));
  assert.equal(page.includes('owner@example.com'),false);
 }
+const Actions=require('../components/VillaActions.tsx').default;
+const actions=renderToStaticMarkup(createElement(Actions,{id:'property-live',name:'Live home',contactHref:'/en/villa/property-live/contact',askHref:'/en/ask',locale:'en'}));
+for(const text of ['Request availability','My stay','Share','Ask LE GOLFE','aria-pressed="false"'])assert.ok(actions.includes(text));
+assert.equal(actions.includes('Mon séjour'),false);
 const profile={id:'11111111-1111-4111-8111-111111111111',name:'Public host',avatarUrl:'https://example.com/avatar.jpg'};
 for(const locale of ['fr','en']){
  const page=renderToStaticMarkup(createElement(VillaDetail,{villa:live,today:'2026-10-16',locale,announcerProfile:profile}));
