@@ -25,6 +25,7 @@ let logs='';for(const stream of [server.stdout,server.stderr])stream.on('data',c
    await save.click();
    await page.getByRole('link',{name:new RegExp(fr?'Retrouver dans Mon séjour':'View in My stay')}).first().click();
    await page.waitForURL('**/saved#mes-rendez-vous');
+   await page.locator('#mes-rendez-vous li').first().waitFor();
    assert.ok(await page.locator('#mes-rendez-vous li').count()>0,'event session saved from its live page');
    await page.goto(origin+'/'+locale+'/whats-on?range=weekend',{waitUntil:'networkidle'});
   }
@@ -40,12 +41,13 @@ let logs='';for(const stream of [server.stdout,server.stderr])stream.on('data',c
   await page.getByRole('button',{name:fr?'Ajouter à mon séjour':'Add to my stay',exact:true}).click();
   assert.equal(await page.getByRole('button',{name:fr?'Ajouté ✓':'Saved ✓',exact:true}).getAttribute('aria-pressed'),'true');
   await page.goto(origin+'/'+locale+'/saved',{waitUntil:'networkidle'});
+  await page.locator('#mes-adresses a[href*="/place/"]').first().waitFor();
   assert.ok((await page.locator('#mes-adresses a[href*="/place/"]').count())>0,'saved place is available in My stay');await bounds();
   // Exact session snapshots survive reloads, distinguish versions and can be removed.
   await page.evaluate(()=>localStorage.setItem('le-golfe-saved-events-v1',JSON.stringify([{id:'test-session',title:'Saved evening',titleFr:'Soirée enregistrée',location:'Cogolin',session:{start:'2099-11-02',time:'18:00',version:'VF'}},{id:'test-session',title:'Saved evening',titleFr:'Soirée enregistrée',location:'Cogolin',session:{start:'2099-11-02',time:'20:00',version:'VO'}}])));
   await page.reload({waitUntil:'networkidle'});
-  const saved=page.locator('#mes-rendez-vous');assert.equal(await saved.locator('li').count(),2);assert.match(await saved.innerText(),/18:00/);assert.match(await saved.innerText(),/20:00/);await bounds();
-  await saved.getByRole('button',{name:fr?'Retirer':'Remove',exact:true}).first().click();await page.reload({waitUntil:'networkidle'});assert.equal(await page.locator('#mes-rendez-vous li').count(),1);
+  const saved=page.locator('#mes-rendez-vous');await saved.locator('li').first().waitFor();assert.equal(await saved.locator('li').count(),2);assert.match(await saved.innerText(),/18:00/);assert.match(await saved.innerText(),/20:00/);await bounds();
+  await saved.getByRole('button',{name:fr?'Retirer':'Remove',exact:true}).first().click();await page.reload({waitUntil:'networkidle'});await page.locator('#mes-rendez-vous li').first().waitFor();assert.equal(await page.locator('#mes-rendez-vous li').count(),1);
   await context.close();
  }
  console.log('Outing mobile WebKit: home date shortcuts, empty agenda to museum guide to place to My stay, saved session versions/times/reload/remove, FR/EN and 375/390px bounds passed.');
