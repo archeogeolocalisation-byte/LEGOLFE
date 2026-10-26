@@ -1,3 +1,4 @@
+import {localDiscoveriesMedia} from './localDiscoveriesMedia';
 import {localLifeMedia} from './localLifeMedia';
 import {associationMedia} from './associationMedia';
 import {cogolinRayolMedia} from './cogolinRayolPlaces';
@@ -12,6 +13,7 @@ import type {VillagePhoto} from './villageMedia';
 export const newExperienceMedia:Record<string,VillagePhoto[]> = {
  ...associationMedia,
  ...localLifeMedia,
+ ...localDiscoveriesMedia,
  ...planDeLaTourMedia,
  ...sainteMaximeMedia,
  ...grimaudMedia,
