@@ -17,7 +17,7 @@ Module._load=function(request,parent,...rest){
 const {places}=require('../data/places.ts'),{placeFacts}=require('../data/placeFacts.ts');
 const {discoveryFeatures}=require('../data/discoveryFeatures.ts');
 const {placeSeoCopy}=require('../data/placeSeoCopy.ts');
-const {relatedPlacesFor,guidesForPlaceVisit}=require('../lib/placeDiscovery.ts');
+const {relatedPlacesFor}=require('../lib/placeDiscovery.ts');
 const {nearbyExplorer}=require('../lib/nearbyExplorer.ts');
 const Page=require('../app/[locale]/place/[id]/page.tsx'),{GET}=require('../app/sitemap.xml/route.ts');
 const {renderToReadableStream}=require('react-dom/server');
@@ -36,7 +36,6 @@ async function htmlFor(id,locale){const stream=await renderToReadableStream(awai
   }[place.id];
   if(reviewedVillageStops)assert.deepEqual(related.map(p=>p.id),reviewedVillageStops,'Reviewed village visits keep direct public links');
   else assert.deepEqual(related.slice(0,nearby.length).map(p=>p.id),nearby.map(p=>p.place.id),'Sourced neighbors have priority');
-  const guides=guidesForPlaceVisit(place);assert.ok(guides.length<=3);assert.equal(new Set(guides.map(g=>g.slug)).size,guides.length);
   for(const locale of ['fr','en']){
    const metadata=await Page.generateMetadata({params:Promise.resolve({locale,id:place.id})});
    const title=metadata.title.absolute,description=metadata.description;
@@ -53,7 +52,9 @@ async function htmlFor(id,locale){const stream=await renderToReadableStream(awai
    const html=await htmlFor(place.id,locale);
    assert.equal((html.match(/<h1[ >]/g)||[]).length,1,`${place.id}/${locale}: one main heading`);
    for(const target of related)assert.ok(html.includes(`href="/${locale}/place/${target.id}"`));
-   for(const guide of guides)assert.ok(html.includes(`href="/${locale}/guides/${guide.slug}"`));
+   assert.equal(html.includes('LE GOLFE / GUIDES'),false,`${place.id}/${locale}: no generic guide module`);
+   const paragraphs=[...html.matchAll(/<p\b[^>]*>([\s\S]*?)<\/p>/g)].map(m=>m[1].replace(/<[^>]+>/g,' ').replace(/\s+/g,' ').trim().toLowerCase()).filter(text=>text.length>=100);
+   assert.equal(new Set(paragraphs).size,paragraphs.length,`${place.id}/${locale}: no repeated descriptive paragraphs`);
    const schema=JSON.parse(html.match(/<script type="application\/ld\+json">([^<]+)<\/script>/g).map(tag=>tag.replace(/^.*?>/,'').replace(/<\/script>$/,'')).find(text=>JSON.parse(text)['@type']!=='BreadcrumbList'));
    assert.equal(schema.description,description,'Structured data and metadata describe the same content');
    if(place.id==='place-des-lices'&&locale==='fr'){assert.equal(title.includes('market'),false);assert.ok(html.includes('Place des Lices &amp; marché'));}
@@ -85,5 +86,5 @@ async function htmlFor(id,locale){const stream=await renderToReadableStream(awai
  const preview=await Page.generateMetadata({params:Promise.resolve({locale:'fr',id:'san-peire-randonnee'})});
  assert.equal(preview.robots.index,false);assert.equal(preview.alternates,undefined);
  assert.equal((await GET()).status,503);
- console.log(`Place SEO: ${places.length*2} complete FR/EN pages rendered; unique metadata, schema, canonicals/hreflang, sitemap, related places/guides, San Peïre sources and preview isolation passed.`);
+ console.log(`Place SEO: ${places.length*2} complete FR/EN pages rendered; unique metadata, schema, canonicals/hreflang, sitemap, related places, no duplicated descriptive paragraphs or generic guide modules, San Peïre sources and preview isolation passed.`);
 })().catch(error=>{console.error(error);process.exitCode=1;});

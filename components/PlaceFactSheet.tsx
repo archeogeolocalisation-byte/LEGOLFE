@@ -48,7 +48,7 @@ export default function PlaceFactSheet({id,locale}:{id:string;locale:Locale}) {
   <section className="lg-shell py-16 md:py-24">
    <div className="lg-quote-box grid gap-10 bg-[#edf4f6] md:grid-cols-[.35fr_1.65fr]">
     <div><p className="lg-kicker text-[var(--lg-blue)]">{fr?'LE REGARD LE GOLFE':'THE LE GOLFE VIEW'}</p><div className="lg-blue-rule mt-5"/></div>
-    <div><p className="max-w-4xl text-4xl font-black uppercase leading-[.95] tracking-[-.055em] text-[var(--lg-blue)] md:text-7xl">“{signature.quote}”</p><p className="mt-8 max-w-2xl text-lg leading-8 text-black/65">{copy.intro}</p></div>
+    <div><p className="max-w-4xl text-4xl font-black uppercase leading-[.95] tracking-[-.055em] text-[var(--lg-blue)] md:text-7xl">“{signature.quote}”</p></div>
    </div>
   </section>
   <section className="border-t border-black">
@@ -57,11 +57,10 @@ export default function PlaceFactSheet({id,locale}:{id:string;locale:Locale}) {
     <div className="mt-14 grid border-t border-black md:grid-cols-3">{chapters.slice(0,3).map(([title,body],i)=><article id={`visit-${i+1}`} key={title} className="scroll-mt-24 border-b border-black/25 py-8 md:border-b-0 md:border-r md:px-8 first:md:pl-0 last:md:border-r-0"><p className="lg-kicker text-[var(--lg-blue)]">0{i+1}</p><h3 className="mt-5 text-2xl font-black leading-tight tracking-[-.04em] md:text-3xl">{title}</h3><p className="mt-5 text-sm leading-7 text-black/65">{body}</p></article>)}</div>
    </div>
   </section>
-  <section id="visit-4" className="lg-shell scroll-mt-24 pb-20 md:pb-24"><div className="grid gap-10 border-t border-black pt-10 md:grid-cols-[.7fr_1.3fr]"><p className="lg-kicker text-[var(--lg-blue)]">{fr?'POUR ALLER PLUS LOIN':'BEYOND THE FIRST LOOK'}</p><div><h2 className="text-4xl font-black uppercase leading-[.92] tracking-[-.055em] md:text-7xl">{chapters[3]?.[0]??signature.close}</h2><p className="mt-7 max-w-2xl text-lg leading-8 text-black/65">{chapters[3]?.[1]??copy.intro}</p></div></div></section>
-  <section className="bg-[var(--lg-blue)] text-white"><div className="lg-shell py-20 md:py-28"><p className="lg-kicker text-white/75">{fr?'LE BON CONSEIL':'THE USEFUL DISTINCTION'}</p><div className="mt-5 h-1 w-16 bg-[#a5def0]"/><div className="mt-9 grid gap-12 md:grid-cols-[1.15fr_.85fr]"><h2 className="text-5xl font-black uppercase leading-[.9] tracking-[-.055em] md:text-[5rem]">{signature.dark}</h2><p className="max-w-xl text-lg leading-8 text-white/85">{chapters[1]?.[1]??copy.intro}</p></div></div></section>
+  <section id="visit-4" className="lg-shell scroll-mt-24 pb-20 md:pb-24"><div className="grid gap-10 border-t border-black pt-10 md:grid-cols-[.7fr_1.3fr]"><p className="lg-kicker text-[var(--lg-blue)]">{fr?'POUR ALLER PLUS LOIN':'BEYOND THE FIRST LOOK'}</p><div><h2 className="text-4xl font-black uppercase leading-[.92] tracking-[-.055em] md:text-7xl">{chapters[3]?.[0]??signature.close}</h2><p className="mt-7 max-w-2xl text-lg leading-8 text-black/65">{chapters[3]?.[1]}</p></div></div></section>
+  <section className="bg-[var(--lg-blue)] text-white"><div className="lg-shell py-12 md:py-16"><p className="lg-kicker text-white/75">{fr?'LE BON CONSEIL':'THE USEFUL DISTINCTION'}</p><div className="mt-5 h-1 w-16 bg-[#a5def0]"/><h2 className="mt-8 max-w-5xl text-5xl font-black uppercase leading-[.9] tracking-[-.055em] md:text-[5rem]">{signature.dark}</h2></div></section>
   <section className="lg-shell py-20 md:py-24"><p className="lg-kicker text-[var(--lg-blue)]">{association?(fr?'ENTRER EN CONTACT':'GET IN TOUCH'):(fr?'PRÉPARER LA VISITE':'PLAN YOUR VISIT')}</p>
    <h2 className="mt-5 max-w-5xl text-5xl font-black uppercase leading-[.92] tracking-[-.055em] md:text-[5rem]">{signature.close}</h2>
-   <p className="mt-7 max-w-2xl text-lg leading-8 text-black/65">{copy.description}</p>
    <dl className="mt-14 grid gap-7 border-y border-black py-8 sm:grid-cols-2 lg:grid-cols-4">{copy.facts.filter(([label])=>!(visitAddress&&/^(adresse|address)$/i.test(label.trim()))).map(([label,value])=><div key={label}><dt className="lg-kicker text-[var(--lg-blue)]">{label}</dt><dd className="mt-3 text-sm font-semibold leading-7 text-black/70">{value}</dd></div>)}</dl>
 
    <PlaceMapBlock name={placeName(place,locale)} location={place.location} points={placeMapPoints[id]??[]} address={visitAddress} locale={locale}/>
