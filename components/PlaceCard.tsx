@@ -21,6 +21,6 @@ export default function PlaceCard({place,locale="en"}:{place:Place;locale?:Local
       <span className="shrink-0 text-2xl font-black transition-transform duration-200 group-hover:translate-x-1">↗</span>
     </div>
     <p className="mt-4 max-w-xl text-[13px] font-semibold leading-5 text-black/55 md:text-sm md:leading-6">{desc}</p>
-    {media && (media.credit||media.license) && <p className="lg-credit">{media.contextual ? (locale === "fr" ? "Photo de contexte" : "Context photo") : "Photo"}: {[media.credit,media.license].filter(Boolean).join(" · ")}</p>}
+    {media && (media.credit||media.license) && <p className="lg-credit">{media.illustrative ? (locale === "fr" ? "Photo d’illustration" : "Illustrative photo") : media.contextual ? (locale === "fr" ? "Photo de contexte" : "Context photo") : "Photo"}: {[media.credit,media.license].filter(Boolean).join(" · ")}</p>}
   </Link>
 }

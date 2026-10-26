@@ -47,7 +47,7 @@ for (const id of ['masters-champions-petanque-2026', 'cogolin-arts-plastiques-20
 }
 assert.ok(!eventsInWindow(catalog, dateWindow('today', '2026-11-07')).some(e => e.id === 'cogolin-arts-plastiques-2026'));
 assert.ok(eventsInWindow(catalog, dateWindow('today', '2026-11-14')).some(e => e.id === 'cogolin-arts-plastiques-2026'));
-const remaining=places.filter(p=>!placeMapPoints[p.id]?.length).map(p=>p.id).sort();
+const remaining=places.filter(p=>!p.tags.includes('association')&&!placeMapPoints[p.id]?.length).map(p=>p.id).sort();
 assert.deepEqual(remaining,['bateaux-verts-excursion','caseneuve-catamaran','cecile-golmard-chef','maison-laurent-conciergerie','taxi-estelle'],'every fixed venue and hiking reference is covered');
 const hike=placeMapPoints['san-peire-randonnee'][0];
 assert.equal(hike.kind,'area');assert.equal(hike.latitude,43.3111428);assert.equal(hike.longitude,6.5611339);

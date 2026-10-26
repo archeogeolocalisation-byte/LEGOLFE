@@ -1,3 +1,4 @@
+import {associationFacts} from './associationPlaces';
 import {cogolinRayolFacts} from './cogolinRayolPlaces';
 import {saintTropezFacts} from './saintTropezPlaces';
 import {ramatuelleGassinFacts} from './ramatuelleGassinPlaces';
@@ -11,6 +12,7 @@ import type {Locale} from '../lib/i18n';
 export type PlaceFactCopy={title:string;description:string;intro:string;facts:[string,string][];sections:[string,string][];questions:[string,string][]};
 export type PlaceFacts={verified:string;copy:Record<Locale,PlaceFactCopy>;sources:{label:string;url:string}[];nearby:string[]};
 export const placeFacts:Record<string,PlaceFacts> = {
+ ...associationFacts,
   ...newExperienceFacts,
   ...planDeLaTourFacts,
  ...sainteMaximeFacts,

@@ -18,7 +18,7 @@ const Sheet=require('../components/PlaceFactSheet.tsx').default,Page=require('..
 const {renderToStaticMarkup}=require('react-dom/server'),{GET}=require('../app/sitemap.xml/route.ts');
 const licenses=JSON.parse(fs.readFileSync(path.join(__dirname,'../public/media/place-facts/licenses.json')));
 (async()=>{
- assert.equal(Object.keys(placeFacts).length,48);
+ assert.equal(Object.keys(placeFacts).length,53);
  assert.equal(new Set(places.map(p=>p.id)).size,places.length);
  assert.ok(placesInDestination(getDestination('grimaud')).some(p=>p.id==='port-grimaud'));
  const xml=await(await GET()).text();

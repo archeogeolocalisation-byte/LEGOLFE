@@ -8,6 +8,7 @@ export type PlaceMedia = {
   license: string;
   source: string;
   contextual?: boolean;
+  illustrative?: boolean;
 };
 
 const commons = (name: string) =>

@@ -5,11 +5,11 @@ import { placeDescriptionFr } from "../data/places";
 import type { Place, PlaceCategory } from "../data/places";
 import type { Locale } from "./i18n";
 
-export const exploreFilterIds = ["all", "places", "eat", "beach", "sea", "do", "party", "wellness", "services", "quiet", "view", "family", "walk", "heritage", "nature", "music", "romantic", "lunch", "beachclub"] as const;
+export const exploreFilterIds = ["all", "associations", "places", "eat", "beach", "sea", "do", "party", "wellness", "services", "quiet", "view", "family", "walk", "heritage", "nature", "music", "romantic", "lunch", "beachclub"] as const;
 export type ExploreFilter = typeof exploreFilterIds[number];
 export const exploreFilterLabels: Record<Locale, Record<ExploreFilter, string>> = {
-  fr: { all: "Tout", places: "Patrimoine", eat: "Restaurants", beach: "Plages", sea: "Mer & bateaux", do: "À faire", party: "Sortir", wellness: "Bien-être & sport", services: "Services", quiet: "Au calme", view: "Belle vue", family: "En famille",walk:"Balade & randonnée",heritage:"Patrimoine & histoire",nature:"Nature",music:"Musique & soirées",romantic:"À deux",lunch:"Déjeuner",beachclub:"Clubs de plage" },
-  en: { all: "All", places: "Heritage", eat: "Restaurants", beach: "Beaches", sea: "Boats & sea", do: "Things to do", party: "Nightlife", wellness: "Wellness & sport", services: "Services", quiet: "Quiet", view: "Great view", family: "Family",walk:"Walks & hiking",heritage:"Heritage & history",nature:"Nature",music:"Music & nightlife",romantic:"For two",lunch:"Lunch",beachclub:"Beach clubs" },
+  fr: { all: "Tout", associations:"Associations", places: "Patrimoine", eat: "Restaurants", beach: "Plages", sea: "Mer & bateaux", do: "À faire", party: "Sortir", wellness: "Bien-être & sport", services: "Services", quiet: "Au calme", view: "Belle vue", family: "En famille",walk:"Balade & randonnée",heritage:"Patrimoine & histoire",nature:"Nature",music:"Musique & soirées",romantic:"À deux",lunch:"Déjeuner",beachclub:"Clubs de plage" },
+  en: { all: "All", associations:"Associations", places: "Heritage", eat: "Restaurants", beach: "Beaches", sea: "Boats & sea", do: "Things to do", party: "Nightlife", wellness: "Wellness & sport", services: "Services", quiet: "Quiet", view: "Great view", family: "Family",walk:"Walks & hiking",heritage:"Heritage & history",nature:"Nature",music:"Music & nightlife",romantic:"For two",lunch:"Lunch",beachclub:"Beach clubs" },
 };
 export function isExploreFilter(value: unknown): value is ExploreFilter {
   return typeof value === "string" && exploreFilterIds.some(id => id === value);
