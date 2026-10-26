@@ -48,7 +48,7 @@ export default function AskPlanMap({markers,total,locale}:{markers:AskPlanMarker
             const left=xy.x-center.x+width/2,top=xy.y-center.y+height/2;
             if(left<0||left>width||top<0||top>height)return null;
             return <button type="button" key={m.id} onClick={()=>choose(m)} title={m.name} aria-label={`${m.order}. ${m.name}`} aria-pressed={selected===m.id}
-              className={`absolute z-10 flex h-10 w-10 -translate-x-1/2 -translate-y-full items-center justify-center rounded-full border-2 border-white text-sm font-black shadow-lg focus-visible:outline-4 focus-visible:outline-[#0B4F6C] ${selected===m.id?"bg-[#071D2B] text-white":"bg-[#0B4F6C] text-white"}`} style={{left,top}}>{m.order}</button>;
+              className={`absolute z-10 flex h-10 w-10 -translate-x-1/2 -translate-y-full items-center justify-center rounded-full border-2 border-white text-sm font-black shadow-lg focus-visible:outline-4 focus-visible:outline-[var(--lg-blue)] ${selected===m.id?"bg-[#071D2B] text-white":"bg-[var(--lg-blue)] text-white"}`} style={{left,top}}>{m.order}</button>;
           })}
       </div>
       <div className="absolute right-3 top-3 z-20 flex flex-col border border-black/20 bg-white text-black"><button type="button" onClick={()=>setFocus(v=>({...v,zoom:Math.min(14,v.zoom+1)}))} disabled={focus.zoom>=14} aria-label={fr?"Zoomer":"Zoom in"} className="h-10 w-10 text-xl font-bold disabled:opacity-40">+</button><button type="button" onClick={()=>setFocus(v=>({...v,zoom:Math.max(9,v.zoom-1)}))} disabled={focus.zoom<=9} aria-label={fr?"Dézoomer":"Zoom out"} className="h-10 w-10 border-t border-black/20 text-xl font-bold disabled:opacity-40">−</button></div>

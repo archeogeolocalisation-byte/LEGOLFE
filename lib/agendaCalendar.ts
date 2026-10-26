@@ -32,6 +32,10 @@ export function sessionsInWindow(event:GolfeEvent,window:DateWindow):EventSessio
 export function eventOverlaps(event:GolfeEvent,from:string,to:string){return sessionsInWindow(event,{from,to}).length>0;}
 export function firstSessionInWindow(event:GolfeEvent,window:DateWindow){return sessionsInWindow(event,window).sort((a,b)=>a.start.localeCompare(b.start))[0];}
 export function eventsInWindow(events:GolfeEvent[],window:DateWindow):GolfeEvent[]{return events.filter(e=>sessionsInWindow(e,window).length).sort((a,b)=>firstSessionInWindow(a,window)!.start.localeCompare(firstSessionInWindow(b,window)!.start) || (firstSessionInWindow(a,window)!.time||"00:00").localeCompare(firstSessionInWindow(b,window)!.time||"00:00") || a.id.localeCompare(b.id));}
+// Keep editorial priorities, then prefer dated appointments over exhibitions already running.
+export function featuredEventsInWindow(events:GolfeEvent[],window:DateWindow,limit=3):GolfeEvent[]{
+ return eventsInWindow(events,window).sort((a,b)=>Number(!!b.featured)-Number(!!a.featured)||Number(firstSessionInWindow(a,window)!.start<window.from)-Number(firstSessionInWindow(b,window)!.start<window.from)).slice(0,limit);
+}
 export function catalogMonths(events:GolfeEvent[]):string[]{
  const months=new Set<string>();
  for(const e of events)for(const s of eventSessions(e)){

@@ -17,6 +17,16 @@ assert.equal(a[0].title,'LES MISÉRABLES');assert.equal(a[0].filmDurationMinutes
 assert.deepEqual(a[0].sessions,[{start:day,time:'14:00',version:'VF'},{start:day,time:'20:15',version:'VF'},{start:'2026-10-20',time:'14:00',version:'VF'},{start:'2026-10-20',time:'20:15',version:'VF'}]);
 assert.equal(b[0].title,'Le Corset');assert.equal(b[0].sessions[0].start,day);assert.equal(b[0].sessions[0].time,'16:00');assert.equal(b[0].filmDurationMinutes,90);
 assert.throws(()=>parseRaimu(raimu,'2026-11-19'),/mismatch/);assert.throws(()=>parsePagnol('<h1>Maintenance</h1>',day));
+// A programme starting earlier this week must keep future sessions without shifting dates.
+const followingDay=parseRaimu(raimu,'2026-10-20');
+assert.ok(followingDay.length>0);assert.ok(followingDay.every(e=>e.sessions.every(s=>s.start>='2026-10-20')));
+assert.ok(followingDay[0].sessions.some(s=>s.start==='2026-10-25'));
+assert.throws(()=>parseRaimu(raimu,'2026-10-26'),/mismatch/,'stale first column beyond six days');
+assert.throws(()=>parseRaimu(raimu.replaceAll('Mar.','Ven.'),day),/mismatch/,'weekday contradictions reject the whole timetable');
+// Reuse the timetable's weekday/day pattern across a year boundary.
+const rollover=raimu.replace(/(class="nom_jour">[^<]+<\/span> )(\d+)(<\/a>)/g,(_,a,n,b)=>a+String((Number(n)+9-1)%31+1)+b);
+const crossed=parseRaimu(rollover,'2027-01-01');
+assert.ok(crossed.some(e=>e.sessions.some(s=>s.start==='2027-01-03')));
 assert.ok(parsePagnol(pagnol.replaceAll('14h00','99h99'),day)[0].sessions.every(s=>s.time!=='99:99'));
 const films=JSON.parse(fixture('miramar-media.json')),shows=JSON.parse(fixture('miramar-shows.json')),options=JSON.parse(fixture('miramar-mediaoptions.json'));
 const c=parseMiramar(films,shows,options,day);assert.equal(c.length,2);assert.ok(c.some(e=>e.sessions.some(s=>s.start===day&&s.time==='14:30')));
@@ -48,9 +58,14 @@ for(const locale of ['fr','en']){values=[];index=0;const tree=Agenda({locale,eve
  let calls=[];global.fetch=async(url,opts)=>{calls.push(String(url));assert.equal(opts.next.revalidate,1800);assert.equal(opts.redirect,'error');return new Response(String(url).includes('cineode')?raimu:pagnol,{headers:{date:'Mon, 19 Oct 2026 10:00:00 GMT'}});};
  assert.equal((await getCinemaFeed('raimu')).length,2);assert.ok((await getCinemaFeed('pagnol')).length>=2);
  global.fetch=async()=>{throw new Error('Offline');};assert.deepEqual(await getCinemaFeed('raimu'),freshCinemaEvents(cinemaSnapshot.filter(e=>e.id.startsWith('cinema-raimu-')),day,true));
- global.fetch=async()=>new Response('Unavailable',{status:503});assert.ok((await getCinemaFeed('raimu')).length>0);
- global.fetch=async()=>new Response('Changed timetable');assert.ok((await getCinemaFeed('pagnol')).length>0);
+ global.fetch=async()=>new Response('Unavailable',{status:503});assert.deepEqual(await getCinemaFeed('raimu'),freshCinemaEvents(cinemaSnapshot.filter(e=>e.id.startsWith('cinema-raimu-')),day,true));
+ global.fetch=async()=>new Response('Changed timetable');assert.deepEqual(await getCinemaFeed('pagnol'),freshCinemaEvents(cinemaSnapshot.filter(e=>e.id.startsWith('cinema-pagnol-')),day,true));
  global.fetch=async url=>{const u=String(url);if(u==='https://cinema-cavalaire.fr/')return new Response('<meta name="api_token" content="00000000-0000-0000-0000-000000000000">');const route=new URL(u).pathname.split('/').pop();return new Response(fixture('miramar-'+route+'.json'),{headers:{date:'Mon, 19 Oct 2026 10:00:00 GMT'}});};assert.deepEqual(await getCinemaFeed('miramar'),c);
+ global.Date=class extends RealDate{constructor(...args){super(...(args.length?args:['2026-10-23T10:00:00Z']));}static now(){return new RealDate('2026-10-23T10:00:00Z').getTime();}};
+ global.fetch=async()=>{throw new Error('Offline');};
+ assert.ok((await getCinemaFeed('raimu')).length>0,'recent checked snapshot survives an offline source');
+ assert.ok((await getCinemaFeed('pagnol')).length>0);
+ assert.equal(freshCinemaEvents(cinemaSnapshot,'2026-10-26',true).length,0,'checked fallback expires after two days');
  }finally{global.fetch=realFetch;global.Date=RealDate;}
  console.log('Cinema: three official formats, dated/VF/VO sessions, DST, cancellations, secure posters, freshness, failed imports, FR/EN and town/category filters passed.');
 })().catch(e=>{console.error(e);process.exitCode=1;});

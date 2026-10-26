@@ -1,6 +1,62 @@
 import type {VillagePhoto} from './villageMedia';
 // Photographs supplied for these places. No photographer or licence was supplied.
 export const suppliedPlaceMedia:Record<string,VillagePhoto[]> = {
+  "plage-des-elephants": [
+    {
+        "src": "/media/places/supplied-20261023/plage-des-elephants.webp",
+        "alt": "La plage des Éléphants à Sainte-Maxime",
+        "caption": {
+            "fr": "La plage des Éléphants à Sainte-Maxime",
+            "en": "Plage des Éléphants in Sainte-Maxime"
+        },
+        "credit": "",
+        "license": "",
+        "licenseUrl": "",
+        "source": ""
+    }
+],
+  "maison-des-papillons": [
+    {
+        "src": "/media/places/supplied-20261023/maison-des-papillons.webp",
+        "alt": "La salle des collections de la Maison des Papillons à Saint-Tropez",
+        "caption": {
+            "fr": "La salle des collections de la Maison des Papillons à Saint-Tropez",
+            "en": "The collection room at Maison des Papillons in Saint-Tropez"
+        },
+        "credit": "",
+        "license": "",
+        "licenseUrl": "",
+        "source": ""
+    }
+],
+  "byblos-beach": [
+    {
+        "src": "/media/places/supplied-20261023/byblos-beach.webp",
+        "alt": "La terrasse de Byblos Beach face à la mer à Pampelonne",
+        "caption": {
+            "fr": "La terrasse de Byblos Beach face à la mer à Pampelonne",
+            "en": "Byblos Beach terrace overlooking the sea on Pampelonne beach"
+        },
+        "credit": "",
+        "license": "",
+        "licenseUrl": "",
+        "source": ""
+    }
+],
+  "gaio-club": [
+    {
+        "src": "/media/places/supplied-20261023/gaio-club.webp",
+        "alt": "La salle du Gaïo avec vue sur le port de Saint-Tropez",
+        "caption": {
+            "fr": "La salle du Gaïo avec vue sur le port de Saint-Tropez",
+            "en": "Inside Gaïo overlooking Saint-Tropez harbour"
+        },
+        "credit": "",
+        "license": "",
+        "licenseUrl": "",
+        "source": ""
+    }
+],
   "casita-pampelonne": [
   {
     "src": "/media/places/casita-pampelonne-aerial.webp",

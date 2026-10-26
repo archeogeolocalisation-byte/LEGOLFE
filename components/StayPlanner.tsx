@@ -176,7 +176,7 @@ export default function StayPlanner({ places, villas, locale }: { places: Place[
         </div>
       )}
 
-      {activePlan.length > 0 && <div className="mt-12 grid gap-6 border-y border-black bg-black p-6 text-white md:grid-cols-[1fr_auto] md:items-center md:p-10">
+      {activePlan.length > 0 && <div className="mt-12 grid gap-6 border-y border-black bg-[var(--lg-blue)] p-6 text-white md:grid-cols-[1fr_auto] md:items-center md:p-10">
         <div><p className="lg-kicker text-[var(--lg-blue)]">{fr ? "LE GOLFE / AFFINER MON SÉJOUR" : "ASK LE GOLFE / OPTIMISE"}</p><p className="mt-3 max-w-3xl text-3xl font-black uppercase leading-[.95] tracking-[-.045em] md:text-5xl">{fr ? "LE PLANNING EST POSÉ. MAINTENANT, FAISONS-LE RESPIRER." : "THE PLAN IS SET. NOW LET'S MAKE IT BREATHE."}</p></div>
         <Link href={`/${locale}/ask?shortlist=${encodeURIComponent(planPrompt)}`} className="lg-btn lg-btn--accent">{fr ? "Affiner avec LE GOLFE" : "Refine with Ask"} →</Link>
       </div>}

@@ -1,6 +1,6 @@
-.page{background:#fdfcf9;color:#0b3046;}
+.page{background:#fdfcf9;color:var(--lg-blue);}
 .hero{display:grid;gap:30px;padding-top:40px;padding-bottom:42px;}
-.kicker{font-size:10px;font-weight:800;letter-spacing:.13em;text-transform:uppercase;color:#0b4f6c;}
+.kicker{font-size:10px;font-weight:800;letter-spacing:.13em;text-transform:uppercase;color:var(--lg-blue);}
 .title{margin-top:20px;max-width:850px;font-size:clamp(40px,6vw,78px);line-height:.98;letter-spacing:-.055em;font-weight:900;text-transform:uppercase;overflow-wrap:anywhere;}
 .intro{margin-top:24px;max-width:650px;font-size:18px;line-height:1.75;color:#385765;}
 .visual{display:flex;flex-direction:column;justify-content:space-between;gap:35px;padding:28px;background:#eee7da;border:1px solid #d1c5b3;}
@@ -12,7 +12,7 @@
 .note{margin-top:14px;max-width:650px;font-size:13px;line-height:1.7;color:#536570;}
 .cards{display:grid;gap:18px;margin-top:34px;}
 .card{padding:25px;border:1px solid #c7bba8;background:#fff;}
-.card>span{font-size:10px;font-weight:800;letter-spacing:.12em;color:#0b4f6c;}
+.card>span{font-size:10px;font-weight:800;letter-spacing:.12em;color:var(--lg-blue);}
 .card h2{margin-top:16px;font-size:25px;line-height:1.15;font-weight:900;letter-spacing:-.035em;}
 .card p{margin-top:14px;font-size:14px;line-height:1.8;color:#385765;}
 .card a{display:inline-flex;align-items:center;min-height:44px;margin-top:18px;font-size:12px;font-weight:800;text-decoration:underline;text-underline-offset:4px;}
@@ -20,6 +20,6 @@
 .section h2{font-size:clamp(28px,3vw,38px);font-weight:900;line-height:1.1;letter-spacing:-.04em;}
 .section p{max-width:780px;font-size:16px;line-height:1.85;color:#385765;}
 .links{display:flex;flex-wrap:wrap;gap:12px;margin-top:20px;}
-.cta{display:inline-flex;align-items:center;justify-content:space-between;gap:24px;min-height:46px;padding:12px 18px;background:#0b4f6c;color:#fff;font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.06em;}
-.page a:focus-visible{outline:3px solid #0b4f6c;outline-offset:5px;}
+.cta{display:inline-flex;align-items:center;justify-content:space-between;gap:24px;min-height:46px;padding:12px 18px;background:var(--lg-blue);color:#fff;font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.06em;}
+.page a:focus-visible{outline:3px solid var(--lg-blue);outline-offset:5px;}
 @media(min-width:800px){.hero{grid-template-columns:1.5fr .8fr;align-items:stretch;gap:60px;padding-top:48px;padding-bottom:50px;}.cards{grid-template-columns:repeat(3,minmax(0,1fr));}.section{grid-template-columns:.8fr 1.4fr;gap:50px;}.visual{padding:32px;}}

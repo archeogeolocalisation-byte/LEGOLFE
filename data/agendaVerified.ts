@@ -1,6 +1,11 @@
 import type { GolfeEvent } from "./events";
 // Individual official-source checks are dated on each record.
 export const verifiedEventUpdates:Record<string,Partial<GolfeEvent>> = {
+  "baleines": {"source": "https://gassin.eu/fr/animation/distractions-et-loisirs/ramatuelle/projection-des-baleines-des-tortues-et-des-hommes-7951129/", "venue": "Espace Culturel Albert-Raphaël", "streetAddress": "11 Chemin de la Calade", "postalCode": "83350", "sessions": [{"start": "2026-10-23", "time": "20:30", "endTime": "22:00"}], "sourceCheckedAt": "2026-10-23"},
+  "magic-show-maxime": {"source": "https://www.sainte-maxime.com/agenda/magic-show-sainte-maxime-fr-6295439/", "venue": "Chapiteau du Théâtre de la Mer", "streetAddress": "Promenade A. Simon Lorière", "postalCode": "83120", "sessions": [{"start": "2026-10-22", "time": "18:30"}, {"start": "2026-10-23", "time": "18:30"}, {"start": "2026-10-24", "time": "14:30"}, {"start": "2026-10-24", "time": "21:30"}, {"start": "2026-10-25", "time": "18:30"}], "sourceCheckedAt": "2026-10-23"},
+  "combustibles-cogolin": {"source": "https://www.cogolin.fr/agenda/spectacles-les-combustibles/", "time": "20:30", "venue": "Centre Maurin des Maures", "sourceCheckedAt": "2026-10-23"},
+  "grande-braderie": {"source": "https://www.sainttropeztourisme.com/fr/fiche/grande-braderie-de-saint-tropez-7658690/", "sourceCheckedAt": "2026-10-23"},
+  "orgue-miltschitzky": {"source": "https://www.sainttropeztourisme.com/fr/fiche/concert-une-heure-avec-l-orgue-josef-edwin-miltschitzky-7593853/", "time": "17:00", "venue": "Église Notre-Dame-de-l’Assomption", "streetAddress": "Rue Commandant Guichard", "postalCode": "83990", "sourceCheckedAt": "2026-10-23"},
   "cape31-gold-cup": {sourceCheckedAt:"2026-10-16",venue:"Rade du Golfe de Saint-Tropez",practicalFr:"Du 12 au 17 octobre 2026 ; accès libre annoncé. Consultez la Société Nautique pour le programme et les conditions de course.",practical:"12–17 October 2026; free admission advertised. Consult the Société Nautique for the programme and racing conditions."},
   "maud-fontenoy": {
     "time": "18:00",

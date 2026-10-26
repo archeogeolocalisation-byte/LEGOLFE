@@ -5,7 +5,7 @@ The existing agenda includes a Cinema category. Date and commune filters operate
 ## Sources
 
 - Le Pagnol, Sainte-Maxime: official HTML timetable, selected Wednesday–Tuesday week and seven day columns. The first three published weeks are read. Only explicitly dated weeks and valid hour cells are accepted.
-- Raimu, Cogolin: Cinéode's official timetable, linked by the municipal cinema page. Its first day heading must match the response date in Europe/Paris; subsequent numbered days are checked across month boundaries.
+- Raimu, Cogolin: Cinéode's official timetable, linked by the municipal cinema page. Its first heading can fall within the six days preceding the response date in Europe/Paris. Both weekday and numbered day must match every consecutive column, including across month/year boundaries; older or contradictory headings are rejected.
 - Studio Miramar, Cavalaire: the cinema's public CineOffice widget. Its public identifier is read from HTML into memory; no login is involved or identifier stored in the repository. Only public film and show metadata is retained; deleted, cancelled, draft, school and other-cinema screenings are excluded. Zoned show times are converted to Europe/Paris, including the October clock change.
 - Star, Saint-Tropez: official municipal programme link only. The municipality links to AlloCiné; no unsupported schedule import is claimed.
 
@@ -15,7 +15,7 @@ Each card displays film title, cinema/town, published screening times and versio
 
 Server requests use Next fetch revalidation of 30 minutes, a shared eight-second deadline per cinema, bounded response sizes and no redirects. Providers load concurrently. Changing or empty/unreadable timetables fall back to the checked snapshot for at most two days. Completed days are removed. There is no guaranteed completeness: programme links remain available when an import is missing. A valid empty timetable replaces old entries rather than retaining them indefinitely.
 
-The initial checked snapshot contains 44 film/cinema records and 136 screenings from 19 October 2026 onwards. Imported programmes may add films as cinemas publish more weeks. No prices or booking availability are inferred.
+The snapshot checked on 23 October 2026 contains 19 film/cinema records and 100 screenings from that date onwards (Le Pagnol and Raimu). Miramar remains accessible through its official programme link when its import is unavailable. Imported programmes may add films as cinemas publish more weeks. No prices or booking availability are inferred.
 
 ## Validation
 

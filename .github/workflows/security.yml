@@ -8,6 +8,12 @@ permissions:
 jobs:
   verify:
     runs-on: ubuntu-latest
+    # Keep this image aligned with the exact Playwright version in package.json.
+    container:
+      image: mcr.microsoft.com/playwright:v1.62.1-noble
+      options: --user 1001
+    env:
+      PLAYWRIGHT_BROWSERS_PATH: /ms-playwright
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
@@ -18,6 +24,18 @@ jobs:
           node-version: '24'
           cache: npm
       - run: npm ci
+      - name: Check preinstalled Safari engine
+        run: |
+          node <<'NODE'
+          const assert = require('node:assert/strict');
+          const { webkit } = require('playwright');
+          assert.equal(require('playwright/package.json').version, '1.62.1', 'Align the CI image with the project Playwright version.');
+          (async () => {
+            const browser = await webkit.launch();
+            await browser.close();
+            console.log('Preinstalled WebKit launches successfully.');
+          })().catch(error => { console.error(error); process.exitCode = 1; });
+          NODE
       - run: npm run test:security
       - run: node scripts/test-admin.cjs
       - run: node scripts/test-direct-contact.mjs
@@ -59,8 +77,6 @@ jobs:
           NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: sb_publishable_ci_dummy
           NEXT_PUBLIC_SITE_URL: https://legolfe.com
 
-      - name: Install Safari test engine
-        run: npx playwright install --with-deps webkit
       - name: Verify global footer and information pages
         run: node scripts/test-footer-browser.cjs
         env:
@@ -75,6 +91,12 @@ jobs:
           NEXT_PUBLIC_SITE_URL: https://legolfe.com
       - name: Verify cinema filters on mobile Safari
         run: node scripts/test-cinema-browser.cjs
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: https://example.supabase.co
+          NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: sb_publishable_ci_dummy
+          NEXT_PUBLIC_SITE_URL: https://legolfe.com
+      - name: Verify local news on mobile Safari
+        run: node scripts/test-local-news-browser.cjs
         env:
           NEXT_PUBLIC_SUPABASE_URL: https://example.supabase.co
           NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: sb_publishable_ci_dummy
@@ -112,4 +134,11 @@ jobs:
         with:
           name: place-mobile-webkit
           path: test-results/place-mobile
+          if-no-files-found: ignore
+      - name: Save local news screenshots
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: local-news-mobile-webkit
+          path: test-results/local-news
           if-no-files-found: ignore
