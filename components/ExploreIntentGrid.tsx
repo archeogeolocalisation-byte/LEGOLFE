@@ -48,7 +48,7 @@ export default function ExploreIntentGrid({ places, locale, filter = "all", quer
         return <article key={place.id} className="explore-card">
           <Link href={`/${locale}/place/${place.id}`} className="group explore-card-link">
             <div className="lg-image explore-card-image">
-              {media ? <><img src={media.src} alt={media.alt} loading={index<3?"eager":"lazy"} decoding="async"/>{media.contextual&&<span className="absolute bottom-3 left-3 bg-white/95 px-2 py-1 text-[9px] font-black uppercase tracking-[.08em]">{fr?"Photo du secteur":"Area photograph"}</span>}</> : <div className="explore-card-placeholder"><span aria-hidden="true" className="explore-placeholder-monogram">LG</span><span className="lg-kicker">LE GOLFE / {labels[place.category]}</span></div>}
+              {media ? <><img src={media.src} alt={media.alt} loading={index<3?"eager":"lazy"} decoding="async"/>{media.contextual&&<span className="absolute bottom-3 left-3 bg-white/95 px-2 py-1 text-[9px] font-black uppercase tracking-[.08em]">{media.illustrative?(fr?"Photo d’illustration":"Illustrative photograph"):(fr?"Photo du secteur":"Area photograph")}</span>}</> : <div className="explore-card-placeholder"><span aria-hidden="true" className="explore-placeholder-monogram">LG</span><span className="lg-kicker">LE GOLFE / {labels[place.category]}</span></div>}
               <span aria-hidden="true" className="explore-card-number">{String(index+1).padStart(2,"0")}</span>
               <span aria-hidden="true" className="explore-card-arrow">↗</span>
             </div>

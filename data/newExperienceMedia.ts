@@ -1,3 +1,4 @@
+import {associationMedia} from './associationMedia';
 import {cogolinRayolMedia} from './cogolinRayolPlaces';
 import {saintTropezMedia} from './saintTropezPlaces';
 import {ramatuelleGassinMedia} from './ramatuelleGassinPlaces';
@@ -8,6 +9,7 @@ import {sainteMaximeMedia} from './sainteMaximePlaces';
 import {planDeLaTourMedia} from './planDeLaTourPlaces';
 import type {VillagePhoto} from './villageMedia';
 export const newExperienceMedia:Record<string,VillagePhoto[]> = {
+ ...associationMedia,
  ...planDeLaTourMedia,
  ...sainteMaximeMedia,
  ...grimaudMedia,

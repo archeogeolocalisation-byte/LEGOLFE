@@ -1,3 +1,4 @@
+import {associationPlaces} from './associationPlaces';
 import {cogolinRayolPlaces} from './cogolinRayolPlaces';
 import {saintTropezPlaces} from './saintTropezPlaces';
 import {ramatuelleGassinPlaces} from './ramatuelleGassinPlaces';
@@ -52,6 +53,7 @@ export type Place = {
 // Facts below were desk-checked against official/tourism sources in September 2026;
 // "bestFor", "notIdealFor" and tags are LE GOLFE editorial classifications.
 export const places: Place[] = [
+ ...associationPlaces,
   ...planDeLaTourPlaces,
  ...sainteMaximePlaces,
  ...grimaudPlaces,

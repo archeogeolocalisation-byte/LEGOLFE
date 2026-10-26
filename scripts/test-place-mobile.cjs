@@ -17,7 +17,7 @@ const pause=ms=>new Promise(resolve=>setTimeout(resolve,ms));
    if(attempt===59)throw new Error('Preview server not ready: '+serverLog);await pause(500);
   }
   browser=await webkit.launch({headless:true});
-  const representative=['eglise-notre-dame-assomption-saint-tropez','domaine-de-la-croix','cap-taillat','pampelonne','citadelle-saint-tropez','cogolin-village'];
+  const representative=['agda-chats-du-golfe','amis-bravade-saint-tropez','eglise-notre-dame-assomption-saint-tropez','domaine-de-la-croix','cap-taillat','pampelonne','citadelle-saint-tropez','cogolin-village'];
   for(const width of [320,375,390,430,768,1280]){
    const context=await browser.newContext({viewport:{width,height:844},isMobile:width<768,hasTouch:width<768,deviceScaleFactor:2,locale:'fr-FR',reducedMotion:'reduce'});
    // Keep the audit deterministic: maps/auth/analytics are external to this layout test.

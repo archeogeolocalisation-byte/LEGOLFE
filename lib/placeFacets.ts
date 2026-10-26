@@ -38,11 +38,11 @@ const secondaryCategories:Record<string,readonly PlaceCategory[]>={
  "caves-du-roy":[], "gaio-club":["eat"],"opera-saint-tropez":["party"],
  "base-nautique-cogolin":["do"]
 };
-export const placeFacetIds=["quiet","view","family","walk","heritage","nature","music","romantic","lunch","beachclub"] as const;
+export const placeFacetIds=["associations","quiet","view","family","walk","heritage","nature","music","romantic","lunch","beachclub"] as const;
 export type PlaceFacet=typeof placeFacetIds[number];
 export const placeFacetLabels:Record<Locale,Record<PlaceFacet,string>>={
- fr:{quiet:"Au calme",view:"Belle vue",family:"En famille",walk:"Balade & randonnée",heritage:"Patrimoine",nature:"Nature",music:"Musique & soirées",romantic:"À deux",lunch:"Déjeuner",beachclub:"Clubs de plage"},
- en:{quiet:"Quiet",view:"Great view",family:"Family",walk:"Walks & hiking",heritage:"Heritage",nature:"Nature",music:"Music & nights out",romantic:"For two",lunch:"Lunch",beachclub:"Beach clubs"}
+ fr:{associations:"Associations",quiet:"Au calme",view:"Belle vue",family:"En famille",walk:"Balade & randonnée",heritage:"Patrimoine",nature:"Nature",music:"Musique & soirées",romantic:"À deux",lunch:"Déjeuner",beachclub:"Clubs de plage"},
+ en:{associations:"Associations",quiet:"Quiet",view:"Great view",family:"Family",walk:"Walks & hiking",heritage:"Heritage",nature:"Nature",music:"Music & nights out",romantic:"For two",lunch:"Lunch",beachclub:"Beach clubs"}
 };
 const editorialFacets:Record<string,readonly PlaceFacet[]>={
  "pampelonne":["beachclub"],"club-55":["beachclub","lunch"],"byblos-beach":["beachclub","lunch"],
@@ -54,6 +54,7 @@ const editorialFacets:Record<string,readonly PlaceFacet[]>={
  "plan-de-la-tour-village":["quiet","walk","nature","view"]
 };
 const signals:Record<PlaceFacet,readonly string[]>={
+ associations:["association"],
  quiet:["quiet","calm","peaceful","tranquil","slow"],view:["view","views","sea-view","panorama","viewpoint","hilltop","belvedere"],
  family:["family","families","kids","children","child-friendly"],
  walk:["walk","walking","hike","hiking","trail","randonnee","sentier"],

@@ -20,6 +20,7 @@ function readSaved(): string[] {
 
 export default function PlaceActions({ place, locale }: { place: Place; locale: Locale }) {
   const fr = locale === "fr";
+  const association=place.tags.includes("association");
   const [saved, setSaved] = useState(false);
   const [count, setCount] = useState(0);
   const [error,setError]=useState("");
@@ -57,7 +58,7 @@ export default function PlaceActions({ place, locale }: { place: Place; locale: 
           <div>
             <p className="lg-kicker">{fr ? "AGIR" : "NEXT MOVE"}</p>
             <h2 className="lg-title mt-4 max-w-3xl text-4xl md:text-6xl">
-              {fr ? "GARDEZ-LE. RÉSERVEZ-LE. CONSTRUISEZ AUTOUR." : "SAVE IT. BOOK IT. BUILD AROUND IT."}
+              {association?(fr?"DÉCOUVREZ-LES. SOUTENEZ-LES. PARTICIPEZ.":"DISCOVER. SUPPORT. TAKE PART."):(fr ? "GARDEZ-LE. RÉSERVEZ-LE. CONSTRUISEZ AUTOUR." : "SAVE IT. BOOK IT. BUILD AROUND IT.")}
             </h2>
           </div>
           <div className="flex flex-wrap gap-2 md:justify-end">
