@@ -1,4 +1,5 @@
-"use client";
+'use client';
+import type {VillaDistinction} from '../lib/villaCollections';
 import {normalizeMapLocation,type VillaMapLocation} from "../lib/villaMapLocation";
 import OwnerContactSettings from "./OwnerContactSettings";
 import PilotNotice from "./PilotNotice";
@@ -24,6 +25,7 @@ type Role = "owner" | "concierge";
 type Visibility = "public" | "private" | "request";
 type ListingStatus = "draft" | "published" | "paused";
 export type Property = {
+  requestedCollection?:VillaDistinction;collectionPitch?:string;
   titleFr?:string;titleEn?:string;descriptionFr?:string;descriptionEn?:string;highlightsFr?:string[];highlightsEn?:string[];
   mapLocation?:VillaMapLocation;district?:string;
   online?:boolean;announcerType?:'owner'|'agency';
@@ -58,6 +60,7 @@ const seedStays: Stay[] = [
 
 function normalizeProperty(raw:Partial<Property>):Property {
   return {
+    requestedCollection:raw.requestedCollection,collectionPitch:raw.collectionPitch,
     mapLocation:normalizeMapLocation(raw.mapLocation),district:typeof raw.district==='string'?raw.district.slice(0,80):'',
     online:raw.online===true,announcerType:raw.announcerType==='agency'?'agency':'owner',
     id:raw.id || `property-${crypto.randomUUID()}`,
@@ -175,6 +178,7 @@ export default function HostDesk({locale}:{locale:Locale}) {
     const item:Property={
       mapLocation:normalizeMapLocation(JSON.parse(String(fd.get('mapLocation')||'null'))),district:String(fd.get('district')||'').trim().slice(0,80),
       announcerType:role==='concierge'?'agency':'owner',
+      requestedCollection:['charm','exceptional'].includes(String(fd.get('requestedCollection')))?String(fd.get('requestedCollection')) as VillaDistinction:undefined,collectionPitch:String(fd.get('collectionPitch')||'').trim().slice(0,600),
       id:editingProperty?.id || `property-${crypto.randomUUID()}`,
       name:String(fd.get("name")||""), location:String(fd.get("location")||""), guests:Number(fd.get("guests")||0),
       bedrooms:Number(fd.get("bedrooms")||0), bathrooms:Number(fd.get("bathrooms")||0),

@@ -1,3 +1,4 @@
+import {withReviewedCollections} from './publicVillaCollections';
 import 'server-only';
 import {createClient} from '@supabase/supabase-js';
 import {villas} from '../data/villas';
@@ -8,9 +9,10 @@ export async function getPublicVilla(id:string):Promise<VillaListing|null>{
  const db=createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!,process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY!,{auth:{persistSession:false,autoRefreshToken:false}});
  const {data,error}=await db.from('villa_listings').select('id,payload').eq('id',id).eq('status','published').eq('visibility','public').abortSignal(AbortSignal.timeout(8000)).maybeSingle();
  if(error){if(['42P01','PGRST205'].includes(error.code))return null;throw new Error('Impossible de charger cette annonce. Réessayez dans un instant.');}
- return data?parsePublicVilla(id,data.payload):null;
+ const villa=data?parsePublicVilla(id,data.payload):null;
+ return villa?(await withReviewedCollections(db,[villa]))[0]:null;
 }
 
 export async function getPublishedVillas():Promise<VillaListing[]>{
- try{const db=createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!,process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY!,{auth:{persistSession:false,autoRefreshToken:false}});const {data,error}=await db.from('villa_listings').select('id,payload').eq('status','published').eq('visibility','public').order('created_at',{ascending:false}).limit(200).abortSignal(AbortSignal.timeout(5000));if(error)return [];return (data||[]).flatMap(row=>{const villa=parsePublicVilla(row.id,row.payload);return villa?[villa]:[];});}catch{return [];}
+ try{const db=createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!,process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY!,{auth:{persistSession:false,autoRefreshToken:false}});const {data,error}=await db.from('villa_listings').select('id,payload').eq('status','published').eq('visibility','public').order('created_at',{ascending:false}).limit(200).abortSignal(AbortSignal.timeout(5000));if(error)return [];return withReviewedCollections(db,(data||[]).flatMap(row=>{const villa=parsePublicVilla(row.id,row.payload);return villa?[villa]:[];}));}catch{return [];}
 }

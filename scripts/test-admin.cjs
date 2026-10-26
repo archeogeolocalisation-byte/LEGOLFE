@@ -29,6 +29,7 @@ const request=(method='GET',body,token='valid',origin='https://www.legolfe.com',
   assert.equal((await GET(request('GET',undefined,'invalid'))).status,401);
   actor=ownerId;calls=[];assert.equal((await GET(request())).status,403);assert.equal(calls.some(c=>c.change),false);
   assert.equal((await PATCH(request('PATCH',{kind:'user',id:ownerId,role:'moderator'}))).status,403);assert.equal(calls.some(c=>c.change),false);
+  assert.equal((await PATCH(request('PATCH',{kind:'collection',id:payload.id,collection:'exceptional',expectedPayload:payload}))).status,403);
   actor=adminId;assert.equal((await PATCH(request('PATCH',{},'valid','https://attacker.example'))).status,403);
   delete process.env.SUPABASE_SECRET_KEY;assert.equal((await GET(request())).status,503);process.env.SUPABASE_SECRET_KEY='secret';
   const r=await GET(request());assert.equal(r.status,200);assert.equal(r.headers.get('Cache-Control'),'no-store, private');const listing=(await r.json()).listings[0];assert.equal(listing.ownerEmail,'owner@example.com');
@@ -39,5 +40,8 @@ const request=(method='GET',body,token='valid',origin='https://www.legolfe.com',
   calls=[];assert.equal((await PATCH(request('PATCH',change))).status,200);const saved=calls.find(c=>c.change)?.change;assert.equal(saved.payload.extraField,'preserve');assert.deepEqual(saved.payload.photos,payload.photos);assert.equal(saved.owner_id,ownerId);assert.equal(saved.payload.name,'Mas updated');
   missingOwner=true;calls=[];assert.equal((await PATCH(request('PATCH',change))).status,400);assert.equal(calls.some(c=>c.change),false);missingOwner=false;
   calls=[];assert.equal((await PATCH(request('PATCH',{kind:'user',id:ownerId,role:'moderator'}))).status,200);assert.deepEqual(calls.find(c=>c.change?.app_metadata)?.change,{app_metadata:{legolfe_role:'moderator'}});
+  const {validateCollectionReview}=require('../lib/villaCollectionValidation.ts');
+  for(const bad of [{id:'wrong',collection:'charm',expectedPayload:payload},{id:payload.id,collection:'luxury',expectedPayload:payload},{id:payload.id,collection:'charm',expectedPayload:payload,reasonFr:'',reasonEn:''}])assert.throws(()=>validateCollectionReview(bad));
+  assert.equal(validateCollectionReview({id:payload.id,collection:null,expectedPayload:payload}).p_collection,null);
   console.log('Admin: authorization, validation, privacy and preservation checks passed.');
 })().catch(error=>{console.error(error);process.exitCode=1;});

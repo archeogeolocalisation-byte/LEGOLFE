@@ -1,3 +1,4 @@
+import {nightlyPriceLabel} from '../lib/villaCollections';
 import {villaHref} from '../lib/villaPaths';
 import type {Locale} from '../lib/i18n';
 import VillaActions from './VillaActions';
@@ -13,6 +14,7 @@ export default function VillaStayPanel({villa,askHref,locale='fr'}:{
   <p className="lg-kicker">{fr?'VOTRE SÉJOUR':'YOUR STAY'} / {villa.name}</p>
   <p className="mt-5 text-4xl font-black tracking-[-.055em]">{villa.price?`${villa.price.toLocaleString(fr?'fr-FR':'en-GB')} €`:(fr?'Prix sur demande':'Price on request')}</p>
   <p className="mt-2 text-xs font-semibold leading-6 text-black/60">{villa.price?(fr?'Prix indicatif / semaine · à confirmer avec le propriétaire':'Indicative weekly price · confirm with the owner'):(fr?'Prix à convenir directement avec le propriétaire':'Price to arrange directly with the owner')}</p>
+  {villa.price>0&&<p className="mt-3 text-xs leading-6 text-black/65">{nightlyPriceLabel(villa.price,locale)}<br/>{fr?'Estimation issue du tarif hebdomadaire de départ, période et frais à confirmer.':'Estimate from the starting weekly rate; confirm season and fees.'}</p>}
   <div className="mt-6 border-t border-black/15 pt-5">
    <VillaActions locale={locale} id={villa.id} name={villa.name} contactHref={villaHref(villa.id,locale,true)} askHref={askHref} hideContact/>
   </div>
