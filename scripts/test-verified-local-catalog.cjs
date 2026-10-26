@@ -48,7 +48,9 @@ for (const id of ['masters-champions-petanque-2026', 'cogolin-arts-plastiques-20
 assert.ok(!eventsInWindow(catalog, dateWindow('today', '2026-11-07')).some(e => e.id === 'cogolin-arts-plastiques-2026'));
 assert.ok(eventsInWindow(catalog, dateWindow('today', '2026-11-14')).some(e => e.id === 'cogolin-arts-plastiques-2026'));
 const remaining=places.filter(p=>!p.tags.includes('association')&&!placeMapPoints[p.id]?.length).map(p=>p.id).sort();
-assert.deepEqual(remaining,['bateaux-verts-excursion','caseneuve-catamaran','cecile-golmard-chef','maison-laurent-conciergerie','taxi-estelle'],'every fixed venue and hiking reference is covered');
+// Editorial additions keep search-based directions until a sourced geographic point is reviewed.
+const pendingGeographicReview=['fete-chataigne-garde-freinet','musee-patrimoine-grimaud','villa-romaine-pardigon','chapelle-notre-dame-miremer','chapelle-sainte-magdeleine-la-mole','plage-de-la-nartelle'];
+assert.deepEqual(remaining,[...pendingGeographicReview,'bateaux-verts-excursion','caseneuve-catamaran','cecile-golmard-chef','maison-laurent-conciergerie','taxi-estelle'].sort(),'only explicitly pending profiles and mobile services lack map references');
 const hike=placeMapPoints['san-peire-randonnee'][0];
 assert.equal(hike.kind,'area');assert.equal(hike.latitude,43.3111428);assert.equal(hike.longitude,6.5611339);
 assert.equal(hike.source,'https://www.cirkwi.com/fr/point-interet/3041300-san-peire');
@@ -59,4 +61,4 @@ const {guides}=require('../data/guides.ts');
 assert.ok(guides.find(g=>g.slug==='randonnee-san-peire-plan-de-la-tour').placeIds.includes('san-peire-randonnee'),'hike links to its existing route guide');
 assert.equal(new URL(pointDirectionsUrl(placeMapPoints['byblos-beach'][0])).searchParams.get('destination'),'42 boulevard Patch, 83350 Ramatuelle, France');
 assert.equal(new URL(pointDirectionsUrl(placeMapPoints['club-55'][0])).searchParams.get('destination'),'43 boulevard Patch, 83350 Ramatuelle, France');
-console.log('Verified local catalog: 18 added map references, full fixed-place coverage, summit hiking reference, walking directions and exact event sessions passed.');
+console.log('Verified local catalog: 18 added map references, tracked pending geographic reviews, summit hiking reference, walking directions and exact event sessions passed.');

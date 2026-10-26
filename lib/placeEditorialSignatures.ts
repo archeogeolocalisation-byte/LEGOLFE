@@ -1,3 +1,4 @@
+import {localDiscoveriesSignatures} from '../data/localDiscoveriesPlaces';
 import {localLifeSignatures} from '../data/localLifePlaces';
 import {associationSignatures} from '../data/associationPlaces';
 import {cogolinRayolSignatures} from '../data/cogolinRayolPlaces';
@@ -14,6 +15,7 @@ type Signature={subtitle:string;quote:string;rhythm:string;dark:string;close:str
 export const editorialSignatures:Record<string,Record<Locale,Signature>>={
  ...associationSignatures,
  ...localLifeSignatures,
+ ...localDiscoveriesSignatures,
  ...planDeLaTourSignatures,
  ...sainteMaximeSignatures,
  ...grimaudSignatures,

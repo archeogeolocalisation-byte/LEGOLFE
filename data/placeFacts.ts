@@ -1,3 +1,4 @@
+import {localDiscoveriesFacts} from './localDiscoveriesPlaces';
 import {localLifeFacts} from './localLifePlaces';
 import {associationFacts} from './associationPlaces';
 import {cogolinRayolFacts} from './cogolinRayolPlaces';
@@ -15,6 +16,7 @@ export type PlaceFacts={verified:string;copy:Record<Locale,PlaceFactCopy>;source
 export const placeFacts:Record<string,PlaceFacts> = {
  ...associationFacts,
  ...localLifeFacts,
+ ...localDiscoveriesFacts,
   ...newExperienceFacts,
   ...planDeLaTourFacts,
  ...sainteMaximeFacts,

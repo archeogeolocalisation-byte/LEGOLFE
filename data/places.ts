@@ -1,3 +1,4 @@
+import {localDiscoveriesPlaces} from './localDiscoveriesPlaces';
 import {localLifePlaces} from './localLifePlaces';
 import {associationPlaces} from './associationPlaces';
 import {cogolinRayolPlaces} from './cogolinRayolPlaces';
@@ -56,6 +57,7 @@ export type Place = {
 export const places: Place[] = [
  ...associationPlaces,
  ...localLifePlaces,
+ ...localDiscoveriesPlaces,
   ...planDeLaTourPlaces,
  ...sainteMaximePlaces,
  ...grimaudPlaces,
