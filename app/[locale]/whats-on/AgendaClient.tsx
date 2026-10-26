@@ -1,5 +1,6 @@
 "use client";
 /* eslint-disable @next/next/no-img-element -- Existing event media URLs retain their fallback behaviour. */
+import {agendaAlternatives,nextAgendaDay} from "../../../lib/agendaDiscovery";
 import {cinemas} from "../../../data/cinemas";
 import styles from "./AgendaClient.module.css";
 import { parisIsoDay } from "../../../lib/localCalendar";
@@ -11,7 +12,7 @@ import { useEffect, useMemo, useState } from "react";
 import { agendaSources, type GolfeEvent, type EventCategory } from "../../../data/events";
 import { mediaForEvent, eventMediaLabel, agendaTitleCardIds } from "../../../lib/eventMedia";
 
-type Props = { locale: "fr" | "en"; events: GolfeEvent[]; initialDay:string;initialCategory?:"all"|"cinema" };
+type Props = { locale: "fr" | "en"; events: GolfeEvent[]; initialDay:string;initialCategory?:"all"|"cinema";initialRange?:Range };
 type Range = "today" | "tomorrow" | "weekend" | "7days" | "month";
 
 const categoryLabels: Record<EventCategory, { fr: string; en: string }> = {
@@ -54,18 +55,20 @@ function EventArtwork({event, locale, titleCard}:{event:GolfeEvent;locale:"fr"|"
   return <img ref={node=>{if(node?.complete&&node.naturalWidth===0)setFailedSource(image.src);}} width={1440} height={960} decoding="async" style={image.kind==="official"?{objectFit:"contain",background:"var(--lg-navy-deep)"}:undefined} src={image.src} alt={image.alt} loading="lazy" onError={()=>setFailedSource(image.src)}/>;
 }
 
-export default function AgendaClient({ locale, events, initialDay,initialCategory="all" }: Props) {
+export default function AgendaClient({ locale, events, initialDay,initialCategory="all",initialRange="7days" }: Props) {
   const fr = locale === "fr";
   const [todayIso,setTodayIso]=useState(initialDay);
   useEffect(()=>{const timer=setInterval(()=>setTodayIso(parisIsoDay()),60_000);return ()=>clearInterval(timer);},[]);
-  const [range, setRange] = useState<Range>("7days");
+  const [range, setRange] = useState<Range>(initialRange);
   const [month, setMonth] = useState("");
-  const selectedWindow = upcomingWindow(monthWindow(month) ?? dateWindow(range, todayIso),todayIso);
+  const [day,setDay]=useState("");
+  const selectedWindow = upcomingWindow((day&&day>=todayIso?{from:day,to:day}:undefined) ?? monthWindow(month) ?? dateWindow(range, todayIso),todayIso);
   const months = useMemo(() => catalogMonths(events).filter(value=>value>=todayIso.slice(0,7)), [events,todayIso]);
   const [category, setCategory] = useState<"all" | EventCategory>(initialCategory);
   const [location, setLocation] = useState("all");
   const locations = useMemo(() => Array.from(new Set([...events.map((e) => e.location),...cinemas.map(c=>c.town)])).sort(), [events]);
   const filtered=useMemo(()=>eventsInWindow(events,{from:selectedWindow.from,to:selectedWindow.to}).filter(e=>(category==="all"||e.category===category)&&(location==="all"||e.location===location)),[events,selectedWindow.from,selectedWindow.to,category,location]);
+  const nextDay=nextAgendaDay(events.filter(e=>(category==="all"||e.category===category)&&(location==="all"||e.location===location)),selectedWindow);
   const featured=featuredEventsInWindow(filtered,upcomingWindow(selectedWindow,todayIso));
   const featuredIds=new Set(featured.map(e=>e.id));
   const remaining=filtered.filter(e=>!featuredIds.has(e.id));
@@ -104,15 +107,15 @@ export default function AgendaClient({ locale, events, initialDay,initialCategor
         <div className="mx-auto max-w-7xl px-6 py-4 md:px-10">
           <div className="flex max-w-full gap-2 overflow-x-auto pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
             {rangeButtons.map((item) => {
-              const selected = !month && range === item.key;
-              return <button key={item.key} type="button" aria-pressed={selected} onClick={() => { setMonth(""); setRange(item.key); }} className={`inline-flex min-h-11 shrink-0 items-center gap-2 border px-4 py-2 text-[11px] font-black uppercase tracking-[.13em] transition ${selected ? "border-transparent text-[var(--lg-blue)]" : "border-white/30 text-white hover:border-white"}`} style={selected ? { backgroundColor: accent } : undefined}>
+              const selected = !month && !day && range === item.key;
+              return <button key={item.key} type="button" aria-pressed={selected} onClick={() => { setDay(""); setMonth(""); setRange(item.key); }} className={`inline-flex min-h-11 shrink-0 items-center gap-2 border px-4 py-2 text-[11px] font-black uppercase tracking-[.13em] transition ${selected ? "border-transparent text-[var(--lg-blue)]" : "border-white/30 text-white hover:border-white"}`} style={selected ? { backgroundColor: accent } : undefined}>
                 {fr ? item.fr : item.en}<span className="font-bold opacity-75" aria-hidden="true">{countWindow(item.key)}</span>
               </button>;
             })}
           </div>
           <div className="mt-3 flex items-center gap-3">
             <label htmlFor="agenda-month" className="text-[10px] font-black uppercase tracking-[.13em]">{fr ? "Choisir un mois" : "Choose a month"}</label>
-            <select id="agenda-month" value={month} onChange={event => setMonth(event.target.value)} className={styles.filterSelect+" max-w-full border border-white/30 bg-[var(--lg-navy-surface)] px-3 py-2 text-xs font-bold text-white"}>
+            <select id="agenda-month" value={month} onChange={event => {setDay("");setMonth(event.target.value);}} className={styles.filterSelect+" max-w-full border border-white/30 bg-[var(--lg-navy-surface)] px-3 py-2 text-xs font-bold text-white"}>
               <option value="">{fr ? "Période rapide" : "Quick dates"}</option>
               {months.map(value => <option key={value} value={value}>{formatCalendarMonth(value, locale)}</option>)}
             </select>
@@ -159,13 +162,21 @@ export default function AgendaClient({ locale, events, initialDay,initialCategor
             <p className="text-[10px] font-black uppercase tracking-[.22em]" style={{ color: accent }}>{periodText}</p>
             <h2 aria-live="polite" aria-atomic="true" className="mt-2 text-4xl font-black tracking-[-.035em] md:text-5xl">{filtered.length} {fr ? "rendez-vous" : "events"}</h2>
           </div>
-          {(category !== "all" || location !== "all" || month || range !== "month") && <button onClick={() => { setMonth(""); setRange("month"); setCategory("all"); setLocation("all"); }} className="text-[10px] font-black uppercase tracking-[.15em] underline underline-offset-4">{fr ? "Réinitialiser ce mois" : "Reset to this month"}</button>}
+          {(category !== "all" || location !== "all" || month || day || range !== "month") && <button onClick={() => { setDay(""); setMonth(""); setRange("month"); setCategory("all"); setLocation("all"); }} className="text-[10px] font-black uppercase tracking-[.15em] underline underline-offset-4">{fr ? "Réinitialiser ce mois" : "Reset to this month"}</button>}
         </div>
 
         {filtered.length === 0 ? (
-          <div className="my-16 border border-white/30 bg-[var(--lg-navy-surface)] px-6 py-16 text-center">
-            <p className="text-3xl font-black">{fr ? "Rien dans ce filtre." : "Nothing in this filter."}</p>
-            <p className="mt-3 text-sm text-white/60">{fr ? "Élargissez la période ou changez de catégorie." : "Widen the dates or change category."}</p>
+          <div data-agenda-empty className="my-10 border border-white/30 bg-[var(--lg-navy-surface)] p-6 md:p-10">
+            <h3 className="text-3xl font-black">{fr ? "Pas de rendez-vous publié pour cette sélection." : "No published events for this selection."}</h3>
+            <p className="mt-3 text-sm leading-6 text-white/75">{fr ? "Cela ne signifie pas que tout est fermé. Consultez une autre date ou préparez une sortie à partir de nos guides." : "This does not mean everything is closed. Try another date or plan an outing with our guides."}</p>
+            <div className="mt-6 flex flex-wrap gap-3">
+             {nextDay&&<button type="button" onClick={()=>{setMonth("");setDay(nextDay);}} className="min-h-11 border border-white/50 px-4 py-3 text-sm font-bold">{fr?"Prochaine date publiée":"Next published date"} · {formatCalendarDay(nextDay,locale,true)} →</button>}
+             <button type="button" onClick={()=>{setDay("");setMonth("");setRange("7days");setCategory("all");setLocation("all");}} className="min-h-11 bg-[var(--lg-sky)] px-4 py-3 text-sm font-bold text-[var(--lg-blue)]">{fr?"Tout le Golfe sur 7 jours":"Next 7 days across the Golfe"} →</button>
+            </div>
+            <div className="mt-8 grid gap-3 sm:grid-cols-3">
+             {agendaAlternatives.map(idea=><Link key={idea.slug} href={`/${locale}/guides/${idea.slug}`} className="min-w-0 border-t border-white/30 py-4"><span className="block font-bold underline underline-offset-4">{fr?idea.fr:idea.en} →</span><span className="mt-2 block text-sm leading-6 text-white/75">{fr?idea.detailFr:idea.detailEn}</span></Link>)}
+             <Link href={`/${locale}/destinations`} className="min-w-0 border-t border-white/30 py-4"><span className="block font-bold underline underline-offset-4">{fr?"Une balade dans les villages":"A walk around the villages"} →</span><span className="mt-2 block text-sm leading-6 text-white/75">{fr?"Choisissez une commune et retrouvez ses lieux à découvrir.":"Choose a town and explore its places."}</span></Link>
+            </div>
           </div>
         ) : remaining.length>0 ? (
           <div className={styles.eventGrid} aria-label={fr?'Les autres rendez-vous':'More events'}>

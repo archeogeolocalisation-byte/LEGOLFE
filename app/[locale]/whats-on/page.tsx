@@ -1,3 +1,4 @@
+import { agendaRange } from "../../../lib/agendaDiscovery";
 import { parisIsoDay } from "../../../lib/localCalendar";
 import { pageMetadata } from "../../../lib/seo";
 import { notFound } from "next/navigation";
@@ -19,7 +20,7 @@ export default async function WhatsOn({ params,searchParams }: { params: Promise
   return (
     <main className="agenda-page min-h-screen bg-[var(--lg-blue)] text-[var(--lg-ivory)]">
       <SiteHeader light={false} locale={locale} path="/whats-on" />
-      <AgendaClient locale={locale} events={merged} initialDay={parisIsoDay()} initialCategory={initialCategory} />
+      <AgendaClient locale={locale} events={merged} initialDay={parisIsoDay()} initialCategory={initialCategory} initialRange={agendaRange(query.range)} />
     </main>
   );
 }

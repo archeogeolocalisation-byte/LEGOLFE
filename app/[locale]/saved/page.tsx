@@ -10,6 +10,7 @@ import { categoryFR, isLocale } from "../../../lib/i18n";
 import { mediaForPlace } from "../../../lib/placeMedia";
 import VillaComparison from "../../../components/VillaComparison";
 import StayPlanner from "../../../components/StayPlanner";
+import EventStayActions from "../../../components/EventStayActions";
 import SavedDayPlanSection from "../../../components/SavedDayPlan";
 
 const STORAGE_KEY = "le-golfe-saved-places";
@@ -57,14 +58,16 @@ export default function SavedPage({ params }: { params: Promise<{ locale: string
       </div>
 
       <div className="mt-6 flex flex-wrap items-center justify-between gap-4"><p className="text-xs leading-5 text-black/50">{fr?"Sélection conservée sur ce navigateur, sans compte.":"Shortlist saved in this browser, no account required."}</p><Link href="/requests" className="lg-btn">{fr?"Mes demandes de séjour":"My stay requests"} →</Link></div>
-      <nav aria-label={fr?"Organiser mon séjour":"Organise My Stay"} className="mt-8 grid gap-3 sm:grid-cols-3">
+      <nav aria-label={fr?"Organiser mon séjour":"Organise My Stay"} className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
        <Link href={`/${locale}/ask`} className="flex min-h-24 flex-col justify-between border border-white/30 p-4 transition hover:bg-white/10"><span className="lg-kicker text-[#a6d8e5]">01 / {fr?"PROGRAMME":"PLAN"}</span><span className="mt-3 font-black">{fr?"Créer ou modifier mon programme":"Create or edit my plan"} ↗</span></Link>
        <Link href={savedPlaces.length?"#mes-adresses":`/${locale}/explore`} className="flex min-h-24 flex-col justify-between border border-white/30 p-4 transition hover:bg-white/10"><span className="lg-kicker text-[#a6d8e5]">02 / {fr?"ADRESSES":"PLACES"}</span><span className="mt-3 font-black">{savedPlaces.length? (fr?`${savedPlaces.length} lieux enregistrés`:`${savedPlaces.length} saved places`) : (fr?"Trouver des lieux":"Discover places")} ↗</span></Link>
        <Link href={savedVillas.length?"#mes-maisons":`/${locale}/stay`} className="flex min-h-24 flex-col justify-between border border-white/30 p-4 transition hover:bg-white/10"><span className="lg-kicker text-[#a6d8e5]">03 / {fr?"MAISONS":"HOMES"}</span><span className="mt-3 font-black">{savedVillas.length?(fr?`${savedVillas.length} maison(s) enregistrée(s)`:`${savedVillas.length} saved homes`):(fr?"Choisir une maison":"Find a home")} ↗</span></Link>
+       <Link href="#mes-rendez-vous" className="flex min-h-24 flex-col justify-between border border-white/30 p-4 transition hover:bg-white/10"><span className="lg-kicker text-[#a6d8e5]">04 / {fr?"RENDEZ-VOUS":"EVENTS"}</span><span className="mt-3 font-black">{fr?"Retrouver mes séances":"View my saved sessions"} ↗</span></Link>
       </nav>
+      <EventStayActions locale={locale}/>
       <SavedDayPlanSection locale={locale}/>
       {storageError&&<p role="alert" className="mt-5 border border-red-700 p-4 text-sm">{storageError}</p>}
-      {!ready?<p className="mt-12" role="status">{fr?"Chargement de votre sélection…":"Loading your shortlist…"}</p>:savedPlaces.length === 0 && savedVillas.length === 0 ? <div className="mt-20 border-y border-black py-14"><p className="text-3xl font-black tracking-[-.04em]">{fr ? "Votre séjour commence ici." : "Your stay starts here."}</p><Link href={`/${locale}/explore`} className="mt-6 inline-flex lg-btn">{fr?"Explorer":"Explore"} →</Link><Link href={`/${locale}/stay`} className="lg-btn ml-3 mt-6">{fr?'Choisir une maison':'Choose a home'} →</Link></div> : <>
+      {!ready?<p className="mt-12" role="status">{fr?"Chargement de votre sélection…":"Loading your shortlist…"}</p>:savedPlaces.length === 0 && savedVillas.length === 0 ? <div className="mt-20 border-y border-black py-14"><p className="text-3xl font-black tracking-[-.04em]">{fr ? "Complétez votre séjour avec des lieux et une maison." : "Complete your stay with places and a home."}</p><Link href={`/${locale}/explore`} className="mt-6 inline-flex lg-btn">{fr?"Explorer":"Explore"} →</Link><Link href={`/${locale}/stay`} className="lg-btn ml-3 mt-6">{fr?'Choisir une maison':'Choose a home'} →</Link></div> : <>
       <div className="mt-16 grid gap-2 md:grid-cols-12">
         {savedPlaces.slice(0,4).map((p,i)=>{const m=mediaForPlace(p.id);const spans=["md:col-span-7","md:col-span-5","md:col-span-5","md:col-span-7"];return <Link key={p.id} href={`/${locale}/place/${p.id}`} className={`group relative min-h-[260px] overflow-hidden bg-black ${spans[i]||"md:col-span-6"}`}>{m?<img src={m.src} alt={m.alt} className="absolute inset-0 h-full w-full object-cover opacity-85 transition duration-700 group-hover:scale-[1.015]"/>:<div className="absolute inset-0 bg-black"/>}<div className="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-transparent"/><div className="absolute bottom-0 left-0 p-5 text-white"><p className="lg-kicker text-white/60">{p.location}</p><p className="mt-2 text-4xl font-black uppercase leading-[.88] tracking-[-.06em] md:text-5xl">{p.name}</p></div></Link>})}
       </div>

@@ -22,19 +22,22 @@ export default function PlaceActions({ place, locale }: { place: Place; locale: 
   const fr = locale === "fr";
   const [saved, setSaved] = useState(false);
   const [count, setCount] = useState(0);
+  const [error,setError]=useState("");
 
   useEffect(() => {
-    const ids = readSaved();
-    setSaved(ids.includes(place.id));
-    setCount(ids.length);
+    function refresh(){const ids=readSaved();setSaved(ids.includes(place.id));setCount(ids.length);}
+    refresh();window.addEventListener('storage',refresh);window.addEventListener('le-golfe:saved-places',refresh);
+    return()=>{window.removeEventListener('storage',refresh);window.removeEventListener('le-golfe:saved-places',refresh);};
   }, [place.id]);
 
   function toggleSaved() {
     const ids = readSaved();
     const next = ids.includes(place.id) ? ids.filter((id) => id !== place.id) : [...ids, place.id];
-    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
-    setSaved(next.includes(place.id));
-    setCount(next.length);
+    try{
+      window.localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
+      setSaved(next.includes(place.id));setCount(next.length);setError("");
+      window.dispatchEvent(new Event('le-golfe:saved-places'));
+    }catch{setError(fr?"Ce lieu n’a pas pu être enregistré sur cet appareil.":"This place could not be saved on this device.");}
   }
 
   const askHref = useMemo(
@@ -63,7 +66,7 @@ export default function PlaceActions({ place, locale }: { place: Place; locale: 
                 {primaryLabel} ↗
               </a>
             )}
-            <button type="button" onClick={toggleSaved} className={`lg-btn ${saved ? "lg-btn--dark" : ""}`}>
+            <button type="button" onClick={toggleSaved} aria-pressed={saved} className={`lg-btn ${saved ? "lg-btn--dark" : ""}`}>
               {saved ? (fr ? "Ajouté ✓" : "Saved ✓") : (fr ? "Ajouter à mon séjour" : "Add to my stay")}
             </button>
             <Link href={askHref} className="lg-btn">
@@ -71,7 +74,8 @@ export default function PlaceActions({ place, locale }: { place: Place; locale: 
             </Link>
           </div>
         </div>
-        <div className="mt-6 flex items-center justify-between border-t border-black/20 pt-4 text-[10px] font-black uppercase tracking-[.13em]">
+        {error&&<p role="alert" className="mt-4 text-sm">{error}</p>}
+        <div className="mt-6 flex flex-wrap gap-3 items-center justify-between border-t border-black/20 pt-4 text-[10px] font-black uppercase tracking-[.13em]">
           <span>{fr ? "Votre sélection reste sur cet appareil." : "Your shortlist stays on this device."}</span>
           <Link href={`/${locale}/saved`} className="underline underline-offset-4">
             {fr ? "Mon séjour" : "My stay"} · {count}

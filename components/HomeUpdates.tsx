@@ -1,3 +1,4 @@
+import {agendaAlternatives} from "../lib/agendaDiscovery";
 import Link from "next/link";
 import type { GolfeEvent, EventCategory } from "../data/events";
 import type { LocalNewsItem, LocalNewsKind } from "../data/localNews";
@@ -31,6 +32,9 @@ export default function HomeUpdates({ locale, events, news, window }: {
           <h2 id="home-agenda-title" className="lg-title mt-6 text-[clamp(2.75rem,9vw,4.25rem)] uppercase">{fr ? <>CE QUI<br />SE PASSE.</> : <>WHAT’S<br />HAPPENING.</>}</h2>
           <p className="mt-5 max-w-md text-sm font-semibold leading-6 text-black/65">{fr ? "Une sortie, un concert, un rendez-vous sur l’eau. Choisissez votre prochain moment dans le Golfe." : "An outing, a concert, a date on the water. Choose your next moment in the Golfe."}</p>
         </header>
+        <nav aria-label={fr?"Choisir ma sortie":"Choose an outing"} className="mt-6 flex flex-wrap gap-2">
+          {[{range:"today",fr:"Aujourd’hui",en:"Today"},{range:"weekend",fr:"Ce week-end",en:"This weekend"}].map(item=><Link key={item.range} href={`/${locale}/whats-on?range=${item.range}`} className={`inline-flex min-h-11 items-center border border-[var(--lg-blue)] px-4 py-2 text-sm font-bold text-[var(--lg-blue)] ${focus}`}>{fr?item.fr:item.en} →</Link>)}
+        </nav>
         <ul className="mt-7 flex-1 border-t border-black/25">
           {events.map(event => {
             const session = firstSessionInWindow(event, window);
@@ -58,8 +62,9 @@ export default function HomeUpdates({ locale, events, news, window }: {
               </Link>
             </li>;
           })}
-          {!events.length ? <li className="py-8 text-sm font-semibold leading-6 text-black/65">{fr ? "Aucun rendez-vous publié pour les sept prochains jours. Retrouvez les prochaines dates dans l’agenda." : "No listings for the next seven days. Find upcoming dates in the full agenda."}</li> : null}
+          {!events.length ? <li className="py-8 text-sm font-semibold leading-6 text-black/65">{fr ? "Aucun rendez-vous publié pour les sept prochains jours. Retrouvez les prochaines dates dans l’agenda ou préparez une sortie avec nos guides." : "No listings for the next seven days. Find upcoming dates in the full agenda or plan an outing with our guides."}</li> : null}
         </ul>
+        {!events.length&&<div className="mt-4 flex flex-wrap gap-4">{agendaAlternatives.map(idea=><Link key={idea.slug} href={`/${locale}/guides/${idea.slug}`} className={`text-sm font-bold underline underline-offset-4 ${focus}`}>{fr?idea.fr:idea.en} →</Link>)}</div>}
         <Link href={`/${locale}/whats-on`} className={`mt-6 flex min-h-12 items-center justify-between border border-black bg-white px-4 text-xs font-black uppercase tracking-[.12em] transition-colors hover:bg-black hover:text-white ${focus}`}>
           {fr ? "Tout l’agenda" : "Full agenda"}<span aria-hidden="true">→</span>
         </Link>
