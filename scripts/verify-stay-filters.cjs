@@ -17,10 +17,14 @@ const malicious={id:'property-owner-claim',name:'House',location:'Grimaud',price
 const parsed=listing.parsePublicVilla(malicious.id,malicious);equal(parsed.collection,undefined);equal(parsed.collectionReasons,undefined);equal(parsed.requestedCollection,'charm');
 equal(collections.collectionFromReview({collection:'charm',reason_fr:'Jardin et architecture',reason_en:'Garden and architecture'}).collection,'charm');
 equal(collections.collectionFromReview({collection:'exceptional'}),undefined);
+const priced=[{...fixtures[0],id:'low',price:1400},{...fixtures[0],id:'unknown',price:0},{...fixtures[0],id:'high',price:9000}];
+equal(lib.sortStayVillas(priced,'price-asc').map(v=>v.id),['low','high','unknown']);
+equal(lib.sortStayVillas(priced,'price-desc').map(v=>v.id),['high','low','unknown']);
+equal(priced.map(v=>v.id),['low','unknown','high']);
 let states=[],index=0;const hooks={...React,useEffect(){},useState(v){const i=index++;if(!(i in states))states[i]=v;return[states[i],v=>{states[i]=typeof v==='function'?v(states[i]):v;}];}};const Component=load('components/StayFilters.tsx',hooks).default;
 function nodes(t,p){let found=[];function walk(v){if(Array.isArray(v))return v.forEach(walk);if(v?.props){if(p(v))found.push(v);walk(v.props.children);}}walk(t);return found;}
 function text(t){return Array.isArray(t)?t.map(text).join(''):typeof t==='string'||typeof t==='number'?String(t):t?.props?text(t.props.children):'';}
-function render(locale='fr'){index=0;return Component({villas:fixtures,locale});}let tree=render();equal(nodes(nodes(tree,n=>n.type==='select')[3],n=>n.type==='option')[1].props.value,'1500');equal(text(tree).includes('1 500'),true);equal(text(nodes(tree,n=>n.props.role==='status')[0]),'7 maisons trouvées');
+function render(locale='fr'){index=0;return Component({villas:fixtures,locale});}let tree=render();equal(nodes(nodes(tree,n=>n.type==='select')[3],n=>n.type==='option')[1].props.value,'1500');equal(text(tree).includes('1 500'),true);equal(nodes(nodes(tree,n=>n.props.id==='stay-filter-panel')[0],n=>n.type==='select').length,0);equal(text(nodes(tree,n=>n.props.role==='status')[0]),'7 maisons trouvées');
 nodes(tree,n=>n.type==='select')[0].props.onChange({target:{value:'Ramatuelle'}});tree=render();equal(text(nodes(tree,n=>n.props.role==='status')[0]),'2 maisons trouvées');
 nodes(tree,n=>n.type==='select')[3].props.onChange({target:{value:'6000-10000'}});tree=render();equal(text(nodes(tree,n=>n.props.role==='status')[0]),'0 maisons trouvées');equal(text(tree).includes('Aucune maison'),true);
 nodes(tree,n=>n.type==='button'&&text(n)==='Tout effacer')[0].props.onClick();tree=render();equal(text(nodes(tree,n=>n.props.role==='status')[0]),'7 maisons trouvées');

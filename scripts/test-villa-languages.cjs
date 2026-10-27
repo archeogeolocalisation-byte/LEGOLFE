@@ -36,6 +36,25 @@ assert.ok(contact.includes('Review my enquiry'));
 assert.ok(contact.includes('href="/fr/villa/villa-eden/contact"'));
 assert.ok(contact.includes('value="2026-11-01"'));
 assert.equal(contact.includes('/fr/en/'),false);
+// Public cards expose only declared amenities, save independently of their links,
+// and keep samples outside the saving flow.
+for(const locale of ['fr','en']){
+ const card=renderToStaticMarkup(createElement(VillaCard,{villa:{...villas[0],id:'property-card',amenities:['Pool','Heated pool','Sea view','Garden','Parking'],collection:'charm'},locale}));
+ assert.ok(card.includes(locale==='fr'?'Enregistrer Villa Eden dans Mon séjour':'Save Villa Eden to My stay'));
+ assert.ok(card.includes(locale==='fr'?'Piscine chauffée':'Heated pool'));
+ assert.equal((card.match(/<li>/g)||[]).length,3);
+ assert.equal(card.includes(locale==='fr'?'Env.':'Approx.'),false,'Weekly rate remains the primary card price');
+ for(const link of card.matchAll(/<a\b[^>]*>[\s\S]*?<\/a>/g))assert.equal(link[0].includes('<button'),false,'Save is not nested inside a navigation link');
+ const demo=renderToStaticMarkup(createElement(VillaCard,{villa:villas[0],locale}));assert.equal(demo.includes('aria-pressed'),false);assert.equal(demo.includes('12 km'),false);
+}
+const {toggleSavedVilla,readSavedVillaIds}=require('../lib/useSavedVilla.ts');
+const stored=new Map();let saveEvents=0;
+global.window=Object.assign(new EventTarget(),{localStorage:{getItem:key=>stored.get(key)??null,setItem:(key,value)=>stored.set(key,value)}});
+window.addEventListener('le-golfe:saved-villas',()=>saveEvents++);
+assert.equal(toggleSavedVilla('property-card'),true);assert.deepEqual(readSavedVillaIds(),['property-card']);
+assert.equal(toggleSavedVilla('property-other'),true);assert.equal(toggleSavedVilla('property-card'),false);assert.deepEqual(readSavedVillaIds(),['property-other']);assert.equal(saveEvents,3);
+window.localStorage.setItem=()=>{throw new Error('storage disabled');};assert.throws(()=>toggleSavedVilla('property-blocked'),/storage disabled/);assert.equal(saveEvents,3);
+delete global.window;
 const { validateStayDates }=require('../lib/stayRequest.ts');
 assert.equal(validateStayDates({arrival:'2026-11-05',departure:'2026-11-01',guests:'2'},8,'2026-10-12','en'),'Departure must be after arrival.');
 const live={...villas[0],id:'property-live',live:true,photos:[{src:'https://example.com/photo.jpg',alt:'House'}],amenities:[],highlights:[]};
