@@ -382,3 +382,5 @@ button,textarea,input { font:inherit; }
 @media(min-width:768px){.stay-example-grid{grid-template-columns:repeat(2,minmax(0,1fr));}.stay-hero-image img{max-height:390px;}}
 @media(min-width:1024px){.stay-example-grid{grid-template-columns:repeat(3,minmax(0,1fr));}}
 @media(max-width:479px){.stay-search-heading{flex-direction:column;}.stay-search-heading h2{max-width:none;}.stay-search-heading .lg-btn{width:100%;}.stay-collections button{flex:1 1 calc(50% - 8px);padding:8px;font-size:11px;}.villa-card-content{padding:20px;}.stay-sort{width:100%;justify-content:space-between;}.stay-sort select{flex:1;min-width:0;}}
+
+.villa-heart{margin-top:24px;padding:20px;background:#e0edf0;border:1px solid #aac5d0;border-radius:14px;color:#0b3046;}.villa-heart .lg-btn{gap:8px;}.villa-heart .lg-btn[aria-pressed="true"]{background:#0b3046;color:#fff;border-color:#0b3046;}.villa-heart button:disabled{opacity:.65;cursor:wait;}
