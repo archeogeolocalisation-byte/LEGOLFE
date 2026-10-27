@@ -1,3 +1,4 @@
+import {coastalDiscoveryMedia} from './coastalDiscoveryMedia';
 import {localDiscoveriesMedia} from './localDiscoveriesMedia';
 import {localLifeMedia} from './localLifeMedia';
 import {associationMedia} from './associationMedia';
@@ -14,6 +15,7 @@ export const newExperienceMedia:Record<string,VillagePhoto[]> = {
  ...associationMedia,
  ...localLifeMedia,
  ...localDiscoveriesMedia,
+ ...coastalDiscoveryMedia,
  ...planDeLaTourMedia,
  ...sainteMaximeMedia,
  ...grimaudMedia,

@@ -4,6 +4,11 @@ import type {Locale} from "./i18n";
 // A place keeps one editorial primary category and can have reviewed secondary uses.
 // These links drive Explorer, page chips and LE GOLFE recommendations consistently.
 const secondaryCategories:Record<string,readonly PlaceCategory[]>={
+ "pointe-des-sardinaux":["beach"],
+ "port-cogolin":["do"],
+ "plage-luc-provensal-sainte-maxime":["do"],
+ "plage-du-rayol":["do"],
+ "maison-des-arcades-grimaud":["places"],
  "tour-horloge-cogolin":["places"],
  "eglise-saint-sauveur-cogolin":["places"],
  "chapelles-saint-roch-cogolin":["places"],

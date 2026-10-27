@@ -1,0 +1,32 @@
+[
+  {
+    "file": "/media/coastal-discoveries/port-cogolin.webp",
+    "source": "https://commons.wikimedia.org/wiki/File:Port-Cogolin.JPG",
+    "credit": "Net-breuer / Wikimedia Commons",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "sha256": "06ed932fdb6843ff8434d089895e92bb5a9e99938bb2fe5b0e93bc4730ed1be1",
+    "bytes": 148296,
+    "processing": "Resized to 1280px wide, converted to WebP; CSS display crop"
+  },
+  {
+    "file": "/media/coastal-discoveries/plage-luc-provensal.webp",
+    "source": "https://commons.wikimedia.org/wiki/File:Saint-Tropez_(Francia)_-_panoramio.jpg",
+    "credit": "Manuel Velo Martinez (velomartinez) / Wikimedia Commons",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "sha256": "d2566f9e6852cf6d3b0701e5995235170dbc738c3b2da0efc3a9eba00a09e3d2",
+    "bytes": 139246,
+    "processing": "Resized to 1280px wide, converted to WebP; CSS display crop"
+  },
+  {
+    "file": "/media/coastal-discoveries/maison-arcades.webp",
+    "source": "https://commons.wikimedia.org/wiki/File:Grimaud-village-05.jpg",
+    "credit": "Patricia.fidi / Wikimedia Commons",
+    "license": "Domaine public / Public domain",
+    "licenseUrl": "https://commons.wikimedia.org/wiki/File:Grimaud-village-05.jpg#Licensing",
+    "sha256": "7f243f27af08377cad45d183b0ab9a751a08166c52a36d66210ad2c836a20463",
+    "bytes": 127086,
+    "processing": "Resized to 1280px wide, converted to WebP; CSS display crop"
+  }
+]

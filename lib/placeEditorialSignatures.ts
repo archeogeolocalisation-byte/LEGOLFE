@@ -1,3 +1,4 @@
+import {coastalDiscoverySignatures} from '../data/coastalDiscoveryPlaces';
 import {localDiscoveriesSignatures} from '../data/localDiscoveriesPlaces';
 import {localLifeSignatures} from '../data/localLifePlaces';
 import {associationSignatures} from '../data/associationPlaces';
@@ -16,6 +17,7 @@ export const editorialSignatures:Record<string,Record<Locale,Signature>>={
  ...associationSignatures,
  ...localLifeSignatures,
  ...localDiscoveriesSignatures,
+ ...coastalDiscoverySignatures,
  ...planDeLaTourSignatures,
  ...sainteMaximeSignatures,
  ...grimaudSignatures,
