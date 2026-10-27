@@ -1,5 +1,7 @@
-/** Reviewed local copies. Full source, credit and processing record: /media/place-cache/licenses.json. */
+/** Reviewed local copies. Source, credit and processing records: /media/place-cache/licenses.json and /media/coastal-discoveries/sources.json. */
 export const placeImageCache:Record<string,string> = {
+  "https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/Port-Cogolin.JPG/1280px-Port-Cogolin.JPG": "/media/coastal-discoveries/port-cogolin.webp",
+  "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Saint-Tropez_%28Francia%29_-_panoramio.jpg/1280px-Saint-Tropez_%28Francia%29_-_panoramio.jpg": "/media/coastal-discoveries/plage-luc-provensal.webp",
   "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/23/Plan-de-la-tour-01.jpg/960px-Plan-de-la-tour-01.jpg": "/media/place-cache/68d5bdaf25a903a8.webp",
   "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/db/83120_Le_Plan-de-la-Tour%2C_France_-_panoramio.jpg/1280px-83120_Le_Plan-de-la-Tour%2C_France_-_panoramio.jpg": "/media/place-cache/f90fa02ed59d66b3.webp",
   "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/39/Plan-de-la-tour-02.jpg/960px-Plan-de-la-tour-02.jpg": "/media/place-cache/e52ba98a7f46cf81.webp",

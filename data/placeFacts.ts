@@ -1,3 +1,4 @@
+import {coastalDiscoveryFacts} from './coastalDiscoveryPlaces';
 import {localDiscoveriesFacts} from './localDiscoveriesPlaces';
 import {localLifeFacts} from './localLifePlaces';
 import {associationFacts} from './associationPlaces';
@@ -17,6 +18,7 @@ export const placeFacts:Record<string,PlaceFacts> = {
  ...associationFacts,
  ...localLifeFacts,
  ...localDiscoveriesFacts,
+ ...coastalDiscoveryFacts,
   ...newExperienceFacts,
   ...planDeLaTourFacts,
  ...sainteMaximeFacts,
