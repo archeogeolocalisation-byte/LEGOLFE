@@ -215,7 +215,7 @@ button,textarea,input { font:inherit; }
 .stay-assistance{margin-top:32px;padding:28px;background:#eee7da;border-top:3px solid var(--lg-blue);}
 .stay-assistance .lg-btn{background:#fff;border-color:#779dad;color:#102d39;}
 @media(min-width:768px){.stay-hero{grid-template-columns:1.15fr 1fr;gap:40px;}.stay-hero-image img{max-height:320px;}.stay-fields{grid-template-columns:repeat(3,minmax(0,1fr));}}
-@media(min-width:1200px){.stay-fields{grid-template-columns:1.1fr .85fr .85fr 1.2fr 1fr 1fr;}.stay-search{padding:24px;}}
+@media(min-width:1200px){.stay-fields{grid-template-columns:repeat(4,minmax(0,1fr));}.stay-search{padding:24px;}}
 @media(max-width:479px){.stay-search{padding:16px;}.stay-search-heading h2{font-size:18px;max-width:190px;}.stay-hero{gap:20px;}.stay-hero-image img{aspect-ratio:16/9;}.stay-fields .editor-input{padding:8px 6px;}.stay-assistance{padding:20px;}}
 
 /* Personal workspace: warm surfaces and clear LE GOLFE accents. */

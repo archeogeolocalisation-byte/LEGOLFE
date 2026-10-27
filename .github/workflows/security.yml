@@ -32,6 +32,10 @@ jobs:
       - run: npm run test:security
       - run: npm audit --omit=dev --audit-level=high
       - run: npx tsc --noEmit
+      - name: Check villa budgets and protected collections
+        run: |
+          node scripts/verify-stay-filters.cjs
+          node scripts/test-villa-collections-db.mjs
       - name: Check place content and SEO
         run: node scripts/test-place-seo.cjs
       - run: npm run build

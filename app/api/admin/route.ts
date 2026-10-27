@@ -1,3 +1,4 @@
+import {validateCollectionReview} from '../../../lib/villaCollectionValidation';
 import {parsePublicVilla} from '../../../lib/villaListing';
 import {requireAdmin,requireStaff} from '../../../lib/adminServer';
 import {isAdminId,validateAdminChange} from '../../../lib/adminValidation';
@@ -43,14 +44,22 @@ export async function GET(request:Request){
       return [id,result.data.user.email||''] as const;
     }));
     const emails=new Map(owners);
-    return response({listings:(data||[]).map(row=>({...row,ownerEmail:emails.get(row.owner_id)||''})),hasNext:data?.length===50});
+    let reviews:Record<string,unknown>={};let collectionsReady=true;
+    try{
+      if(data?.length){
+        const result=await db.from('villa_collection_reviews').select('listing_id,collection,reason_fr,reason_en').in('listing_id',data.map(row=>row.id));
+        if(result.error)collectionsReady=false;
+        else reviews=Object.fromEntries((result.data||[]).map(row=>[row.listing_id,row]));
+      }
+    }catch{collectionsReady=false;}
+    return response({listings:(data||[]).map(row=>({...row,collectionReview:reviews[row.id]||null,collectionsReady,ownerEmail:emails.get(row.owner_id)||''})),hasNext:data?.length===50});
   }catch(error){return failure(error);}
 }
 export async function PATCH(request:Request){
   try{
     checkOrigin(request);
     const {db,role,actorId}=await requireStaff(request);
-    const input=await readJson(request,16000) as Record<string,unknown>;
+    const input=await readJson(request,60000) as Record<string,unknown>;
     if(input?.kind==='moderation'){
       if(typeof input.id!=='string'||!/^[0-9a-f-]{36}$/i.test(input.id)||!['approved','rejected','pending'].includes(String(input.status)))throw new RequestError('INVALID_CHANGE',400);
       const {data:post,error:postError}=await db.from('community_posts').select('id,status,image_path').eq('id',input.id).single();
@@ -61,6 +70,16 @@ export async function PATCH(request:Request){
       return response({ok:true});
     }
     if(role!=='admin')throw new RequestError('ADMIN_REQUIRED',403);
+    if(input?.kind==='collection'){
+      const review=validateCollectionReview(input);
+      const {error}=await db.rpc('review_villa_collection',review);
+      if(error){
+        if(String(error.message).includes('COLLECTION_REVIEW_CONFLICT'))throw new RequestError('COLLECTION_REVIEW_CONFLICT',409);
+        if(['42883','42P01','PGRST202','PGRST205'].includes(error.code||''))throw new RequestError('COLLECTIONS_NOT_CONFIGURED',503);
+        throw error;
+      }
+      return response({ok:true});
+    }
     const change=validateAdminChange(input);
     if(change.kind==='user'){
       const existing=await db.auth.admin.getUserById(change.id);if(existing.error)throw existing.error;

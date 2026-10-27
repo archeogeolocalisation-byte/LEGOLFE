@@ -1,0 +1,36 @@
+import assert from 'node:assert/strict';
+import {readFile} from 'node:fs/promises';
+import {PGlite} from '@electric-sql/pglite';
+const db=new PGlite();
+try{
+ await db.exec(`create role anon;create role authenticated;create role service_role bypassrls;grant usage on schema public to anon,authenticated,service_role;
+ create table public.villa_listings(id text primary key,status text,visibility text,payload jsonb);
+ grant all on public.villa_listings to service_role;grant select on public.villa_listings to anon,authenticated;`);
+ const sql=await readFile(new URL('../supabase/villa-collections.sql',import.meta.url),'utf8');
+ await db.exec(sql);await db.exec(sql);
+ const payload={id:'property-test',name:'Small character house',location:'Grimaud',price:1400,guests:4,bedrooms:2,bathrooms:1,description:'A small house with character',amenities:[],highlights:[],photos:[],announcer:{kind:'owner',name:'Owner'}};
+ assert.equal((await db.query('select villa_valid_payload($1,$2) as valid',[{...payload,requestedCollection:'charm',collectionPitch:'A garden'},payload.id])).rows[0].valid,true);
+ assert.equal((await db.query('select villa_valid_payload($1,$2) as valid',[{...payload,collection:'exceptional'},payload.id])).rows[0].valid,false);
+ assert.equal((await db.query('select villa_valid_payload($1,$2) as valid',[{...payload,requestedCollection:'invalid'},payload.id])).rows[0].valid,false);
+ await db.query("insert into villa_listings values('property-test','published','public',$1)",[payload]);
+ await db.exec('set role authenticated');
+ await assert.rejects(db.query("insert into villa_collection_reviews values('property-test','exceptional','Owner claim','Owner claim','fake',now())"),/permission denied/);
+ await assert.rejects(db.query("select review_villa_collection('property-test','exceptional','Owner claim','Owner claim',$1)",[payload]),/permission denied/);
+ await db.exec('reset role;set role service_role');
+ await db.query("select review_villa_collection('property-test','charm','Architecture et jardin confirmés','Verified architecture and garden',$1)",[payload]);
+ await db.exec('reset role;set role anon');
+ let rows=(await db.query('select listing_id,collection,reason_fr,reason_en from villa_collection_reviews')).rows;
+ assert.equal(rows.length,1);assert.equal(rows[0].collection,'charm');
+ await db.exec("reset role;update villa_listings set payload=jsonb_set(payload,'{price}','1450') where id='property-test';set role anon");
+ assert.equal((await db.query('select listing_id from villa_collection_reviews')).rows.length,0,'Owner edit suspends the selection');
+ await db.exec('reset role;set role service_role');
+ await assert.rejects(db.query("select review_villa_collection('property-test','exceptional','Unseen house changed','Unseen house changed',$1)",[payload]),/COLLECTION_REVIEW_CONFLICT/);
+ const current={...payload,price:1450};
+ await db.query("select review_villa_collection('property-test','charm','Jardin et volumes confirmés','Verified garden and rooms',$1)",[current]);
+ await db.exec("reset role;update villa_listings set visibility='private';set role anon");
+ assert.equal((await db.query('select listing_id from villa_collection_reviews')).rows.length,0,'Private listings expose no selection');
+ await db.exec('reset role;set role service_role');
+ await db.query("select review_villa_collection('property-test',null,'','',$1)",[current]);
+ assert.equal((await db.query('select listing_id from villa_collection_reviews')).rows.length,0);
+ console.log('Villa collections DB: owner forgery denied, admin review, public visibility, edit invalidation, stale-review protection and withdrawal passed.');
+}finally{await db.close();}
