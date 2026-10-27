@@ -1,5 +1,5 @@
 import {validMapPoint} from './villaMapLocation';
-export type MapPoint={id:string;label:{fr:string;en:string};latitude:number;longitude:number;source:string;checked:string;kind:'venue'|'area';directionsQuery?:string;travelMode?:'walking';note:{fr:string;en:string}};
+export type MapPoint={id:string;label:{fr:string;en:string};latitude:number;longitude:number;source:string;coordinateSource?:string;checked:string;kind:'venue'|'area';directionsQuery?:string;travelMode?:'walking';note:{fr:string;en:string}};
 export function osmMapUrl(point:MapPoint){
  if(!validMapPoint(point.latitude,point.longitude))return undefined;
  const dx=point.kind==='area'?.014:.006,dy=dx*.7;

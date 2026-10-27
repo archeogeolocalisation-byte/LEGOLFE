@@ -60,10 +60,28 @@ for (const id of ['masters-champions-petanque-2026', 'cogolin-arts-plastiques-20
 }
 assert.ok(!eventsInWindow(catalog, dateWindow('today', '2026-11-07')).some(e => e.id === 'cogolin-arts-plastiques-2026'));
 assert.ok(eventsInWindow(catalog, dateWindow('today', '2026-11-14')).some(e => e.id === 'cogolin-arts-plastiques-2026'));
-const remaining=places.filter(p=>!p.tags.includes('association')&&!placeMapPoints[p.id]?.length).map(p=>p.id).sort();
-// Editorial additions keep search-based directions until a sourced geographic point is reviewed.
-const pendingGeographicReview=['pointe-des-sardinaux','fete-chataigne-garde-freinet','musee-patrimoine-grimaud','villa-romaine-pardigon','chapelle-notre-dame-miremer','chapelle-sainte-magdeleine-la-mole','plage-de-la-nartelle'];
-assert.deepEqual(remaining,[...pendingGeographicReview,'bateaux-verts-excursion','caseneuve-catamaran','cecile-golmard-chef','maison-laurent-conciergerie','taxi-estelle'].sort(),'only explicitly pending profiles and mobile services lack map references');
+// Every published profile has either a sourced public reference or an explicitly
+// reviewed sector-only reason. Associations are no longer exempt from coverage.
+const remaining=places.filter(p=>!placeMapPoints[p.id]?.length).map(p=>p.id).sort();
+assert.deepEqual(remaining,['agda-chats-du-golfe','cecile-golmard-chef','maison-laurent-conciergerie','taxi-estelle'].sort(),'only mobile services and AGDA without a public reception venue remain sector-only');
+const {reviewedPlaceMapPoints}=require('../data/reviewedPlaceMapPoints.ts');
+assert.equal(Object.keys(reviewedPlaceMapPoints).length,17);
+for(const [id,points] of Object.entries(reviewedPlaceMapPoints))for(const point of points){
+ assert.ok(places.some(p=>p.id===id));assert.ok(validMapPoint(point.latitude,point.longitude));
+ assert.equal(point.checked,'2026-10-27');assert.ok(point.note.fr.length>70&&point.note.en.length>70);
+ if(point.coordinateSource)assert.equal(new URL(point.coordinateSource).protocol,'https:');
+}
+const sardinaux=placeMapPoints['pointe-des-sardinaux'][0];
+assert.equal(sardinaux.latitude,43.314625);assert.equal(sardinaux.longitude,6.671237);
+assert.equal(sardinaux.source,'https://sportnature.var.fr/outdoor-site/110-La-pointe-des-Sardinaux');
+assert.equal(sardinaux.travelMode,'walking');assert.ok(sardinaux.note.fr.includes('îlot'));
+assert.equal(placeMapPoints['plage-de-la-nartelle'][0].latitude,placeMapPoints['sainte-maxime-village'].find(p=>p.id==='nartelle').latitude);
+assert.equal(placeMapPoints['amis-moulins-ramatuelle'][0].latitude,placeMapPoints['moulin-de-paillas'][0].latitude,'mill, not tourism office footer');
+assert.equal(placeMapPoints['association-festival-ramatuelle'][0].kind,'area','performance venue is not the association office');
+assert.equal(placeMapPoints['escandihado-grimaud-cogolin'][0].kind,'area','public contact address does not certify every workshop venue');
+assert.equal(placeMapPoints['caseneuve-catamaran'].length,2,'only sourced, labelled possible departures');
+assert.equal(placeMapPoints['chapelle-sainte-magdeleine-la-mole'][0].travelMode,'walking');
+assert.notEqual(placeMapPoints['chapelle-sainte-magdeleine-la-mole'][0].latitude,placeMapPoints['eglise-sainte-magdeleine-la-mole'][0].latitude,'hilltop chapel is distinct from village church');
 const hike=placeMapPoints['san-peire-randonnee'][0];
 assert.equal(hike.kind,'area');assert.equal(hike.latitude,43.3111428);assert.equal(hike.longitude,6.5611339);
 assert.equal(hike.source,'https://www.cirkwi.com/fr/point-interet/3041300-san-peire');
@@ -74,4 +92,4 @@ const {guides}=require('../data/guides.ts');
 assert.ok(guides.find(g=>g.slug==='randonnee-san-peire-plan-de-la-tour').placeIds.includes('san-peire-randonnee'),'hike links to its existing route guide');
 assert.equal(new URL(pointDirectionsUrl(placeMapPoints['byblos-beach'][0])).searchParams.get('destination'),'42 boulevard Patch, 83350 Ramatuelle, France');
 assert.equal(new URL(pointDirectionsUrl(placeMapPoints['club-55'][0])).searchParams.get('destination'),'43 boulevard Patch, 83350 Ramatuelle, France');
-console.log('Verified local catalog: reviewed classifications, sourced map references, tracked pending geographic reviews, summit hiking reference, walking directions and exact event sessions passed.');
+console.log('Verified local catalog: reviewed classifications, sourced map references, all-profile map coverage and explicit sector fallbacks, summit hiking reference, walking directions and exact event sessions passed.');
