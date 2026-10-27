@@ -27,13 +27,15 @@ async function nodes(element){if(!element||typeof element!=='object')return [];i
  assert.equal(placeMapPoints['cecile-golmard-chef'],undefined);assert.notEqual(placeMapPoints['grimaud-village'][0].longitude,placeMapPoints['port-grimaud'][0].longitude);
  assert.equal(osmMapUrl({...nartelle,latitude:0}),undefined);
  const secondaryHtml=renderToStaticMarkup(require('react').createElement(Block,{name:'Sainte-Maxime',location:'Sainte-Maxime',points:[nartelle],locale:'fr',address:'Office de tourisme, Place Louis-Blanc'}));
+ const addressHtml=renderToStaticMarkup(require('react').createElement(Block,{name:'Lieu & test',location:'Cogolin',points:[],locale:'fr',address:'12 rue du Test, Cogolin'}));
+ const addressSrc=addressHtml.match(/<iframe[^>]+src="([^"]+)"/)[1].replaceAll('&amp;','&');assert.equal(new URL(addressSrc).searchParams.get('q'),'12 rue du Test, Cogolin');assert.equal(addressHtml.includes('Carte du secteur'),false);assert.ok(addressHtml.includes('Ouvrir le plan'));
  assert.ok(secondaryHtml.includes(pointDirectionsUrl(nartelle).replaceAll('&','&amp;')),'selected map reference controls directions even when the place has a main address');
  assert.equal(new URL(placeSearchUrl('A & B','Saint-Tropez')).searchParams.get('query'),'A & B, Saint-Tropez, France');
  for(const place of places)for(const locale of ['fr','en']){
   const points=placeMapPoints[place.id]??[],html=renderToStaticMarkup(require('react').createElement(Block,{name:place.name,location:place.location,points,locale}));
-  assert.equal(html.includes('<iframe'),points.length>0);assert.equal(html.includes('navigator.geolocation'),false);
+  assert.equal(html.includes('<iframe'),true);assert.equal(html.includes('navigator.geolocation'),false);
   if(points.length){assert.ok(html.includes('openstreetmap.org/copyright'));assert.ok(html.includes('google.com/maps/dir/'));assert.ok(html.includes(locale==='fr'?'Itinéraire vers cette adresse':'Directions to this address'));}
-  else{assert.ok(html.includes('google.com/maps/search/'));assert.equal(place.latitude,undefined);}
+  else{assert.ok(html.includes('google.com/maps/search/'));assert.equal(place.latitude,undefined);const src=html.match(/<iframe[^>]+src="([^"]+)"/)[1].replaceAll('&amp;','&');assert.equal(new URL(src).searchParams.get('q'),`${place.location}, France`);assert.ok(html.includes(locale==='fr'?'Carte du secteur':'Area map'));assert.ok(html.includes(locale==='fr'?'Rechercher ce lieu':'Search for this place'));}
   const element=await Page({params:Promise.resolve({locale,id:place.id})});const children=await nodes(element);const blocks=children.filter(e=>e.type===Block);assert.equal(blocks.length,1);assert.equal(blocks[0].props.points.length,points.length);
   const {newExperienceFacts}=require('../data/newExperienceFacts.ts');if(newExperienceFacts[place.id]){assert.equal(blocks[0].props.address,newExperienceFacts[place.id].address);const blockHtml=renderToStaticMarkup(require('react').createElement(Block,blocks[0].props));assert.ok(blockHtml.includes('output=embed')||points.length>0);assert.ok(blockHtml.includes('Itinéraire vers cette adresse')||blockHtml.includes('Directions to this address'));}
   const community=children.filter(e=>typeof e.type==='function'&&e.type.name==='CommunitySection');assert.equal(community.length,1);const locationAt=children.indexOf(blocks[0]),communityAt=children.indexOf(community[0]);assert.ok(locationAt<communityAt);
@@ -58,5 +60,5 @@ async function nodes(element){if(!element||typeof element!=='object')return [];i
   }
   const siblings=require('react').Children.toArray(element.props.children),communityIndex=siblings.findIndex(e=>typeof e.type==='function'&&e.type.name==='CommunitySection');assert.ok(['lg-shell py-6','lg-shell py-12'].includes(siblings[communityIndex+1].props.className));
  }
- console.log(`Maps: ${count} sourced public references; ${places.length*2} FR/EN route integrations and unloaded renders, road destination, bounds, fallbacks and service privacy passed.`);
+ console.log(`Maps: ${count} sourced public references; ${places.length*2} FR/EN route integrations and map renders, road destination, bounds, fallbacks and service privacy passed.`);
 })().catch(e=>{console.error(e);process.exitCode=1;});
