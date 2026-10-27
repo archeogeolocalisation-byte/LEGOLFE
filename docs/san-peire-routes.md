@@ -16,10 +16,14 @@ Le GPX téléchargeable `public/media/trails/san-peire-village.gpx` conserve les
 
 La fiche n°65442977 annonce 6,66 km, 2 h 35, +246 m et un niveau moyen. Le repère de départ publié est 43.311004, 6.550222 ; il ne garantit pas un stationnement autorisé. Les retours de février à avril 2026 concernant le chemin des Chèvres et le parking sont signalés comme des retours datés, pas comme un état d’accès actuel vérifié.
 
-La carte de cette variante est fournie par le widget Visorando officiel, chargé uniquement après un clic explicite et retiré quand on revient au parcours village. Le lien vers la fiche source reste disponible si le widget échoue. Aucun GPX Visorando n’est recopié ni réattribué à LE GOLFE. Ses téléchargements et son profil sont consultables chez le fournisseur.
+Les anciens widgets officiels ont été testés dans un navigateur : l’un reste vide avec une erreur JavaScript, l’autre refuse l’intégration de ce parcours. La version finale affiche donc une carte native à partir des 240 positions et altitudes publiées par le flux cartographique de cette fiche Visorando. Seuls les faits géographiques nécessaires sont conservés dans `data/sanPeireLoop.json`, avec la source ; aucune donnée d’auteur, horaire GPS ou autre métadonnée de suivi n’est reprise. La distance géométrique calculée est d’environ 6,657 km, cohérente avec les 6,66 km annoncés. Le marqueur sommet suit le point le plus haut de cette trace.
+
+Les deux départs disposent de la même carte, du profil, du curseur d’exploration et du plein écran. Aucun script ni widget Visorando n’est chargé dans le navigateur des visiteurs. Le GPX de cette boucle se télécharge chez Visorando ; seul le GPX du village est proposé localement. L’attribution, le lien vers le descriptif et les retours datés restent visibles.
 
 ## Cohérence et contrôle
 
 La fiche Explorer indiquait 6 km aller-retour tandis que le guide préparait 12 km depuis le village. Les deux contenus, descriptions SEO et dates de vérification documentaire sont alignés. Le lien « nouvelles du sentier » conduit au formulaire de contribution existant, avec modération ; aucune nouvelle table ni migration n’est nécessaire.
 
-Tests : `test-san-peire-routes.cjs` contrôle les 247 coordonnées et le SHA source, les altitudes et le GPX exporté, le cadrage de toute la trace, les deux variantes, les rendus FR/EN, le chargement externe explicite, le curseur et le focus plein écran. Les contrôles guides/SEO et lieux/SEO couvrent les deux pages, les sources et le sitemap. Ces tests sont intégrés à la CI.
+Tests : `test-san-peire-routes.cjs` contrôle les 247 coordonnées et le SHA source, les altitudes et le GPX exporté, le cadrage de toute la trace, les deux variantes, les rendus FR/EN, les 240 positions des Vernades, les profils et le lien source, le curseur et le focus plein écran. Les contrôles guides/SEO et lieux/SEO couvrent les deux pages, les sources et le sitemap. Ces tests sont intégrés à la CI.
+
+La compilation de la première version a réussi sur Vercel. L’aperçu du site est protégé par une connexion Vercel et n’a pas pu être contrôlé visuellement dans le navigateur de cette session. Aucune protection ni règle d’accès n’a été modifiée.
