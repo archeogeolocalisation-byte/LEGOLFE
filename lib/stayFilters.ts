@@ -6,3 +6,13 @@ export type StayFilters={collection?:string;location:string;guests:string;bedroo
 export const emptyStayFilters:StayFilters={collection:'',location:'',guests:'',bedrooms:'',budget:'',amenities:[],arrival:'',departure:''};
 export {amenityOptions as stayAmenityOptions} from './villaAmenities';
 export function filterStayVillas(villas:StayVilla[],filters:StayFilters,calendars:Record<string,VillaCalendar>={}):StayVilla[]{return villas.filter(v=>(!filters.location||v.location===filters.location)&&(!filters.guests||v.guests>=Number(filters.guests))&&(!filters.bedrooms||v.bedrooms>=Number(filters.bedrooms))&&matchesStayBudget(v.price,filters.budget)&&(!filters.collection||(v.collection||'homes')===filters.collection)&&filters.amenities.every(a=>v.amenities.includes(a))&&(!(filters.arrival&&filters.departure)||calendarAllows(calendars[v.id],filters.arrival,filters.departure)));}
+
+// Missing prices stay at the end in both price directions. Never mutate the catalog.
+export function sortStayVillas(villas:StayVilla[],order:string):StayVilla[]{
+ if(order==='capacity')return [...villas].sort((a,b)=>b.guests-a.guests);
+ if(order!=='price-asc'&&order!=='price-desc')return villas;
+ return [...villas].sort((a,b)=>{
+  if(!a.price||!b.price)return (a.price?0:1)-(b.price?0:1);
+  return order==='price-asc'?a.price-b.price:b.price-a.price;
+ });
+}
