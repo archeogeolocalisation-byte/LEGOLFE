@@ -2,41 +2,111 @@ import type {Locale} from '../lib/i18n';
 export type DiscoveryGuide={title:string;description:string;intro:string;sections:[string,string][];nearby:[string,string][];verified?:string;sources?:{label:string;url:string}[]};
 export const discoveryFeatures:Record<string,Record<Locale,DiscoveryGuide>> = {
   "san-peire-randonnee": {
-    fr: {
-      title: "San Peïre au Plan-de-la-Tour : randonnée et panorama",
-      description: "Préparez la randonnée vers San Peïre au Plan-de-la-Tour : parcours de 6 km aller-retour, dénivelé, accès au sommet et restrictions forestières.",
-      intro: "San Peïre se découvre en marchant depuis le secteur du Plan-de-la-Tour. Cette sortie relie les collines boisées à un ancien site fortifié et à un panorama sur le Golfe. Choisissez-la pour une vraie randonnée, puis gardez une pause au village pour le retour.",
-      sections: [
-        ["Un sommet et un ancien site fortifié", "À 416 mètres d’altitude, San Peïre domine la plaine du Plan-de-la-Tour. L’office présente les vestiges d’un habitat fortifié médiéval et une vue vers le Golfe, les Maures et l’Estérel. Notre conseil : gardez du temps au sommet pour observer le paysage, puis revenez par le sentier."],
-        ["Distance, dénivelé et difficulté", "La fiche de randonnée de l’office annonce 6 km aller-retour, 370 m de dénivelé positif et une durée indicative de 2 h. Le balisage est jaune ; le terrain comporte des passages rocheux et n’est pas adapté aux poussettes. Adaptez le temps prévu à votre rythme et aux pauses."],
-        ["Préparer le départ au Plan-de-la-Tour", "Consultez le descriptif officiel, qui prolonge le sentier des Gorgues, avant de choisir votre départ. Le repère de carte situe le secteur : il ne désigne pas un parking au sommet. Prévoyez chaussures de randonnée et eau, puis vérifiez la carte d’accès aux massifs avant de partir ; une restriction peut modifier votre programme."],
-      ],
-      nearby: [["plan-de-la-tour-village", "Préparer votre étape au Plan-de-la-Tour"]],
-      verified: "2026-10-16",
-      sources: [
-        {label:"Office du Golfe · Itinéraire de San Peïre",url:"https://www.golfe-sainttropez-tourisme.fr/fiche-apidae/randonnee-chemin-vers-le-san-peire/"},
-        {label:"Office du Golfe · Patrimoine et panorama",url:"https://www.golfe-sainttropez-tourisme.fr/decouvrir/cote-nature/sites-emblematiques/san-peire/"},
-        {label:"Office du Golfe · Accès aux massifs",url:"https://www.golfe-sainttropez-tourisme.fr/sejourner/pratique/risque-incendie/"},
-      ],
+    "fr": {
+        "title": "San Peïre : deux départs pour découvrir le sommet",
+        "description": "San Peïre au Plan-de-la-Tour : comparez le départ du village et la boucle des Vernades, consultez le tracé, le profil, le GPX et les conseils de marche.",
+        "intro": "Du village ou des Vernades, San Peïre se découvre à pied. Choisissez votre départ, gardez les bons repères pour le retour, puis prenez le temps des chênes-lièges, du granite et du panorama sur le Golfe.",
+        "sections": [
+            [
+                "Un sommet, deux approches",
+                "Le départ du village propose une demi-journée en aller-retour. La boucle des Vernades, publiée sur Visorando, est plus courte. Comparez-les dans le module de parcours et conservez le descriptif correspondant à votre choix."
+            ],
+            [
+                "Les chiffres du départ village",
+                "Le topoguide officiel précise 6 km et 2 h en aller simple, avec +370 m annoncés à l’aller. Comptez environ 12 km et 4 h hors pauses pour revenir par le même chemin. La fiche web de l’office utilise une présentation différente ; nous distinguons explicitement aller et retour."
+            ],
+            [
+                "Préparer la marche",
+                "Le terrain comporte des passages rocheux. Repérez un stationnement autorisé, prenez de l’eau et vérifiez l’accès aux massifs le jour du départ. La trace documentaire ne remplace pas les indications et restrictions sur place."
+            ]
+        ],
+        "nearby": [
+            [
+                "plan-de-la-tour-village",
+                "Faire une pause au village"
+            ]
+        ],
+        "verified": "2026-10-27",
+        "sources": [
+            {
+                "label": "Office de tourisme · Chemin vers le San Peire",
+                "url": "https://www.golfe-sainttropez-tourisme.fr/fiche-apidae/randonnee-chemin-vers-le-san-peire/"
+            },
+            {
+                "label": "Topoguide officiel · Du Plan de la Tour au San Peïre (PDF, 18 Mo)",
+                "url": "https://www.golfe-saint-tropez-information.com/files/visitgolfe/docs/randos-web-2023-gardefreinet-plandelatour-fr.pdf"
+            },
+            {
+                "label": "Préfecture du Var · Carte d’accès aux massifs",
+                "url": "https://www.var.gouv.fr/Actions-de-l-Etat/Foret/Fermeture-des-massifs-en-ete/Carte-d-acces-aux-massifs"
+            },
+            {
+                "label": "Office du Golfe · GPX du départ village",
+                "url": "https://www.golfe-saint-tropez-information.com/fr/loisirs/loisirs-sportifs/plan-de-la-tour/randonnee-chemin-vers-le-san-peire-5865643"
+            },
+            {
+                "label": "Visorando · Pic de San Peïre, boucle des Vernades",
+                "url": "https://www.visorando.com/randonnee-pic-de-san-peire/"
+            },
+            {
+                "label": "IGN · Altimétrie RGE ALTI",
+                "url": "https://cartes.gouv.fr/aide/fr/guides-utilisateur/utiliser-les-services-de-la-geoplateforme/calcul-altimetrique/"
+            }
+        ]
     },
-    en: {
-      title: "San Peïre, Le Plan-de-la-Tour: hike and summit views",
-      description: "Plan the San Peïre hike from Le Plan-de-la-Tour: 6 km return route, ascent, summit access and forest restrictions to check before setting out.",
-      intro: "Reach San Peïre on foot from the Le Plan-de-la-Tour area. The outing connects wooded hills with a former fortified site and views over the Golfe. Choose it for a proper hike, then leave time for a village break on your return.",
-      sections: [
-        ["A summit and former fortified settlement", "At 416 metres, San Peïre overlooks the Le Plan-de-la-Tour plain. The tourist office describes medieval fortified remains and views towards the Golfe, the Maures and the Estérel. Our suggestion: leave time at the top to take in the landscape before returning along the trail."],
-        ["Distance, ascent and difficulty", "The tourist office lists a 6 km return walk, 370 m of ascent and an indicative duration of two hours. Yellow markings guide the way; there are rocky sections and the route is unsuitable for pushchairs. Allow extra time for your own pace and breaks."],
-        ["Preparing your departure", "Read the official route, which continues from the Les Gorgues trail, before choosing your starting point. The map reference locates the area; it is not a summit car park. Bring hiking shoes and water, and check forest access restrictions before leaving: the day’s conditions may change your plans."],
-      ],
-      nearby: [["plan-de-la-tour-village", "Plan a stop in Le Plan-de-la-Tour"]],
-      verified: "2026-10-16",
-      sources: [
-        {label:"Golfe tourist office · San Peïre route",url:"https://www.golfe-sainttropez-tourisme.fr/fiche-apidae/randonnee-chemin-vers-le-san-peire/"},
-        {label:"Golfe tourist office · Heritage and views",url:"https://www.golfe-sainttropez-tourisme.fr/decouvrir/cote-nature/sites-emblematiques/san-peire/"},
-        {label:"Golfe tourist office · Forest access",url:"https://www.golfe-sainttropez-tourisme.fr/sejourner/pratique/risque-incendie/"},
-      ],
-    },
-  },
+    "en": {
+        "title": "San Peïre: two starting points for the summit",
+        "description": "San Peïre at Le Plan-de-la-Tour: compare the village start with the Les Vernades loop, explore the route map, elevation profile, GPX and practical advice.",
+        "intro": "Walk to San Peïre from the village or Les Vernades. Choose your starting point and plan the return before enjoying the cork oaks, granite and views over the Golfe.",
+        "sections": [
+            [
+                "One summit, two approaches",
+                "The village start offers a half-day out-and-back hike. The Les Vernades loop published on Visorando is shorter. Compare them in the route section and use the directions for your chosen itinerary."
+            ],
+            [
+                "Village route figures",
+                "The official guidebook specifies 6 km and 2 hours one way, with a listed +370 m of outward ascent. Allow around 12 km and 4 hours excluding stops for an out-and-back hike. The tourist office webpage presents the figures differently; we explicitly distinguish the outward and return journeys."
+            ],
+            [
+                "Prepare your walk",
+                "There are rocky sections. Find authorised parking, bring water and check forest access on the day. The documented route does not replace signs or restrictions on the ground."
+            ]
+        ],
+        "nearby": [
+            [
+                "plan-de-la-tour-village",
+                "Plan a village break"
+            ]
+        ],
+        "verified": "2026-10-27",
+        "sources": [
+            {
+                "label": "Office de tourisme · Chemin vers le San Peire",
+                "url": "https://www.golfe-sainttropez-tourisme.fr/fiche-apidae/randonnee-chemin-vers-le-san-peire/"
+            },
+            {
+                "label": "Topoguide officiel · Du Plan de la Tour au San Peïre (PDF, 18 Mo)",
+                "url": "https://www.golfe-saint-tropez-information.com/files/visitgolfe/docs/randos-web-2023-gardefreinet-plandelatour-fr.pdf"
+            },
+            {
+                "label": "Préfecture du Var · Carte d’accès aux massifs",
+                "url": "https://www.var.gouv.fr/Actions-de-l-Etat/Foret/Fermeture-des-massifs-en-ete/Carte-d-acces-aux-massifs"
+            },
+            {
+                "label": "Office du Golfe · GPX du départ village",
+                "url": "https://www.golfe-saint-tropez-information.com/fr/loisirs/loisirs-sportifs/plan-de-la-tour/randonnee-chemin-vers-le-san-peire-5865643"
+            },
+            {
+                "label": "Visorando · Pic de San Peïre, boucle des Vernades",
+                "url": "https://www.visorando.com/randonnee-pic-de-san-peire/"
+            },
+            {
+                "label": "IGN · Altimétrie RGE ALTI",
+                "url": "https://cartes.gouv.fr/aide/fr/guides-utilisateur/utiliser-les-services-de-la-geoplateforme/calcul-altimetrique/"
+            }
+        ]
+    }
+},
   "moulin-de-paillas": {
     "fr": {
       "title": "Moulin de Paillas à Ramatuelle : visite et panorama",

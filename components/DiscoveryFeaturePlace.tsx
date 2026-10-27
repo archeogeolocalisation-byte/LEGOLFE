@@ -1,3 +1,4 @@
+import SanPeireRoutes from './SanPeireRoutes';
 import PlaceTaxonomy from './PlaceTaxonomy';
 import {fallbackSignature} from "../lib/placeEditorialSignatures";
 import PlaceMapBlock from './PlaceMapBlock';
@@ -25,7 +26,7 @@ export default function DiscoveryFeaturePlace({id,locale}:{id:string;locale:Loca
    <div className="mt-10 grid gap-8 border-t border-black pt-7 md:grid-cols-2"><h2 className="text-4xl font-black uppercase leading-[.94] tracking-[-.05em] md:text-6xl">{signature.subtitle}</h2><p className="max-w-xl text-lg font-bold leading-8 text-black/65">{guide.intro}</p></div>
   </section>
   <PlaceMediaGallery name={place.name} photos={photosForPlace(id)} locale={locale}/>
-  <PlaceMapBlock name={placeName(place,locale)} location={place.location} points={placeMapPoints[id]??[]} locale={locale}/>
+  {id==='san-peire-randonnee'?<SanPeireRoutes locale={locale}/>:<PlaceMapBlock name={placeName(place,locale)} location={place.location} points={placeMapPoints[id]??[]} locale={locale}/>}
   <section className="lg-shell pb-16 md:pb-24"><div className="grid gap-10 md:grid-cols-3">{guide.sections.map(([title,body])=><article key={title} className="border-t border-black pt-6"><h2 className="text-2xl font-black leading-tight tracking-[-.025em]">{title}</h2><p className="mt-5 text-base leading-7 text-black/65">{body}</p></article>)}</div>
    {guide.sources && <aside className="mt-10 border-t border-black/20 pt-7">
     <h2 className="text-xl font-black">{locale==='fr'?'Sources et informations à jour':'Sources and current information'}</h2>
