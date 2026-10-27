@@ -1010,7 +1010,7 @@ export const places: Place[] = [
     goodToKnow:["Trail conditions and access may vary; check the route and current forest restrictions before setting off.","Bring appropriate footwear and drinking water."],
     verified:false,featured:false,
     source:"https://www.golfe-sainttropez-tourisme.fr/fiche-apidae/randonnee-chemin-vers-le-san-peire/",
-    lastVerifiedAt: "2026-10-16"
+    lastVerifiedAt: "2026-10-27"
   },
 ];
 

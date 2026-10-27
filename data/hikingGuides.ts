@@ -28,7 +28,7 @@ export const hikingGuides: Guide[] = [
       "randonnee-pont-des-fees-grimaud"
     ],
     "published": "2026-10-11",
-    "verified": "2026-10-11",
+    "verified": "2026-10-27",
     "sources": [
       {
         "id": "route",
@@ -49,6 +49,21 @@ export const hikingGuides: Guide[] = [
         "id": "fire",
         "label": "Préfecture du Var · Carte d’accès aux massifs",
         "url": "https://www.var.gouv.fr/Actions-de-l-Etat/Foret/Fermeture-des-massifs-en-ete/Carte-d-acces-aux-massifs"
+      },
+      {
+        "id": "gpx",
+        "label": "Office du Golfe · GPX du départ village",
+        "url": "https://www.golfe-saint-tropez-information.com/fr/loisirs/loisirs-sportifs/plan-de-la-tour/randonnee-chemin-vers-le-san-peire-5865643"
+      },
+      {
+        "id": "visorando",
+        "label": "Visorando · Pic de San Peïre, boucle des Vernades",
+        "url": "https://www.visorando.com/randonnee-pic-de-san-peire/"
+      },
+      {
+        "id": "altitudes",
+        "label": "IGN · Altimétrie RGE ALTI",
+        "url": "https://cartes.gouv.fr/aide/fr/guides-utilisateur/utiliser-les-services-de-la-geoplateforme/calcul-altimetrique/"
       }
     ],
     "copy": {
@@ -56,33 +71,33 @@ export const hikingGuides: Guide[] = [
         "title": "SAN PEÏRE.",
         "accent": "LE GOLFE EN HAUT.",
         "seoTitle": "Randonnée au San Peïre : parcours depuis Le Plan-de-la-Tour",
-        "description": "Montez au San Peïre depuis Le Plan-de-la-Tour : environ 12 km aller-retour, départ, balisage, difficulté et topoguide officiel.",
-        "intro": "Le port peut attendre. Ici, on prend de la hauteur par les chemins du Plan-de-la-Tour. Le San Peïre se mérite : du granite, des chênes-lièges et une dernière montée pour regarder le Golfe autrement.",
-        "verdict": "Choisissez cette sortie si vous voulez marcher une demi-journée. Le retour fait partie du programme : les 6 km du topoguide correspondent à l’aller.",
+        "description": "San Peïre au Plan-de-la-Tour : comparez le départ du village et la boucle des Vernades, consultez le tracé, le profil, le GPX et les conseils de marche.",
+        "intro": "Du village ou des Vernades, San Peïre se découvre à pied. Choisissez votre départ, gardez les bons repères pour le retour, puis prenez le temps des chênes-lièges, du granite et du panorama sur le Golfe.",
+        "verdict": "Choisissez le village pour une demi-journée en aller-retour ; comparez la boucle des Vernades sur Visorando pour une sortie plus courte. Ne mélangez pas les distances et les indications des deux parcours.",
         "facts": [
           {
-            "label": "Départ",
-            "value": "Le Plan-de-la-Tour · centre du village"
+            "label": "Commune",
+            "value": "Le Plan-de-la-Tour"
           },
           {
-            "label": "Distance",
-            "value": "6 km à l’aller · environ 12 km aller-retour"
+            "label": "Depuis le village",
+            "value": "≈ 12 km aller-retour · ≈ 4 h hors pauses"
           },
           {
-            "label": "Durée",
-            "value": "2 h à l’aller · prévoir environ 4 h hors pauses"
+            "label": "Boucle des Vernades",
+            "value": "6,66 km · 2 h 35 selon Visorando"
           },
           {
             "label": "Dénivelé",
-            "value": "+370 m annoncés pour l’aller"
+            "value": "Village : +370 m annoncés à l’aller · boucle : +246 m"
           },
           {
             "label": "Niveau",
-            "value": "Difficile · passages rocheux"
+            "value": "Village : difficile · boucle : moyen selon Visorando"
           },
           {
-            "label": "Repères",
-            "value": "Balisage jaune · sentier 24"
+            "label": "À préparer",
+            "value": "Départ, retour et accès aux massifs"
           }
         ],
         "sections": [
@@ -97,13 +112,15 @@ export const hikingGuides: Guide[] = [
           },
           {
             "id": "depart",
-            "title": "Un départ au village, un retour à prévoir",
+            "title": "Le village ou les Vernades : choisir son départ",
             "paragraphs": [
-              "Préparez votre départ au centre du Plan-de-la-Tour, auprès de l’office de tourisme. Repérez un stationnement autorisé avant de marcher et consultez le topoguide. L’adresse de contact de l’office ne constitue pas un parking réservé aux randonneurs.",
-              "Le document détaillé annonce 6 km et 2 h en aller simple. Pour revenir par le même chemin, comptez donc environ 12 km et réservez une demi-journée, pauses comprises. Les 4 h sont une estimation de préparation, obtenue en doublant le temps d’aller, pas une durée garantie."
+              "Le parcours du village s’appuie sur le topoguide officiel : 6 km et 2 h en aller simple, soit environ 12 km pour revenir par le même chemin. La durée de 4 h hors pauses est une estimation de préparation. Le début du GPX est localisé sur notre carte ; repérez séparément un stationnement autorisé.",
+              "L’autre départ correspond à la boucle publiée sur Visorando, dans le secteur des Vernades. Ses chiffres et son descriptif lui appartiennent : consultez sa fiche actualisée, notamment les retours sur l’accès au chemin des Chèvres et le stationnement."
             ],
             "sourceIds": [
-              "topo"
+              "topo",
+              "gpx",
+              "visorando"
             ]
           },
           {
@@ -143,8 +160,8 @@ export const hikingGuides: Guide[] = [
         ],
         "questions": [
           {
-            "question": "Les 6 km comprennent-ils le retour ?",
-            "answer": "Non : le topoguide détaillé les annonce en aller simple. Cette fiche prépare un retour par le même itinéraire, soit environ 12 km au total."
+            "question": "Quelle distance prévoir selon le départ ?",
+            "answer": "Depuis le village, le topoguide annonce 6 km à l’aller : prévoyez environ 12 km avec le retour. La boucle des Vernades publiée sur Visorando annonce 6,66 km au total. Ce sont deux parcours distincts."
           },
           {
             "question": "Est-ce une randonnée pour débuter ?",
@@ -166,33 +183,33 @@ export const hikingGuides: Guide[] = [
         "title": "SAN PEÏRE.",
         "accent": "ABOVE THE GOLFE.",
         "seoTitle": "San Peïre hike from Le Plan-de-la-Tour: route and practical guide",
-        "description": "Plan the San Peïre hike from Le Plan-de-la-Tour: roughly 12 km out and back, trail difficulty, waymarks and official route documents.",
-        "intro": "Leave the harbour for another day. This walk climbs from Le Plan-de-la-Tour through granite and cork oaks, with a final ascent that changes your view of the Golfe.",
-        "verdict": "Allow half a day. The detailed guide’s 6 km is one way, so plan the return as carefully as the climb.",
+        "description": "San Peïre at Le Plan-de-la-Tour: compare the village start with the Les Vernades loop, explore the route map, elevation profile, GPX and practical advice.",
+        "intro": "Walk to San Peïre from the village or Les Vernades. Choose your starting point and plan the return before enjoying the cork oaks, granite and views over the Golfe.",
+        "verdict": "Choose the village for a half-day out-and-back hike, or compare the shorter Les Vernades loop on Visorando. Keep each route’s distances and directions separate.",
         "facts": [
           {
-            "label": "Start",
-            "value": "Le Plan-de-la-Tour · village centre"
+            "label": "Town",
+            "value": "Le Plan-de-la-Tour"
           },
           {
-            "label": "Distance",
-            "value": "6 km one way · roughly 12 km out and back"
+            "label": "Village start",
+            "value": "≈ 12 km out and back · ≈ 4 h excluding stops"
           },
           {
-            "label": "Time",
-            "value": "2 h outward · allow roughly 4 h without stops"
+            "label": "Les Vernades loop",
+            "value": "6.66 km · 2 h 35 according to Visorando"
           },
           {
             "label": "Ascent",
-            "value": "Published outward ascent: 370 m"
+            "value": "Village: listed +370 m outward · loop: +246 m"
           },
           {
             "label": "Difficulty",
-            "value": "Difficult · rocky sections"
+            "value": "Village: difficult · loop: moderate according to Visorando"
           },
           {
-            "label": "Navigation",
-            "value": "Yellow waymarks · trail 24"
+            "label": "Plan ahead",
+            "value": "Start, return journey and forest access"
           }
         ],
         "sections": [
@@ -207,13 +224,15 @@ export const hikingGuides: Guide[] = [
           },
           {
             "id": "depart",
-            "title": "Start in the village and plan the return",
+            "title": "Village or Les Vernades: choose your start",
             "paragraphs": [
-              "Prepare your start in the village centre with the tourist office and find authorised parking. An office contact address is not a dedicated hikers’ car park. Download the detailed route document before setting off.",
-              "It gives 6 km and 2 hours one way. Returning on the same path makes roughly 12 km. Our 4-hour walking allowance doubles the published outward time; it is a planning estimate, not a guaranteed duration. Add breaks and allow half a day."
+              "The village route follows the official guidebook: 6 km and 2 hours one way, or around 12 km to return on the same path. Four hours excluding stops is a planning estimate. Our map marks the GPX start; locate authorised parking separately.",
+              "The alternative is the loop published on Visorando from the Les Vernades area. Use that route’s own figures and directions, including current reports about Chemin des Chèvres access and parking."
             ],
             "sourceIds": [
-              "topo"
+              "topo",
+              "gpx",
+              "visorando"
             ]
           },
           {
@@ -253,8 +272,8 @@ export const hikingGuides: Guide[] = [
         ],
         "questions": [
           {
-            "question": "Does the published 6 km include the return?",
-            "answer": "No. The detailed official document describes 6 km one way. Returning by the same route means roughly 12 km in total."
+            "question": "How far is each route?",
+            "answer": "From the village, the official guidebook lists 6 km one way: allow around 12 km including the return. The Les Vernades loop on Visorando lists 6.66 km in total. These are separate routes."
           },
           {
             "question": "Is it a good first hike?",

@@ -40,8 +40,11 @@ jobs:
         run: |
           node scripts/verify-stay-filters.cjs
           node scripts/test-villa-collections-db.mjs
-      - name: Check place content and SEO
-        run: node scripts/test-place-seo.cjs
+      - name: Check place content, hiking routes and SEO
+        run: |
+          node scripts/test-san-peire-routes.cjs
+          node scripts/test-guides-seo.cjs
+          node scripts/test-place-seo.cjs
       - run: npm run build
         env:
           NEXT_PUBLIC_SUPABASE_URL: https://example.supabase.co

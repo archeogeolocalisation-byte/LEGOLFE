@@ -228,7 +228,7 @@ export default function CommunitySection({ placeId, locale }: { placeId: string;
             </div>
           </div>
 
-          <div className="border-t border-black pt-6">
+          <div id="contribuer" className="scroll-mt-8 border-t border-black pt-6">
             <p className="lg-kicker">{fr ? "CONTRIBUER" : "CONTRIBUTE"}</p>
             {!userId ? (
               <div className="mt-6">

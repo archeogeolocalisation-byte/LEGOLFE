@@ -62,9 +62,9 @@ async function htmlFor(id,locale){const stream=await renderToReadableStream(awai
     const guide=discoveryFeatures[place.id][locale];
     for(const [heading] of guide.sections)assert.ok(html.includes(heading));
     for(const source of guide.sources)assert.ok(html.includes(source.url));
-    assert.match(html,/datetime="2026-10-16"/i);
+    assert.match(html,/datetime="2026-10-27"/i);
     assert.ok(html.includes('6 km'));assert.ok(html.includes('370 m'));
-    assert.ok(xml.includes(`<loc>${metadata.alternates.canonical}</loc><lastmod>2026-10-16</lastmod>`));
+    assert.ok(xml.includes(`<loc>${metadata.alternates.canonical}</loc><lastmod>2026-10-27</lastmod>`));
    }
    if(place.id==='cap-taillat'){
     assert.ok(title.includes('Escalet')&&title.includes('Gigaro'),'Both primary trailheads are discoverable in metadata');
