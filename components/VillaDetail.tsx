@@ -1,3 +1,4 @@
+import VillaEditorialDetail from './VillaEditorialDetail';
 import {villaCollectionLabels} from '../lib/villaCollections';
 import {villaEditorialModels} from '../data/villaEditorialModels';
 import {places} from '../data/places';
@@ -15,6 +16,7 @@ import type {VillaListing} from '../lib/villaListing';
 export default function VillaDetail({villa,today,preview=false,locale='fr',announcerProfile=null}:{villa:VillaListing;today:string;preview?:boolean;locale?:'fr'|'en';announcerProfile?:VillaAnnouncerProfile|null}){
  const fr=locale==='fr',t=(a:string,b:string)=>fr?a:b;
  const model=villaEditorialModels[villa.id],modelCopy=model?.copy[locale];
+ if(model&&!villa.live&&!preview)return <VillaEditorialDetail villa={villa} model={model} locale={locale}/>;
  const description=modelCopy?.intro||(!fr&&(villa.descriptionEn||villaDescriptionEn[villa.id]))||villa.description;
  const title=modelCopy?.title||(!fr?villa.titleEn:villa.titleFr)||villa.name;
  const highlights=(!fr?villa.highlightsEn:villa.highlights)||[];

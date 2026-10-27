@@ -15,7 +15,7 @@ export const villas = [
     saintTropezDistance: 12,
     image: "/villas/villa-eden.jpg",
     description:
-      "Une villa contemporaine confidentielle avec piscine chauffée, vue mer et accès rapide aux plages de Ramatuelle.",
+      "Maison de démonstration à Ramatuelle : quatre chambres, vue mer et piscine chauffée. Cette présentation illustre le site, sans offre de location.",
   },
   {
     id: "villa-alba",

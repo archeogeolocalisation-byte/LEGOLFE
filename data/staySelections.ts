@@ -7,7 +7,7 @@ export const distanceSelections = [
 export function villasWithin(maxKm:number){return villas.filter(v=>Number.isFinite(v.saintTropezDistance) && v.saintTropezDistance>=0 && v.saintTropezDistance<=maxKm).sort((a,b)=>a.saintTropezDistance-b.saintTropezDistance);}
 export function stayPaths(){return ["/stay",...distanceSelections.filter(s=>villasWithin(s.maxKm).length).map(s=>`/stay/${s.slug}`)];}
 export const villaDescriptionEn:Record<string,string>={
- "villa-eden":"A contemporary villa with a heated pool, sea view and a base for exploring the beaches of Ramatuelle.",
+ "villa-eden":"Demonstration home in Ramatuelle: four bedrooms, sea view and heated pool. This presentation illustrates the site and is not a rental offer.",
  "villa-alba":"An elegant villa overlooking the bay of Saint-Tropez, suited to a quiet stay with family or friends.",
  "villa-azure":"A large family villa with a private garden and pool, close to the beaches.",
  "villa-celeste":"A property near Pampelonne with a large heated pool and panoramic views of the Mediterranean.",

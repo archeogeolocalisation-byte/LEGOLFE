@@ -3,6 +3,7 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const ts = require('typescript');
 for (const extension of ['.ts','.tsx']) require.extensions[extension] = (module, filename) => module._compile(ts.transpileModule(fs.readFileSync(filename, 'utf8'), { compilerOptions: { module: ts.ModuleKind.CommonJS, jsx: ts.JsxEmit.ReactJSX, esModuleInterop: true } }).outputText, filename);
+require.extensions['.css']=module=>{module.exports=new Proxy({},{get:(_,key)=>key==='__esModule'?false:String(key)});};
 process.env.NEXT_PUBLIC_SUPABASE_URL='https://example.supabase.co';
 process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY='sb_publishable_ci_dummy';
 const { createElement } = require('react');
@@ -86,3 +87,19 @@ assert.equal(safeReturnPath('/villa/property-live'),'/villa/property-live');
 assert.equal(safeReturnPath('/villa/../../account'),'');
 const {actOnBooking}=require('../lib/villaBookingStore.ts');
 void assert.rejects(actOnBooking('id','confirm',null,'100','terms',true),/BOOKING_DISABLED_DURING_PILOT/).then(()=>console.log('Villas: FR/EN examples, live enquiry/contact paths, privacy, safe return links and booking mutation disabled passed.')).catch(error=>{console.error(error);process.exitCode=1;});
+
+// Editorial layout is limited to the demonstration, with explicit unknowns and
+// no invented rental action, additional photo, proximity or repeated paragraph.
+for(const locale of ['fr','en']){
+ const demo={...villas[0],photos:[{src:villas[0].image,alt:'Presentation photo'}],amenities:['Pool','Heated pool','Sea view','Quiet setting'],highlights:[]};
+ const html=renderToStaticMarkup(createElement(VillaDetail,{villa:demo,today:'2026-10-27',locale}));
+ assert.equal((html.match(/<h1[ >]/g)||[]).length,1);
+ for(const id of ['la-maison','equipements','a-savoir','le-secteur'])assert.ok(html.includes(`id="${id}"`));
+ assert.equal(html.includes('type="date"'),false);assert.equal(html.includes('<form'),false);assert.equal(html.includes('aria-pressed'),false);
+ assert.ok(html.includes(locale==='fr'?'Tarif d’illustration':'Illustrative rate'));
+ assert.ok(html.includes(locale==='fr'?'dispositif de sécurité':'safety system'));
+ assert.ok(html.includes(locale==='fr'?'Voir la photo':'View photo'));assert.equal(html.includes(locale==='fr'?'Voir les 5 photos':'Show all 5 photos'),false);
+ const equipment=html.split('id="equipements"')[1].split('</section>')[0];assert.ok(equipment.includes(locale==='fr'?'Piscine chauffée':'Heated pool'));assert.equal(equipment.includes(locale==='fr'?'> Piscine</li>':'> Pool</li>'),false);
+ const paragraphs=[...html.matchAll(/<p\b[^>]*>([\s\S]*?)<\/p>/g)].map(m=>m[1].replace(/<[^>]+>/g,' ').replace(/\s+/g,' ').trim()).filter(text=>text.length>=100);assert.equal(new Set(paragraphs).size,paragraphs.length);
+ const preview=renderToStaticMarkup(createElement(VillaDetail,{villa:demo,today:'2026-10-27',locale,preview:true}));assert.ok(preview.includes(locale==='fr'?'APERÇU — AUCUN ENVOI':'PREVIEW — NO SUBMISSION'));assert.equal(preview.includes(locale==='fr'?'Tarif d’illustration':'Illustrative rate'),false);
+}
