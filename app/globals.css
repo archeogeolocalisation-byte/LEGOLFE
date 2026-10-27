@@ -277,10 +277,10 @@ button,textarea,input { font:inherit; }
 
 .host-role-options{display:grid;gap:18px;margin-top:28px;}.host-role-option{padding:26px;border:1px solid #c9c1b3;border-top:3px solid var(--lg-blue);background:#fff;text-align:left;}.host-role-option:nth-child(2){background:#e0edf0;}.host-role-option:hover{background:#d5e8ed;}@media(min-width:768px){.host-role-options{grid-template-columns:repeat(2,minmax(0,1fr));}}
 
-/* White villa pages, with colour reserved for details and actions. */
+/* Houses: Mediterranean blue, sea-glass and sand, with direct contact first. */
 .villa-detail{background:#fff;color:#102d39;}
 .villa-sidebar{display:grid;gap:22px;min-width:0;}
-.villa-contact-card{background:#fff;border:1px solid #c8d8de;border-top:4px solid var(--lg-blue);padding:24px;}
+.villa-contact-card{background:#e0edf0;border:1px solid #aac5d0;border-top:4px solid var(--lg-blue);border-radius:18px;padding:24px;}
 .villa-contact-card>.lg-kicker{color:var(--lg-blue);font-size:10px;}
 .villa-contact-identity{display:flex;align-items:center;gap:16px;margin-top:20px;}
 .villa-contact-avatar{display:flex;align-items:center;justify-content:center;flex-shrink:0;width:64px;height:64px;border-radius:50%;overflow:hidden;background:#dcecf1;color:var(--lg-blue);border:1px solid #aac5d0;font-size:26px;font-weight:900;}
@@ -298,6 +298,16 @@ button,textarea,input { font:inherit; }
 .villa-detail :is(.lg-btn--dark,#demande-sejour form>button),.villa-detail .fixed>a{background:var(--lg-blue);border-color:var(--lg-blue);color:#fff;}
 .villa-detail :is(a,button,input,select,summary):focus-visible{outline:2px solid var(--lg-blue);outline-offset:3px;}
 @media(max-width:479px){.villa-contact-card{padding:20px;}}
+
+.villa-detail--direct{background:#fdfcf9;color:#0b3046;}
+.villa-detail--direct>section:first-child{background:linear-gradient(120deg,#e0edf0 0%,#fdfcf9 75%);border-bottom:1px solid #d5e3e8;margin-bottom:28px;border-radius:0 0 24px 24px;}
+.villa-detail--direct nav[aria-label]{border-color:#aac5d0;color:#0b3046;}
+.villa-detail--direct #la-maison ul li{border-color:#38766d;}
+.villa-detail--direct #la-maison .grid.border-y{background:#e8efea;border-color:#bfd1c6;border-radius:16px;padding-inline:18px;color:#214e48;}
+.villa-detail--direct #equipements li{background:#e8efea;border-color:#bfd1c6;border-radius:12px;color:#214e48;}
+.villa-stay-actions{background:#f1eadf;border:1px solid #d5cbbd;border-radius:18px;padding:24px;color:#0b3046;}
+.villa-mobile-contact{background:#e0edf0;border-top:1px solid #aac5d0;color:#0b3046;}
+.villa-detail--direct #photos{background:#edf4f5;border-color:#aac5d0;padding-inline:20px;border-radius:18px;}
 
 /* Place pages: content must fit the viewport before any decorative clipping. */
 .place-page { width:100%; min-width:0; }
