@@ -96,7 +96,7 @@ for(const locale of ['fr','en']){
  assert.equal((html.match(/<h1[ >]/g)||[]).length,1);
  for(const id of ['la-maison','equipements','a-savoir','le-secteur'])assert.ok(html.includes(`id="${id}"`));
  assert.equal(html.includes('type="date"'),false);assert.equal(html.includes('<form'),false);assert.equal(html.includes('aria-pressed'),false);
- assert.ok(html.includes(locale==='fr'?'Tarif d’illustration':'Illustrative rate'));
+ assert.equal(html.includes(locale==='fr'?'Tarif d’illustration':'Illustrative rate'),false);assert.equal(html.includes('€'),false);
  assert.ok(html.includes(locale==='fr'?'dispositif de sécurité':'safety system'));
  assert.ok(html.includes(locale==='fr'?'Voir la photo':'View photo'));assert.equal(html.includes(locale==='fr'?'Voir les 5 photos':'Show all 5 photos'),false);
  const equipment=html.split('id="equipements"')[1].split('</section>')[0];assert.ok(equipment.includes(locale==='fr'?'Piscine chauffée':'Heated pool'));assert.equal(equipment.includes(locale==='fr'?'> Piscine</li>':'> Pool</li>'),false);
