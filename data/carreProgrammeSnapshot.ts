@@ -2,6 +2,11 @@ import type {GolfeEvent} from "./events";
 /** Official public programme checked 13 October 2026; fallback if provider is unavailable. */
 export const carreProgrammeSnapshot:GolfeEvent[] = [
   {
+    "organizer": {
+      "type": "Organization",
+      "name": "Le Carré Sainte-Maxime",
+      "url": "https://www.carre-sainte-maxime.fr/"
+    },
     "id": "boreale-carre",
     "officialImage": "https://img.mapado.net/2026/6/6/6a23eaf73bbbc-reale-photo-01-fleo-visual-carre-sainte-maxime-web.jpeg",
     "title": "BOREALE, LA NAISSANCE DES AURORES / CIE MINIBOX",
@@ -28,6 +33,17 @@ export const carreProgrammeSnapshot:GolfeEvent[] = [
     "sourceCheckedAt": "2026-10-13"
   },
   {
+    "organizer": {
+      "type": "Organization",
+      "name": "Le Carré Sainte-Maxime",
+      "url": "https://www.carre-sainte-maxime.fr/"
+    },
+    "performers": [
+      {
+        "type": "Person",
+        "name": "Justina Lee Brown"
+      }
+    ],
     "id": "justina-lee-brown",
     "officialImage": "https://img.mapado.net/2026/6/4/6a215646d1131--lee-brown-c-femellestudio-carre-sainte-maxime-web.jpeg",
     "title": "JUSTINA LEE BROWN / ECHOES OF HOME",
@@ -54,6 +70,17 @@ export const carreProgrammeSnapshot:GolfeEvent[] = [
     "sourceCheckedAt": "2026-10-13"
   },
   {
+    "organizer": {
+      "type": "Organization",
+      "name": "Le Carré Sainte-Maxime",
+      "url": "https://www.carre-sainte-maxime.fr/"
+    },
+    "performers": [
+      {
+        "type": "Person",
+        "name": "Greg Zlap"
+      }
+    ],
     "id": "carre-733261",
     "officialImage": "https://img.mapado.net/2026/6/4/6a21566bef413-greg-zlap-804-yann-orhan-carre-sainte-maxime-web.jpeg",
     "title": "GREG ZLAP / TOUTE LA MUSIQUE QUE J’AIME",
@@ -80,6 +107,11 @@ export const carreProgrammeSnapshot:GolfeEvent[] = [
     "sourceCheckedAt": "2026-10-13"
   },
   {
+    "organizer": {
+      "type": "Organization",
+      "name": "Le Carré Sainte-Maxime",
+      "url": "https://www.carre-sainte-maxime.fr/"
+    },
     "id": "carre-733289",
     "officialImage": "https://img.mapado.net/2026/6/4/6a21569785066-ye-c-metilinet-carre-sainte-maxime-web.jpeg",
     "title": "YÉ ! (L’EAU) / CIRCUS BAOBAB",
@@ -106,6 +138,11 @@ export const carreProgrammeSnapshot:GolfeEvent[] = [
     "sourceCheckedAt": "2026-10-13"
   },
   {
+    "organizer": {
+      "type": "Organization",
+      "name": "Le Carré Sainte-Maxime",
+      "url": "https://www.carre-sainte-maxime.fr/"
+    },
     "id": "carre-733303",
     "officialImage": "https://img.mapado.net/2026/6/4/6a2156af5ff47-ussieres-claudio-cavallari-carre-sainte-maxime-web.jpeg",
     "title": "POUSSIERES / YANN FRISCH / CIE L'ABSENTE",
@@ -136,6 +173,11 @@ export const carreProgrammeSnapshot:GolfeEvent[] = [
     "sourceCheckedAt": "2026-10-13"
   },
   {
+    "organizer": {
+      "type": "Organization",
+      "name": "Le Carré Sainte-Maxime",
+      "url": "https://www.carre-sainte-maxime.fr/"
+    },
     "id": "carre-757593",
     "officialImage": "https://img.mapado.net/2026/6/5/6a22abdfd5e32-st-hip-hop-c-charles-ripon-carre-sainte-maxime-web.jpeg",
     "title": "CAMUS EST HIP HOP / CIE PAR-ALLELES",
@@ -162,6 +204,11 @@ export const carreProgrammeSnapshot:GolfeEvent[] = [
     "sourceCheckedAt": "2026-10-13"
   },
   {
+    "organizer": {
+      "type": "Organization",
+      "name": "Le Carré Sainte-Maxime",
+      "url": "https://www.carre-sainte-maxime.fr/"
+    },
     "id": "carre-759343",
     "officialImage": "https://img.mapado.net/2026/6/10/6a2929057b83a-ecole-des-femmes-geoffrey-posada-serguier-0165.jpeg",
     "title": "L’ECOLE DES FEMMES / ROBIN RENUCCI / FRANCOIS MOREL",
@@ -188,6 +235,11 @@ export const carreProgrammeSnapshot:GolfeEvent[] = [
     "sourceCheckedAt": "2026-10-13"
   },
   {
+    "organizer": {
+      "type": "Organization",
+      "name": "Le Carré Sainte-Maxime",
+      "url": "https://www.carre-sainte-maxime.fr/"
+    },
     "id": "carre-759350",
     "officialImage": "https://img.mapado.net/2026/6/6/6a24008da87e8-chiffonade-fabriceroque-carre-sainte-maxime-web.jpeg",
     "title": "CHIFFONADE / CARRE BLANC CIE",
@@ -214,6 +266,11 @@ export const carreProgrammeSnapshot:GolfeEvent[] = [
     "sourceCheckedAt": "2026-10-13"
   },
   {
+    "organizer": {
+      "type": "Organization",
+      "name": "Le Carré Sainte-Maxime",
+      "url": "https://www.carre-sainte-maxime.fr/"
+    },
     "id": "carre-733359",
     "officialImage": "https://img.mapado.net/2026/6/4/6a2156f3abf4c-a-folia-c-laurentphilippe-carre-sainte-maxime-web.jpeg",
     "title": "A FOLIA / STATIC SHOT - CCN BALLET DE LORRAINE",
@@ -240,6 +297,11 @@ export const carreProgrammeSnapshot:GolfeEvent[] = [
     "sourceCheckedAt": "2026-10-13"
   },
   {
+    "organizer": {
+      "type": "Organization",
+      "name": "Le Carré Sainte-Maxime",
+      "url": "https://www.carre-sainte-maxime.fr/"
+    },
     "id": "carre-733408",
     "officialImage": "https://img.mapado.net/2026/6/4/6a215767dab45-enzaccio-c-frederic-iovino-carre-sainte-maxime-web.jpeg",
     "title": "LORENZACCIO / DAVID BOBEE",
@@ -270,6 +332,11 @@ export const carreProgrammeSnapshot:GolfeEvent[] = [
     "sourceCheckedAt": "2026-10-13"
   },
   {
+    "organizer": {
+      "type": "Organization",
+      "name": "Le Carré Sainte-Maxime",
+      "url": "https://www.carre-sainte-maxime.fr/"
+    },
     "id": "carre-759357",
     "officialImage": "https://img.mapado.net/2026/6/6/6a2408115af0e--rouge-elisabeth-carecchio-carre-sainte-maxime-web.jpeg",
     "title": "LE PETIT CHAPERON ROUGE / JOEL POMMERAT",
@@ -296,6 +363,11 @@ export const carreProgrammeSnapshot:GolfeEvent[] = [
     "sourceCheckedAt": "2026-10-13"
   },
   {
+    "organizer": {
+      "type": "Organization",
+      "name": "Le Carré Sainte-Maxime",
+      "url": "https://www.carre-sainte-maxime.fr/"
+    },
     "id": "carre-733436",
     "officialImage": "https://img.mapado.net/2026/6/4/6a21577ff16a4-he-sadness-c-vitali-akimov-carre-sainte-maxime-web.jpeg",
     "title": "DELAY THE SADNESS / SHARON EYAL DANCE COMPANY",
@@ -322,6 +394,11 @@ export const carreProgrammeSnapshot:GolfeEvent[] = [
     "sourceCheckedAt": "2026-10-13"
   },
   {
+    "organizer": {
+      "type": "Organization",
+      "name": "Le Carré Sainte-Maxime",
+      "url": "https://www.carre-sainte-maxime.fr/"
+    },
     "id": "carre-733450",
     "officialImage": "https://img.mapado.net/2026/6/4/6a21579b23522-felix-radu-clearazur-carre-sainte-maxime-web.jpeg",
     "title": "FELIX RADU / INFINI + 3",
@@ -348,6 +425,11 @@ export const carreProgrammeSnapshot:GolfeEvent[] = [
     "sourceCheckedAt": "2026-10-13"
   },
   {
+    "organizer": {
+      "type": "Organization",
+      "name": "Le Carré Sainte-Maxime",
+      "url": "https://www.carre-sainte-maxime.fr/"
+    },
     "id": "carre-733464",
     "officialImage": "https://img.mapado.net/2026/6/4/6a2157c65a0fa-natholie-music-photography-carre-sainte-maxime-web.jpeg",
     "title": "ANDRE MANOUKIAN / LA SULTANE",
@@ -374,6 +456,11 @@ export const carreProgrammeSnapshot:GolfeEvent[] = [
     "sourceCheckedAt": "2026-10-13"
   },
   {
+    "organizer": {
+      "type": "Organization",
+      "name": "Le Carré Sainte-Maxime",
+      "url": "https://www.carre-sainte-maxime.fr/"
+    },
     "id": "carre-733478",
     "officialImage": "https://img.mapado.net/2026/6/4/6a2157e2078ef-re-morte-c-kaisha-vignette-carre-sainte-maxime-web.jpeg",
     "title": "NATURE MORTE / CIRQUE LE ROUX",
@@ -400,6 +487,11 @@ export const carreProgrammeSnapshot:GolfeEvent[] = [
     "sourceCheckedAt": "2026-10-13"
   },
   {
+    "organizer": {
+      "type": "Organization",
+      "name": "Le Carré Sainte-Maxime",
+      "url": "https://www.carre-sainte-maxime.fr/"
+    },
     "id": "carre-733492",
     "officialImage": "https://img.mapado.net/2026/6/4/6a2157f67efc4-mminentes-pascale-cholette-carre-sainte-maxime-web.jpeg",
     "title": "IMMINENTES / JANN GALLOIS / CIE BURN OUT",
@@ -426,6 +518,11 @@ export const carreProgrammeSnapshot:GolfeEvent[] = [
     "sourceCheckedAt": "2026-10-13"
   },
   {
+    "organizer": {
+      "type": "Organization",
+      "name": "Le Carré Sainte-Maxime",
+      "url": "https://www.carre-sainte-maxime.fr/"
+    },
     "id": "carre-733506",
     "officialImage": "https://img.mapado.net/2026/6/4/6a2158129d44b-haroun-credit-sekza-carre-sainte-maxime-web.jpeg",
     "title": "HAROUN / BONJOUR QUAND MÊME",
@@ -452,6 +549,11 @@ export const carreProgrammeSnapshot:GolfeEvent[] = [
     "sourceCheckedAt": "2026-10-13"
   },
   {
+    "organizer": {
+      "type": "Organization",
+      "name": "Le Carré Sainte-Maxime",
+      "url": "https://www.carre-sainte-maxime.fr/"
+    },
     "id": "carre-733513",
     "officialImage": "https://img.mapado.net/2026/6/4/6a215828426bc-t-panamax-c-db-motion-prod-carre-sainte-maxime-web.jpeg",
     "title": "POST PANAMAX / KUBILAI KHAN INVESTIGATIONS",
@@ -478,6 +580,11 @@ export const carreProgrammeSnapshot:GolfeEvent[] = [
     "sourceCheckedAt": "2026-10-13"
   },
   {
+    "organizer": {
+      "type": "Organization",
+      "name": "Le Carré Sainte-Maxime",
+      "url": "https://www.carre-sainte-maxime.fr/"
+    },
     "id": "carre-733527",
     "officialImage": "https://img.mapado.net/2026/6/4/6a21583b9174d--grand-bal-c-romain-tissot-carre-sainte-maxime-web.jpeg",
     "title": "LE GRAND BAL / COMPAGNIE DYPTIK",
@@ -504,6 +611,11 @@ export const carreProgrammeSnapshot:GolfeEvent[] = [
     "sourceCheckedAt": "2026-10-13"
   },
   {
+    "organizer": {
+      "type": "Organization",
+      "name": "Le Carré Sainte-Maxime",
+      "url": "https://www.carre-sainte-maxime.fr/"
+    },
     "id": "carre-733569",
     "officialImage": "https://img.mapado.net/2026/6/4/6a21588429da2-mur-mure-emiliebrouchon-carre-sainte-maxime-web.jpeg",
     "title": "MUR MURE / JEREMIE LIPPMAN / CLOVIS CORNILLAC",
@@ -530,6 +642,11 @@ export const carreProgrammeSnapshot:GolfeEvent[] = [
     "sourceCheckedAt": "2026-10-13"
   },
   {
+    "organizer": {
+      "type": "Organization",
+      "name": "Le Carré Sainte-Maxime",
+      "url": "https://www.carre-sainte-maxime.fr/"
+    },
     "id": "carre-733541",
     "officialImage": "https://img.mapado.net/2026/6/4/6a2158513f7ac-potiche-c-tanguy-mendrisse-carre-sainte-maxime-web.jpeg",
     "title": "POTICHE / CHARLES TEMPLON / CLEMENTINE CÉLARIÉ / BARILLET ET GRÉDY",
@@ -556,6 +673,11 @@ export const carreProgrammeSnapshot:GolfeEvent[] = [
     "sourceCheckedAt": "2026-10-13"
   },
   {
+    "organizer": {
+      "type": "Organization",
+      "name": "Le Carré Sainte-Maxime",
+      "url": "https://www.carre-sainte-maxime.fr/"
+    },
     "id": "carre-733562",
     "officialImage": "https://img.mapado.net/2026/6/4/6a21586d4ef17-le-couloir-bernard-richebe-carre-sainte-maxime-web.jpeg",
     "title": "DANS LE COULOIR / CHARLES TORDJMAN / JEAN-PIERRE DARROUSSIN",
@@ -582,6 +704,11 @@ export const carreProgrammeSnapshot:GolfeEvent[] = [
     "sourceCheckedAt": "2026-10-13"
   },
   {
+    "organizer": {
+      "type": "Organization",
+      "name": "Le Carré Sainte-Maxime",
+      "url": "https://www.carre-sainte-maxime.fr/"
+    },
     "id": "carre-733583",
     "officialImage": "https://img.mapado.net/2026/6/5/6a22e20858e84-the-attic-mapado.jpeg",
     "title": "THE ATTIC / LES 7 DOIGTS",
@@ -612,6 +739,11 @@ export const carreProgrammeSnapshot:GolfeEvent[] = [
     "sourceCheckedAt": "2026-10-13"
   },
   {
+    "organizer": {
+      "type": "Organization",
+      "name": "Le Carré Sainte-Maxime",
+      "url": "https://www.carre-sainte-maxime.fr/"
+    },
     "id": "carre-733597",
     "officialImage": "https://img.mapado.net/2026/6/4/6a21598112393-eries-de-scapin-lea-saboun-carre-sainte-maxime-web.jpeg",
     "title": "LES FOURBERIES DE SCAPIN / THEATRE NATIONAL DE NICE - C.D.N NICE COTE D'AZUR",
@@ -638,6 +770,11 @@ export const carreProgrammeSnapshot:GolfeEvent[] = [
     "sourceCheckedAt": "2026-10-13"
   },
   {
+    "organizer": {
+      "type": "Organization",
+      "name": "Le Carré Sainte-Maxime",
+      "url": "https://www.carre-sainte-maxime.fr/"
+    },
     "id": "carre-733604",
     "officialImage": "https://img.mapado.net/2026/6/4/6a21599179a03-e-temps-pierreplanchenault-carre-sainte-maxime-web.jpeg",
     "title": "ENTRE-TEMPS / PHILIPPE DECOUFLÉ / CIE DCA",
@@ -664,6 +801,11 @@ export const carreProgrammeSnapshot:GolfeEvent[] = [
     "sourceCheckedAt": "2026-10-13"
   },
   {
+    "organizer": {
+      "type": "Organization",
+      "name": "Le Carré Sainte-Maxime",
+      "url": "https://www.carre-sainte-maxime.fr/"
+    },
     "id": "carre-733611",
     "officialImage": "https://img.mapado.net/2026/6/4/6a2159a345eb3-abd-al-malik-fabien-coste-carre-sainte-maxime-web.jpeg",
     "title": "ABD AL MALIK / GIBRALTAR",
@@ -690,6 +832,11 @@ export const carreProgrammeSnapshot:GolfeEvent[] = [
     "sourceCheckedAt": "2026-10-13"
   },
   {
+    "organizer": {
+      "type": "Organization",
+      "name": "Le Carré Sainte-Maxime",
+      "url": "https://www.carre-sainte-maxime.fr/"
+    },
     "id": "carre-733618",
     "officialImage": "https://img.mapado.net/2026/6/4/6a215a046bdbc-llet-c-julien-benhamou-onp-carre-sainte-maxime-web.jpeg",
     "title": "JUNIOR BALLET DE L’OPERA NATIONAL DE PARIS",
@@ -716,6 +863,11 @@ export const carreProgrammeSnapshot:GolfeEvent[] = [
     "sourceCheckedAt": "2026-10-13"
   },
   {
+    "organizer": {
+      "type": "Organization",
+      "name": "Le Carré Sainte-Maxime",
+      "url": "https://www.carre-sainte-maxime.fr/"
+    },
     "id": "carre-733632",
     "officialImage": "https://img.mapado.net/2026/6/4/6a215a15b912e--lamour-c-vincent-berenger-carre-sainte-maxime-web.jpeg",
     "title": "C’EST SI SIMPLE L’AMOUR / CHARLES BERLING / LARS NOREN",
@@ -742,6 +894,11 @@ export const carreProgrammeSnapshot:GolfeEvent[] = [
     "sourceCheckedAt": "2026-10-13"
   },
   {
+    "organizer": {
+      "type": "Organization",
+      "name": "Le Carré Sainte-Maxime",
+      "url": "https://www.carre-sainte-maxime.fr/"
+    },
     "id": "carre-761891",
     "officialImage": "https://img.mapado.net/2026/6/8/6a26ea4d4f2a6-ieu-madenian-c-harold-fibo-carre-sainte-maxime-web.jpeg",
     "title": "MATHIEU MADENIAN / A PLEURER DE RIRE",
@@ -768,6 +925,11 @@ export const carreProgrammeSnapshot:GolfeEvent[] = [
     "sourceCheckedAt": "2026-10-13"
   },
   {
+    "organizer": {
+      "type": "Organization",
+      "name": "Le Carré Sainte-Maxime",
+      "url": "https://www.carre-sainte-maxime.fr/"
+    },
     "id": "carre-733653",
     "officialImage": "https://img.mapado.net/2026/6/4/6a215a526edc8-souad-massi-yann-orhan-carre-sainte-maxime-web.jpeg",
     "title": "SOUAD MASSI / ZAGATE",
@@ -794,6 +956,11 @@ export const carreProgrammeSnapshot:GolfeEvent[] = [
     "sourceCheckedAt": "2026-10-13"
   },
   {
+    "organizer": {
+      "type": "Organization",
+      "name": "Le Carré Sainte-Maxime",
+      "url": "https://www.carre-sainte-maxime.fr/"
+    },
     "id": "carre-733695",
     "officialImage": "https://img.mapado.net/2026/6/4/6a215a6297d7f-a-jalousie-marcel-hartmann-carre-sainte-maxime-web.jpeg",
     "title": "LA JALOUSIE MICHEL FAU / SACHA GUITRY",

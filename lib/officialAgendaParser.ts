@@ -1,5 +1,6 @@
 import type {GolfeEvent,EventCategory,EventSession} from '../data/events';
 import type {OfficialAgendaSource} from '../data/officialAgendaSources';
+import {eventParticipant} from './eventStructuredData';
 import {addDays,isIsoDay} from './agendaCalendar';
 
 import {agendaTowns as towns} from '../data/agendaTowns';
@@ -26,7 +27,12 @@ const weekdays=['DIMANCHE','LUNDI','MARDI','MERCREDI','JEUDI','VENDREDI','SAMEDI
 const validTime=(v:unknown):v is string=>typeof v==='string'&&/^([01]\d|2[0-3]):[0-5]\d$/.test(v);
 export function parseOfficialAgendaDetail(html:string,url:string,source:OfficialAgendaSource,checked:string):GolfeEvent|undefined {
  if(html.length>2_000_000||!officialDetailUrl(url,source)||!isIsoDay(checked))return;
- let title='',location='',streetAddress='',postalCode='',identifier='',cancelled=false,sessions:EventSession[]=[];
+ const candidates=jsonLd(html).filter(n=>n['@type']==='Event');
+ const structured=candidates.find(n=>n.url===url||n['@id']===url)??(candidates.length===1?candidates[0]:undefined);
+ const organizer=eventParticipant(structured?.organizer);
+ const performers=(Array.isArray(structured?.performer)?structured.performer:[structured?.performer]).flatMap(p=>{const valid=eventParticipant(p,true);return valid?[valid]:[];});
+ const cancelled=/Cancelled|Postponed/.test(String(structured?.eventStatus??''));
+ let title='',location='',streetAddress='',postalCode='',identifier='',sessions:EventSession[]=[];
  if(source.format==='apidae'){
   const main=html.match(/<main\b[^>]*itemtype=["']https?:\/\/schema.org\/Event["'][^>]*>([\s\S]*?)<\/main>/i)?.[1];if(!main)return;
   const start=meta(main,'startDate'),end=meta(main,'endDate');if(!start||!isIsoDay(start)||end&&end!==start)return;
@@ -38,12 +44,14 @@ export function parseOfficialAgendaDetail(html:string,url:string,source:Official
   if(!written||`${written[3]}-${String(months.indexOf(written[2])+1).padStart(2,'0')}-${written[1].padStart(2,'0')}`!==start)return;
   const hour=opening.match(/(?:^|\s)(?:à|de)\s*(\d{1,2})h(\d{2})?\b/i),time=hour?hour[1].padStart(2,'0')+':'+(hour[2]??'00'):undefined;
   if(time&&!validTime(time))return;
-  title=prop(main,'name');location=towns[new URL(url).pathname.split('/')[4]];streetAddress=prop(main,'streetAddress');postalCode=prop(main,'postalCode');identifier=new URL(url).pathname.match(/-(\d+)\/$/)![1];sessions=[{start,time}];
+  title=prop(main,'name');location=towns[new URL(url).pathname.split('/')[4]];streetAddress=prop(main,'streetAddress');postalCode=prop(main,'postalCode');identifier=new URL(url).pathname.match(/-(\d+)\/$/)![1];
+  const range=opening.match(/\bde\s+\d{1,2}h(?:\d{2})?\s*[àa]\s*(\d{1,2})h(\d{2})?\b/i),endTime=range?range[1].padStart(2,'0')+':'+(range[2]??'00'):undefined;
+  sessions=[{start,time,...(endTime&&validTime(endTime)?{endTime,...(time&&endTime<time?{end:addDays(start,1)}:{})}:{})}];
  }else{
   const raw=html.match(/var IRISCollectionTheme\s*=\s*(\{[\s\S]*?\});/)?.[1];if(!raw)return;
   let fields;try{fields=JSON.parse(raw).queriedObject?.wpetFields;}catch{return;}
   if(!fields||!Array.isArray(fields.periodes))return;
-  const event=jsonLd(html).find(n=>n['@type']==='Event');if(!event)return;cancelled=/Cancelled|Postponed/.test(String(event.eventStatus??''));
+  if(!structured)return;
   title=agendaPlain(String(fields.nom??''));location='Rayol-Canadel-sur-Mer';streetAddress=agendaPlain(String(fields['adresse-1']??''));postalCode=String(fields['code-postal']??'');identifier=String(fields.identifiant??'');
   if(!/^\d{5,10}$/.test(identifier))return;
   for(const period of fields.periodes){
@@ -60,5 +68,5 @@ export function parseOfficialAgendaDetail(html:string,url:string,source:Official
  }
  if(!title||title.length>240||!location||!sessions.length||sessions.length>800)return;
  sessions=[...new Map(sessions.map(s=>[[s.start,s.time??'',s.endTime??''].join('|'),s])).values()].sort((a,b)=>a.start.localeCompare(b.start)||(a.time??'').localeCompare(b.time??''));
- return {cancelled:cancelled||/annul[eé]|cancelled|canceled/i.test(title)||undefined,id:'apidae-'+identifier,title,titleFr:title,start:sessions[0].start,time:sessions[0].time,sessions,location,streetAddress:streetAddress||undefined,postalCode:postalCode||undefined,category:category(title,new URL(url).pathname),summary:'An event in the official local programme. Check the organiser’s page for details and booking.',summaryFr:'Un rendez-vous du programme local officiel. Consultez la fiche de l’organisateur pour le détail et les réservations.',why:'Combine this event with places in the same commune, allowing time for travel.',whyFr:'Complétez ce rendez-vous avec des lieux de la même commune, en prévoyant les déplacements.',source:url,sourceLabel:source.label,sourceCheckedAt:checked};
+ return {...(organizer?{organizer}:{}),...(performers.length?{performers}:{}),cancelled:cancelled||/annul[eé]|cancelled|canceled/i.test(title)||undefined,id:'apidae-'+identifier,title,titleFr:title,start:sessions[0].start,time:sessions[0].time,sessions,location,streetAddress:streetAddress||undefined,postalCode:postalCode||undefined,category:category(title,new URL(url).pathname),summary:'An event in the official local programme. Check the organiser’s page for details and booking.',summaryFr:'Un rendez-vous du programme local officiel. Consultez la fiche de l’organisateur pour le détail et les réservations.',why:'Combine this event with places in the same commune, allowing time for travel.',whyFr:'Complétez ce rendez-vous avec des lieux de la même commune, en prévoyant les déplacements.',source:url,sourceLabel:source.label,sourceCheckedAt:checked};
 }

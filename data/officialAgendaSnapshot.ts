@@ -1,6 +1,6 @@
 import type {GolfeEvent} from './events';
 // Official programme records checked on 17 October 2026; fallback for unavailable providers.
-export const officialAgendaSnapshot:GolfeEvent[]=[
+export const officialAgendaSnapshot:GolfeEvent[] = [
   {
     "id": "apidae-7976468",
     "title": "Stof Reggea Festival",
@@ -10,7 +10,9 @@ export const officialAgendaSnapshot:GolfeEvent[]=[
     "sessions": [
       {
         "start": "2026-10-17",
-        "time": "18:00"
+        "time": "18:00",
+        "endTime": "01:00",
+        "end": "2026-10-18"
       }
     ],
     "location": "Gassin",
@@ -79,7 +81,8 @@ export const officialAgendaSnapshot:GolfeEvent[]=[
     "sessions": [
       {
         "start": "2026-10-17",
-        "time": "18:30"
+        "time": "18:30",
+        "endTime": "22:30"
       }
     ],
     "location": "Grimaud",
@@ -149,7 +152,8 @@ export const officialAgendaSnapshot:GolfeEvent[]=[
     "sessions": [
       {
         "start": "2026-10-17",
-        "time": "17:00"
+        "time": "17:00",
+        "endTime": "20:00"
       }
     ],
     "location": "Saint-Tropez",
@@ -173,7 +177,8 @@ export const officialAgendaSnapshot:GolfeEvent[]=[
     "sessions": [
       {
         "start": "2026-10-18",
-        "time": "11:00"
+        "time": "11:00",
+        "endTime": "15:00"
       }
     ],
     "location": "Cavalaire-sur-Mer",
@@ -314,7 +319,8 @@ export const officialAgendaSnapshot:GolfeEvent[]=[
     "sessions": [
       {
         "start": "2026-10-21",
-        "time": "10:00"
+        "time": "10:00",
+        "endTime": "11:00"
       }
     ],
     "location": "Cogolin",
@@ -386,7 +392,8 @@ export const officialAgendaSnapshot:GolfeEvent[]=[
     "sessions": [
       {
         "start": "2026-10-23",
-        "time": "20:30"
+        "time": "20:30",
+        "endTime": "22:00"
       }
     ],
     "location": "Ramatuelle",
@@ -458,7 +465,8 @@ export const officialAgendaSnapshot:GolfeEvent[]=[
     "sessions": [
       {
         "start": "2026-10-24",
-        "time": "15:30"
+        "time": "15:30",
+        "endTime": "17:00"
       }
     ],
     "location": "Sainte-Maxime",
