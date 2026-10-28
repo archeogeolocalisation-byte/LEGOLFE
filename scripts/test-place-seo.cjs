@@ -58,6 +58,13 @@ async function htmlFor(id,locale){const stream=await renderToReadableStream(awai
    const schema=JSON.parse(html.match(/<script type="application\/ld\+json">([^<]+)<\/script>/g).map(tag=>tag.replace(/^.*?>/,'').replace(/<\/script>$/,'')).find(text=>JSON.parse(text)['@type']!=='BreadcrumbList'));
    assert.equal(schema.description,description,'Structured data and metadata describe the same content');
    if(place.id==='place-des-lices'&&locale==='fr'){assert.equal(title.includes('market'),false);assert.ok(html.includes('Place des Lices &amp; marché'));}
+   if(['randonnee-saint-clement','randonnee-moulin-adrech','randonnee-miremer'].includes(place.id)){
+    const routeId=place.id.slice('randonnee-'.length);
+    assert.ok(html.includes(`id="parcours-${routeId}"`),'Each new hike has its full route on the actual place page');
+    assert.ok(html.includes(`/media/trails/${routeId}.gpx`));assert.ok(html.includes('type="range"'));assert.ok(html.includes('IGN RGE ALTI'));
+    assert.ok(html.includes(`/${locale}/place/${place.id}#contribuer`));assert.ok(html.includes('overview.svg'));assert.ok(!html.includes('Image Wikimedia Commons'),'Route diagrams are not labelled as Wikimedia photos');
+    assert.ok(xml.includes(`<loc>${metadata.alternates.canonical}</loc><lastmod>2026-10-28</lastmod>`));
+   }
    if(place.id==='circuit-cap-lardier'){
     assert.ok(html.includes('id="parcours-cap-lardier"'),'Cap Lardier place page renders the actual route, not only the guide');
     assert.ok(html.includes('cap-lardier.gpx'));assert.ok(html.includes('type="range"'));assert.ok(html.includes('OpenStreetMap'));

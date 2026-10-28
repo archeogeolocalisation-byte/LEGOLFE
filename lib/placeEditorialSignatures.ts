@@ -1,3 +1,4 @@
+import {newHikingSignatures} from '../data/newHikingPlaces';
 import {coastalDiscoverySignatures} from '../data/coastalDiscoveryPlaces';
 import {localDiscoveriesSignatures} from '../data/localDiscoveriesPlaces';
 import {localLifeSignatures} from '../data/localLifePlaces';
@@ -14,6 +15,7 @@ import type {Locale} from './i18n';
 
 type Signature={subtitle:string;quote:string;rhythm:string;dark:string;close:string};
 export const editorialSignatures:Record<string,Record<Locale,Signature>>={
+ ...newHikingSignatures,
  ...associationSignatures,
  ...localLifeSignatures,
  ...localDiscoveriesSignatures,

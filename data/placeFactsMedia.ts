@@ -1,6 +1,8 @@
+import {newHikingMedia} from './newHikingPlaces';
 import type {VillagePhoto} from './villageMedia';
 export type FactPhoto=VillagePhoto & {width:number;height:number};
 export const placeFactsMedia:Record<string,FactPhoto> = {
+ ...newHikingMedia,
   "grimaud-village": {
     "src": "/media/place-facts/grimaud-village.webp",
     "alt": "Le village de Grimaud (2023)",

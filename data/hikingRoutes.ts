@@ -1,3 +1,4 @@
+import {newHikingRoutes} from './newHikingRoutes';
 import cap from './cap-lardierTrail.json';
 import pont from './pont-des-feesTrail.json';
 import fort from './roches-blanchesTrail.json';
@@ -5,8 +6,9 @@ import type {HikingPoint} from '../lib/hikingTrack';
 import type {Locale} from '../lib/i18n';
 
 type Copy={title:string;intro:string;start:string;distance:string;time:string;ascent:string;level:string;warning:string;steps:[string,string][]};
-export type HikingRouteDefinition={id:string;slug:string;placeId:string;points:HikingPoint[];sourcePage:string;sourceLabel:string;gpx?:string;copy:Record<Locale,Copy>};
+export type HikingRouteDefinition={id:string;slug?:string;placeId:string;points:HikingPoint[];sourcePage:string;sourceLabel:string;gpx?:string;altitudeSource?:string;copy:Record<Locale,Copy>};
 export const hikingRoutes:HikingRouteDefinition[]=[
+ ...newHikingRoutes,
  {id:'cap-lardier',slug:'randonnee-cap-lardier-gigaro',placeId:'circuit-cap-lardier',points:cap.points,sourcePage:cap.sourcePage,sourceLabel:'Parc national de Port-Cros',gpx:'/media/trails/cap-lardier.gpx',copy:{
   fr:{title:'Cap Lardier · la boucle de Gigaro',intro:'Le maquis à l’aller, les criques au retour. Une demi-journée pour retrouver Gigaro par le littoral.',start:'Point d’accueil de Gigaro',distance:'8,2 km · boucle',time:'3 h 30 annoncées',ascent:'+282 m',level:'Intermédiaire',warning:'Sentier irrégulier et exposé à la chaleur. Cette boucle ne rejoint pas le Cap Taillat.',steps:[['Partir de Gigaro','Préparez le stationnement et repérez le point d’accueil.'],['Rejoindre le cap','Suivez la branche intérieure et les indications du Parc.'],['Retrouver la mer','Revenez par Brouis et Jovat ; gardez du temps pour les pauses.']]},
   en:{title:'Cap Lardier · the Gigaro loop',intro:'Scrubland on the way out, coves on the way back. A half-day walk returning to Gigaro along the coast.',start:'Gigaro welcome point',distance:'8.2 km · loop',time:'Listed time: 3 h 30',ascent:'+282 m',level:'Intermediate',warning:'Uneven paths and exposure to heat. This loop does not reach Cap Taillat.',steps:[['Start at Gigaro','Plan parking and locate the welcome point.'],['Reach the cape','Follow the inland section and the Park’s directions.'],['Return by the sea','Head back via Brouis and Jovat, allowing time for breaks.']]}

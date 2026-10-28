@@ -1,3 +1,4 @@
+import {newHikingFacts} from './newHikingPlaces';
 import {coastalDiscoveryFacts} from './coastalDiscoveryPlaces';
 import {localDiscoveriesFacts} from './localDiscoveriesPlaces';
 import {localLifeFacts} from './localLifePlaces';
@@ -15,6 +16,7 @@ import type {Locale} from '../lib/i18n';
 export type PlaceFactCopy={title:string;description:string;intro:string;facts:[string,string][];sections:[string,string][];questions:[string,string][]};
 export type PlaceFacts={verified:string;copy:Record<Locale,PlaceFactCopy>;sources:{label:string;url:string}[];nearby:string[]};
 export const placeFacts:Record<string,PlaceFacts> = {
+ ...newHikingFacts,
  ...associationFacts,
  ...localLifeFacts,
  ...localDiscoveriesFacts,

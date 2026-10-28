@@ -1,3 +1,4 @@
+import {newHikingPlaces} from './newHikingPlaces';
 import {coastalDiscoveryPlaces} from './coastalDiscoveryPlaces';
 import {localDiscoveriesPlaces} from './localDiscoveriesPlaces';
 import {localLifePlaces} from './localLifePlaces';
@@ -56,6 +57,7 @@ export type Place = {
 // Facts below were desk-checked against official/tourism sources in September 2026;
 // "bestFor", "notIdealFor" and tags are LE GOLFE editorial classifications.
 export const places: Place[] = [
+ ...newHikingPlaces,
  ...associationPlaces,
  ...localLifePlaces,
  ...localDiscoveriesPlaces,
