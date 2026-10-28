@@ -19,3 +19,7 @@ The short official Fort circuit is a separate route (3 km, difficult); its linke
 The three `data/*Trail.json` files hold source SHA-256 hashes and all source coordinates/elevations. Local Cap and Pont GPX files preserve every point in order. `scripts/test-hiking-routes.cjs` checks snapshots, downloads, map framing, interactive profile state and guide/place integration. Source labels and documentary dates appear on the public pages. Opening status must be checked separately on the day.
 
 Fort photograph reuses the existing locally cached Commons image (no new download): Blaue Max, 2015, [source](https://commons.wikimedia.org/wiki/File:Fort_du_Freinet,_La_Garde-Freinet,_France.jpg), CC BY-SA 4.0. Existing resizing, WebP conversion and display cropping are disclosed by `GuideImage`.
+
+## Page separation correction — 28 October 2026
+
+The Cap Lardier route is attached to the actual `circuit-cap-lardier` place page as well as its guide. The 9.46 km Visorando loop belongs to its own `randonnee-roches-blanches` place page; its existing guide URL is retained. `fort-freinet` covers the shorter site visit, links to the official blue/red access plan, and does not render or attribute reports to the longer loop. No complete short-track geometry is invented from the red GPX fragments. The blue approach is presented as shorter and less difficult than the red connection, with rocky terrain still disclosed; the office’s combined 3 km figures are not assigned to an unmeasured blue return walk.

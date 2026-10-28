@@ -3,7 +3,7 @@ const fs=require('node:fs'),path=require('node:path'),assert=require('node:asser
 const compile=source=>ts.transpileModule(source,{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022,jsx:ts.JsxEmit.ReactJSX,esModuleInterop:true}}).outputText;
 for(const ext of ['.ts','.tsx'])require.extensions[ext]=(m,f)=>m._compile(compile(fs.readFileSync(f,'utf8')),f);
 require.extensions['.css']=m=>{m.exports=new Proxy({},{get:(_,key)=>key==='__esModule'?false:String(key)});};
-const {hikingRoutes}=require('../data/hikingRoutes.ts'),{hikingMapFrame}=require('../lib/hikingTrack.ts'),{mapPointPixels}=require('../lib/villaMapLocation.ts');
+const {hikingRoutes,hikingRouteForPlace}=require('../data/hikingRoutes.ts'),{hikingMapFrame}=require('../lib/hikingTrack.ts'),{mapPointPixels}=require('../lib/villaMapLocation.ts');
 const {renderToStaticMarkup}=require('react-dom/server'),Component=require('../components/HikingRoute.tsx').default;
 function distance(a,b){const rad=x=>x*Math.PI/180;return 6371*2*Math.asin(Math.sqrt(Math.sin(rad(b.lat-a.lat)/2)**2+Math.cos(rad(a.lat))*Math.cos(rad(b.lat))*Math.sin(rad(b.lon-a.lon)/2)**2));}
 for(const route of hikingRoutes){
@@ -32,6 +32,7 @@ for(const route of hikingRoutes){
  states=[];refs=[];const render=()=>{cursor=0;refCursor=0;return m.exports.default({route,locale:'fr'});};let tree=render();const lastIndex=route.points.length-1;nodes(tree).find(n=>n.type==='input').props.onChange({target:{value:String(lastIndex)}});tree=render();assert.ok(nodes(tree).filter(n=>n.type?.name==='HikingMap').every(n=>n.props.index===lastIndex));assert.ok(text(nodes(tree).find(n=>n.type==='output')).includes(String(Math.round(route.points.at(-1).elevation))));
  let opened=0,focused=0;nodes(tree).find(n=>n.type==='dialog').props.ref.current={showModal(){opened++;},close(){}};nodes(tree).find(n=>n.type==='button'&&text(n).includes('Carte plein écran')).props.onClick({currentTarget:{focus(){focused++;}}});tree=render();assert.equal(opened,1);assert.equal(nodes(tree).filter(n=>n.type?.name==='HikingMap').length,2);nodes(tree).find(n=>n.type==='dialog').props.onClose();tree=render();assert.equal(focused,1);assert.equal(nodes(tree).filter(n=>n.type?.name==='HikingMap').length,1);
 }
+assert.equal(hikingRouteForPlace('circuit-cap-lardier')?.id,'cap-lardier');assert.equal(hikingRouteForPlace('randonnee-roches-blanches')?.id,'roches-blanches');assert.equal(hikingRouteForPlace('fort-freinet'),undefined);
 const fort=hikingRoutes.find(r=>r.id==='roches-blanches');assert.match(fort.copy.fr.warning,/rouge.*expérimentés/);assert.match(fort.copy.en.warning,/red.*experienced/);assert.match(fort.copy.fr.warning,/3 km/);
 const page=fs.readFileSync(path.join(__dirname,'../app/[locale]/guides/[slug]/page.tsx'),'utf8');assert.match(page,/hikingRouteForGuide\(guide.slug\)/);assert.match(page,/<HikingRoute key=\{hikingRoute.id\}/);
 console.log('PASS: 3 hiking routes — 1,143 source coordinates/elevations, snapshot hashes, cumulative distances, GPX conversion, mobile/desktop framing, FR/EN rendering, profile exploration, fullscreen focus and trail-report links.');

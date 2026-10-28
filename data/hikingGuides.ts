@@ -312,6 +312,7 @@ export const hikingGuides: Guide[] = [
       "la-croix-valmer"
     ],
     "placeIds": [
+      "circuit-cap-lardier",
       "gigaro-beach"
     ],
     "related": [
@@ -445,6 +446,10 @@ export const hikingGuides: Guide[] = [
         ],
         "links": [
           {
+            "label": "Le circuit et son tracé",
+            "path": "/place/circuit-cap-lardier"
+          },
+          {
             "label": "Gigaro, la plage de départ",
             "path": "/place/gigaro-beach"
           },
@@ -558,6 +563,10 @@ export const hikingGuides: Guide[] = [
           }
         ],
         "links": [
+          {
+            "label": "The circuit and its track",
+            "path": "/place/circuit-cap-lardier"
+          },
           {
             "label": "Gigaro beach, the starting point",
             "path": "/place/gigaro-beach"
@@ -879,7 +888,7 @@ export const hikingGuides: Guide[] = [
       "la-garde-freinet"
     ],
     "placeIds": [
-      "fort-freinet",
+      "randonnee-roches-blanches",
       "croix-des-maures"
     ],
     "related": [
@@ -918,9 +927,9 @@ export const hikingGuides: Guide[] = [
     ],
     "copy": {
       "fr": {
-        "title": "LES MAURES.",
-        "accent": "DE CRÊTE EN FORT.",
-        "seoTitle": "Roches Blanches et Fort Freinet : randonnée de 9,46 km",
+        "title": "ROCHES BLANCHES.",
+        "accent": "LA GRANDE RANDONNÉE.",
+        "seoTitle": "Randonnée vers les Roches Blanches depuis La Garde-Freinet",
         "description": "Une grande boucle à La Garde-Freinet : Roches Blanches, Croix des Maures et Fort Freinet, avec carte du tracé, relief, départ et précautions.",
         "intro": "Prenez de la hauteur au-dessus de La Garde-Freinet. Une sortie pour marcher vraiment, lever les yeux sur les crêtes et terminer au Fort avant de retrouver les rues du village.",
         "verdict": "Réservez une bonne demi-journée, pauses comprises. Gardez de l’énergie pour le final escarpé.",
@@ -1017,6 +1026,10 @@ export const hikingGuides: Guide[] = [
         ],
         "links": [
           {
+            "label": "La fiche randonnée des Roches Blanches",
+            "path": "/place/randonnee-roches-blanches"
+          },
+          {
             "label": "La fiche du Fort Freinet",
             "path": "/place/fort-freinet"
           },
@@ -1031,9 +1044,9 @@ export const hikingGuides: Guide[] = [
         ]
       },
       "en": {
-        "title": "THE MAURES.",
-        "accent": "RIDGES TO THE FORT.",
-        "seoTitle": "Roches Blanches and Fort Freinet: a 9.46 km hiking loop",
+        "title": "ROCHES BLANCHES.",
+        "accent": "THE LONGER HIKE.",
+        "seoTitle": "Roches Blanches hike from La Garde-Freinet: the longer loop",
         "description": "A longer walk in La Garde-Freinet via Roches Blanches, Croix des Maures and Fort Freinet, with a route map, elevation profile, start and precautions.",
         "intro": "Head above La Garde-Freinet for a proper walk, open ridge views and a final stop at the Fort before returning to the village streets.",
         "verdict": "Allow a generous half-day including stops. Save some energy for the steep final section.",
@@ -1129,6 +1142,10 @@ export const hikingGuides: Guide[] = [
           }
         ],
         "links": [
+          {
+            "label": "Roches Blanches hiking page",
+            "path": "/place/randonnee-roches-blanches"
+          },
           {
             "label": "Fort Freinet place guide",
             "path": "/place/fort-freinet"

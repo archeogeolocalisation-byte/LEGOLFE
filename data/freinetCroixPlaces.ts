@@ -29,7 +29,7 @@ export const freinetCroixPlaces:Place[] = [
     "verified": false,
     "featured": false,
     "source": "https://www.golfe-saint-tropez-information.com/fr/loisirs/site-et-monument-historique/la-garde-freinet/fort-freinet-3350325",
-    "lastVerifiedAt": "2026-10-16"
+    "lastVerifiedAt": "2026-10-28"
   },
   {
     "id": "croix-des-maures",
@@ -157,19 +157,49 @@ export const freinetCroixPlaces:Place[] = [
     "verified": false,
     "featured": false,
     "source": "https://destination.portcros-parcnational.fr/fr/trek/681-Circuit-du-Cap-Lardier",
-    "lastVerifiedAt": "2026-10-16"
+    "lastVerifiedAt": "2026-10-28"
+  },
+  {
+    "id": "randonnee-roches-blanches",
+    "name": "Randonnée vers les Roches Blanches",
+    "category": "do",
+    "location": "La Garde-Freinet",
+    "description": "A longer walk in La Garde-Freinet via Roches Blanches, Croix des Maures and Fort Freinet, with a route map, elevation profile, start and precautions.",
+    "bestFor": [
+      "A longer hike in the Maures"
+    ],
+    "notIdealFor": [
+      "A short stroll"
+    ],
+    "tags": [
+      "hiking",
+      "walk",
+      "nature",
+      "view"
+    ],
+    "goodToKnow": [
+      "9.46 km loop; separate from the short Fort-Freinet walk."
+    ],
+    "verified": false,
+    "featured": false,
+    "source": "https://www.visorando.com/randonnee-les-roches-blanches-la-croix-des-maures-/",
+    "lastVerifiedAt": "2026-10-28"
   }
 ];
 
 export const freinetCroixFacts:Record<string,PlaceFacts> = {
   "fort-freinet": {
-    "verified": "2026-10-16",
+    "verified": "2026-10-28",
     "copy": {
       "fr": {
-        "title": "Fort-Freinet : visite du site et accès à pied",
+        "title": "Fort Freinet : balade courte et accès au site médiéval",
         "description": "Découvrez le Fort-Freinet à La Garde-Freinet : vestiges du village médiéval, panorama sur les Maures et accès à pied. Un chemin escarpé à préparer avant la visite.",
-        "intro": "Au-dessus de La Garde-Freinet, le rocher devient une page d’histoire. Le Fort-Freinet conserve les traces d’un village fortifié et ouvre le regard sur les Maures. Notre idée : venir pour les vestiges autant que pour le paysage, avec le temps et l’équipement nécessaires à une véritable montée.",
+        "intro": "Une sortie centrée sur les vestiges et le panorama, à distinguer de la grande randonnée des Roches Blanches. Depuis le parking de la Croix, choisissez l’accès bleu indiqué sur le plan officiel et revenez par le même chemin. Un programme plus court, avec un terrain rocheux qui demande de l’attention.",
         "facts": [
+          [
+            "Format",
+            "Balade vers le Fort · distincte des Roches Blanches"
+          ],
           [
             "Site",
             "Ancien village fortifié médiéval"
@@ -193,12 +223,12 @@ export const freinetCroixFacts:Record<string,PlaceFacts> = {
             "Le Fort-Freinet est un ancien habitat fortifié dont l’occupation médiévale est présentée du XIIe au XVIe siècle. La roche, les vestiges et le fossé racontent l’organisation du lieu. Notre conseil : observer la façon dont le relief a été utilisé avant de chercher à reconnaître chaque bâtiment disparu."
           ],
           [
-            "Comment accéder au Fort-Freinet ?",
-            "Le Conservatoire indique un accès uniquement à pied depuis le village ou le parking de la Croix. Le repère de cette fiche situe le site archéologique, pas un accès automobile au sommet. Suivez le parcours officiel et les indications sur place ; chaussures adaptées, eau et temps pour le retour sont à prévoir."
+            "Le départ court : parking de la Croix",
+            "Le plan officiel propose un accès depuis le parking de la Croix. Pour rejoindre le Fort, préférez le sentier bleu, moins difficile que la liaison rouge, puis reprenez le même itinéraire au retour. Le repère cartographique ci-dessous situe les vestiges ; consultez le plan pour le départ et les embranchements."
           ],
           [
-            "Une montée qui demande de l’attention",
-            "La fiche de randonnée Croix et Fort-Freinet décrit des portions raides, des escarpements et des à-pics. Elle recommande d’éviter pluie et vent. Vérifiez météo et ouverture des massifs, restez sur les passages indiqués et renoncez si les conditions ne conviennent pas au groupe. La distance de 3 km annoncée concerne le circuit combiné, pas un simple accès au fort."
+            "Plus court, avec des passages rocheux",
+            "Cette balade évite le grand détour vers les Roches Blanches. Le bleu reste escarpé : chaussures adaptées et temps sec sont recommandés. Évitez pluie et vent fort. Les 3 km et 1 h 30 de l’office concernent son circuit combinant Croix et Fort ; ce ne sont pas des mesures de l’accès bleu aller-retour."
           ],
           [
             "Relier le paysage au musée",
@@ -211,16 +241,20 @@ export const freinetCroixFacts:Record<string,PlaceFacts> = {
             "Non. Le site se rejoint à pied depuis le village ou le parking de la Croix. La carte ne désigne pas une route automobile jusqu’aux vestiges."
           ],
           [
-            "La visite convient-elle à une promenade facile ?",
-            "L’approche est escarpée et le circuit officiel comporte des passages difficiles. Consultez la fiche de randonnée et choisissez un programme adapté à votre groupe."
+            "Est-ce la randonnée des Roches Blanches ?",
+            "Non. Cette fiche présente la visite courte du Fort. La boucle de 9,46 km vers les Roches Blanches possède sa propre fiche. L’accès bleu au Fort reste rocheux et ne garantit pas une promenade facile pour tous."
           ]
         ]
       },
       "en": {
-        "title": "Fort-Freinet: medieval remains and walking access",
+        "title": "Fort Freinet: short walk and medieval site access",
         "description": "Visit Fort-Freinet above La Garde-Freinet: medieval village remains, Maures views and walking access. Plan for steep terrain and check conditions before visiting.",
-        "intro": "Above La Garde-Freinet, the rock becomes a page of history. Fort-Freinet preserves traces of a fortified village and opens the view across the Maures. Our idea: come for the remains as much as the landscape, allowing the time and equipment needed for a proper climb.",
+        "intro": "A visit centred on the remains and views, separate from the longer Roches Blanches hike. From the Croix car park, choose the blue approach shown on the official plan and return along the same path. A shorter outing with rocky terrain that still needs care.",
         "facts": [
+          [
+            "Format",
+            "Short Fort walk · separate from Roches Blanches"
+          ],
           [
             "Site",
             "Former medieval fortified village"
@@ -244,12 +278,12 @@ export const freinetCroixFacts:Record<string,PlaceFacts> = {
             "Fort-Freinet is a former fortified settlement whose medieval occupation is presented from the 12th to 16th centuries. Rock, remains and the ditch reveal its organisation. Our advice: look at how people used the terrain before trying to identify every vanished building."
           ],
           [
-            "How to reach Fort-Freinet",
-            "The Conservatoire describes access on foot only from the village or Croix car park. This page’s marker locates the archaeological site, not vehicle access to the summit. Follow official routes and local signs, bringing suitable shoes, water and time for the return."
+            "The shorter start: Croix car park",
+            "The official plan shows an approach from the Croix car park. Choose the blue path to the Fort, less difficult than the red connection, and retrace your route. The map below locates the remains; use the official plan for the start and junctions."
           ],
           [
-            "A climb requiring attention",
-            "The Croix and Fort-Freinet walking listing describes steep sections, rocky passages and drops. It advises avoiding rain and wind. Check weather and forest access, keep to indicated routes and turn back if conditions do not suit your group. The listed 3 km refers to the combined circuit, not simply reaching the fort."
+            "Shorter, with rocky sections",
+            "This visit avoids the longer Roches Blanches circuit. The blue path remains steep: wear suitable footwear and choose dry weather. Avoid rain and strong wind. The office’s 3 km and 1 h 30 describe its combined Croix and Fort circuit, not a measured blue out-and-back approach."
           ],
           [
             "Connect landscape and museum",
@@ -262,8 +296,8 @@ export const freinetCroixFacts:Record<string,PlaceFacts> = {
             "No. Walk from the village or Croix car park. The map does not indicate a road to the remains."
           ],
           [
-            "Is it an easy stroll?",
-            "The approach is steep and the official circuit has difficult sections. Consult the route and choose an outing suitable for your group."
+            "Is this the Roches Blanches hike?",
+            "No. This page covers the shorter Fort visit. The 9.46 km Roches Blanches loop has its own page. The blue approach remains rocky and is not an easy stroll for everyone."
           ]
         ]
       }
@@ -284,9 +318,14 @@ export const freinetCroixFacts:Record<string,PlaceFacts> = {
       {
         "label": "Préfecture du Var · accès aux massifs",
         "url": "https://www.var.gouv.fr/Actions-de-l-Etat/Foret/Fermeture-des-massifs-en-ete/Carte-d-acces-aux-massifs"
+      },
+      {
+        "label": "Office du Golfe · Plan des accès bleus et rouges (PDF)",
+        "url": "https://static.apidae-tourisme.com/filestore/objets-touristiques/documents/171/165/37660075/2023CCGST_FicheRando1FR.pdf"
       }
     ],
     "nearby": [
+      "randonnee-roches-blanches",
       "croix-des-maures",
       "conservatoire-patrimoine-freinet"
     ]
@@ -784,7 +823,7 @@ export const freinetCroixFacts:Record<string,PlaceFacts> = {
     ]
   },
   "circuit-cap-lardier": {
-    "verified": "2026-10-16",
+    "verified": "2026-10-28",
     "copy": {
       "fr": {
         "title": "Circuit du Cap Lardier depuis Gigaro : randonnée de 8,2 km",
@@ -913,6 +952,156 @@ export const freinetCroixFacts:Record<string,PlaceFacts> = {
       "la-croix-valmer-village",
       "gigaro-beach"
     ]
+  },
+  "randonnee-roches-blanches": {
+    "verified": "2026-10-28",
+    "sources": [
+      {
+        "label": "Visorando · Roches Blanches, Croix des Maures et Fort Freinet (2710724)",
+        "url": "https://www.visorando.com/randonnee-les-roches-blanches-la-croix-des-maures-/"
+      },
+      {
+        "label": "Office du Golfe · La Croix et le Fort Freinet : difficultés du site",
+        "url": "https://www.golfe-saint-tropez-information.com/fr/loisirs/loisirs-sportifs/la-garde-freinet/la-garde-freinet-la-croix-et-le-fort-freinet-4599409"
+      },
+      {
+        "label": "Office du Golfe · Circuit court et variantes du Fort Freinet (PDF)",
+        "url": "https://static.apidae-tourisme.com/filestore/objets-touristiques/documents/171/165/37660075/2023CCGST_FicheRando1FR.pdf"
+      },
+      {
+        "label": "Conservatoire du Patrimoine du Freinet · Le Fort Freinet",
+        "url": "https://www.conservatoiredufreinet.org/sites-et-patrimoine/le-fort-freinet/"
+      },
+      {
+        "label": "Préfecture du Var · Carte d’accès aux massifs",
+        "url": "https://www.var.gouv.fr/Actions-de-l-Etat/Foret/Fermeture-des-massifs-en-ete/Carte-d-acces-aux-massifs"
+      }
+    ],
+    "nearby": [
+      "fort-freinet",
+      "croix-des-maures",
+      "conservatoire-patrimoine-freinet"
+    ],
+    "copy": {
+      "fr": {
+        "title": "Randonnée vers les Roches Blanches depuis La Garde-Freinet",
+        "description": "Une grande boucle à La Garde-Freinet : Roches Blanches, Croix des Maures et Fort Freinet, avec carte du tracé, relief, départ et précautions.",
+        "intro": "Prenez de la hauteur au-dessus de La Garde-Freinet. Une sortie pour marcher vraiment, lever les yeux sur les crêtes et terminer au Fort avant de retrouver les rues du village.",
+        "facts": [
+          [
+            "Départ",
+            "Parking des Teilles · La Garde-Freinet"
+          ],
+          [
+            "Distance",
+            "9,46 km · boucle Visorando"
+          ],
+          [
+            "Durée publiée",
+            "3 h 40 hors pauses"
+          ],
+          [
+            "Dénivelé",
+            "+344 m"
+          ],
+          [
+            "Niveau",
+            "Moyenne · vigilance au Fort"
+          ],
+          [
+            "Point haut",
+            "636 m"
+          ]
+        ],
+        "sections": [
+          [
+            "Commencer au village",
+            "La boucle cartographiée part du parking des Teilles. Préparez votre stationnement puis ouvrez le descriptif pour les premières intersections. Une arrivée au parking de la Croix change le départ de référence."
+          ],
+          [
+            "Choisir la bonne boucle",
+            "Cette fiche suit le grand circuit Visorando : Roches Blanches, Croix et Fort. L’office propose aussi une sortie de 3 km, classée difficile : sa distance et ses variantes décrivent un autre itinéraire."
+          ],
+          [
+            "Au Fort, garder toute son attention",
+            "L’office signale des escarpements et des passages exposés. Évitez pluie et vent fort ; la liaison rouge est réservée aux marcheurs expérimentés. Le bleu reste escarpé. Si le terrain dépasse votre aisance, renoncez au passage."
+          ],
+          [
+            "Préparer le jour de la sortie",
+            "Vérifiez l’accès aux massifs et la météo avant de partir. Notre conseil : emportez de l’eau, le descriptif et une marge avant la nuit. Les pauses s’ajoutent au temps publié."
+          ]
+        ],
+        "questions": [
+          [
+            "Est-ce le petit circuit de 3 km ?",
+            "Non : la carte présente la grande boucle de 9,46 km publiée sur Visorando. Le circuit court de l’office reste un itinéraire distinct."
+          ],
+          [
+            "Peut-on venir en voiture au Fort ?",
+            "Le site se rejoint à pied, depuis le village ou le parking de la Croix."
+          ]
+        ]
+      },
+      "en": {
+        "title": "Roches Blanches hike from La Garde-Freinet: the longer loop",
+        "description": "A longer walk in La Garde-Freinet via Roches Blanches, Croix des Maures and Fort Freinet, with a route map, elevation profile, start and precautions.",
+        "intro": "Head above La Garde-Freinet for a proper walk, open ridge views and a final stop at the Fort before returning to the village streets.",
+        "facts": [
+          [
+            "Start",
+            "Les Teilles car park · La Garde-Freinet"
+          ],
+          [
+            "Distance",
+            "9.46 km · Visorando loop"
+          ],
+          [
+            "Published time",
+            "3 h 40 excluding stops"
+          ],
+          [
+            "Ascent",
+            "+344 m"
+          ],
+          [
+            "Difficulty",
+            "Moderate · care at the Fort"
+          ],
+          [
+            "Highest point",
+            "636 m"
+          ]
+        ],
+        "sections": [
+          [
+            "Start in the village",
+            "The mapped loop starts at Les Teilles car park. Plan parking, then open the directions for the first junctions. Starting at the Croix car park changes the reference start."
+          ],
+          [
+            "Choose the right circuit",
+            "This guide follows the longer Visorando circuit: Roches Blanches, the Croix and the Fort. The tourist office also lists a difficult 3 km walk; its distance and variants describe a separate route."
+          ],
+          [
+            "Give the Fort your full attention",
+            "The tourist office warns of steep and exposed sections. Avoid rain and strong wind. The red connection is for experienced walkers; the blue remains steep. Turn back if the terrain exceeds your confidence."
+          ],
+          [
+            "Check before setting off",
+            "Check forest access and the weather. Our suggestion: bring water, the directions and a margin before dark. Stops are additional to the published walking time."
+          ]
+        ],
+        "questions": [
+          [
+            "Is this the short 3 km circuit?",
+            "No. The map shows the longer 9.46 km loop published on Visorando. The office’s short circuit is a separate route."
+          ],
+          [
+            "Can I drive to the Fort?",
+            "The site is reached on foot, from the village or the Croix car park."
+          ]
+        ]
+      }
+    }
   }
 };
 
@@ -1011,6 +1200,22 @@ export const freinetCroixSignatures = {
       "rhythm": "START AT GIGARO. REACH THE CAP. RETURN BY THE COAST.",
       "dark": "THE RIGHT CIRCUIT BEGINS WITH THE RIGHT TRACK.",
       "close": "GIVE CAP LARDIER ITS HALF-DAY."
+    }
+  },
+  "randonnee-roches-blanches": {
+    "fr": {
+      "subtitle": "LES ROCHES BLANCHES, AU FIL DES CRÊTES.",
+      "quote": "PRENDRE DE LA HAUTEUR DANS LES MAURES.",
+      "rhythm": "MARCHER. REJOINDRE LES CRÊTES. REVENIR AU VILLAGE.",
+      "dark": "UNE GRANDE BOUCLE À PRÉPARER.",
+      "close": "LE BON DÉPART POUR LES ROCHES BLANCHES."
+    },
+    "en": {
+      "subtitle": "ROCHES BLANCHES, ALONG THE RIDGES.",
+      "quote": "GAIN HEIGHT IN THE MAURES.",
+      "rhythm": "WALK. REACH THE RIDGES. RETURN TO THE VILLAGE.",
+      "dark": "PLAN FOR A LONGER LOOP.",
+      "close": "THE RIGHT START FOR ROCHES BLANCHES."
     }
   }
 };
@@ -1129,6 +1334,24 @@ export const freinetCroixMapPoints:Record<string,MapPoint[]> = {
         "en": "Start of the National Park’s official GPX at Gigaro, not the headland. Park nearby and continue on foot; check site opening."
       }
     }
+  ],
+  "randonnee-roches-blanches": [
+    {
+      "id": "roches-blanches-start",
+      "label": {
+        "fr": "Départ de la grande boucle · parking des Teilles",
+        "en": "Long loop start · Les Teilles car park"
+      },
+      "latitude": 43.319761,
+      "longitude": 6.469907,
+      "source": "https://www.visorando.com/randonnee-les-roches-blanches-la-croix-des-maures-/",
+      "checked": "2026-10-28",
+      "kind": "area",
+      "note": {
+        "fr": "Départ publié du circuit Visorando 2710724. Stationnement à vérifier sur place.",
+        "en": "Published start of Visorando route 2710724. Check parking on site."
+      }
+    }
   ]
 };
 
@@ -1217,6 +1440,20 @@ export const freinetCroixMedia:Record<string,VillagePhoto[]> = {
       "credit": "Johan N / Wikimedia Commons",
       "license": "CC BY-SA 3.0",
       "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/"
+    }
+  ],
+  "randonnee-roches-blanches": [
+    {
+      "src": "https://upload.wikimedia.org/wikipedia/commons/6/6e/Fort_du_Freinet%2C_La_Garde-Freinet%2C_France.jpg",
+      "source": "https://commons.wikimedia.org/wiki/File:Fort_du_Freinet,_La_Garde-Freinet,_France.jpg",
+      "alt": "Vestiges du Fort-Freinet à La Garde-Freinet (2015)",
+      "caption": {
+        "fr": "Fort Freinet, dernière étape de la grande boucle des Roches Blanches (2015)",
+        "en": "Fort Freinet, a final stop on the longer Roches Blanches loop (2015)"
+      },
+      "credit": "Blaue Max / Wikimedia Commons",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
     }
   ]
 };
