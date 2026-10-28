@@ -58,6 +58,21 @@ async function htmlFor(id,locale){const stream=await renderToReadableStream(awai
    const schema=JSON.parse(html.match(/<script type="application\/ld\+json">([^<]+)<\/script>/g).map(tag=>tag.replace(/^.*?>/,'').replace(/<\/script>$/,'')).find(text=>JSON.parse(text)['@type']!=='BreadcrumbList'));
    assert.equal(schema.description,description,'Structured data and metadata describe the same content');
    if(place.id==='place-des-lices'&&locale==='fr'){assert.equal(title.includes('market'),false);assert.ok(html.includes('Place des Lices &amp; marché'));}
+   if(place.id==='circuit-cap-lardier'){
+    assert.ok(html.includes('id="parcours-cap-lardier"'),'Cap Lardier place page renders the actual route, not only the guide');
+    assert.ok(html.includes('cap-lardier.gpx'));assert.ok(html.includes('type="range"'));assert.ok(html.includes('OpenStreetMap'));
+   }
+   if(place.id==='randonnee-roches-blanches'){
+    assert.ok(html.includes('id="parcours-roches-blanches"'));assert.ok(html.includes(locale==='fr'?'9,46 km':'9.46 km'));
+    assert.ok(html.includes(`/${locale}/place/randonnee-roches-blanches#contribuer`),'Trail reports belong to the longer hike');
+    assert.ok(html.includes(`/${locale}/place/fort-freinet`),'The separate Fort visit stays linked');
+   }
+   if(place.id==='fort-freinet'){
+    assert.ok(!html.includes('id="parcours-roches-blanches"'),'Fort visit must never inherit the longer hike');
+    assert.ok(html.includes(locale==='fr'?'Fort Freinet : la balade courte':'Fort Freinet: the shorter walk'));
+    assert.ok(html.includes('2023CCGST_FicheRando1FR.pdf'));assert.ok(html.includes('parking de la Croix')||html.includes('Croix car park'));
+    assert.ok(html.includes(`href="/${locale}/place/randonnee-roches-blanches"`));
+   }
    if(place.id==='san-peire-randonnee'){
     const guide=discoveryFeatures[place.id][locale];
     for(const [heading] of guide.sections)assert.ok(html.includes(heading));
