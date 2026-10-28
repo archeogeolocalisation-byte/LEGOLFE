@@ -23,3 +23,27 @@ Fort photograph reuses the existing locally cached Commons image (no new downloa
 ## Page separation correction — 28 October 2026
 
 The Cap Lardier route is attached to the actual `circuit-cap-lardier` place page as well as its guide. The 9.46 km Visorando loop belongs to its own `randonnee-roches-blanches` place page; its existing guide URL is retained. `fort-freinet` covers the shorter site visit, links to the official blue/red access plan, and does not render or attribute reports to the longer loop. No complete short-track geometry is invented from the red GPX fragments. The blue approach is presented as shorter and less difficult than the red connection, with rocky terrain still disclosed; the office’s combined 3 km figures are not assigned to an unmeasured blue return walk.
+
+## Three new place pages — 28 October 2026
+
+These are three new catalogue records, each rendering its own full map, profile, GPX download and moderated trail contributions directly on the place page:
+
+| Place page | Source geometry | Measured GPX | Published distance / time |
+| --- | --- | --- | --- |
+| `randonnee-saint-clement` | 159 original points, one track segment | 4.197 km | 4 km / 1 h 20 |
+| `randonnee-moulin-adrech` | 88 original points, one track segment | 2.584 km | 3 km / 1 h |
+| `randonnee-miremer` | 331 original points, one track segment | 9.157 km | 9.7 km / 3 h |
+
+The source distance differences are disclosed in each page and in the overview diagrams. No point was added to make the files match the published distance. Miremer is a hiking itinerary from the village, separate from the existing chapel heritage page.
+
+Original GPX files, linked by the Office du Golfe:
+
+- Saint-Clément: https://static.apidae-tourisme.com/filestore/objets-touristiques/plans/198/74/41044678/GFT_St_Clment_GPX.gpx
+- Moulin de l’Adrech: https://static.apidae-tourisme.com/filestore/objets-touristiques/plans/83/73/41044307/GFT_Moulin_Adrech_GPX.gpx
+- Miremer: https://static.apidae-tourisme.com/filestore/objets-touristiques/plans/224/73/41044448/GFT_Miremer_GPX.gpx
+
+Source pages and PDF guidebooks are recorded in `data/newHikingPlaces.ts`. All three GPX files omit elevations. For the exact source points, elevations were requested in batches of at most 40 from `https://data.geopf.fr/altimetrie/1.0/calcul/alti/rest/elevation.json`, with `resource=ign_rge_alti_wld`, `zonly=true`, and matching latitude/longitude lists. The `*-ign.json` files preserve returned elevation arrays in source order. The trail datasets include SHA-256 hashes of both source files. Public descriptions distinguish IGN terrain estimates from GPS recordings, and published ascent remains attributed to the office rather than recomputed from the model.
+
+The local downloads preserve all original coordinates and add the documented IGN elevations. Overview SVGs are original diagrams calculated from the same geometry, labelled as diagrams without basemaps; they are not photographs or generated depictions of the landscape.
+
+Inspected but not published: the Gorgues file measured 3.09 km and did not close, versus 5.2 km announced; Cogolin–Giégi measured 6.79 km versus 10 km announced; Peygros ended more than 1 km from its start. No missing sections were invented or joined. Those files are not shipped with these pages.

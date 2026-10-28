@@ -1,4 +1,4 @@
-export type VillagePhoto = {src:string;alt:string;caption:{fr:string;en:string};credit:string;license:string;licenseUrl:string;source:string;contextual?:boolean;illustrative?:boolean};
+export type VillagePhoto = {diagram?:boolean;src:string;alt:string;caption:{fr:string;en:string};credit:string;license:string;licenseUrl:string;source:string;contextual?:boolean;illustrative?:boolean};
 export const villageMedia:Record<string,VillagePhoto[]> = {
   "sainte-maxime-village": [
     {

@@ -1,3 +1,4 @@
+import {newHikingMapPoints} from './newHikingPlaces';
 import {reviewedPlaceMapPoints} from './reviewedPlaceMapPoints';
 import {coastalDiscoveryMapPoints} from './coastalDiscoveryMapPoints';
 import {cogolinRayolMapPoints} from './cogolinRayolPlaces';
@@ -11,6 +12,7 @@ import {planDeLaTourMapPoints} from './planDeLaTourPlaces';
 import type {MapPoint} from '../lib/placeMapLinks';
 // Public venue references from official sources; never inferred from a business owner’s home.
 export const placeMapPoints:Record<string,MapPoint[]> = {
+ ...newHikingMapPoints,
  ...reviewedPlaceMapPoints,
  ...coastalDiscoveryMapPoints,
  ...planDeLaTourMapPoints,

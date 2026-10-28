@@ -9,11 +9,14 @@ function distance(a,b){const rad=x=>x*Math.PI/180;return 6371*2*Math.asin(Math.s
 for(const route of hikingRoutes){
  const data=require(`../data/${route.id}Trail.json`),raw=fs.readFileSync(path.join(__dirname,'../data/sources/hiking',data.sourceFile),'utf8');
  assert.equal(crypto.createHash('sha256').update(raw).digest('hex'),data.sourceSha256);
- const coordinates=route.id==='cap-lardier'?[...raw.matchAll(/<trkpt lat="([^"]+)" lon="([^"]+)"[^>]*>\s*<ele>([^<]+)<\/ele>/g)].map(m=>m.slice(1).map(Number)):route.id==='pont-des-fees'?raw.match(/<coordinates>([\s\S]*?)<\/coordinates>/)[1].trim().split(/\s+/).map(s=>{const [lon,lat,ele]=s.split(',').map(Number);return[lat,lon,ele];}):JSON.parse(raw);
- assert.equal(route.points.length,coordinates.length);assert.equal(coordinates.length,route.id==='cap-lardier'?688:route.id==='pont-des-fees'?130:325);
+ const counts={'cap-lardier':688,'pont-des-fees':130,'roches-blanches':325,'saint-clement':159,'moulin-adrech':88,'miremer':331};
+ const terrain=data.altitudeFile?JSON.parse(fs.readFileSync(path.join(__dirname,'../data/sources/hiking',data.altitudeFile),'utf8')):undefined;
+ if(terrain)assert.equal(crypto.createHash('sha256').update(fs.readFileSync(path.join(__dirname,'../data/sources/hiking',data.altitudeFile))).digest('hex'),data.altitudeSha256);
+ const coordinates=terrain?[...raw.matchAll(/<trkpt lat="([^"]+)" lon="([^"]+)"/g)].map((m,i)=>[Number(m[1]),Number(m[2]),terrain[i]]):route.id==='cap-lardier'?[...raw.matchAll(/<trkpt lat="([^"]+)" lon="([^"]+)"[^>]*>\s*<ele>([^<]+)<\/ele>/g)].map(m=>m.slice(1).map(Number)):route.id==='pont-des-fees'?raw.match(/<coordinates>([\s\S]*?)<\/coordinates>/)[1].trim().split(/\s+/).map(s=>{const [lon,lat,ele]=s.split(',').map(Number);return[lat,lon,ele];}):JSON.parse(raw);
+ assert.equal(route.points.length,coordinates.length);assert.equal(coordinates.length,counts[route.id]);
  let accumulated=0;
  route.points.forEach((p,i)=>{assert.deepEqual([p.lat,p.lon,p.elevation],coordinates[i]);assert.ok(p.elevation>0);if(i){const gap=distance(route.points[i-1],p);assert.ok(gap<.35,'No artificial connections between disconnected source fragments');accumulated+=gap;}assert.ok(Math.abs(p.distanceKm-accumulated)<.000001);});
- const expected=route.id==='cap-lardier'?8.219:route.id==='pont-des-fees'?1.891:9.453;assert.ok(Math.abs(accumulated-expected)<.003);
+ const expected={'cap-lardier':8.219,'pont-des-fees':1.891,'roches-blanches':9.453,'saint-clement':4.197,'moulin-adrech':2.584,'miremer':9.157}[route.id];assert.ok(Math.abs(accumulated-expected)<.003);
  for(const [w,h] of [[240,300],[350,300],[800,480],[1200,480]]){const f=hikingMapFrame(w,h,route.points);for(const p of route.points){const v=mapPointPixels(p.lat,p.lon,f.zoom);assert.ok(Math.abs(v.x-f.center.x)<w/2&&Math.abs(v.y-f.center.y)<h/2,`${route.id}: complete source fits ${w}px map`);}}
  if(route.gpx){const gpx=fs.readFileSync(path.join(__dirname,'../public',route.gpx),'utf8'),exported=[...gpx.matchAll(/<trkpt lat="([^"]+)" lon="([^"]+)"><ele>([^<]+)<\/ele>/g)].map(m=>m.slice(1).map(Number));assert.deepEqual(exported,coordinates);assert.equal((gpx.match(/<trkseg>/g)||[]).length,1);}
  for(const locale of ['fr','en']){
@@ -35,4 +38,4 @@ for(const route of hikingRoutes){
 assert.equal(hikingRouteForPlace('circuit-cap-lardier')?.id,'cap-lardier');assert.equal(hikingRouteForPlace('randonnee-roches-blanches')?.id,'roches-blanches');assert.equal(hikingRouteForPlace('fort-freinet'),undefined);
 const fort=hikingRoutes.find(r=>r.id==='roches-blanches');assert.match(fort.copy.fr.warning,/rouge.*expérimentés/);assert.match(fort.copy.en.warning,/red.*experienced/);assert.match(fort.copy.fr.warning,/3 km/);
 const page=fs.readFileSync(path.join(__dirname,'../app/[locale]/guides/[slug]/page.tsx'),'utf8');assert.match(page,/hikingRouteForGuide\(guide.slug\)/);assert.match(page,/<HikingRoute key=\{hikingRoute.id\}/);
-console.log('PASS: 3 hiking routes — 1,143 source coordinates/elevations, snapshot hashes, cumulative distances, GPX conversion, mobile/desktop framing, FR/EN rendering, profile exploration, fullscreen focus and trail-report links.');
+console.log('PASS: 6 hiking routes — 1,721 source coordinates/elevations, snapshot hashes, cumulative distances, GPX conversion, mobile/desktop framing, FR/EN rendering, profile exploration, fullscreen focus and trail-report links.');
