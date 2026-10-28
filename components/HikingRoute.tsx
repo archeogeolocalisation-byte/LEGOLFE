@@ -1,0 +1,36 @@
+'use client';
+import Link from 'next/link';
+import {useRef,useState} from 'react';
+import HikingMap from './HikingMap';
+import type {HikingRouteDefinition} from '../data/hikingRoutes';
+import type {Locale} from '../lib/i18n';
+import styles from './SanPeireRoutes.module.css';
+
+export default function HikingRoute({route,locale}:{route:HikingRouteDefinition;locale:Locale}){
+ const t=(fr:string,en:string)=>locale==='fr'?fr:en,copy=route.copy[locale];
+ const [index,setIndex]=useState(0),[expanded,setExpanded]=useState(false),dialog=useRef<HTMLDialogElement>(null),trigger=useRef<HTMLButtonElement|null>(null);
+ const point=route.points[index],last=route.points.at(-1)!,first=route.points[0];
+ const min=Math.floor(Math.min(...route.points.map(p=>p.elevation))/50)*50,max=Math.ceil(Math.max(...route.points.map(p=>p.elevation))/50)*50;
+ const x=(distance:number)=>40+distance/last.distanceKm*720,y=(elevation:number)=>145-(elevation-min)/Math.max(1,max-min)*120;
+ const profile=route.points.map(p=>`${x(p.distanceKm)},${y(p.elevation)}`).join(' ');
+ const mapLabel=t(`Tracé de ${copy.title} : départ vert, point haut bleu, point exploré blanc`,`Track for ${copy.title}: green start, blue high point, white explored point`);
+ return <section id={`parcours-${route.id}`} className={styles.section} aria-labelledby={`route-${route.id}-title`}>
+  <div className="lg-shell">
+   <p className="lg-kicker">{t('LE PARCOURS / PRÉPARER LA MARCHE','THE ROUTE / PLAN YOUR WALK')}</p>
+   <h2 id={`route-${route.id}-title`} className={styles.title}>{copy.title}</h2><p className={styles.intro}>{copy.intro}</p>
+   <div className={styles.panel}>
+    <div className={styles.summary}><h3>{t('Les repères du parcours','Route details')}</h3><dl>{[[t('Départ','Start'),copy.start],[t('Distance','Distance'),copy.distance],[t('Durée hors pauses','Time excluding stops'),copy.time],[t('Dénivelé','Ascent'),copy.ascent],[t('Niveau','Difficulty'),copy.level]].map(([label,value])=><div key={label}><dt>{label}</dt><dd>{value}</dd></div>)}</dl><p>{copy.warning}</p>
+     <div className={styles.actions}><a className="lg-btn" href={`https://www.google.com/maps/dir/?api=1&destination=${first.lat},${first.lon}`} target="_blank" rel="noopener noreferrer">{t('Rejoindre le départ','Directions to the start')} ↗</a>{route.gpx?<a className="lg-btn" href={route.gpx} download>{t('Télécharger le GPX','Download GPX')} ↓</a>:<a className="lg-btn" href={route.sourcePage} target="_blank" rel="noopener noreferrer">{t('GPX et fiche Visorando','GPX and Visorando route sheet')} ↗</a>}<a href={route.sourcePage} target="_blank" rel="noopener noreferrer">{t('Lire le descriptif source','Read the source directions')} ↗</a></div>
+    </div>
+    <div className={styles.mapHeading}><p>{t('La boucle complète · tracé sourcé','The complete loop · sourced track')}</p><button type="button" onClick={event=>{trigger.current=event.currentTarget;setExpanded(true);dialog.current?.showModal();}}>{t('Carte plein écran','Full-screen map')} ↗</button></div>
+    <HikingMap points={route.points} index={index} locale={locale} label={mapLabel}/>
+    <p className={styles.note}>{t('Source du tracé et des altitudes :','Track and elevation source:')} {route.sourceLabel}. {t('Tracé documenté, sans vérification terrain LE GOLFE. Les repères ne garantissent pas une place de stationnement.','Documented track, without a LE GOLFE field check. Markers do not guarantee parking.')}</p>
+    <div className={styles.profile}><h3>{t('Comprendre le relief','Understand the terrain')}</h3><svg viewBox="0 0 800 180" role="img" aria-label={t(`Profil altimétrique : ${copy.title}`,`Elevation profile: ${copy.title}`)}><line x1="40" y1="145" x2="760" y2="145" stroke="#aac5d0"/><polygon points={`40,145 ${profile} 760,145`} fill="#dbe9e3"/><polyline points={profile} fill="none" stroke="#246452" strokeWidth="3"/><circle cx={x(point.distanceKm)} cy={y(point.elevation)} r="6" fill="#0b3046"/><text x="3" y="27">{max} m</text><text x="3" y="145">{min} m</text><text x="40" y="172">0 km</text><text x="690" y="172">{last.distanceKm.toLocaleString(locale,{maximumFractionDigits:2})} km</text></svg><label>{t('Explorer le profil et la carte','Explore the profile and map')}<input type="range" min="0" max={route.points.length-1} value={index} onChange={event=>setIndex(Number(event.target.value))} aria-valuetext={`${point.distanceKm.toLocaleString(locale,{maximumFractionDigits:1})} km · ${Math.round(point.elevation)} m`}/></label><output>{point.distanceKm.toLocaleString(locale,{maximumFractionDigits:1})} km · {Math.round(point.elevation)} m</output><p className={styles.note}>{t('Distance du profil calculée sur la géométrie source ; de petits écarts avec la distance publiée sont possibles. Le profil ne confirme pas les conditions actuelles du sentier.','Profile distance is calculated from the source geometry and may differ slightly from the published distance. The profile does not confirm current trail conditions.')}</p></div>
+    <ol className={styles.steps}>{copy.steps.map(([title,body],i)=><li key={title}><span>0{i+1}</span><div><h4>{title}</h4><p>{body}</p></div></li>)}</ol>
+   </div>
+   <aside className={styles.before}><div><h3>{t('Avant de partir','Before setting off')}</h3><p>{t('Emportez eau, chaussures adaptées et le descriptif. Consultez les restrictions le jour même et respectez les indications sur place.','Bring water, suitable footwear and the directions. Check restrictions on the day and follow signs on site.')}</p><a href="https://www.var.gouv.fr/Actions-de-l-Etat/Foret/Fermeture-des-massifs-en-ete/Carte-d-acces-aux-massifs" target="_blank" rel="noopener noreferrer">{t('Vérifier l’accès aux massifs','Check forest access')} ↗</a></div><div><h3>{t('Les nouvelles du sentier','News from the trail')}</h3><p>{t('Un passage encombré ou un balisage effacé ? Ajoutez un retour daté et une photo dans les contributions du lieu. Publication après modération.','A blocked path or faded waymark? Add a dated report and photo to the place contributions. Posts are moderated before publication.')}</p><Link href={`/${locale}/place/${route.placeId}#contribuer`}>{t('Partager une information de terrain','Share a trail update')} ↗</Link></div></aside>
+   <p className={styles.note}><a href={route.sourcePage} target="_blank" rel="noopener noreferrer">{route.sourceLabel}</a> · {t('Vérification documentaire : 28 octobre 2026','Desk check: 28 October 2026')}</p>
+  </div>
+  <dialog ref={dialog} className={styles.dialog} aria-label={t(`Carte plein écran : ${copy.title}`,`Full-screen map: ${copy.title}`)} onClose={()=>{setExpanded(false);trigger.current?.focus();}}><div className={styles.dialogHeader}><strong>{copy.title}</strong><button type="button" autoFocus onClick={()=>dialog.current?.close()}>{t('Fermer','Close')} ×</button></div>{expanded&&<HikingMap points={route.points} index={index} locale={locale} label={mapLabel}/>}</dialog>
+ </section>;
+}

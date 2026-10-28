@@ -316,10 +316,11 @@ export const hikingGuides: Guide[] = [
     ],
     "related": [
       "randonnee-san-peire-plan-de-la-tour",
-      "randonnee-pont-des-fees-grimaud"
+      "randonnee-pont-des-fees-grimaud",
+      "randonnee-roches-blanches-fort-freinet"
     ],
     "published": "2026-10-11",
-    "verified": "2026-10-11",
+    "verified": "2026-10-28",
     "sources": [
       {
         "id": "route",
@@ -335,6 +336,11 @@ export const hikingGuides: Guide[] = [
         "id": "fire",
         "label": "Préfecture du Var · Carte d’accès aux massifs",
         "url": "https://www.var.gouv.fr/Actions-de-l-Etat/Foret/Fermeture-des-massifs-en-ete/Carte-d-acces-aux-massifs"
+      },
+      {
+        "id": "park",
+        "label": "Parc national de Port-Cros · Circuit du Cap Lardier et GPX",
+        "url": "https://destination.portcros-parcnational.fr/fr/trek/681-Circuit-du-Cap-Lardier"
       }
     ],
     "copy": {
@@ -592,10 +598,11 @@ export const hikingGuides: Guide[] = [
     ],
     "related": [
       "randonnee-san-peire-plan-de-la-tour",
-      "randonnee-cap-lardier-gigaro"
+      "randonnee-cap-lardier-gigaro",
+      "randonnee-roches-blanches-fort-freinet"
     ],
     "published": "2026-10-11",
-    "verified": "2026-10-11",
+    "verified": "2026-10-28",
     "sources": [
       {
         "id": "route",
@@ -611,6 +618,11 @@ export const hikingGuides: Guide[] = [
         "id": "fire",
         "label": "Préfecture du Var · Carte d’accès aux massifs",
         "url": "https://www.var.gouv.fr/Actions-de-l-Etat/Foret/Fermeture-des-massifs-en-ete/Carte-d-acces-aux-massifs"
+      },
+      {
+        "id": "topo",
+        "label": "Département du Var · Topoguide du vallon du Pont des Fées (PDF)",
+        "url": "https://snvadmin.var.fr/api/fr/treks/24169/le-vallon-du-pont-des-fees.pdf"
       }
     ],
     "copy": {
@@ -618,9 +630,9 @@ export const hikingGuides: Guide[] = [
         "title": "PONT DES FÉES.",
         "accent": "GRIMAUD EN BAS.",
         "seoTitle": "Randonnée du Pont des Fées à Grimaud : une boucle facile",
-        "description": "Une courte randonnée à Grimaud : boucle de 1,89 km au Pont des Fées, départ près du cimetière, moulin Saint-Roch et conseils pratiques.",
+        "description": "Une courte randonnée à Grimaud : boucle de 1,9 km au Pont des Fées, départ près du cimetière, moulin Saint-Roch et conseils pratiques.",
         "intro": "Grimaud ne se regarde pas seulement depuis son château. Descendez dans le vallon de la Garde : un pont, des arbres, puis une remontée vers le moulin. Une courte marche pour donner un peu de relief à la visite du village.",
-        "verdict": "Le choix le plus accessible de nos trois randonnées. Court et classé facile, le parcours garde des marches et une remontée : venez avec des chaussures adaptées.",
+        "verdict": "Une courte boucle pour compléter la visite de Grimaud. Le classement facile garde des marches et une remontée : venez avec des chaussures adaptées.",
         "facts": [
           {
             "label": "Départ",
@@ -628,7 +640,7 @@ export const hikingGuides: Guide[] = [
           },
           {
             "label": "Distance",
-            "value": "1,89 km · boucle"
+            "value": "1,9 km · boucle"
           },
           {
             "label": "Durée",
@@ -685,11 +697,12 @@ export const hikingGuides: Guide[] = [
             "id": "effort",
             "title": "Facile ne veut pas dire tout plat",
             "paragraphs": [
-              "La fiche annonce une heure pour 1,89 km et 81 m de montée cumulée. Le sentier comporte des marches ; le retour demande de remonter. Préférez des chaussures qui tiennent le pied aux sandales de plage.",
+              "La fiche annonce une heure pour 1,9 km et 81 m de montée cumulée. Le sentier comporte des marches ; le retour demande de remonter. Préférez des chaussures qui tiennent le pied aux sandales de plage.",
               "Pour une sortie familiale, adaptez le rythme et restez proches des enfants dans la descente. Si vous cherchez un chemin adapté à une poussette ou à une mobilité réduite, demandez une autre proposition à l’office : cette boucle ne constitue pas une garantie d’accessibilité."
             ],
             "sourceIds": [
-              "route"
+              "route",
+              "topo"
             ]
           },
           {
@@ -733,9 +746,9 @@ export const hikingGuides: Guide[] = [
         "title": "PONT DES FÉES.",
         "accent": "BELOW GRIMAUD.",
         "seoTitle": "Pont des Fées walk in Grimaud: a short, easy loop",
-        "description": "Plan a short walk in Grimaud: 1.89 km Pont des Fées loop, start near the cemetery, Saint-Roch windmill and practical advice.",
+        "description": "Plan a short walk in Grimaud: 1.9 km Pont des Fées loop, start near the cemetery, Saint-Roch windmill and practical advice.",
         "intro": "There is more to Grimaud than the view from its castle. Drop into the Garde valley for a bridge, trees and a climb back towards the windmill. A short walk adds a different perspective to a village visit.",
-        "verdict": "The easiest of our three walks. Its short distance and easy rating still include steps and an uphill return: wear suitable shoes.",
+        "verdict": "A short loop to accompany a Grimaud visit. Its easy rating still includes steps and an uphill return: wear suitable shoes.",
         "facts": [
           {
             "label": "Start",
@@ -743,7 +756,7 @@ export const hikingGuides: Guide[] = [
           },
           {
             "label": "Distance",
-            "value": "1.89 km · loop"
+            "value": "1.9 km · loop"
           },
           {
             "label": "Time",
@@ -800,11 +813,12 @@ export const hikingGuides: Guide[] = [
             "id": "effort",
             "title": "Easy does not mean flat",
             "paragraphs": [
-              "The route listing gives an hour for 1.89 km with 81 m of ascent. Steps and the uphill return still require effort. Choose shoes that hold your feet securely rather than beach sandals.",
+              "The route listing gives an hour for 1.9 km with 81 m of ascent. Steps and the uphill return still require effort. Choose shoes that hold your feet securely rather than beach sandals.",
               "Adapt the pace for children and stay close on the descent. If you need a pushchair-friendly or accessible path, ask the tourist office for another option; this loop does not guarantee step-free access."
             ],
             "sourceIds": [
-              "route"
+              "route",
+              "topo"
             ]
           },
           {
@@ -841,6 +855,291 @@ export const hikingGuides: Guide[] = [
           {
             "label": "Grimaud village",
             "path": "/place/grimaud-village"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "slug": "randonnee-roches-blanches-fort-freinet",
+    "category": {
+      "fr": "Randonnée / La Garde-Freinet",
+      "en": "Hiking / La Garde-Freinet"
+    },
+    "image": "fort-freinet",
+    "imageAlt": {
+      "fr": "Vestiges du Fort Freinet au-dessus de La Garde-Freinet",
+      "en": "Fort Freinet remains above La Garde-Freinet"
+    },
+    "imageCaption": {
+      "fr": "Le Fort Freinet, étape finale de la grande boucle · photographie de 2015",
+      "en": "Fort Freinet, near the end of the longer loop · photograph from 2015"
+    },
+    "destinations": [
+      "la-garde-freinet"
+    ],
+    "placeIds": [
+      "fort-freinet",
+      "croix-des-maures"
+    ],
+    "related": [
+      "randonnee-cap-lardier-gigaro",
+      "randonnee-pont-des-fees-grimaud",
+      "randonnee-san-peire-plan-de-la-tour"
+    ],
+    "published": "2026-10-28",
+    "verified": "2026-10-28",
+    "sources": [
+      {
+        "id": "route",
+        "label": "Visorando · Roches Blanches, Croix des Maures et Fort Freinet (2710724)",
+        "url": "https://www.visorando.com/randonnee-les-roches-blanches-la-croix-des-maures-/"
+      },
+      {
+        "id": "safety",
+        "label": "Office du Golfe · La Croix et le Fort Freinet : difficultés du site",
+        "url": "https://www.golfe-saint-tropez-information.com/fr/loisirs/loisirs-sportifs/la-garde-freinet/la-garde-freinet-la-croix-et-le-fort-freinet-4599409"
+      },
+      {
+        "id": "topo",
+        "label": "Office du Golfe · Circuit court et variantes du Fort Freinet (PDF)",
+        "url": "https://static.apidae-tourisme.com/filestore/objets-touristiques/documents/171/165/37660075/2023CCGST_FicheRando1FR.pdf"
+      },
+      {
+        "id": "heritage",
+        "label": "Conservatoire du Patrimoine du Freinet · Le Fort Freinet",
+        "url": "https://www.conservatoiredufreinet.org/sites-et-patrimoine/le-fort-freinet/"
+      },
+      {
+        "id": "fire",
+        "label": "Préfecture du Var · Carte d’accès aux massifs",
+        "url": "https://www.var.gouv.fr/Actions-de-l-Etat/Foret/Fermeture-des-massifs-en-ete/Carte-d-acces-aux-massifs"
+      }
+    ],
+    "copy": {
+      "fr": {
+        "title": "LES MAURES.",
+        "accent": "DE CRÊTE EN FORT.",
+        "seoTitle": "Roches Blanches et Fort Freinet : randonnée de 9,46 km",
+        "description": "Une grande boucle à La Garde-Freinet : Roches Blanches, Croix des Maures et Fort Freinet, avec carte du tracé, relief, départ et précautions.",
+        "intro": "Prenez de la hauteur au-dessus de La Garde-Freinet. Une sortie pour marcher vraiment, lever les yeux sur les crêtes et terminer au Fort avant de retrouver les rues du village.",
+        "verdict": "Réservez une bonne demi-journée, pauses comprises. Gardez de l’énergie pour le final escarpé.",
+        "facts": [
+          {
+            "label": "Départ",
+            "value": "Parking des Teilles · La Garde-Freinet"
+          },
+          {
+            "label": "Distance",
+            "value": "9,46 km · boucle Visorando"
+          },
+          {
+            "label": "Durée publiée",
+            "value": "3 h 40 hors pauses"
+          },
+          {
+            "label": "Dénivelé",
+            "value": "+344 m"
+          },
+          {
+            "label": "Niveau",
+            "value": "Moyenne · vigilance au Fort"
+          },
+          {
+            "label": "Point haut",
+            "value": "636 m"
+          }
+        ],
+        "sections": [
+          {
+            "id": "depart",
+            "title": "Commencer au village",
+            "paragraphs": [
+              "La boucle cartographiée part du parking des Teilles. Préparez votre stationnement puis ouvrez le descriptif pour les premières intersections. Une arrivée au parking de la Croix change le départ de référence."
+            ],
+            "sourceIds": [
+              "route"
+            ]
+          },
+          {
+            "id": "format",
+            "title": "Choisir la bonne boucle",
+            "paragraphs": [
+              "Cette fiche suit le grand circuit Visorando : Roches Blanches, Croix et Fort. L’office propose aussi une sortie de 3 km, classée difficile : sa distance et ses variantes décrivent un autre itinéraire."
+            ],
+            "sourceIds": [
+              "route",
+              "safety",
+              "topo"
+            ]
+          },
+          {
+            "id": "terrain",
+            "title": "Au Fort, garder toute son attention",
+            "paragraphs": [
+              "L’office signale des escarpements et des passages exposés. Évitez pluie et vent fort ; la liaison rouge est réservée aux marcheurs expérimentés. Le bleu reste escarpé. Si le terrain dépasse votre aisance, renoncez au passage."
+            ],
+            "sourceIds": [
+              "safety",
+              "topo"
+            ]
+          },
+          {
+            "id": "patrimoine",
+            "title": "Prolonger la découverte",
+            "paragraphs": [
+              "Le Fort se rejoint uniquement à pied. Le Conservatoire propose des ressources sur le site, dont une reconstitution en 3D : une autre manière de découvrir le lieu après la marche."
+            ],
+            "sourceIds": [
+              "heritage"
+            ]
+          },
+          {
+            "id": "conditions",
+            "title": "Préparer le jour de la sortie",
+            "paragraphs": [
+              "Vérifiez l’accès aux massifs et la météo avant de partir. Notre conseil : emportez de l’eau, le descriptif et une marge avant la nuit. Les pauses s’ajoutent au temps publié."
+            ],
+            "sourceIds": [
+              "fire"
+            ]
+          }
+        ],
+        "questions": [
+          {
+            "question": "Est-ce le petit circuit de 3 km ?",
+            "answer": "Non : la carte présente la grande boucle de 9,46 km publiée sur Visorando. Le circuit court de l’office reste un itinéraire distinct."
+          },
+          {
+            "question": "Peut-on venir en voiture au Fort ?",
+            "answer": "Le site se rejoint à pied, depuis le village ou le parking de la Croix."
+          }
+        ],
+        "links": [
+          {
+            "label": "La fiche du Fort Freinet",
+            "path": "/place/fort-freinet"
+          },
+          {
+            "label": "La Croix des Maures",
+            "path": "/place/croix-des-maures"
+          },
+          {
+            "label": "Découvrir La Garde-Freinet",
+            "path": "/destinations/la-garde-freinet"
+          }
+        ]
+      },
+      "en": {
+        "title": "THE MAURES.",
+        "accent": "RIDGES TO THE FORT.",
+        "seoTitle": "Roches Blanches and Fort Freinet: a 9.46 km hiking loop",
+        "description": "A longer walk in La Garde-Freinet via Roches Blanches, Croix des Maures and Fort Freinet, with a route map, elevation profile, start and precautions.",
+        "intro": "Head above La Garde-Freinet for a proper walk, open ridge views and a final stop at the Fort before returning to the village streets.",
+        "verdict": "Allow a generous half-day including stops. Save some energy for the steep final section.",
+        "facts": [
+          {
+            "label": "Start",
+            "value": "Les Teilles car park · La Garde-Freinet"
+          },
+          {
+            "label": "Distance",
+            "value": "9.46 km · Visorando loop"
+          },
+          {
+            "label": "Published time",
+            "value": "3 h 40 excluding stops"
+          },
+          {
+            "label": "Ascent",
+            "value": "+344 m"
+          },
+          {
+            "label": "Difficulty",
+            "value": "Moderate · care at the Fort"
+          },
+          {
+            "label": "Highest point",
+            "value": "636 m"
+          }
+        ],
+        "sections": [
+          {
+            "id": "depart",
+            "title": "Start in the village",
+            "paragraphs": [
+              "The mapped loop starts at Les Teilles car park. Plan parking, then open the directions for the first junctions. Starting at the Croix car park changes the reference start."
+            ],
+            "sourceIds": [
+              "route"
+            ]
+          },
+          {
+            "id": "format",
+            "title": "Choose the right circuit",
+            "paragraphs": [
+              "This guide follows the longer Visorando circuit: Roches Blanches, the Croix and the Fort. The tourist office also lists a difficult 3 km walk; its distance and variants describe a separate route."
+            ],
+            "sourceIds": [
+              "route",
+              "safety",
+              "topo"
+            ]
+          },
+          {
+            "id": "terrain",
+            "title": "Give the Fort your full attention",
+            "paragraphs": [
+              "The tourist office warns of steep and exposed sections. Avoid rain and strong wind. The red connection is for experienced walkers; the blue remains steep. Turn back if the terrain exceeds your confidence."
+            ],
+            "sourceIds": [
+              "safety",
+              "topo"
+            ]
+          },
+          {
+            "id": "patrimoine",
+            "title": "Continue the discovery",
+            "paragraphs": [
+              "The Fort is reached on foot only. The Conservatoire offers resources about the site, including a 3D reconstruction, to explore after the walk."
+            ],
+            "sourceIds": [
+              "heritage"
+            ]
+          },
+          {
+            "id": "conditions",
+            "title": "Check before setting off",
+            "paragraphs": [
+              "Check forest access and the weather. Our suggestion: bring water, the directions and a margin before dark. Stops are additional to the published walking time."
+            ],
+            "sourceIds": [
+              "fire"
+            ]
+          }
+        ],
+        "questions": [
+          {
+            "question": "Is this the short 3 km circuit?",
+            "answer": "No. The map shows the longer 9.46 km loop published on Visorando. The office’s short circuit is a separate route."
+          },
+          {
+            "question": "Can I drive to the Fort?",
+            "answer": "The site is reached on foot, from the village or the Croix car park."
+          }
+        ],
+        "links": [
+          {
+            "label": "Fort Freinet place guide",
+            "path": "/place/fort-freinet"
+          },
+          {
+            "label": "Croix des Maures",
+            "path": "/place/croix-des-maures"
+          },
+          {
+            "label": "Explore La Garde-Freinet",
+            "path": "/destinations/la-garde-freinet"
           }
         ]
       }

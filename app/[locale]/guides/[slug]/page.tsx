@@ -1,4 +1,6 @@
 import Link from "next/link";
+import HikingRoute from '../../../../components/HikingRoute';
+import {hikingRouteForGuide} from '../../../../data/hikingRoutes';
 import SanPeireRoutes from "../../../../components/SanPeireRoutes";
 import { notFound } from "next/navigation";
 import SiteHeader from "../../../../components/SiteHeader";
@@ -33,6 +35,7 @@ export default async function Page({ params }: Props) {
   const { locale, guide } = await resolve(params);
   const fr = locale === "fr", copy = guide.copy[locale], path = `/guides/${guide.slug}`;
   const related = relatedGuidesFor(guide);
+  const hikingRoute = hikingRouteForGuide(guide.slug);
   const mentionedPlaces = guide.placeIds.flatMap(id => places.filter(place => place.id === id));
   const schema = guideArticleSchema(guide, locale);
   return <main className="min-h-screen bg-white text-black">
@@ -51,6 +54,7 @@ export default async function Page({ params }: Props) {
         <dl className="grid gap-6 border-y border-black py-7 md:grid-cols-3">{copy.facts.map(fact => <div key={fact.label}><dt className="lg-kicker text-black/60">{fact.label}</dt><dd className="mt-3 text-lg font-black leading-7">{fact.value}</dd></div>)}</dl>
       </div>
       {guide.slug==='randonnee-san-peire-plan-de-la-tour'&&<SanPeireRoutes locale={locale}/>}
+      {hikingRoute&&<HikingRoute key={hikingRoute.id} route={hikingRoute} locale={locale}/>}
       <div className="lg-shell grid gap-10 py-12 md:grid-cols-[.35fr_1fr] md:gap-14 md:py-16">
         <aside>
           <nav aria-label={fr ? "Sommaire du guide" : "Guide contents"} className="border-t border-black pt-5 md:sticky md:top-8">
