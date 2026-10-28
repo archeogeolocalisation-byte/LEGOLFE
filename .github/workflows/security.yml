@@ -43,6 +43,7 @@ jobs:
       - name: Check place content, hiking routes and SEO
         run: |
           node scripts/test-san-peire-routes.cjs
+          node scripts/test-hiking-routes.cjs
           node scripts/test-guides-seo.cjs
           node scripts/test-place-seo.cjs
       - run: npm run build

@@ -1,4 +1,5 @@
 import type { StaticImageData } from "next/image";
+import fortFreinet from "../public/media/place-cache/935ba0b8fbd40a84.webp";
 import pampelonne from "../public/media/guides/pampelonne-cover.webp";
 import ramatuelle from "../public/media/guides/ramatuelle-cover.webp";
 import saintTropez from "../public/media/guides/saint-tropez-car-free-cover.webp";
@@ -15,6 +16,7 @@ type GuideMedia = { photo: StaticImageData; kind: "illustration" } | {
   photo: StaticImageData; kind: "photograph"; credit: string; license: string; licenseUrl: string; source: string;
 };
 export const guideMedia: Record<string, GuideMedia> = {
+  "fort-freinet": {photo:fortFreinet,kind:"photograph",credit:"Blaue Max / Wikimedia Commons",license:"CC BY-SA 4.0",licenseUrl:"https://creativecommons.org/licenses/by-sa/4.0/",source:"https://commons.wikimedia.org/wiki/File:Fort_du_Freinet,_La_Garde-Freinet,_France.jpg"},
   "verdon-sainte-croix-cover": { photo: verdon, kind: "illustration" },
   "champignons-golfe-saint-tropez-cover": { photo: mushrooms, kind: "illustration" },
   ...Object.fromEntries(["marches-golfe-saint-tropez-jours", "activites-gratuites-golfe-saint-tropez", "golfe-saint-tropez-avec-enfants", "week-end-automne-golfe-saint-tropez"].map(slug => [slug + "-cover", { photo: { src: `/media/guides/${slug}-cover-v2.webp`, width: 1200, height: 800 }, kind: "illustration" as const }])),

@@ -1,3 +1,5 @@
+import HikingRoute from './HikingRoute';
+import {hikingRouteForGuide} from '../data/hikingRoutes';
 import {suppliedPlaceMedia} from '../data/suppliedPlaceMedia';
 import {localPlacePhoto} from '../lib/placeImage';
 import {newExperienceMedia} from '../data/newExperienceMedia';
@@ -45,6 +47,7 @@ export default function PlaceFactSheet({id,locale}:{id:string;locale:Locale}) {
    {experiencePhotos.length>1&&<div className="mt-5 grid gap-5 md:grid-cols-2">{experiencePhotos.slice(1).map(image=><figure key={image.src}><img src={image.src} alt={image.alt} className={suppliedPhotos?"h-auto w-full":"aspect-[4/3] w-full object-cover"} loading="lazy"/><figcaption className="mt-2 text-xs leading-5 text-black/60">{image.caption[locale]}{(image.credit||image.license)&&<> · <a href={image.source} target="_blank" rel="noreferrer" className="underline">{image.credit}</a> · <a href={image.licenseUrl} target="_blank" rel="noreferrer" className="underline">{image.license}</a></>}</figcaption></figure>)}</div>}
 
   </article>
+  {id==='fort-freinet'&&<HikingRoute route={hikingRouteForGuide('randonnee-roches-blanches-fort-freinet')!} locale={locale}/>}
   <section className="lg-shell py-16 md:py-24">
    <div className="lg-quote-box grid gap-10 bg-[#edf4f6] md:grid-cols-[.35fr_1.65fr]">
     <div><p className="lg-kicker text-[var(--lg-blue)]">{fr?'LE REGARD LE GOLFE':'THE LE GOLFE VIEW'}</p><div className="lg-blue-rule mt-5"/></div>
@@ -63,7 +66,7 @@ export default function PlaceFactSheet({id,locale}:{id:string;locale:Locale}) {
    <h2 className="mt-5 max-w-5xl text-5xl font-black uppercase leading-[.92] tracking-[-.055em] md:text-[5rem]">{signature.close}</h2>
    <dl className="mt-14 grid gap-7 border-y border-black py-8 sm:grid-cols-2 lg:grid-cols-4">{copy.facts.filter(([label])=>!(visitAddress&&/^(adresse|address)$/i.test(label.trim()))).map(([label,value])=><div key={label}><dt className="lg-kicker text-[var(--lg-blue)]">{label}</dt><dd className="mt-3 text-sm font-semibold leading-7 text-black/70">{value}</dd></div>)}</dl>
 
-   <PlaceMapBlock name={placeName(place,locale)} location={place.location} points={placeMapPoints[id]??[]} address={visitAddress} locale={locale}/>
+   {id!=='fort-freinet'&&<PlaceMapBlock name={placeName(place,locale)} location={place.location} points={placeMapPoints[id]??[]} address={visitAddress} locale={locale}/>}
 
    <section id="questions" className="mt-12 scroll-mt-24"><h2 className="text-2xl font-black">{fr?'Questions fréquentes':'Common questions'}</h2><div className="mt-5">{copy.questions.map(([question,answer])=><details key={question} className="border-t border-black/20 py-5"><summary className="cursor-pointer font-bold leading-7">{question}</summary><p className="mt-3 max-w-3xl leading-7 text-black/75">{answer}</p></details>)}</div></section>
    <aside className="mt-10 border-t border-black/20 pt-7"><h2 className="text-xl font-black">{fr?'Sources et informations à jour':'Sources and current information'}</h2><p className="mt-3 text-sm leading-6 text-black/75">{fr?'Repères documentaires vérifiés le':'Reference information checked on'} <time dateTime={sheet.verified}>{new Intl.DateTimeFormat(fr?'fr-FR':'en-GB',{day:'numeric',month:'long',year:'numeric',timeZone:'UTC'}).format(new Date(sheet.verified+'T12:00:00Z'))}</time>. {association?(fr?'Présentation éditoriale LE GOLFE ; contactez l’association pour les conditions de participation et ses actualités.':'LE GOLFE editorial profile; contact the association for current news and participation arrangements.'):(fr?'Programme proposé par LE GOLFE ; vérifiez les horaires, accès et tarifs pour votre date auprès des sources officielles.':'Programme suggested by LE GOLFE; check opening times, access and prices for your date with the official sources.')}</p><ul className="mt-4 space-y-2">{sheet.sources.map(source=><li key={source.url}><a className="text-sm font-bold underline underline-offset-4" href={source.url} target="_blank" rel="noreferrer">{source.label} ↗</a></li>)}</ul></aside>
