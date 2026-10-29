@@ -42,6 +42,7 @@ jobs:
           node scripts/test-villa-hearts-db.mjs
       - name: Check villa budgets and protected collections
         run: |
+          node scripts/test-stay-landing.cjs
           node scripts/verify-stay-filters.cjs
           node scripts/test-villa-collections-db.mjs
       - name: Check place content, hiking routes and SEO
