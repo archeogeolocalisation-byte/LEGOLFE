@@ -26,7 +26,7 @@ export default function ExploreIntentGrid({ places, locale, filter = "all", quer
 
   return <>
     <nav aria-label={fr ? "Filtrer les adresses" : "Filter places"} className="explore-controls" id="adresses">
-      <div className="explore-filter-heading"><div><p className="lg-kicker">{fr?"À CHACUN SON GOLFE":"FIND YOUR GOLFE"}</p><h2>{fr?"De quoi avez-vous envie ?":"What takes your fancy?"}</h2></div><p>{fr?"Une envie, une commune ou une adresse en tête : affinez votre sélection.":"A mood, a town or a place in mind: narrow down your selection."}</p></div>
+      <div className="explore-filter-heading"><div><p className="lg-kicker">{fr?"À CHACUN SON GOLFE":"FIND YOUR GOLFE"}</p><h2>{fr?"Trouvez votre prochaine adresse.":"Find your next place."}</h2></div><p>{fr?"Une envie, une commune ou une adresse en tête : affinez votre sélection.":"A mood, a town or a place in mind: narrow down your selection."}</p></div>
 
       <form action={`/${locale}/explore`} method="get" className="explore-search">
         {filter!=="all" && <input type="hidden" name="filter" value={filter}/>}
