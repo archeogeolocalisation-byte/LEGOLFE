@@ -985,6 +985,8 @@ export const practicalGuides: Guide[] = [
     ],
     "placeIds": [
       "saint-tropez-village",
+      "place-des-lices",
+      "musee-gendarmerie-cinema",
       "ramatuelle-village",
       "domaine-rayol-kids",
       "gigaro-beach",
@@ -998,6 +1000,7 @@ export const practicalGuides: Guide[] = [
     "published": "2026-10-13",
     "verified": "2026-10-13",
     "sources": [
+      {"id":"rayhours","label":"Domaine du Rayol · Horaires et fermetures météo","url":"https://www.domainedurayol.org/votre-visite/horaires/"},
       {
         "id": "season",
         "label": "Office de tourisme du Golfe · Automne",
