@@ -2,6 +2,7 @@ import {localPlacePhoto} from './placeImage';
 import {photosForPlace} from "./curatedPlaceGallery";
 
 export type PlaceMedia = {
+  diagram?:boolean;
   src: string;
   alt: string;
   credit: string;
