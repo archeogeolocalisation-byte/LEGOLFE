@@ -6,6 +6,7 @@ require.extensions['.css']=m=>{m.exports=new Proxy({},{get:(_,key)=>key==='__esM
 process.env.VERCEL_ENV='production';process.env.NEXT_PUBLIC_SITE_URL='https://www.legolfe.com';
 const load=Module._load;
 Module._load=function(request,parent,...rest){
+ if(parent?.filename.endsWith('/app/[locale]/page.tsx')&&request.endsWith('/lib/publicNews'))return {getPublicNews:async()=>require('../data/localNews.ts').localNews};
  if(request.endsWith('/lib/publicEvents'))return {getPublicEvents:async()=>[]};
  return load.call(this,request,parent,...rest);
 };
@@ -66,7 +67,7 @@ function placeIds(html,locale){return [...links(html)].filter(href=>href.startsW
   while(queue.length){const route=queue.shift();if(reached.has(route))continue;reached.add(route);for(const href of graph.get(route)??[])if(!href.includes('?'))queue.push(href.split('#')[0]);}
   for(const place of places)assert.ok(reached.has(`/${locale}/place/${place.id}`),'Orphan place: '+locale+'/'+place.id);
   for(const [route,outgoing] of graph)for(const href of outgoing){
-   if(href.startsWith(`/${locale}/place/`))assert.ok(places.some(place=>place.id===href.split('/')[3]),'Broken place link: '+route+' -> '+href);
+   if(href.startsWith(`/${locale}/place/`))assert.ok(places.some(place=>place.id===href.split('/')[3].split(/[?#]/)[0]),'Broken place link: '+route+' -> '+href);
   }
   console.log(`Crawlability ${locale}: all ${places.length} places reachable from home without filters or maps; ${guides.length} guides and ${newsMonths(localNews).length} news archives checked.`);
  }

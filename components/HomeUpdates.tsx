@@ -21,15 +21,15 @@ export default function HomeUpdates({ locale, events, news, window }: {
   locale: Locale; events: GolfeEvent[]; news: LocalNewsItem[]; window: DateWindow;
 }) {
   const fr = locale === "fr";
-  return <section className="border-y border-black/15 bg-[#f7f6f2]">
+  return <section className="home-updates border-y border-black/15 bg-[#f7f6f2]">
     <div className="lg-shell grid gap-12 py-14 md:gap-8 md:py-20 lg:grid-cols-2 lg:gap-12">
-      <section aria-labelledby="home-agenda-title" className="flex min-w-0 flex-col">
+      <section aria-labelledby="home-agenda-title" className="home-update-panel flex min-w-0 flex-col">
         <header className="border-t-4 border-[var(--lg-blue)] pt-5">
           <div className="flex flex-wrap items-center justify-between gap-3">
             <p className="lg-kicker text-[var(--lg-blue)]">{fr ? "AGENDA" : "WHAT’S ON"} / {fr ? "LES 7 PROCHAINS JOURS" : "NEXT 7 DAYS"}</p>
             <span aria-hidden="true" className="text-xs font-black text-black/45">01 / AGENDA</span>
           </div>
-          <h2 id="home-agenda-title" className="lg-title mt-6 text-[clamp(2.75rem,9vw,4.25rem)] uppercase">{fr ? <>CE QUI<br />SE PASSE.</> : <>WHAT’S<br />HAPPENING.</>}</h2>
+          <h2 id="home-agenda-title" className="lg-title mt-6 text-[clamp(2.75rem,9vw,4.25rem)] uppercase">{fr ? <>À l’agenda cette semaine.</> : <>Happening this week.</>}</h2>
           <p className="mt-5 max-w-md text-sm font-semibold leading-6 text-black/65">{fr ? "Une sortie, un concert, un rendez-vous sur l’eau. Choisissez votre prochain moment dans le Golfe." : "An outing, a concert, a date on the water. Choose your next moment in the Golfe."}</p>
         </header>
         <nav aria-label={fr?"Choisir ma sortie":"Choose an outing"} className="mt-6 flex flex-wrap gap-2">
@@ -69,16 +69,17 @@ export default function HomeUpdates({ locale, events, news, window }: {
           {fr ? "Tout l’agenda" : "Full agenda"}<span aria-hidden="true">→</span>
         </Link>
       </section>
-      <section aria-labelledby="home-local-title" className="flex min-w-0 flex-col">
+      <section aria-labelledby="home-local-title" className="home-update-panel flex min-w-0 flex-col">
         <header className="border-t-4 border-black pt-5">
           <div className="flex flex-wrap items-center justify-between gap-3">
             <p className="lg-kicker">{fr ? "VIE LOCALE" : "LOCAL"} / {fr ? "LES INFOS UTILES" : "NEED TO KNOW"}</p>
             <span aria-hidden="true" className="text-xs font-black text-black/45">02 / {fr ? "VIE LOCALE" : "LOCAL"}</span>
           </div>
-          <h2 id="home-local-title" className="lg-title mt-6 text-[clamp(2.75rem,9vw,4.25rem)] uppercase">{fr ? <>À SAVOIR<br />MAINTENANT.</> : <>KNOW IT<br />NOW.</>}</h2>
+          <h2 id="home-local-title" className="lg-title mt-6 text-[clamp(2.75rem,9vw,4.25rem)] uppercase">{fr ? <>Le fil du Golfe.</> : <>The Golfe, day by day.</>}</h2>
           <p className="mt-5 max-w-md text-sm font-semibold leading-6 text-black/65">{fr ? "Accès, nouveaux lieux, vie locale. Les nouvelles qui vous aident à préparer votre séjour." : "Access, new places, local life. Updates to help you plan your stay."}</p>
         </header>
         <ul className="mt-7 flex-1 border-t border-black/25">
+          {!news.length&&<li className="py-8 text-sm leading-6 text-black/65">{fr?"Aucune information publiée à afficher pour le moment. Retrouvez le journal local depuis le lien ci-dessous.":"No published updates to display right now. Open the local journal using the link below."}</li>}
           {news.map(item => <li key={item.id} className="border-b border-black/25">
             <Link href={`/${locale}/local#${item.id}`} className={`group block py-6 ${focus}`}>
               <div className="flex flex-wrap items-center gap-x-3 gap-y-2">

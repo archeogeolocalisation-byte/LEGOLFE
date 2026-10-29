@@ -13,7 +13,7 @@ const server=spawn(process.execPath,[require.resolve('next/dist/bin/next'),'star
    for(const route of routes){await page.goto(origin+'/'+locale+route,{waitUntil:'networkidle'});const header=page.locator('header').first();const headerState=await header.evaluate(el=>({background:getComputedStyle(el).backgroundColor,color:getComputedStyle(el).color,classes:el.className,logoFilter:el.querySelector('img')?getComputedStyle(el.querySelector('img')).filter:''}));assert.ok(headerState.logoFilter.includes('invert'),locale+route+' white logo');assert.equal(headerState.background,'rgb(11, 48, 70)',locale+route+' navy header');assert.equal(headerState.color,'rgb(253, 252, 249)',locale+route+' light header text');assert.equal(await header.getByRole('link',{name:locale==='fr'?'Demander':'Ask',exact:false}).evaluate(el=>getComputedStyle(el).backgroundColor),'rgb(238, 231, 218)');
     if(route===''){
      assert.equal(await page.locator('h1').evaluate(el=>getComputedStyle(el).color),'rgb(11, 48, 70)');
-     assert.equal(await page.locator('h1 .lg-accent').evaluate(el=>getComputedStyle(el).color),'rgb(11, 48, 70)');
+     assert.equal(await page.locator('h1 em').evaluate(el=>getComputedStyle(el).color),'rgb(55, 105, 87)');
      const ask=page.locator('.home-ask');
      assert.equal(await ask.evaluate(el=>getComputedStyle(el).backgroundColor),'rgb(11, 48, 70)');
      const button=ask.locator('.home-ask-button');assert.equal(await button.evaluate(el=>getComputedStyle(el).color),'rgb(11, 48, 70)');assert.equal(await button.evaluate(el=>getComputedStyle(el).backgroundColor),'rgb(238, 231, 218)');
