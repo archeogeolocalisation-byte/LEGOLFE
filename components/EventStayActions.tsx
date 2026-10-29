@@ -38,7 +38,7 @@ export default function EventStayActions({locale,event}:{locale:Locale;event?:Sa
  const sorted=[...items].sort((a,b)=>a.session.start.localeCompare(b.session.start)||(a.session.time||'').localeCompare(b.session.time||''));
  const upcoming=sorted.filter(e=>(e.session.end||e.session.start)>=today),past=sorted.filter(e=>(e.session.end||e.session.start)<today);
  const card=(e:SavedEvent)=><li key={savedEventKey(e)} className="min-w-0 border border-white/30 p-5">
-  <p className="text-sm font-bold text-[#b9e9f4]">{formatCalendarDay(e.session.start,locale,true)}{e.session.end&&e.session.end!==e.session.start?` — ${formatCalendarDay(e.session.end,locale,true)}`:''}{e.session.time?` · ${e.session.time}`:''}{e.session.version?` · ${e.session.version}`:''}</p>
+  <p className="text-sm font-bold text-[#b9e9f4]">{formatCalendarDay(e.session.start,locale,true)}{e.session.end&&e.session.end!==e.session.start?` — ${formatCalendarDay(e.session.end,locale,true)}`:''}{e.session.time?` · ${e.session.time}${e.session.endTime?`–${e.session.endTime}`:''}`:''}{e.session.version?` · ${e.session.version}`:''}</p>
   <Link href={`/${locale}/event/${e.id}#${sessionAnchor(e.session)}`} className="mt-3 block break-words text-xl font-black underline underline-offset-4">{fr?e.titleFr:e.title} →</Link>
   <p className="mt-2 text-sm text-white/80">{e.venue?`${e.venue} · `:''}{e.location}</p>
   {e.streetAddress&&<p className="mt-1 text-sm text-white/80">{e.streetAddress}</p>}

@@ -45,6 +45,9 @@ jobs:
           node scripts/test-san-peire-routes.cjs
           node scripts/test-hiking-routes.cjs
           node scripts/test-event-structured-data.cjs
+          node scripts/test-event-journey.cjs
+          node scripts/test-agenda-discovery.cjs
+          node scripts/test-agenda-dark.cjs
           node scripts/test-guides-seo.cjs
           node scripts/test-place-seo.cjs
       - run: npm run build
