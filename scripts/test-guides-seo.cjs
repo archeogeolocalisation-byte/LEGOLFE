@@ -6,6 +6,7 @@ require.extensions['.css']=m=>{m.exports=new Proxy({},{get:(_,key)=>key==='__esM
 process.env.VERCEL_ENV='production';process.env.NEXT_PUBLIC_SITE_URL='https://www.legolfe.com';
 const load=Module._load;
 Module._load=function(request,parent,...rest){
+ if(parent?.filename.endsWith('/app/[locale]/page.tsx')&&request.endsWith('/lib/publicNews'))return {getPublicNews:async()=>require('../data/localNews.ts').localNews};
  if((parent?.filename.endsWith('/sitemap.xml/route.ts')||parent?.filename.endsWith('/app/[locale]/page.tsx'))&&request.endsWith('/lib/publicEvents'))return {getPublicEvents:async()=>[]};
  if(parent?.filename.endsWith('/sitemap.xml/route.ts')&&request.endsWith('/lib/publicNews'))return {getPublicNews:async()=>require('../data/localNews.ts').localNews};
  if(parent?.filename.endsWith('/sitemap.xml/route.ts')&&request.endsWith('/lib/publicVillas'))return {getPublishedVillas:async()=>[]};
@@ -36,12 +37,11 @@ const {GET}=require('../app/sitemap.xml/route.ts');
  const GuideIndex=require('../app/[locale]/guides/page.tsx').default;
  for(const locale of ['fr','en']){
   const index=renderToStaticMarkup(await GuideIndex({params:Promise.resolve({locale})}));
-  const home=renderToStaticMarkup(await Home({params:Promise.resolve({locale})}));
   for(const guide of guides.slice(0,2)){
    assert.ok(index.includes(`href="/${locale}/guides/${guide.slug}"`));
-   assert.ok(home.includes(`href="/${locale}/guides/${guide.slug}"`));
   }
  }
+ for(const locale of ['fr','en']){const html=renderToStaticMarkup(await Home({params:Promise.resolve({locale})}));for(const slug of ['activites-gratuites-golfe-saint-tropez','golfe-saint-tropez-avec-enfants','week-end-automne-golfe-saint-tropez'])assert.ok(html.includes(`href="/${locale}/guides/${slug}"`));}
  const slugs=new Set(guides.map(g=>g.slug));assert.equal(slugs.size,guides.length);assert.ok(guides.length>=12);
  const titles=new Set(),validDest=new Set(destinations.map(d=>d.slug)),validPlaces=new Set(places.map(p=>p.id));
  const validPaths=new Set(['/whats-on','/stay','/destinations','/explore','/guides','/contact','/a-propos',...placeCategories.map(c=>'/explore/'+c.id),...destinationPaths(),...guides.map(g=>'/guides/'+g.slug),...places.map(p=>'/place/'+p.id)]);

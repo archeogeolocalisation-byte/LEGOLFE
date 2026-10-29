@@ -58,6 +58,8 @@ jobs:
           node scripts/test-agenda-discovery.cjs
           node scripts/test-agenda-dark.cjs
           node scripts/test-guides-seo.cjs
+          node scripts/test-home-journal.cjs
+          node scripts/test-place-crawlability.cjs
           node scripts/test-guides-discovery.cjs
           node scripts/test-family-guide.cjs
           node scripts/test-autumn-guide.cjs
