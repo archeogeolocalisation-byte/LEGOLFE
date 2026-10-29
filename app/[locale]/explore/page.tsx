@@ -23,7 +23,7 @@ export default async function Page({params,searchParams}:Props){
    <div className="explore-intro">
     <div>
      <p className="lg-kicker lg-accent">LE GOLFE / {l==="fr"?"LE CARNET D’ADRESSES":"THE ADDRESS BOOK"}</p>
-     <h1>{fr?<>Vos envies.<br/><em>Votre Golfe.</em></>:<>Your mood.<br/><em>Your Golfe.</em></>}</h1>
+     <h1>{fr?<>Le Golfe.<br/><em>À découvrir.</em></>:<>The Golfe.<br/><em>Yours to explore.</em></>}</h1>
      <p className="explore-deck">{l==="fr"?"Une table, une crique, une balade. Choisissez votre envie, trouvez une adresse et préparez votre prochaine sortie.":"A table, a cove, a walk. Follow your mood, find a place and plan your next outing."}</p>
      <a href="#adresses" className="lg-btn">{fr?"Trouver mon adresse":"Find my place"} ↓</a>
     </div>
