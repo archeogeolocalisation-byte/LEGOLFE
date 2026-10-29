@@ -34,6 +34,10 @@ jobs:
       - run: npx tsc --noEmit
       - name: Check villa community hearts
         run: |
+          node scripts/test-villa-enquiry-draft.cjs
+          node scripts/verify-haumiere-stay.cjs
+          node scripts/verify-villa-stay.cjs
+          node scripts/test-villa-contact.cjs
           node scripts/test-villa-hearts.cjs
           node scripts/test-villa-hearts-db.mjs
       - name: Check villa budgets and protected collections

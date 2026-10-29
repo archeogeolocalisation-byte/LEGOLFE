@@ -24,7 +24,7 @@ for(const locale of ['fr','en']){
  for(const id of [base.id,'property-another']){
   const villa={...base,id};
   const html=renderToStaticMarkup(React.createElement(Detail,{villa,today:'2026-10-27',locale}));
-  noPriceOrCalendar(html);assert.match(html,/href="#annonceur"/);assert.match(html,/villa-mobile-contact/);assert.match(html,/villa-contact-card/);assert.equal(html.includes('id="photos"'),id===base.id);checks+=4;
+  noPriceOrCalendar(html);assert.match(html,/href="#annonceur"/);assert.match(html,/villa-mobile-contact/);assert.match(html,/villa-contact-card/);assert.equal(html.includes('id="photos"'),true);checks+=4;
   const preview=renderToStaticMarkup(React.createElement(Detail,{villa,today:'2026-10-27',locale,preview:true}));noPriceOrCalendar(preview);
  }
  const villas=load('data/villas.ts').villas;
