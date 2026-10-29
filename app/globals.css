@@ -514,3 +514,9 @@ button,textarea,input { font:inherit; }
 .family-place-links{display:flex;flex-direction:column;gap:10px;font-size:14px;font-weight:750;}.family-place-links a{text-decoration:underline;text-underline-offset:3px;}
 .family-outing .family-sources{font-size:11px;line-height:1.7;margin:20px 0;}.family-sources a{display:block;text-decoration:underline;text-underline-offset:3px;}
 .family-rain{margin-top:28px;padding:26px;border-radius:18px;background:#e6eff1;border:1px solid #c7d9df;}.family-rain h3{font-size:25px;font-weight:800;letter-spacing:-.03em;}.family-rain p{max-width:80ch;font-size:14px;line-height:1.8;margin-top:12px;}.family-rain .lg-btn{margin-top:18px;}
+
+/* Autumn programmes: seasonal details and flexible days. */
+.autumn-outing .autumn-steps{margin-top:20px;margin-bottom:0;font-size:14px;font-weight:400;line-height:1.8;}.autumn-steps li+li{margin-top:12px;}
+.autumn-place-links{display:flex;flex-direction:column;gap:10px;font-size:14px;font-weight:750;}.autumn-place-links a{text-decoration:underline;text-underline-offset:3px;}
+.autumn-outing .autumn-sources{font-size:11px;line-height:1.7;margin:20px 0;}.autumn-sources a{display:block;text-decoration:underline;text-underline-offset:3px;}
+.autumn-weather{margin-top:28px;padding:26px;border-radius:18px;background:#f5ecdc;border:1px solid #dfcfb3;}.autumn-weather h3{font-size:25px;font-weight:800;letter-spacing:-.03em;}.autumn-weather p{max-width:80ch;font-size:14px;line-height:1.8;margin-top:12px;}.autumn-weather>div{display:flex;flex-wrap:wrap;gap:12px;margin-top:18px;}
