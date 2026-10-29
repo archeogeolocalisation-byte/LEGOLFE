@@ -3,6 +3,13 @@ import type { Guide } from "../data/guides";
 import type { Locale } from "../lib/i18n";
 import GuideImage from "./GuideImage";
 
+export function GuideCard({guide,locale}:{guide:Guide;locale:Locale}) {
+ return <article className="guide-library-card">
+ <GuideImage guide={guide} locale={locale}/>
+ <div className="guide-library-card-copy"><p className="lg-kicker">{guide.category[locale]}</p><h3><Link href={`/${locale}/guides/${guide.slug}`}>{guide.copy[locale].title} {guide.copy[locale].accent} ↗</Link></h3><p>{guide.copy[locale].description}</p><span>{locale==="fr"?"Ouvrir le guide":"Read the guide"} →</span></div>
+ </article>;
+}
+
 export default function GuideCards({ items, locale }: { items: Guide[]; locale: Locale }) {
   return <div className="grid gap-x-10 gap-y-12 md:grid-cols-2">
     {items.map(guide => <article key={guide.slug} className="border-t border-black pt-5">

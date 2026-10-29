@@ -1,4 +1,5 @@
 import Link from "next/link";
+import BudgetGuidePlan from "../../../../components/BudgetGuidePlan";
 import HikingRoute from '../../../../components/HikingRoute';
 import {hikingRouteForGuide} from '../../../../data/hikingRoutes';
 import SanPeireRoutes from "../../../../components/SanPeireRoutes";
@@ -53,6 +54,7 @@ export default async function Page({ params }: Props) {
       <div className="lg-shell mt-10">
         <dl className="grid gap-6 border-y border-black py-7 md:grid-cols-3">{copy.facts.map(fact => <div key={fact.label}><dt className="lg-kicker text-black/60">{fact.label}</dt><dd className="mt-3 text-lg font-black leading-7">{fact.value}</dd></div>)}</dl>
       </div>
+      {guide.slug==='activites-gratuites-golfe-saint-tropez'&&<BudgetGuidePlan locale={locale}/>}
       {guide.slug==='randonnee-san-peire-plan-de-la-tour'&&<SanPeireRoutes locale={locale}/>}
       {hikingRoute&&<HikingRoute key={hikingRoute.id} route={hikingRoute} locale={locale}/>}
       <div className="lg-shell grid gap-10 py-12 md:grid-cols-[.35fr_1fr] md:gap-14 md:py-16">
