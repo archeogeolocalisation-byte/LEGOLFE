@@ -705,7 +705,8 @@ export const practicalGuides: Guide[] = [
     "placeIds": [
       "grimaud-village",
       "domaine-rayol-kids",
-      "saint-tropez-village"
+      "saint-tropez-village",
+      "musee-gendarmerie-cinema"
     ],
     "related": [
       "activites-gratuites-golfe-saint-tropez",

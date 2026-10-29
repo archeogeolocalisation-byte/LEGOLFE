@@ -1,4 +1,5 @@
 import Link from "next/link";
+import FamilyGuidePlan from "../../../../components/FamilyGuidePlan";
 import BudgetGuidePlan from "../../../../components/BudgetGuidePlan";
 import HikingRoute from '../../../../components/HikingRoute';
 import {hikingRouteForGuide} from '../../../../data/hikingRoutes';
@@ -48,12 +49,14 @@ export default async function Page({ params }: Props) {
         <p className="lg-kicker">LE GOLFE / {guide.category[locale]}</p>
         <h1 className="lg-display mt-7 text-[12vw] leading-[.9] md:text-[92px]">{copy.title}<br /><span className="lg-accent">{copy.accent}</span></h1>
         <p className="mt-9 max-w-3xl text-xl font-bold leading-8">{copy.intro}</p>
+        {guide.slug==='golfe-saint-tropez-avec-enfants'&&<a className="lg-btn mt-6" href="#sorties-en-famille">{fr?"Choisir notre sortie":"Choose our outing"} ↓</a>}
         <p className="mt-6 text-xs leading-6 text-black/65">LE GOLFE · {fr ? "Repères vérifiés le" : "Details checked on"} <time dateTime={guide.verified}>{dateLabel(guide.verified, locale)}</time></p>
       </header>
       <div className="lg-shell"><GuideImage guide={guide} locale={locale} hero /></div>
       <div className="lg-shell mt-10">
         <dl className="grid gap-6 border-y border-black py-7 md:grid-cols-3">{copy.facts.map(fact => <div key={fact.label}><dt className="lg-kicker text-black/60">{fact.label}</dt><dd className="mt-3 text-lg font-black leading-7">{fact.value}</dd></div>)}</dl>
       </div>
+      {guide.slug==='golfe-saint-tropez-avec-enfants'&&<FamilyGuidePlan locale={locale} sources={guide.sources}/>}
       {guide.slug==='activites-gratuites-golfe-saint-tropez'&&<BudgetGuidePlan locale={locale}/>}
       {guide.slug==='randonnee-san-peire-plan-de-la-tour'&&<SanPeireRoutes locale={locale}/>}
       {hikingRoute&&<HikingRoute key={hikingRoute.id} route={hikingRoute} locale={locale}/>}
