@@ -11,7 +11,7 @@ export default function VillaCard({villa,locale}:{villa:CardVilla;locale:Locale}
  const fr=locale==='fr',live=villa.id.startsWith('property-'),href=villaHref(villa.id,locale);
  const amenities=villa.amenities??(villa.pool?['Pool']:[]);
  const highlights=['Heated pool','Pool','Sea view','Garden','Terrace','Air conditioning','Parking','Pets allowed'].filter(value=>amenities.includes(value)&&!(value==='Pool'&&amenities.includes('Heated pool'))).slice(0,3);
- const money=new Intl.NumberFormat(fr?'fr-FR':'en-GB',{style:'currency',currency:'EUR',maximumFractionDigits:0});
+
  return <article className="villa-card">
   <div className="villa-card-photo"><Link href={href} tabIndex={-1} aria-hidden="true" className="group block h-full"><div className="lg-image h-full">{villa.image?<img src={villa.image} alt={`${villa.name} · ${villa.location}`} width="720" height="480" loading="lazy"/>:<div className="villa-card-placeholder">{villa.name}</div>}</div></Link>{!live&&<p className="villa-example-badge">{fr?'Exemple de présentation · indisponible':'Presentation example · not available'}</p>}{live&&<VillaSaveButton id={villa.id} name={villa.name} locale={locale}/>}</div>
   <Link href={href} className="villa-card-content" aria-label={`${fr?'Découvrir':'Explore'} ${villa.name} · ${villa.location}`}>
@@ -21,7 +21,7 @@ export default function VillaCard({villa,locale}:{villa:CardVilla;locale:Locale}
    <p className="villa-card-capacity">{villa.guests} {fr?'personnes':'guests'} <span aria-hidden="true">·</span> {villa.bedrooms} {fr?(villa.bedrooms===1?'chambre':'chambres'):(villa.bedrooms===1?'bedroom':'bedrooms')}</p>
    <p className="villa-card-description">{fr?villa.description:villa.descriptionEn||villaDescriptionEn[villa.id]||villa.description}</p>
    {highlights.length>0&&<ul className="villa-card-highlights" aria-label={fr?'Équipements déclarés':'Listed amenities'}>{highlights.map(value=><li key={value}>{fr?amenityOptions.find(([en])=>en===value)?.[1]||value:value}</li>)}</ul>}
-   <div className="villa-card-bottom"><div>{villa.price>0?<><p className="villa-card-price-label">{fr?'À partir de':'From'}</p><p className="villa-card-price">{money.format(villa.price)} <span>/ {fr?'semaine':'week'}</span></p><p className="villa-card-fees">{fr?'Période et frais à confirmer':'Confirm season and fees'}</p></>:<p className="villa-card-price">{fr?'Prix sur demande':'Price on request'}</p>}</div><span className="villa-card-arrow" aria-hidden="true">↗</span></div>
+   <div className="villa-card-bottom"><p className="villa-card-contact">{live?(fr?'Dates et conditions en contact direct':'Discuss dates and terms directly'):(fr?'Fiche de démonstration':'Sample listing')}</p><span className="villa-card-arrow" aria-hidden="true">↗</span></div>
    <span className="villa-card-cta">{live?(fr?'Découvrir la maison':'Explore this home'):(fr?'Voir la fiche exemple':'View sample listing')} →</span>
   </Link>
  </article>;
