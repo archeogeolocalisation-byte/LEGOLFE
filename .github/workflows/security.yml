@@ -43,6 +43,10 @@ jobs:
       - name: Check villa budgets and protected collections
         run: |
           node scripts/test-stay-landing.cjs
+          node scripts/test-stay-itinerary.cjs
+          node scripts/test-stay-journey.cjs
+          node scripts/test-saved-day-plan.cjs
+          node scripts/test-my-stay-contrast.cjs
           node scripts/verify-stay-filters.cjs
           node scripts/test-villa-collections-db.mjs
       - name: Check place content, hiking routes and SEO

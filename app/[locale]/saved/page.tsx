@@ -1,101 +1,51 @@
-"use client";
-import { villaHref } from "../../../lib/villaPaths";
-
-import Link from "next/link";
-import { use, useEffect, useMemo, useState } from "react";
-import SiteHeader from "../../../components/SiteHeader";
-import { places, getCategory, placeDescriptionFr } from "../../../data/places";
-import { villas } from "../../../data/villas";
-import { categoryFR, isLocale } from "../../../lib/i18n";
-import { mediaForPlace } from "../../../lib/placeMedia";
-import VillaComparison from "../../../components/VillaComparison";
-import StayPlanner from "../../../components/StayPlanner";
-import EventStayActions from "../../../components/EventStayActions";
-import SavedDayPlanSection from "../../../components/SavedDayPlan";
-
-const STORAGE_KEY = "le-golfe-saved-places";
-const VILLA_STORAGE_KEY = "le-golfe-saved-villas";
-
-export default function SavedPage({ params }: { params: Promise<{ locale: string }> }) {
-  const { locale: raw } = use(params);
-  const locale = isLocale(raw) ? raw : "en";
-  const fr = locale === "fr";
-  const [storageError,setStorageError]=useState("");
-  const [ready,setReady]=useState(false);
-  const [ids, setIds] = useState<string[]>([]);
-  const [villaIds, setVillaIds] = useState<string[]>([]);
-
-  useEffect(() => {
-    function refresh(){
-      try { const places=JSON.parse(localStorage.getItem(STORAGE_KEY)||"[]"),villas=JSON.parse(localStorage.getItem(VILLA_STORAGE_KEY)||"[]");setIds(Array.isArray(places)?places.filter(x=>typeof x==='string'):[]);setVillaIds(Array.isArray(villas)?villas.filter(x=>typeof x==='string'):[]);setStorageError("");}
-      catch {setStorageError(fr?"Impossible de lire la sélection de ce navigateur.":"Unable to read this browser’s shortlist.");}
-      setReady(true);
-    }
-    refresh();window.addEventListener('storage',refresh);window.addEventListener('le-golfe:saved-villas',refresh);window.addEventListener('le-golfe:saved-places',refresh);
-    return()=>{window.removeEventListener('storage',refresh);window.removeEventListener('le-golfe:saved-villas',refresh);window.removeEventListener('le-golfe:saved-places',refresh);};
-  }, [fr]);
-
-  const savedPlaces = useMemo(() => ids.map((id) => places.find((p) => p.id === id)).filter(Boolean) as typeof places, [ids]);
-  const categories = useMemo(() => Array.from(new Set(savedPlaces.map((p) => p.category))), [savedPlaces]);
-  const savedVillas = useMemo(() => villaIds.map((id) => villas.find((v) => v.id === id)).filter(Boolean) as typeof villas, [villaIds]);
-
-  function persist(key:string,next:string[],apply:()=>void,event:string){try{localStorage.setItem(key,JSON.stringify(next));apply();setStorageError("");window.dispatchEvent(new Event(event));}catch{setStorageError(fr?"Modification non enregistrée. Vérifiez l’espace disponible sur cet appareil.":"Change not saved. Check storage on this device.");}}
-  function remove(id:string){const next=ids.filter(x=>x!==id);persist(STORAGE_KEY,next,()=>setIds(next),'le-golfe:saved-places');}
-  function removeVilla(id:string){const next=villaIds.filter(x=>x!==id);persist(VILLA_STORAGE_KEY,next,()=>setVillaIds(next),'le-golfe:saved-villas');}
-
-  const askQuery = [...savedPlaces.map((p) => p.name), ...savedVillas.map((v) => v.name)].join(", ");
-  const prompt = fr ? `Construis-moi un séjour autour de cette sélection : ${askQuery}. Propose le bon rythme, les meilleurs moments de la journée et les compromis à connaître.` : `Build me a stay around this shortlist: ${askQuery}. Suggest the right rhythm, best times of day and trade-offs I should know.`;
-
-  return <main className="lg-saved-dark min-h-screen bg-[var(--lg-blue)] text-white">
-    <SiteHeader light={false} locale={locale} path="/saved" />
-    <section className="lg-shell pb-20 pt-12 md:pt-20">
-      <p className="lg-kicker">{fr?"MON SÉJOUR":"MY STAY"} / {String(savedPlaces.length + savedVillas.length).padStart(2, "0")}</p>
-      <h1 className="lg-menu-title mt-6">{fr ? <>MON<br/><span className="lg-accent">SÉJOUR.</span></> : <>MY<br/><span className="lg-accent">STAY.</span></>}</h1>
-      <div className="mt-8 grid gap-8 border-t border-black pt-6 md:grid-cols-[1fr_auto] md:items-start">
-        <div><p className="max-w-2xl text-lg font-bold leading-7 text-black/55">{fr ? "Votre sélection devient un projet de séjour. LE GOLFE peut maintenant relier ces lieux, éviter les mauvais enchaînements et construire un rythme de séjour cohérent." : "Your shortlist becomes a brief. LE GOLFE can connect these places, avoid bad combinations and build a coherent stay rhythm."}</p>
-        {categories.length>0 && <div className="mt-5 flex flex-wrap gap-2">{categories.map((id)=><span key={id} className="border border-black px-3 py-2 text-[9px] font-black uppercase tracking-[.12em]">{fr ? categoryFR[id].name : getCategory(id)?.label}</span>)}</div>}</div>
-        {(savedPlaces.length > 0 || savedVillas.length > 0) && <Link href={`/${locale}/ask?shortlist=${encodeURIComponent(prompt)}`} className="lg-btn lg-btn--accent">{fr ? "Construire mon séjour" : "Build my stay"} →</Link>}
-      </div>
-
-      <div className="mt-6 flex flex-wrap items-center justify-between gap-4"><p className="text-xs leading-5 text-black/50">{fr?"Sélection conservée sur ce navigateur, sans compte.":"Shortlist saved in this browser, no account required."}</p><Link href="/requests" className="lg-btn">{fr?"Mes demandes de séjour":"My stay requests"} →</Link></div>
-      <nav aria-label={fr?"Organiser mon séjour":"Organise My Stay"} className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-       <Link href={`/${locale}/ask`} className="flex min-h-24 flex-col justify-between border border-white/30 p-4 transition hover:bg-white/10"><span className="lg-kicker text-[#a6d8e5]">01 / {fr?"PROGRAMME":"PLAN"}</span><span className="mt-3 font-black">{fr?"Créer ou modifier mon programme":"Create or edit my plan"} ↗</span></Link>
-       <Link href={savedPlaces.length?"#mes-adresses":`/${locale}/explore`} className="flex min-h-24 flex-col justify-between border border-white/30 p-4 transition hover:bg-white/10"><span className="lg-kicker text-[#a6d8e5]">02 / {fr?"ADRESSES":"PLACES"}</span><span className="mt-3 font-black">{savedPlaces.length? (fr?`${savedPlaces.length} lieux enregistrés`:`${savedPlaces.length} saved places`) : (fr?"Trouver des lieux":"Discover places")} ↗</span></Link>
-       <Link href={savedVillas.length?"#mes-maisons":`/${locale}/stay`} className="flex min-h-24 flex-col justify-between border border-white/30 p-4 transition hover:bg-white/10"><span className="lg-kicker text-[#a6d8e5]">03 / {fr?"MAISONS":"HOMES"}</span><span className="mt-3 font-black">{savedVillas.length?(fr?`${savedVillas.length} maison(s) enregistrée(s)`:`${savedVillas.length} saved homes`):(fr?"Choisir une maison":"Find a home")} ↗</span></Link>
-       <Link href="#mes-rendez-vous" className="flex min-h-24 flex-col justify-between border border-white/30 p-4 transition hover:bg-white/10"><span className="lg-kicker text-[#a6d8e5]">04 / {fr?"RENDEZ-VOUS":"EVENTS"}</span><span className="mt-3 font-black">{fr?"Retrouver mes séances":"View my saved sessions"} ↗</span></Link>
-      </nav>
-      <EventStayActions locale={locale}/>
-      <SavedDayPlanSection locale={locale}/>
-      {storageError&&<p role="alert" className="mt-5 border border-red-700 p-4 text-sm">{storageError}</p>}
-      {!ready?<p className="mt-12" role="status">{fr?"Chargement de votre sélection…":"Loading your shortlist…"}</p>:savedPlaces.length === 0 && savedVillas.length === 0 ? <div className="mt-20 border-y border-black py-14"><p className="text-3xl font-black tracking-[-.04em]">{fr ? "Complétez votre séjour avec des lieux et une maison." : "Complete your stay with places and a home."}</p><Link href={`/${locale}/explore`} className="mt-6 inline-flex lg-btn">{fr?"Explorer":"Explore"} →</Link><Link href={`/${locale}/stay`} className="lg-btn ml-3 mt-6">{fr?'Choisir une maison':'Choose a home'} →</Link></div> : <>
-      <div className="mt-16 grid gap-2 md:grid-cols-12">
-        {savedPlaces.slice(0,4).map((p,i)=>{const m=mediaForPlace(p.id);const spans=["md:col-span-7","md:col-span-5","md:col-span-5","md:col-span-7"];return <Link key={p.id} href={`/${locale}/place/${p.id}`} className={`group relative min-h-[260px] overflow-hidden bg-black ${spans[i]||"md:col-span-6"}`}>{m?<img src={m.src} alt={m.alt} className="absolute inset-0 h-full w-full object-cover opacity-85 transition duration-700 group-hover:scale-[1.015]"/>:<div className="absolute inset-0 bg-black"/>}<div className="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-transparent"/><div className="absolute bottom-0 left-0 p-5 text-white"><p className="lg-kicker text-white/60">{p.location}</p><p className="mt-2 text-4xl font-black uppercase leading-[.88] tracking-[-.06em] md:text-5xl">{p.name}</p></div></Link>})}
-      </div>
-
-      {savedVillas.length > 0 && <section id="mes-maisons" className="mt-16 scroll-mt-24">
-        <div className="flex items-end justify-between border-b border-black pb-4"><div><p className="lg-kicker text-[var(--lg-blue)]">{fr?"MAISONS / MA SÉLECTION":"STAY / SAVED"}</p><h2 className="mt-3 text-5xl font-black uppercase tracking-[-.055em] md:text-7xl">{fr ? "VOTRE MAISON." : "YOUR HOME."}</h2></div><span className="text-[10px] font-black uppercase tracking-[.12em] text-black/40">{String(savedVillas.length).padStart(2,"0")}</span></div>
-        <div className="mt-6 grid gap-6 md:grid-cols-2">
-          {savedVillas.map((villa)=><article key={villa.id} className="grid gap-5 border-b border-black pb-6 sm:grid-cols-[180px_1fr]">
-            <Link href={villaHref(villa.id,locale)} className="block aspect-[4/3] overflow-hidden bg-neutral-100"><img src={villa.image} alt={villa.name} className="h-full w-full object-cover"/></Link>
-            <div className="flex flex-col justify-between"><div><p className="lg-kicker text-black/40">{fr?"SÉJOUR":"STAY"} · {villa.location}</p><Link href={villaHref(villa.id,locale)} className="mt-2 block text-4xl font-black uppercase tracking-[-.05em]">{villa.name}</Link><p className="mt-3 text-sm font-bold text-black/50">{villa.guests} {fr ? "voyageurs" : "guests"}</p></div><button onClick={()=>removeVilla(villa.id)} className="mt-5 self-start text-[10px] font-black uppercase tracking-[.12em] underline decoration-[var(--lg-blue)] decoration-2 underline-offset-4">{fr?"Retirer":"Remove"}</button></div>
-          </article>)}
-        </div>
-      <VillaComparison items={savedVillas} locale={locale}/>
-      </section>}
-
-      <StayPlanner places={savedPlaces} villas={savedVillas} locale={locale} />
-
-      <div id="mes-adresses" className="mt-14 scroll-mt-24 border-t border-black">
-        {savedPlaces.map((p, i) => {
-          const media = mediaForPlace(p.id);
-          return <article key={p.id} className="grid gap-6 border-b border-black py-7 md:grid-cols-[150px_1fr_auto] md:items-center">
-            <Link href={`/${locale}/place/${p.id}`} className="block aspect-[4/3] overflow-hidden bg-neutral-100">{media ? <img src={media.src} alt={media.alt} className="h-full w-full object-cover"/> : <div className="flex h-full items-center justify-center text-4xl font-black">{String(i+1).padStart(2,"0")}</div>}</Link>
-            <div><p className="lg-kicker text-black/45">{locale === "fr" ? categoryFR[p.category].name : getCategory(p.category)?.label} · {p.location}</p><Link href={`/${locale}/place/${p.id}`} className="mt-2 block text-4xl font-black uppercase tracking-[-.05em] md:text-5xl">{p.name}</Link><p className="mt-3 max-w-xl text-sm font-semibold leading-6 text-black/50">{fr ? (placeDescriptionFr[p.id] || p.description) : p.description}</p></div>
-            <button onClick={() => remove(p.id)} className="justify-self-start text-[10px] font-black uppercase tracking-[.12em] underline decoration-[var(--lg-blue)] decoration-2 underline-offset-4 md:justify-self-end">{fr ? "Retirer" : "Remove"}</button>
-          </article>;
-        })}
-      </div></>}
-    </section>
-
-  </main>;
+'use client';
+import Link from 'next/link';
+import {use,useEffect,useMemo,useState} from 'react';
+import SiteHeader from '../../../components/SiteHeader';
+import {places} from '../../../data/places';
+import {placeName} from '../../../lib/placeNames';
+import {villas} from '../../../data/villas';
+import {isLocale} from '../../../lib/i18n';
+import {mediaForPlace} from '../../../lib/placeMedia';
+import {villaHref} from '../../../lib/villaPaths';
+import VillaComparison from '../../../components/VillaComparison';
+import StayPlanner from '../../../components/StayPlanner';
+import EventStayActions from '../../../components/EventStayActions';
+import SavedDayPlanSection from '../../../components/SavedDayPlan';
+const STORAGE_KEY='le-golfe-saved-places',VILLA_STORAGE_KEY='le-golfe-saved-villas';
+export default function SavedPage({params}:{params:Promise<{locale:string}>}){
+ const {locale:raw}=use(params),locale=isLocale(raw)?raw:'en',fr=locale==='fr';
+ const [ids,setIds]=useState<string[]>([]),[villaIds,setVillaIds]=useState<string[]>([]),[ready,setReady]=useState(false),[storageError,setStorageError]=useState('');
+ useEffect(()=>{
+  const refresh=()=>{
+   try{const saved=JSON.parse(localStorage.getItem(STORAGE_KEY)||'[]'),homes=JSON.parse(localStorage.getItem(VILLA_STORAGE_KEY)||'[]');setIds(Array.isArray(saved)?[...new Set(saved.filter((id):id is string=>typeof id==='string'))]:[]);setVillaIds(Array.isArray(homes)?[...new Set(homes.filter((id):id is string=>typeof id==='string'))]:[]);setStorageError('');}
+   catch{setStorageError(fr?'Impossible de lire votre sélection sur cet appareil. Aucune donnée n’a été modifiée.':'Unable to read your shortlist on this device. Nothing has been changed.');}setReady(true);
+  };
+  refresh();window.addEventListener('storage',refresh);window.addEventListener('le-golfe:saved-places',refresh);window.addEventListener('le-golfe:saved-villas',refresh);
+  return()=>{window.removeEventListener('storage',refresh);window.removeEventListener('le-golfe:saved-places',refresh);window.removeEventListener('le-golfe:saved-villas',refresh);};
+ },[fr]);
+ const savedPlaces=useMemo(()=>ids.flatMap(id=>places.filter(place=>place.id===id)),[ids]);
+ const savedVillas=useMemo(()=>villaIds.flatMap(id=>villas.filter(villa=>villa.id===id)),[villaIds]);
+ function remove(key:string,id:string,event:string){
+  try{const current=JSON.parse(localStorage.getItem(key)||'[]');if(!Array.isArray(current))throw Error('Invalid selection');localStorage.setItem(key,JSON.stringify(current.filter(value=>value!==id)));setStorageError('');window.dispatchEvent(new Event(event));}
+  catch{setStorageError(fr?'Modification non enregistrée sur cet appareil.':'Change not saved on this device.');}
+ }
+ return <main className="lg-saved-dark trip-page min-h-screen">
+  <SiteHeader light={false} locale={locale} path="/saved"/>
+  <div className="lg-shell trip-content">
+   <header className="trip-hero"><div><p className="lg-kicker">{fr?'MON CARNET DU GOLFE':'MY GOLFE JOURNAL'}</p><h1>{fr?<>Vos envies.<br/><em>Vos journées.</em></>:<>Your favourites.<br/><em>Your days.</em></>}</h1><p>{fr?'Un musée le matin, une plage l’après-midi, une soirée déjà choisie. Composez votre séjour et laissez de la place à l’imprévu.':'A museum in the morning, a beach in the afternoon, an evening already chosen. Shape your stay and leave room for the unexpected.'}</p></div><aside><p className="lg-kicker">{fr?'VOTRE SÉLECTION':'YOUR SHORTLIST'}</p><strong>{ready?savedPlaces.length:'—'}</strong><span>{fr?'lieux à découvrir':'places to discover'}</span><p>{fr?'Votre carnet reste dans ce navigateur. Aucun compte nécessaire pour organiser vos journées.':'Your journal stays in this browser. No account is needed to arrange your days.'}</p><Link href={`/${locale}/guides`} className="lg-btn lg-btn--accent">{fr?'Piocher dans les guides':'Browse the guides'} ↗</Link></aside></header>
+   <nav className="trip-navigation" aria-label={fr?'Organiser mon séjour':'Organise my stay'}><a href="#mon-programme">01 / {fr?'Mes journées':'My days'}</a><a href="#mes-adresses">02 / {fr?'Mes adresses':'My places'} {ready&&`(${savedPlaces.length})`}</a><a href="#mes-rendez-vous">03 / {fr?'Mes rendez-vous':'My events'}</a><a href="#mes-maisons">04 / {fr?'Mes maisons':'My homes'} {ready&&`(${savedVillas.length})`}</a></nav>
+   {storageError&&<p className="trip-warning" role="alert">{storageError}</p>}
+   {ready?<StayPlanner places={savedPlaces} villas={savedVillas} locale={locale}/>:<p role="status" className="trip-loading">{fr?'Chargement de votre carnet…':'Loading your journal…'}</p>}
+   <details className="trip-legacy"><summary>{fr?'Programme créé avec LE GOLFE & copie du compte':'Plan created with LE GOLFE & account copy'}</summary><p>{fr?'Retrouvez ici votre programme précédent et ses options de synchronisation. Il reste distinct de vos journées ci-dessus.':'Find your earlier plan and its sync options here. It remains separate from the daily planner above.'}</p><SavedDayPlanSection locale={locale}/><Link href={`/${locale}/ask`} className="lg-btn">{fr?'Créer ou modifier mon programme':'Create or edit my plan'} ↗</Link></details>
+   <section id="mes-adresses" className="trip-collection scroll-mt-8" aria-labelledby="my-places-title"><div className="trip-heading"><div><p className="lg-kicker">{fr?'À GARDER SOUS LA MAIN':'KEEP CLOSE'}</p><h2 id="my-places-title">{fr?'Mes adresses.':'My places.'}</h2></div><Link className="lg-btn" href={`/${locale}/explore`}>{fr?'Explorer les lieux':'Explore places'} ↗</Link></div>
+    {!ready?<p role="status">{fr?'Chargement…':'Loading…'}</p>:savedPlaces.length?<div className="trip-place-grid">{savedPlaces.map(place=>{const media=mediaForPlace(place.id);return <article key={place.id}><Link href={`/${locale}/place/${place.id}`} className="trip-place-photo">{media?<img src={media.src} alt={media.alt} width={640} height={420} loading="lazy"/>:<span>{placeName(place,locale)}</span>}</Link><div><p>{place.location}</p><h3><Link href={`/${locale}/place/${place.id}`}>{placeName(place,locale)} ↗</Link></h3><button type="button" onClick={()=>remove(STORAGE_KEY,place.id,'le-golfe:saved-places')}>{fr?'Retirer de mes adresses':'Remove from saved places'}</button></div></article>;})}</div>:<div className="trip-empty"><h3>{fr?'Votre prochaine découverte commence ici.':'Your next discovery starts here.'}</h3><p>{fr?'Enregistrez des lieux depuis Explorer ou les guides. Vous pourrez ensuite les placer dans vos journées.':'Save places from Explore or the guides, then add them to your days.'}</p><Link className="lg-btn lg-btn--accent" href={`/${locale}/guides`}>{fr?'Découvrir les guides':'Discover guides'} ↗</Link></div>}
+   </section>
+   <div className="trip-event-collection"><EventStayActions locale={locale}/></div>
+   <section id="mes-maisons" className="trip-collection scroll-mt-8" aria-labelledby="my-homes-title"><div className="trip-heading"><div><p className="lg-kicker">{fr?'LE POINT DE DÉPART':'YOUR BASE'}</p><h2 id="my-homes-title">{fr?'Mes maisons.':'My homes.'}</h2></div><Link href={`/${locale}/stay`} className="lg-btn">{fr?'Choisir une maison':'Find a home'} ↗</Link></div>
+    {savedVillas.length?<><div className="trip-home-grid">{savedVillas.map(villa=><article key={villa.id}><Link href={villaHref(villa.id,locale)}><img src={villa.image} alt={villa.name} width={720} height={480} loading="lazy"/></Link><div><p>{villa.location} · {villa.guests} {fr?'voyageurs':'guests'}</p><h3><Link href={villaHref(villa.id,locale)}>{villa.name} ↗</Link></h3><button type="button" onClick={()=>remove(VILLA_STORAGE_KEY,villa.id,'le-golfe:saved-villas')}>{fr?'Retirer':'Remove'}</button></div></article>)}</div><VillaComparison items={savedVillas} locale={locale}/></>:<p className="trip-empty-small">{fr?'Pas encore de maison enregistrée. Vous pouvez organiser vos journées sans en choisir une.':'No homes saved yet. You can arrange your days without choosing one.'}</p>}
+   </section>
+   <footer className="trip-footer"><p>{fr?'Votre programme est personnel, conservé sur cet appareil. Horaires, accès et réservations se confirment auprès des lieux.':'Your plan is personal and stored on this device. Confirm times, access and bookings with the venues.'}</p><Link href="/requests">{fr?'Mes demandes de séjour':'My stay requests'} ↗</Link></footer>
+  </div>
+ </main>;
 }
