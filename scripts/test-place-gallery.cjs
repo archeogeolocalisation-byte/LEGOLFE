@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-require-imports */
 const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),Module=require('node:module'),ts=require('typescript'),React=require('react');
+require.extensions['.ts']=(m,f)=>m._compile(ts.transpileModule(fs.readFileSync(f,'utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022,jsx:ts.JsxEmit.ReactJSX,esModuleInterop:true}}).outputText,f);
 const filename=path.join(__dirname,'../components/PlaceMediaGallery.tsx'),states=[],refs=[];let stateCursor=0,refCursor=0;
 const realLoad=Module._load;
 Module._load=function(request,parent,...args){if(request==='react'&&parent?.filename===filename)return {...React,useState(initial){const at=stateCursor++;if(!(at in states))states[at]=initial;return [states[at],next=>{states[at]=typeof next==='function'?next(states[at]):next;}];},useRef(initial){const at=refCursor++;if(!(at in refs))refs[at]={current:initial};return refs[at];},useEffect(){}};return realLoad.call(this,request,parent,...args);};
@@ -17,3 +18,16 @@ opener.props.onTouchStart({touches:[{clientX:200,clientY:20}]});opener.props.onT
 opener.props.onTouchStart({touches:[{clientX:200,clientY:20}]});opener.props.onTouchEnd({changedTouches:[{clientX:190,clientY:200}]});tree=render();assert.equal(states[0],1);
 assert.ok(nodes(tree).some(n=>n.type==='a'&&n.props.href==='https://example.org/license'));states[0]=0;tree=render(photos.slice(0,1));assert.equal(button(tree,'Photo suivante'),undefined);tree=render(photos,'en');assert.ok(button(tree,'Next photo'));
 console.log('Place gallery: max three slides, zero/one/multiple photos, looping controls, keyboard, horizontal swipe without opening modal or hijacking vertical scroll, credits and FR/EN passed.');
+
+const {placeMediaLabel}=require('../lib/placeMediaLabel.ts');
+for(const [locale,labels] of [['fr',['Schéma de parcours','Image d’illustration','Photo des environs']],['en',['Route diagram','Illustrative image','Surroundings photograph']]]){
+ assert.equal(placeMediaLabel({},locale),undefined);
+ for(const [i,flags] of [{diagram:true,illustrative:true,contextual:true},{illustrative:true,contextual:true},{contextual:true}].entries()){
+  assert.equal(placeMediaLabel(flags,locale),labels[i]);
+  states[0]=0;const tree=render([{...photos[0],...flags}],locale);const all=nodes(tree);
+  const html=require('react-dom/server').renderToStaticMarkup(tree);
+  assert.ok(html.includes(labels[i]),labels[i]);
+  if(flags.diagram)assert.ok(all.find(n=>n.type==='img').props.className.includes('object-contain'));
+ }
+}
+console.log('Media labels: diagram / illustration / surroundings priority and uncropped route diagrams passed in FR/EN.');

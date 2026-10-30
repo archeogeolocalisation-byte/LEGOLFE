@@ -1,6 +1,7 @@
 'use client';
 import {useEffect,useRef,useState} from 'react';
 import type {VillagePhoto} from '../data/villageMedia';
+import {placeMediaLabel} from '../lib/placeMediaLabel';
 import type {Locale} from '../lib/i18n';
 
 export default function PlaceMediaGallery({name,photos,locale,processed=false}:{name:string;photos:VillagePhoto[];locale:Locale;processed?:boolean}){
@@ -10,7 +11,7 @@ export default function PlaceMediaGallery({name,photos,locale,processed=false}:{
  const dialog=useRef<HTMLDialogElement>(null),opener=useRef<HTMLButtonElement|null>(null);
  useEffect(()=>{if(!opened)return;const before=document.body.style.overflow;document.body.style.overflow='hidden';return()=>{document.body.style.overflow=before;};},[opened]);
  if(!slides.length)return null;
- const active=index%slides.length,photo=slides[active];
+ const active=index%slides.length,photo=slides[active],mediaLabel=placeMediaLabel(photo,locale);
  function open(at:number,button:HTMLButtonElement){opener.current=button;setIndex(at);dialog.current?.showModal();setOpened(true);}
  function reset(){setOpened(false);opener.current?.focus();}
  function close(){dialog.current?.close();reset();}
@@ -21,20 +22,20 @@ export default function PlaceMediaGallery({name,photos,locale,processed=false}:{
    <figure>
     <div className="relative">
     <button type="button" onClick={e=>{if(swiped.current){swiped.current=false;return;}open(active,e.currentTarget);}} onTouchStart={e=>{swiped.current=false;touchStart.current=e.touches.length===1?{x:e.touches[0].clientX,y:e.touches[0].clientY}:null;}} onTouchEnd={e=>{const start=touchStart.current;touchStart.current=null;if(start===null||!e.changedTouches.length)return;const delta=e.changedTouches[0].clientX-start.x,vertical=e.changedTouches[0].clientY-start.y;if(Math.abs(delta)>60&&Math.abs(delta)>Math.abs(vertical)){swiped.current=true;step(delta<0?1:-1);}}} onTouchCancel={()=>{touchStart.current=null;swiped.current=false;}} className="group relative block aspect-[3/2] w-full overflow-hidden bg-neutral-100 text-left md:aspect-[16/8]" aria-label={`${fr?'Ouvrir la photo':'Open photo'} ${active+1} — ${photo.caption[locale]}`}>
-     <img src={photo.src} alt={photo.caption[locale]} loading="eager" fetchPriority={active===0?'high':'auto'} className="absolute inset-0 h-full w-full object-cover"/>
-     {photo.contextual&&<span className="absolute left-4 top-4 bg-black/80 px-3 py-2 text-[10px] font-bold uppercase tracking-wider text-white">{fr?'Photos des environs':'Surroundings'}</span>}
+     <img src={photo.src} alt={photo.caption[locale]} loading="eager" fetchPriority={active===0?'high':'auto'} className={`absolute inset-0 h-full w-full ${photo.diagram?'object-contain':'object-cover'}`}/>
+     {mediaLabel&&<span className="absolute left-4 top-4 bg-black/80 px-3 py-2 text-[10px] font-bold uppercase tracking-wider text-white">{mediaLabel}</span>}
      <span className="absolute bottom-4 right-4 bg-black/85 px-4 py-3 text-xs font-bold text-white">{fr?'Agrandir':'View full size'} ↗</span>
     </button>
     {slides.length>1&&<><button type="button" onClick={()=>step(-1)} aria-label={fr?'Photo précédente':'Previous photo'} className="absolute left-3 top-1/2 z-10 flex min-h-11 min-w-11 -translate-y-1/2 items-center justify-center border border-white/60 bg-black/80 text-2xl font-bold text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">←</button><button type="button" onClick={()=>step(1)} aria-label={fr?'Photo suivante':'Next photo'} className="absolute right-3 top-1/2 z-10 flex min-h-11 min-w-11 -translate-y-1/2 items-center justify-center border border-white/60 bg-black/80 text-2xl font-bold text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">→</button></>}
     </div>
-    <figcaption className="py-3 text-[11px] leading-5 text-black/55" aria-live="polite" aria-atomic="true"><span className="sr-only">{fr?`Photo ${active+1} sur ${slides.length}. `:`Photo ${active+1} of ${slides.length}. `}</span><span className="block font-bold text-black/75">{photo.contextual?(fr?'Environs · ':'Surroundings · '):''}{photo.caption[locale]}</span>{credit(photo)}{(photo.credit||photo.license)&&' · '}{(processed||photo.src.startsWith('/media/place-cache/'))?(fr?'Conversion WebP et recadrage d’affichage ; licence conservée.':'Converted to WebP and display-cropped; licence retained.'):(fr?'Recadrage d’affichage':'Display crop')}</figcaption>
+    <figcaption className="py-3 text-[11px] leading-5 text-black/55" aria-live="polite" aria-atomic="true"><span className="sr-only">{fr?`Photo ${active+1} sur ${slides.length}. `:`Photo ${active+1} of ${slides.length}. `}</span><span className="block font-bold text-black/75">{mediaLabel?`${mediaLabel} · `:''}{photo.caption[locale]}</span>{credit(photo)}{(photo.credit||photo.license)&&' · '}{photo.diagram?(fr?'Schéma affiché en entier ; consultez le tracé officiel pour préparer la sortie.':'Diagram shown in full; consult the official route to plan your outing.'):(processed||photo.src.startsWith('/media/place-cache/'))?(fr?'Conversion WebP et recadrage d’affichage ; licence conservée.':'Converted to WebP and display-cropped; licence retained.'):(fr?'Recadrage d’affichage':'Display crop')}</figcaption>
    </figure>
 
   </div>
   <dialog ref={dialog} onClose={reset} onCancel={()=>setOpened(false)} onKeyDown={e=>{if(e.key==='ArrowRight'){e.preventDefault();step(1);}if(e.key==='ArrowLeft'){e.preventDefault();step(-1);}}} className="fixed inset-0 m-0 h-dvh max-h-none w-screen max-w-none bg-black p-0 text-white backdrop:bg-black" aria-label={fr?`Photos de ${name}`:`Photos of ${name}`}>
-   <div className="flex h-full flex-col px-4 pb-5 sm:px-8"><div className="flex items-center justify-between gap-4 py-5"><p className="text-sm font-bold">{name} · {active+1} / {slides.length}</p><button type="button" autoFocus onClick={close} className="border border-white/40 px-4 py-2 text-sm font-bold">{fr?'Fermer':'Close'} ×</button></div>
+   <div className="flex h-full flex-col px-4 pb-5 sm:px-8"><div className="flex items-center justify-between gap-4 py-5"><p className="text-sm font-bold">{name} · {active+1} / {slides.length}</p><button type="button" autoFocus onClick={close} className="min-h-11 shrink-0 border border-white/40 px-4 py-2 text-sm font-bold">{fr?'Fermer':'Close'} ×</button></div>
     <div className="relative flex min-h-0 flex-1 items-center justify-center"><img src={photo.src} alt={photo.caption[locale]} className="absolute inset-0 h-full w-full object-contain"/>{slides.length>1&&<><button type="button" onClick={()=>step(-1)} aria-label={fr?'Photo précédente':'Previous photo'} className="absolute left-0 rounded-full bg-black/75 p-4 text-3xl">←</button><button type="button" onClick={()=>step(1)} aria-label={fr?'Photo suivante':'Next photo'} className="absolute right-0 rounded-full bg-black/75 p-4 text-3xl">→</button></>}</div>
-    <div className="mt-4 text-center text-xs leading-5 text-white/70" aria-live="polite"><p className="font-bold text-white">{photo.contextual?(fr?"Environs · ":"Surroundings · "):""}{photo.caption[locale]}</p>{credit(photo)}</div>
+    <div className="mt-4 text-center text-xs leading-5 text-white/70" aria-live="polite"><p className="font-bold text-white">{mediaLabel?`${mediaLabel} · `:''}{photo.caption[locale]}</p>{credit(photo)}</div>
    </div>
   </dialog>
  </section>;
