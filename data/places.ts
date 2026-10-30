@@ -173,38 +173,42 @@ export const places: Place[] = [
   "lastVerifiedAt": "2026-10-14"
 },
 {
-  "id": "musee-gendarmerie-cinema",
-  "name": "Musée de la Gendarmerie et du Cinéma",
-  "category": "do",
-  "location": "Saint-Tropez",
-  "description": "Inside the former gendarmerie on Place Blanqui, the Saint-Tropez Gendarmerie and Cinema Museum explores the famous Gendarme films, Louis de Funès and the town’s screen history. A useful cultural stop on a rainy day.",
-  "bestFor": [
-    "Film history",
-    "Families",
-    "Culture on a rainy day"
-  ],
-  "notIdealFor": [
-    "Visitors seeking a large all-day museum",
-    "Trips planned without checking temporary exhibitions"
-  ],
-  "tags": [
-    "museum",
-    "cinema",
-    "culture",
-    "family",
-    "heritage",
-    "saint-tropez"
-  ],
-  "goodToKnow": [
-    "The entrance is at 2 place Blanqui, in the former gendarmerie.",
-    "Consult the official listing for seasonal opening and concessions."
-  ],
-  "verified": false,
-  "featured": true,
-  "source": "https://www.sainttropeztourisme.com/fr/fiche/musee-de-la-gendarmerie-et-du-cinema-4082975/",
-  "phone": "+33 4 94 55 90 20",
-  "lastVerifiedAt": "2026-10-14"
-},
+    "id": "musee-gendarmerie-cinema",
+    "name": "Musée de la Gendarmerie et du Cinéma",
+    "category": "do",
+    "location": "Saint-Tropez",
+    "description": "Discover the Musée de la Gendarmerie et du Cinéma in Saint-Tropez: Louis de Funès film history, exhibitions, opening times, ticket prices and address.",
+    "bestFor": [
+      "Film history",
+      "Families",
+      "Culture on a rainy day"
+    ],
+    "notIdealFor": [
+      "Visitors seeking a large all-day museum",
+      "Trips planned without checking temporary exhibitions"
+    ],
+    "tags": [
+      "museum",
+      "cinema",
+      "culture",
+      "family",
+      "heritage",
+      "saint-tropez"
+    ],
+    "goodToKnow": [
+      "The entrance is at 2 place Blanqui, on a pedestrian square.",
+      "Last admission is listed 30 minutes before closing; check seasonal hours and closure dates.",
+      "The municipal accessibility register describes a level entrance and a lift to the galleries."
+    ],
+    "verified": false,
+    "featured": true,
+    "source": "https://www.sainttropeztourisme.com/fr/fiche/musee-de-la-gendarmerie-et-du-cinema-4082975/",
+    "phone": "+33 4 94 55 90 20",
+    "lastVerifiedAt": "2026-10-30",
+    "latitude": 43.26964,
+    "longitude": 6.63554,
+    "website": "https://www.saint-tropez.fr/culture/mgc/"
+  },
 { id:"port-grimaud", name:"Port Grimaud", category:"places", location:"Grimaud", description:placeFacts["port-grimaud"].copy.en.description, bestFor:["Canals and waterside walks"],notIdealFor:["Unplanned transport connections"],tags:["port-grimaud","canals","architecture","market"],goodToKnow:["Grimaud hilltop village is a separate stop.","Check seasonal market and boat services."],verified:false,featured:false,source:placeFacts["port-grimaud"].sources[0].url,lastVerifiedAt:"2026-10-13" },
 {
   "id": "moulin-de-paillas",
@@ -950,21 +954,43 @@ export const places: Place[] = [
     lastVerifiedAt: "2026-10-02",
   },
   {
-    id: "maison-des-papillons",
-    name: "Maison des Papillons · Musée Dany Lartigue",
-    category: "do",
-    location: "Saint-Tropez",
-    description: "A small, unusual museum in the centre of Saint-Tropez combining butterfly collections, Dany Lartigue's studio and family photographs.",
-    priceLevel: 1,
-    bestFor: ["A short cultural stop", "Families", "Hot afternoons", "Curious first-time visitors"],
-    notIdealFor: ["Travellers looking for a major museum", "Very tight port-only itineraries"],
-    tags: ["museum", "culture", "family", "art", "saint-tropez", "butterflies"],
-    goodToKnow: ["The museum is organised across six spaces including exotic and French butterfly collections, a garden and Dany Lartigue's studio.", "In 2026 the listed adult entry is €2 and admission is free for children under 12."],
-    verified: false,
-    featured: false,
-    source: "https://www.sainttropeztourisme.com/fr/fiche/maison-des-papillons-musee-dany-lartigue-4165778/",
-    openingHours: "Seasonal; 10:00–12:00 and 14:00–18:00 through 7 Oct 2026, then to 17:00",
-    lastVerifiedAt: "2026-10-02",
+    "id": "maison-des-papillons",
+    "name": "Maison des Papillons · Musée Dany Lartigue",
+    "category": "do",
+    "location": "Saint-Tropez",
+    "description": "A small, unusual museum in the centre of Saint-Tropez combining butterfly collections, Dany Lartigue's studio and family photographs.",
+    "priceLevel": 1,
+    "bestFor": [
+      "A short cultural stop",
+      "Families",
+      "Hot afternoons",
+      "Curious first-time visitors"
+    ],
+    "notIdealFor": [
+      "Travellers looking for a major museum",
+      "Very tight port-only itineraries"
+    ],
+    "tags": [
+      "museum",
+      "culture",
+      "family",
+      "art",
+      "saint-tropez",
+      "butterflies"
+    ],
+    "goodToKnow": [
+      "Preserved butterfly specimens are displayed in cases; this is not a live butterfly house.",
+      "Wheelchair access is limited to the ground floor and garden via a removable ramp; contact the museum before visiting."
+    ],
+    "verified": false,
+    "featured": false,
+    "source": "https://www.sainttropeztourisme.com/fr/fiche/maison-des-papillons-musee-dany-lartigue-4165778/",
+    "openingHours": "Seasonal opening with weekly closures; check the official calendar for your date.",
+    "lastVerifiedAt": "2026-10-30",
+    "latitude": 43.270743,
+    "longitude": 6.638513,
+    "phone": "+33 4 94 55 90 10",
+    "website": "https://www.saint-tropez.fr/culture/maison-des-papillons/"
   },
   {
     id: "les-halles-saint-tropez",

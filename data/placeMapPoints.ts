@@ -224,9 +224,10 @@ export const placeMapPoints:Record<string,MapPoint[]> = {
       "checked": "2026-10-13",
       "kind": "venue",
       "note": {
-        "fr": "Repère publié par le lieu ou son office de tourisme. Confirmez les horaires et les conditions du dernier accès avant de partir.",
-        "en": "Location reference published by the venue or its tourist office. Confirm opening times and the final approach before travelling."
-      }
+        "fr": "Le musée indique le 17 rue Étienne Berny, dans le centre ancien. Le point situe le lieu, pas un parking. Pour la rampe amovible et l’accès au rez-de-chaussée et au jardin, contactez le musée avant de venir.",
+        "en": "The museum lists 17 Rue Étienne Berny in the old town. The marker locates the venue, not a car park. Contact the museum before visiting to arrange the removable ramp and access to the ground floor and garden."
+      },
+      "directionsQuery": "17 rue Étienne Berny, 83990 Saint-Tropez, France"
     }
   ],
   "les-halles-saint-tropez": [
