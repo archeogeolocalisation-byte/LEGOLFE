@@ -4,7 +4,44 @@ export const placeQuestions:Record<string,Record<Locale,[string,string][]>> = {
   fr:[["Peut-on rejoindre San Peïre en voiture ?","La randonnée rejoint le sommet à pied. Le repère de carte situe le secteur, pas un accès automobile : consultez l’itinéraire officiel avant de partir."],["Cette randonnée convient-elle à une poussette ?","Non. Le descriptif officiel signale un terrain rocheux, des passages délicats et un parcours non adapté aux poussettes."]],
   en:[["Can I drive to the San Peïre summit?","The hiking route reaches the summit on foot. The map reference locates the area, not a car access point: read the official route before leaving."],["Is the hike suitable for pushchairs?","No. The official description lists rocky terrain, difficult sections and a route unsuitable for pushchairs."]],
  },
-"moulin-de-paillas":{"fr": [["Peut-on visiter l’intérieur du Moulin de Paillas ?", "Les visites ont des jours et horaires spécifiques. Demandez les prochaines possibilités à l’office de tourisme de Ramatuelle avant de venir."], ["À quoi associer cette étape ?", "Le village de Ramatuelle complète la visite ; poursuivez vers Gassin si votre itinéraire vous conduit de ce côté."]], "en": [["Can I visit inside Moulin de Paillas?", "Visits have specific days and times. Ask Ramatuelle’s tourist office about upcoming opportunities before coming."], ["What can I combine it with?", "Ramatuelle village complements the visit; continue towards Gassin if it fits your itinerary."]]},
+"moulin-de-paillas":{
+    "fr": [
+      [
+        "Peut-on visiter l’intérieur tous les jours ?",
+        "Non : consultez les ouvertures commentées de l’association auprès de l’office de Ramatuelle. Le calendrier est saisonnier et la visite peut être annulée par mauvais temps."
+      ],
+      [
+        "La visite du moulin est-elle payante ?",
+        "La fiche officielle annonce une participation libre. Vérifiez les conditions de la prochaine ouverture avant de vous déplacer."
+      ],
+      [
+        "Le moulin est-il accessible en fauteuil roulant ?",
+        "La fiche de visite de l’office indique une visite non accessible en fauteuil roulant. Appelez le 04 98 12 64 00 pour préparer votre déplacement."
+      ],
+      [
+        "Que visiter autour du Moulin de Paillas ?",
+        "Notre suggestion : associer cette étape au village de Ramatuelle, puis à Gassin si ce déplacement correspond à votre journée."
+      ]
+    ],
+    "en": [
+      [
+        "Can I visit inside every day?",
+        "No: check the association’s guided opening sessions with Ramatuelle Tourism. Dates are seasonal and bad weather can cancel the visit."
+      ],
+      [
+        "Is there an admission charge?",
+        "The official listing states voluntary contributions. Check conditions for the next opening before travelling."
+      ],
+      [
+        "Is the windmill wheelchair accessible?",
+        "The tourist office lists the visit as not wheelchair accessible. Call +33 4 98 12 64 00 to plan around your requirements."
+      ],
+      [
+        "What can I visit near Moulin de Paillas?",
+        "Our suggestion: combine it with Ramatuelle village, then Gassin if that journey fits your day."
+      ]
+    ]
+  },
 "cap-taillat":{"fr": [["Quel accès choisir pour rejoindre le Cap Taillat ?", "L’Escalet et Canadel sont les départs côté Ramatuelle. Gigaro, à La Croix-Valmer, permet une randonnée plus longue par le Cap Lardier ou une boucle forestière. Choisissez le tracé complet avant de partir : les distances ne sont pas interchangeables."], ["Combien de temps faut-il depuis l’Escalet ou Gigaro ?", "Ramatuelle Tourisme donne environ 40 minutes d’approche depuis l’Escalet, sans compter le retour. Depuis Gigaro, le Circuit des 2 caps du Parc national représente 14,8 km et 5 h pour la boucle entière, hors longues pauses."], ["Le Cap Taillat est-il très fréquenté en été ?", "Oui, particulièrement en juillet et août. Partez tôt pour limiter chaleur et difficultés de stationnement ; privilégiez si possible le printemps ou l’arrière-saison pour une visite plus calme."], ["Peut-on aller au Cap Taillat en voiture ou avec une poussette ?", "La voiture reste aux points de départ. Le sentier rocheux n’est adapté ni aux poussettes ni aux fauteuils roulants. Le départ de Canadel évite une première portion exposée, mais la suite reste une marche sur terrain irrégulier."]], "en": [["Which starting point should I choose for Cap Taillat?", "L’Escalet and Canadel are on the Ramatuelle side. Gigaro, in La Croix-Valmer, offers a longer hike via Cap Lardier or a forest circuit. Choose the full route first: their distances are not interchangeable."], ["How long is the walk from l’Escalet or Gigaro?", "Ramatuelle Tourism gives around 40 minutes for the approach from l’Escalet, excluding the return. From Gigaro, the National Park’s Circuit des 2 caps is a complete 14.8 km, 5-hour loop, excluding long breaks."], ["Is Cap Taillat very busy in summer?", "Yes, especially in July and August. An early start can reduce heat and parking pressure; consider spring or the shoulder season for a quieter visit."], ["Can I drive to Cap Taillat or take a pushchair?", "Cars stay at the trailheads. The rocky path is unsuitable for pushchairs and wheelchairs. Starting at Canadel avoids an initial exposed stretch, but the remaining walk is still on uneven ground."]]},
 "pont-des-fees":{"fr": [["Peut-on faire la balade avec une poussette ?", "Le chemin est caillouteux et en pente. Grimaud Tourisme indique qu’il n’est pas accessible en poussette."], ["Y a-t-il toujours de l’eau sous le pont ?", "Non. La Garde peut être à sec en période chaude : ne choisissez pas cette promenade pour une baignade."]], "en": [["Can I take a pushchair on the walk?", "The path is rocky and sloping. Grimaud Tourisme states that it is not suitable for pushchairs."], ["Is there always water below the bridge?", "No. The Garde can be dry during the hot season; do not choose this walk for swimming."]]},
 
@@ -517,44 +554,60 @@ export const placeQuestions:Record<string,Record<Locale,[string,string][]>> = {
   "bello-visto": {
     "fr": [
       [
-        "Comment choisir une table ?",
-        "Demandez le placement souhaité lors de la réservation. Une demande de terrasse ou de vue reste à confirmer par l’établissement."
+        "Où est le restaurant Bello Visto ?",
+        "Place deï Barri, dans le village perché de Gassin. Préparez l’arrivée au village plutôt qu’un trajet vers le bord de mer."
       ],
       [
-        "Comment compléter le repas ?",
-        "Gardez du temps pour une promenade dans le vieux Gassin avant ou après, selon l’heure choisie."
+        "Bello Visto est-il ouvert toute l’année ?",
+        "Le site consulté le 30 octobre 2026 annonce une fermeture annuelle et un retour le 30 avril 2027. Confirmez le calendrier auprès du restaurant."
+      ],
+      [
+        "Peut-on réserver une table en terrasse ?",
+        "Indiquez votre souhait au restaurant, qui doit confirmer le placement et la disponibilité. La réservation seule ne garantit pas une table avec vue."
       ]
     ],
     "en": [
       [
-        "How do I choose a table?",
-        "Request your preferred seating when booking. Terrace or view preferences need confirmation from the venue."
+        "Where is Bello Visto restaurant?",
+        "On Place deï Barri in hilltop Gassin. Plan arrival at the village rather than the seafront."
       ],
       [
-        "What can I add to the meal?",
-        "Leave time for a walk through old Gassin before or after, depending on your meal time."
+        "Is Bello Visto open year-round?",
+        "The website checked on 30 October 2026 announces annual closure and a return on 30 April 2027. Confirm the calendar directly with the restaurant."
+      ],
+      [
+        "Can I book a terrace table?",
+        "Tell the restaurant your preference and ask for confirmation. A booking alone does not guarantee a table with a view."
       ]
     ]
   },
   "la-verdoyante": {
     "fr": [
       [
-        "Au vieux village ou dans un autre cadre ?",
-        "Repérez l’adresse exacte avant de partir : la commune de Gassin ne signifie pas automatiquement le centre ancien."
+        "Où se situe La Verdoyante ?",
+        "Au 866 chemin de Coste Brigade, sur les pentes de Gassin. Repérez cette adresse avant de partir ; le restaurant n’est pas sur la place deï Barri."
       ],
       [
-        "Comment préparer le déjeuner ou le dîner ?",
-        "Confirmez la réservation, le service de votre date et vos éventuelles demandes alimentaires."
+        "Comment réserver à La Verdoyante ?",
+        "Le restaurant demande de réserver par téléphone au 04 94 56 16 23. Confirmez la date, le nombre de convives et les éventuelles demandes alimentaires."
+      ],
+      [
+        "Le restaurant est-il ouvert en hiver ?",
+        "Lors de la vérification du 30 octobre 2026, le site annonce une réouverture au printemps 2027. Contactez le restaurant pour obtenir une date confirmée."
       ]
     ],
     "en": [
       [
-        "In the old village or another setting?",
-        "Locate the exact address first: being in Gassin does not automatically mean the old village centre."
+        "Where is La Verdoyante?",
+        "At 866 Chemin de Coste Brigade on Gassin’s slopes. Locate that address before travelling; it is not on Place deï Barri."
       ],
       [
-        "How do I prepare for lunch or dinner?",
-        "Confirm your booking, the service offered on your date and any dietary requests."
+        "How do I book La Verdoyante?",
+        "The restaurant requests telephone bookings on +33 4 94 56 16 23. Confirm the date, party size and any dietary requests."
+      ],
+      [
+        "Is the restaurant open in winter?",
+        "When checked on 30 October 2026, the website announced reopening in spring 2027. Contact the restaurant for a confirmed date."
       ]
     ]
   },
@@ -627,22 +680,30 @@ export const placeQuestions:Record<string,Record<Locale,[string,string][]>> = {
   "les-halles-saint-tropez": {
     "fr": [
       [
-        "Une adresse pour tous les goûts ?",
-        "Le format se prête à un groupe avec des envies différentes. Vérifiez les offres du moment avant d’organiser le rendez-vous."
+        "Où se trouvent Les Halles de Saint-Tropez ?",
+        "Au 1 allée du Quai de l’Épi, dans le secteur du port. Utilisez cette adresse et préparez votre stationnement avant d’arriver."
       ],
       [
-        "Plutôt pour discuter au calme ?",
-        "Si le calme est votre priorité, renseignez-vous sur l’ambiance et la programmation du créneau choisi."
+        "Est-ce un restaurant avec un menu unique ?",
+        "Le lieu se présente comme un food court avec plusieurs cuisines. Vérifiez les cartes, les stands ouverts et l’organisation de la commande pour votre groupe."
+      ],
+      [
+        "Faut-il réserver pour dîner en groupe ?",
+        "Le site propose une réservation de table. Indiquez votre nombre de convives et confirmez le service souhaité ; ne présumez pas la disponibilité le soir même."
       ]
     ],
     "en": [
       [
-        "A place for different tastes?",
-        "The format suits a group with different preferences. Check current food options before arranging to meet."
+        "Where is Les Halles de Saint-Tropez?",
+        "At 1 Allée du Quai de l’Épi, in the harbour area. Use that address and arrange parking before arrival."
       ],
       [
-        "A place for quiet conversation?",
-        "If quiet is your priority, ask about the atmosphere and programme at your chosen time."
+        "Is there one restaurant menu?",
+        "The venue presents itself as a food court with several cuisines. Check menus, operating stands and ordering arrangements for your group."
+      ],
+      [
+        "Should I book for a group dinner?",
+        "The website offers table bookings. Give your party size and confirm the meal service; do not assume same-evening availability."
       ]
     ]
   },
@@ -847,22 +908,30 @@ export const placeQuestions:Record<string,Record<Locale,[string,string][]>> = {
   "spa-du-bailli": {
     "fr": [
       [
-        "Peut-on réserver sans séjourner à l’hôtel ?",
-        "Demandez les conditions d’accès extérieur et les prestations proposées pour votre date."
+        "Où se trouve le Spa du Bailli ?",
+        "Au Bailli de Suffren, avenue des Américains au Rayol-Canadel-sur-Mer. Ce n’est pas une adresse dans le centre de Saint-Tropez. Demandez le point d’accueil lors de la réservation."
       ],
       [
-        "Un soin donne-t-il accès à tous les équipements ?",
-        "Faites préciser ce qui est compris. Un soin ne garantit pas automatiquement piscine, hammam ou autres équipements."
+        "Un massage donne-t-il accès à la piscine ?",
+        "Le site de l’hôtel réserve la piscine et le fitness à ses clients. Ne présumez pas qu’une réservation de soin inclut ces équipements."
+      ],
+      [
+        "Peut-on réserver sans dormir à l’hôtel ?",
+        "Demandez au spa ses conditions d’accueil des visiteurs extérieurs, la disponibilité et les prestations incluses pour votre date. La réservation du soin et celle d’une chambre sont distinctes."
       ]
     ],
     "en": [
       [
-        "Can I book without staying at the hotel?",
-        "Ask about access for outside guests and services offered on your date."
+        "Where is Spa du Bailli?",
+        "At Le Bailli de Suffren, Avenue des Américains in Rayol-Canadel-sur-Mer, outside Saint-Tropez town. Ask for the reception point when booking."
       ],
       [
-        "Does a treatment include every facility?",
-        "Ask what is included. A treatment does not automatically guarantee pool, hammam or other facility access."
+        "Does a massage include pool access?",
+        "The hotel website reserves the pool and fitness area for its guests. Do not assume a treatment booking includes those facilities."
+      ],
+      [
+        "Can I book without staying at the hotel?",
+        "Ask the spa about non-resident conditions, availability and included services for your date. Treatment and room bookings are separate."
       ]
     ]
   }

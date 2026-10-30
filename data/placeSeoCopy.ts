@@ -62,4 +62,48 @@ export const placeSeoCopy: Record<string, Record<Locale, {title:string;descripti
   fr:{title:'Maison Laurent à Ramatuelle : conciergerie et services',description:'Découvrez Maison Laurent, conciergerie à Ramatuelle. Décrivez vos dates et les services souhaités pour préparer votre demande et obtenir un devis.'},
   en:{title:'Maison Laurent, Ramatuelle: concierge services',description:'Discover Maison Laurent concierge services in Ramatuelle. Share your dates and the services you need to prepare your request and obtain a quote.'},
  },
+
+ "les-halles-saint-tropez": {
+  "fr": {
+    "title": "Les Halles de Saint-Tropez : cuisines, accès et réservation",
+    "description": "Manger aux Halles de Saint-Tropez : food court près du port, cuisines variées, adresse et conseils pour réserver une table en groupe."
+  },
+  "en": {
+    "title": "Les Halles de Saint-Tropez: food court, access and bookings",
+    "description": "Plan a meal at Les Halles de Saint-Tropez: harbour-side food court, different cuisines, address and practical advice for a group booking."
+  }
+},
+
+ "bello-visto": {
+  "fr": {
+    "title": "Bello Visto à Gassin : restaurant, terrasse et réservation",
+    "description": "Préparez un repas au Bello Visto à Gassin : cuisine méditerranéenne, terrasse place deï Barri, réservation et calendrier saisonnier à vérifier."
+  },
+  "en": {
+    "title": "Bello Visto in Gassin: restaurant, terrace and bookings",
+    "description": "Plan a meal at Bello Visto in Gassin: Mediterranean cooking, Place deï Barri terrace, table bookings and seasonal opening to check before visiting."
+  }
+},
+
+ "la-verdoyante": {
+  "fr": {
+    "title": "La Verdoyante à Gassin : restaurant et réservation",
+    "description": "Découvrez La Verdoyante à Gassin : cuisine provençale, terrasse au-dessus des vignes, adresse chemin de Coste Brigade et réservation par téléphone."
+  },
+  "en": {
+    "title": "La Verdoyante in Gassin: restaurant and reservations",
+    "description": "Discover La Verdoyante in Gassin: Provençal cooking, a terrace above the vineyards, Coste Brigade address and telephone reservations."
+  }
+},
+
+ "spa-du-bailli": {
+  "fr": {
+    "title": "Spa du Bailli au Rayol-Canadel : soins et réservation",
+    "description": "Préparez une pause au Spa du Bailli de Suffren, au Rayol-Canadel : soins Esthederm, accès, réservation et différence entre soin et équipements de l’hôtel."
+  },
+  "en": {
+    "title": "Spa du Bailli in Rayol-Canadel: treatments and bookings",
+    "description": "Plan a treatment at Spa du Bailli de Suffren in Rayol-Canadel: Esthederm care, access, bookings and the difference between a treatment and hotel facilities."
+  }
+},
 };
