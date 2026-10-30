@@ -54,6 +54,17 @@ async function htmlFor(id,locale){const stream=await renderToReadableStream(awai
    for(const target of related)assert.ok(html.includes(`href="/${locale}/place/${target.id}"`));
    assert.equal(html.includes('LE GOLFE / GUIDES'),false,`${place.id}/${locale}: no generic guide module`);
    const editorial=require('../data/editorialFeatures.ts').editorialFeatures[place.id]?.[locale];
+   const village=require('../data/villageFeatures.ts').villageFeatures[place.id];
+   if(village?.[locale].visitSections){
+    const escaped=value=>require('react-dom/server').renderToStaticMarkup(require('react').createElement('span',null,value)).slice(6,-7);
+    for(const [heading,body] of village[locale].visitSections){assert.ok(html.includes(escaped(heading)),`${place.id}/${locale}: village visit heading rendered`);assert.ok(html.includes(escaped(body)),`${place.id}/${locale}: village visit body rendered`);}
+    assert.match(village.verified,/^\d{4}-\d{2}-\d{2}$/);
+    assert.ok(html.includes(`dateTime="${village.verified}"`)||html.includes(`datetime="${village.verified}"`));
+    assert.ok(village.sources.length>=2);
+    for(const source of village.sources){assert.ok(source.url.startsWith('https://'));assert.ok(html.includes(`href="${source.url}"`));}
+    for(const target of village.nearby??[]){assert.ok(places.some(p=>p.id===target),`${place.id}: valid village visit link`);assert.ok(html.includes(`href="/${locale}/place/${target}"`));}
+    assert.ok(xml.includes(`<loc>${metadata.alternates.canonical}</loc><lastmod>${village.verified}</lastmod>`));
+   }
    if(editorial?.visitSections){
     const escaped=value=>require('react-dom/server').renderToStaticMarkup(require('react').createElement('span',null,value)).slice(6,-7);
     for(const [heading,body] of editorial.visitSections){assert.ok(html.includes(escaped(heading)),`${place.id}/${locale}: useful section heading rendered`);assert.ok(html.includes(escaped(body)),`${place.id}/${locale}: useful section body rendered`);}
