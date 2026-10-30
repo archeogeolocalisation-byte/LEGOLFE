@@ -93,7 +93,7 @@ export default function AgendaClient({ locale, events, initialDay,initialCategor
             <div>
               <p className="text-[11px] font-bold uppercase tracking-[.24em]" style={{ color: accent }}>LE GOLFE / AGENDA</p>
               <h1 className="lg-menu-title mt-4 max-w-5xl">
-                {fr ? <>CE QUI SE PASSE<br/><span style={{ color: accent }}>ICI. MAINTENANT.</span></> : <>WHAT&apos;S HAPPENING<br/><span style={{ color: accent }}>HERE. NOW.</span></>}
+                {fr ? <>LE GOLFE.<br/><span style={{ color: accent }}>À L’AFFICHE.</span></> : <>THE GOLFE.<br/><span style={{ color: accent }}>WHAT’S ON.</span></>}
               </h1>
             </div>
             <p className="max-w-md text-base leading-7 text-white/65 lg:pb-2">

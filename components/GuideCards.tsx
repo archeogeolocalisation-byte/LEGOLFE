@@ -6,7 +6,7 @@ import GuideImage from "./GuideImage";
 export function GuideCard({guide,locale}:{guide:Guide;locale:Locale}) {
  return <article className="guide-library-card">
  <GuideImage guide={guide} locale={locale}/>
- <div className="guide-library-card-copy"><p className="lg-kicker">{guide.category[locale]}</p><h3><Link href={`/${locale}/guides/${guide.slug}`}>{guide.copy[locale].title} {guide.copy[locale].accent} ↗</Link></h3><p>{guide.copy[locale].description}</p><span>{locale==="fr"?"Ouvrir le guide":"Read the guide"} →</span></div>
+ <div className="guide-library-card-copy"><p className="lg-kicker">{guide.category[locale]}</p><h3><Link href={`/${locale}/guides/${guide.slug}`}>{guide.copy[locale].seoTitle} ↗</Link></h3><p>{guide.copy[locale].description}</p><span>{locale==="fr"?"Ouvrir le guide":"Read the guide"} →</span></div>
  </article>;
 }
 
