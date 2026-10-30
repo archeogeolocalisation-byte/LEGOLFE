@@ -50,6 +50,12 @@ async function htmlFor(id,locale){const stream=await renderToReadableStream(awai
    assert.ok(xml.includes(`<loc>${metadata.alternates.canonical}</loc>`));
    // Verify actual page output, including the async content component, rather than source strings.
    const html=await htmlFor(place.id,locale);
+   if(['cogolin-village','sainte-maxime-village'].includes(place.id)){
+    const fact=placeFacts[place.id],escaped=value=>require('react-dom/server').renderToStaticMarkup(require('react').createElement('span',null,value)).slice(6,-7);
+    for(const [heading,body] of fact.copy[locale].sections){assert.ok(html.includes(escaped(heading)),`${place.id}/${locale}: fact section heading rendered`);assert.ok(html.includes(escaped(body)),`${place.id}/${locale}: fact section body rendered`);}
+    for(const [question,answer] of fact.copy[locale].questions){assert.ok(html.includes(escaped(question)));assert.ok(html.includes(escaped(answer)));}
+    for(const source of fact.sources)assert.ok(html.includes(`href="${source.url}"`));
+   }
    assert.equal((html.match(/<h1[ >]/g)||[]).length,1,`${place.id}/${locale}: one main heading`);
    for(const target of related)assert.ok(html.includes(`href="/${locale}/place/${target.id}"`));
    assert.equal(html.includes('LE GOLFE / GUIDES'),false,`${place.id}/${locale}: no generic guide module`);

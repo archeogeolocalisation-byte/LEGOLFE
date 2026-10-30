@@ -316,7 +316,7 @@ export const places: Place[] = [
   "verified": false,
   "featured": true,
   "source": "https://www.golfe-saint-tropez-information.com/fr/villages-stations/cogolin",
-  "lastVerifiedAt": "2026-10-04"
+  "lastVerifiedAt": "2026-10-30"
 },{
   "id": "la-croix-valmer-village",
   "name": "La Croix-Valmer",
@@ -412,7 +412,7 @@ export const places: Place[] = [
   "verified": false,
   "featured": true,
   "source": "https://www.golfe-saint-tropez-information.com/fr/villages-stations/sainte-maxime",
-  "lastVerifiedAt": "2026-10-03"
+  "lastVerifiedAt": "2026-10-30"
 },{
   "id": "cavalaire-village",
   "name": "Cavalaire-sur-Mer",
@@ -443,7 +443,7 @@ export const places: Place[] = [
   "verified": false,
   "featured": true,
   "source": "https://www.golfe-saint-tropez-information.com/fr/villages-stations/cavalaire-sur-mer",
-  "lastVerifiedAt": "2026-10-03"
+  "lastVerifiedAt": "2026-10-30"
 },{
   "id": "la-mole-village",
   "name": "La Môle",
