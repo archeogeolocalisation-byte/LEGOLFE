@@ -109,8 +109,8 @@ export const discoveryFeatures:Record<string,Record<Locale,DiscoveryGuide>> = {
 },
   "moulin-de-paillas": {
     "fr": {
-      "title": "Moulin de Paillas à Ramatuelle : visite et panorama",
-      "description": "Découvrez le Moulin de Paillas sur les hauteurs de Ramatuelle : panorama, accès et conseils pour préparer la visite du moulin restauré.",
+      "title": "Moulin de Paillas à Ramatuelle : visites, accès et panorama",
+      "description": "Préparez la visite du Moulin de Paillas à Ramatuelle : route des Moulins, visites commentées, accès intérieur, météo et conseils pour organiser votre étape.",
       "intro": "Sur les hauteurs de Ramatuelle, le Moulin de Paillas donne une autre perspective sur la presqu’île. Une étape à associer au village pour regarder le paysage, puis découvrir le patrimoine du moulin lorsque les visites le permettent.",
       "sections": [
         [
@@ -122,8 +122,12 @@ export const discoveryFeatures:Record<string,Record<Locale,DiscoveryGuide>> = {
           "Le site de Castellas se trouve à environ deux kilomètres du village, sur la route de Gassin. Repérez votre trajet avant de partir et prévoyez des chaussures confortables pour découvrir les abords."
         ],
         [
-          "Visiter l’intérieur du moulin",
-          "La vue extérieure et la visite du mécanisme sont deux moments différents. Contactez l’office de tourisme de Ramatuelle pour connaître les jours et les horaires de visite ; ne comptez pas sur une ouverture permanente."
+          "Visite intérieure : vérifier le calendrier et la météo",
+          "L’association Les Amis des Moulins de Ramatuelle assure les ouvertures commentées annoncées par l’office de tourisme. La fiche de visite indique une participation libre et une annulation en cas de mauvais temps. Consultez le prochain créneau avant de partir : découvrir les abords ne signifie pas que le mécanisme est accessible tous les jours."
+        ],
+        [
+          "Accès au moulin et visite avec une mobilité réduite",
+          "L’adresse publiée est route des Moulins de Paillas, à Ramatuelle. La fiche officielle signale un parking à proximité et une visite non accessible en fauteuil roulant. Si vous avez besoin de limiter la marche ou les marches, contactez l’office au 04 98 12 64 00 avant le déplacement."
         ]
       ],
       "nearby": [
@@ -135,11 +139,22 @@ export const discoveryFeatures:Record<string,Record<Locale,DiscoveryGuide>> = {
           "gassin-village",
           "Continuer vers Gassin"
         ]
+      ],
+      "verified": "2026-10-30",
+      "sources": [
+        {
+          "label": "Office de Ramatuelle · visites, accès et calendrier",
+          "url": "https://www.ramatuelle-tourisme.com/fr/animation/culture/ramatuelle/visite-du-moulin-de-paillas-5995772/"
+        },
+        {
+          "label": "Office de Ramatuelle · patrimoine du moulin",
+          "url": "https://www.ramatuelle-tourisme.com/fr/decouvrir-la-presquile/cote-nature/les-tresors-caches/moulin-de-paillas/"
+        }
       ]
     },
     "en": {
-      "title": "Moulin de Paillas in Ramatuelle: visits and views",
-      "description": "Plan a stop at Moulin de Paillas above Ramatuelle: coastal views, access from the village and information on visiting the restored windmill.",
+      "title": "Moulin de Paillas in Ramatuelle: visits, access and views",
+      "description": "Plan a visit to Moulin de Paillas in Ramatuelle: Route des Moulins access, guided openings, interior visits, weather and practical planning advice.",
       "intro": "Above Ramatuelle, Moulin de Paillas offers another perspective on the peninsula. Combine it with a visit to the village, take in the landscape and explore the windmill’s heritage when visits are available.",
       "sections": [
         [
@@ -151,8 +166,12 @@ export const discoveryFeatures:Record<string,Record<Locale,DiscoveryGuide>> = {
           "The Castellas site is around two kilometres from the village, on the road towards Gassin. Check your route before setting out and wear comfortable shoes for exploring the surroundings."
         ],
         [
-          "Visiting inside the windmill",
-          "The outside viewpoint and a visit to the mechanism are separate experiences. Contact Ramatuelle’s tourist office for visiting days and times; do not assume the interior is always open."
+          "Interior visits: check the calendar and weather",
+          "Les Amis des Moulins de Ramatuelle runs the guided openings listed by the tourist office. The visit listing states voluntary contributions and cancellation in bad weather. Check the next session before travelling: seeing the surroundings does not mean the mechanism is accessible every day."
+        ],
+        [
+          "Getting to the windmill with reduced mobility",
+          "The published address is Route des Moulins de Paillas, Ramatuelle. The official visit listing mentions nearby parking and states that the visit is not wheelchair accessible. To check walking distances or steps for your needs, contact the tourist office on +33 4 98 12 64 00 before travelling."
         ]
       ],
       "nearby": [
@@ -164,6 +183,17 @@ export const discoveryFeatures:Record<string,Record<Locale,DiscoveryGuide>> = {
           "gassin-village",
           "Continue to Gassin"
         ]
+      ],
+      "verified": "2026-10-30",
+      "sources": [
+        {
+          "label": "Ramatuelle Tourism · visits, access and dates",
+          "url": "https://www.ramatuelle-tourisme.com/fr/animation/culture/ramatuelle/visite-du-moulin-de-paillas-5995772/"
+        },
+        {
+          "label": "Ramatuelle Tourism · windmill heritage",
+          "url": "https://www.ramatuelle-tourisme.com/fr/decouvrir-la-presquile/cote-nature/les-tresors-caches/moulin-de-paillas/"
+        }
       ]
     }
   },

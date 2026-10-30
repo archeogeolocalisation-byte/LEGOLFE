@@ -53,6 +53,12 @@ async function htmlFor(id,locale){const stream=await renderToReadableStream(awai
    assert.equal((html.match(/<h1[ >]/g)||[]).length,1,`${place.id}/${locale}: one main heading`);
    for(const target of related)assert.ok(html.includes(`href="/${locale}/place/${target.id}"`));
    assert.equal(html.includes('LE GOLFE / GUIDES'),false,`${place.id}/${locale}: no generic guide module`);
+   const editorial=require('../data/editorialFeatures.ts').editorialFeatures[place.id]?.[locale];
+   if(editorial?.visitSections){
+    const escaped=value=>require('react-dom/server').renderToStaticMarkup(require('react').createElement('span',null,value)).slice(6,-7);
+    for(const [heading,body] of editorial.visitSections){assert.ok(html.includes(escaped(heading)),`${place.id}/${locale}: useful section heading rendered`);assert.ok(html.includes(escaped(body)),`${place.id}/${locale}: useful section body rendered`);}
+    for(const [,target] of editorial.internalLinks??[]){assert.ok(target.startsWith('/place/')||target.startsWith('/destinations/')||target.startsWith('/guides/'));if(target.startsWith('/place/'))assert.ok(places.some(p=>p.id===target.split('/')[2]),`${place.id}: valid contextual place link`);if(target.startsWith('/guides/'))assert.ok(require('../data/guides.ts').guides.some(g=>g.slug===target.split('/')[2]),`${place.id}: valid contextual guide link`);if(target.startsWith('/destinations/'))assert.ok(require('../data/destinations.ts').destinations.some(d=>d.slug===target.split('/')[2]),`${place.id}: valid contextual destination link`);assert.ok(html.includes(`href="/${locale}${target}"`),`${place.id}/${locale}: contextual link in public HTML`);}
+   }
    const paragraphs=[...html.matchAll(/<p\b[^>]*>([\s\S]*?)<\/p>/g)].map(m=>m[1].replace(/<[^>]+>/g,' ').replace(/\s+/g,' ').trim().toLowerCase()).filter(text=>text.length>=100);
    assert.equal(new Set(paragraphs).size,paragraphs.length,`${place.id}/${locale}: no repeated descriptive paragraphs`);
    const schema=JSON.parse(html.match(/<script type="application\/ld\+json">([^<]+)<\/script>/g).map(tag=>tag.replace(/^.*?>/,'').replace(/<\/script>$/,'')).find(text=>JSON.parse(text)['@type']!=='BreadcrumbList'));

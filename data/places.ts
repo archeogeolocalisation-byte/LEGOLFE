@@ -207,30 +207,35 @@ export const places: Place[] = [
 },
 { id:"port-grimaud", name:"Port Grimaud", category:"places", location:"Grimaud", description:placeFacts["port-grimaud"].copy.en.description, bestFor:["Canals and waterside walks"],notIdealFor:["Unplanned transport connections"],tags:["port-grimaud","canals","architecture","market"],goodToKnow:["Grimaud hilltop village is a separate stop.","Check seasonal market and boat services."],verified:false,featured:false,source:placeFacts["port-grimaud"].sources[0].url,lastVerifiedAt:"2026-10-13" },
 {
-  "id": "moulin-de-paillas",
-  "name": "Moulin de Paillas",
-  "category": "do",
-  "location": "Ramatuelle",
-  "description": "Above Ramatuelle, the restored Moulin de Paillas brings windmill heritage and sweeping Saint-Tropez peninsula views together. Find the right approach near Col de Paillas and confirm visit access before travelling.",
-  "bestFor": [
-    "Heritage and landscape"
-  ],
-  "notIdealFor": [
-    "Unprepared visits"
-  ],
-  "tags": [
-    "heritage",
-    "view",
-    "village"
-  ],
-  "goodToKnow": [
-    "Check the tourist office information before setting out."
-  ],
-  "verified": false,
-  "featured": false,
-  "source": "https://www.ramatuelle-tourisme.com/fr/decouvrir-la-presquile/cote-nature/les-tresors-caches/moulin-de-paillas/",
-  "lastVerifiedAt": "2026-10-05"
-},
+    "id": "moulin-de-paillas",
+    "name": "Moulin de Paillas",
+    "category": "do",
+    "location": "Ramatuelle",
+    "description": "Above Ramatuelle, the restored Moulin de Paillas brings windmill heritage and sweeping Saint-Tropez peninsula views together. Find the right approach near Col de Paillas and confirm visit access before travelling.",
+    "bestFor": [
+      "Heritage and landscape"
+    ],
+    "notIdealFor": [
+      "Unprepared visits"
+    ],
+    "tags": [
+      "heritage",
+      "view",
+      "village"
+    ],
+    "goodToKnow": [
+      "Guided interior openings follow the seasonal tourist-office calendar and can be cancelled in bad weather.",
+      "The official visit listing states voluntary contributions and no wheelchair access."
+    ],
+    "verified": false,
+    "featured": false,
+    "source": "https://www.ramatuelle-tourisme.com/fr/decouvrir-la-presquile/cote-nature/les-tresors-caches/moulin-de-paillas/",
+    "lastVerifiedAt": "2026-10-30",
+    "latitude": 43.21379,
+    "longitude": 6.60534,
+    "phone": "+33 4 98 12 64 00",
+    "website": "https://www.ramatuelle-tourisme.com/fr/animation/culture/ramatuelle/visite-du-moulin-de-paillas-5995772/"
+  },
 {
   "id": "cap-taillat",
   "name": "Cap Taillat",
@@ -559,39 +564,79 @@ export const places: Place[] = [
     lastVerifiedAt: "2026-10-02",
   },
   {
-    id: "bello-visto",
-    name: "Bello Visto",
-    category: "eat",
-    location: "Gassin",
-    description: "In hilltop Gassin, Bello Visto pairs Mediterranean dining with a terrace overlooking the Golfe de Saint-Tropez. Find it on Place deï Barri, and check seasonal opening and bookings before heading up to the village.",
-    priceLevel: 3,
-    bestFor: ["Lunch with a view", "Couples", "Village evenings"],
-    notIdealFor: ["Beach-day convenience", "Late-night Saint-Tropez energy"],
-    tags: ["terrace", "view", "mediterranean", "village", "gassin"],
-    goodToKnow: ["The restaurant is on Place deï Barri in the village and highlights a shaded terrace overlooking the Golfe.", "The official site lists seasonal operation; check current dates before planning around it."],
-    verified: false,
-    featured: true,
-    website: "https://bellovisto.eu/",
-    bookingUrl: "https://bellovisto.eu/reservation-restaurant/",
-    source: "https://gassin.eu/fr/sorties/restaurant/gassin/restaurant-bello-visto-4936003/",
-    lastVerifiedAt: "2026-10-02",
+    "id": "bello-visto",
+    "name": "Bello Visto",
+    "category": "eat",
+    "location": "Gassin",
+    "description": "In hilltop Gassin, Bello Visto pairs Mediterranean dining with a terrace overlooking the Golfe de Saint-Tropez. Find it on Place deï Barri, and check seasonal opening and bookings before heading up to the village.",
+    "priceLevel": 3,
+    "bestFor": [
+      "Lunch with a view",
+      "Couples",
+      "Village evenings"
+    ],
+    "notIdealFor": [
+      "Beach-day convenience",
+      "Late-night Saint-Tropez energy"
+    ],
+    "tags": [
+      "terrace",
+      "view",
+      "mediterranean",
+      "village",
+      "gassin"
+    ],
+    "goodToKnow": [
+      "The restaurant is on Place deï Barri in the village and highlights a shaded terrace overlooking the Golfe.",
+      "The official site lists seasonal operation; check current dates before planning around it."
+    ],
+    "verified": false,
+    "featured": true,
+    "website": "https://bellovisto.eu/",
+    "bookingUrl": "https://bellovisto.eu/reservation-restaurant/",
+    "source": "https://gassin.eu/fr/sorties/restaurant/gassin/restaurant-bello-visto-4936003/",
+    "lastVerifiedAt": "2026-10-30",
+    "latitude": 43.2284,
+    "longitude": 6.58585,
+    "phone": "+33 4 94 56 17 30",
+    "openingHours": "Official site checked 30 Oct 2026: annual closure, return announced for 30 Apr 2027; reconfirm before travel."
   },
   {
-    id: "la-verdoyante",
-    name: "La Verdoyante",
-    category: "eat",
-    location: "Gassin",
-    description: "La Verdoyante sits among the vineyards outside Gassin, pairing Provençal and Mediterranean cuisine with a panoramic terrace. It is a countryside lunch or dinner rather than a port-side stop; book ahead in high season.",
-    priceLevel: 3,
-    bestFor: ["Provençal lunch", "Families", "Countryside setting"],
-    notIdealFor: ["Car-free evenings", "Last-minute peak-season plans"],
-    tags: ["provence", "terrace", "vineyards", "family", "gassin"],
-    goodToKnow: ["Gassin Tourisme lists Provençal and Mediterranean cuisine, garden, parking and a panoramic terrace setting.", "The tourism listing warns that the restaurant can book several days ahead in peak season."],
-    verified: false,
-    featured: false,
-    website: "https://la-verdoyante.fr",
-    source: "https://gassin.eu/fr/sorties/restaurant/gassin/restaurant-la-verdoyante-4081316/",
-    lastVerifiedAt: "2026-10-02",
+    "id": "la-verdoyante",
+    "name": "La Verdoyante",
+    "category": "eat",
+    "location": "Gassin",
+    "description": "La Verdoyante sits among the vineyards outside Gassin, pairing Provençal and Mediterranean cuisine with a panoramic terrace. It is a countryside lunch or dinner rather than a port-side stop; book ahead in high season.",
+    "priceLevel": 3,
+    "bestFor": [
+      "Provençal lunch",
+      "Families",
+      "Countryside setting"
+    ],
+    "notIdealFor": [
+      "Car-free evenings",
+      "Last-minute peak-season plans"
+    ],
+    "tags": [
+      "provence",
+      "terrace",
+      "vineyards",
+      "family",
+      "gassin"
+    ],
+    "goodToKnow": [
+      "Gassin Tourisme lists Provençal and Mediterranean cuisine, garden, parking and a panoramic terrace setting.",
+      "The tourism listing warns that the restaurant can book several days ahead in peak season."
+    ],
+    "verified": false,
+    "featured": false,
+    "website": "https://www.la-verdoyante.fr/",
+    "source": "https://gassin.eu/fr/sorties/restaurant/gassin/restaurant-la-verdoyante-4081316/",
+    "lastVerifiedAt": "2026-10-30",
+    "latitude": 43.2374,
+    "longitude": 6.590186,
+    "phone": "+33 4 94 56 16 23",
+    "openingHours": "Official site checked 30 Oct 2026: reopening announced for spring 2027; confirm the date directly."
   },
   {
     id: "byblos-beach",
@@ -967,39 +1012,82 @@ export const places: Place[] = [
     lastVerifiedAt: "2026-10-02",
   },
   {
-    id: "les-halles-saint-tropez",
-    name: "Les Halles de Saint-Tropez",
-    category: "eat",
-    location: "Saint-Tropez",
-    description: "Near the Saint-Tropez harbour, Les Halles brings food stands, food trucks, a brasserie and music under one roof. A flexible option for groups with different tastes; check the current programme if you are coming for the evening.",
-    priceLevel: 2,
-    bestFor: ["Groups with different tastes", "Casual evenings", "Easy port-area plans", "Late aperitif"],
-    notIdealFor: ["Quiet destination dining", "Travellers seeking one chef-led menu"],
-    tags: ["food-hall", "casual", "groups", "nightlife", "saint-tropez", "port"],
-    goodToKnow: ["Saint-Tropez Tourisme lists world-cuisine stands and food trucks plus a brasserie-style indoor space.", "The venue advertises a resident DJ every evening from 19:00 to 01:00 and live music on weekends."],
-    verified: false,
-    featured: true,
-    source: "https://www.sainttropeztourisme.com/fr/fiche/les-halles-de-saint-tropez-5936300/",
-    openingHours: "Daily 1 Apr–31 Oct 2026; reduced winter opening",
-    lastVerifiedAt: "2026-10-02",
+    "id": "les-halles-saint-tropez",
+    "name": "Les Halles de Saint-Tropez",
+    "category": "eat",
+    "location": "Saint-Tropez",
+    "description": "Near the Saint-Tropez harbour, Les Halles brings food stands, food trucks, a brasserie and music under one roof. A flexible option for groups with different tastes; check the current programme if you are coming for the evening.",
+    "priceLevel": 2,
+    "bestFor": [
+      "Groups with different tastes",
+      "Casual evenings",
+      "Easy port-area plans",
+      "Late aperitif"
+    ],
+    "notIdealFor": [
+      "Quiet destination dining",
+      "Travellers seeking one chef-led menu"
+    ],
+    "tags": [
+      "food-hall",
+      "casual",
+      "groups",
+      "nightlife",
+      "saint-tropez",
+      "port"
+    ],
+    "goodToKnow": [
+      "The venue describes a food court with several world cuisines at 1 Allée du Quai de l’Épi.",
+      "Confirm your table, meal service and entertainment programme for the date chosen."
+    ],
+    "verified": false,
+    "featured": true,
+    "source": "https://www.sainttropeztourisme.com/fr/fiche/les-halles-de-saint-tropez-5936300/",
+    "openingHours": "Check current venue and individual food-service hours with the establishment.",
+    "lastVerifiedAt": "2026-10-30",
+    "latitude": 43.272081,
+    "longitude": 6.636594,
+    "website": "https://www.leshallesdesaint-tropez.com/",
+    "phone": "+33 4 94 96 27 68"
   },
   {
-    id: "spa-du-bailli",
-    name: "Le Spa du Bailli",
-    category: "wellness",
-    location: "Rayol-Canadel-sur-Mer",
-    description: "At Le Bailli de Suffren in Rayol-Canadel, the Spa du Bailli offers massages and treatments with a Mediterranean outlook. Confirm seasonal opening, treatment availability and what access is included before planning your visit.",
-    priceLevel: 3,
-    bestFor: ["Couples", "Recovery day", "Sea-view massage", "Rayol stays"],
-    notIdealFor: ["Large group spa days", "Travellers wanting full pool access without staying at the hotel"],
-    tags: ["spa", "massage", "wellness", "rayol", "sea-view", "esthederm"],
-    goodToKnow: ["The tourism office describes treatment cabins facing the Mediterranean and lists nearby parking.", "Seasonal calendars vary between sources and years; confirm the current dates and non-resident access directly with the spa."],
-    verified: false,
-    featured: false,
-    website: "https://www.lebaillidesuffren.com/espace-bien-etre-esthederm-bailli-de-suffren/",
-    source: "https://www.golfe-sainttropez-tourisme.fr/fiche-apidae/le-spa-du-bailli-2/",
-    openingHours: "Seasonal opening; confirm the current season and treatment slot with the spa",
-    lastVerifiedAt: "2026-10-16",
+    "id": "spa-du-bailli",
+    "name": "Le Spa du Bailli",
+    "category": "wellness",
+    "location": "Rayol-Canadel-sur-Mer",
+    "description": "At Le Bailli de Suffren in Rayol-Canadel, the Spa du Bailli offers massages and treatments with a Mediterranean outlook. Confirm seasonal opening, treatment availability and what access is included before planning your visit.",
+    "priceLevel": 3,
+    "bestFor": [
+      "Couples",
+      "Recovery day",
+      "Sea-view massage",
+      "Rayol stays"
+    ],
+    "notIdealFor": [
+      "Large group spa days",
+      "Travellers wanting full pool access without staying at the hotel"
+    ],
+    "tags": [
+      "spa",
+      "massage",
+      "wellness",
+      "rayol",
+      "sea-view",
+      "esthederm"
+    ],
+    "goodToKnow": [
+      "The spa is at Le Bailli de Suffren in Rayol-Canadel-sur-Mer, not Saint-Tropez town.",
+      "The hotel reserves the pool and fitness space for hotel guests; confirm treatment access and seasonal availability directly."
+    ],
+    "verified": false,
+    "featured": false,
+    "website": "https://www.lebaillidesuffren.com/espace-bien-etre-esthederm-bailli-de-suffren/",
+    "source": "https://www.golfe-sainttropez-tourisme.fr/fiche-apidae/le-spa-du-bailli-2/",
+    "openingHours": "Seasonal opening; confirm the current season and treatment slot with the spa",
+    "lastVerifiedAt": "2026-10-30",
+    "latitude": 43.1563,
+    "longitude": 6.47807,
+    "phone": "+33 4 98 04 47 83"
   },
 
   {
