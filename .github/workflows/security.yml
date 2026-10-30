@@ -67,6 +67,13 @@ jobs:
           node scripts/test-explore-filters.cjs
           node scripts/test-explore-hub.cjs
           node scripts/test-nearby-explorer.cjs
+      - name: Check place catalogue, images and map references
+        run: |
+          node scripts/test-place-facts.cjs
+          node scripts/test-place-images.cjs
+          node scripts/test-place-maps.cjs
+          node scripts/test-place-gallery.cjs
+          node scripts/verify-place-gallery.cjs
       - run: npm run build
         env:
           NEXT_PUBLIC_SUPABASE_URL: https://example.supabase.co

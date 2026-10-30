@@ -20,4 +20,4 @@ for(const place of places){
   if(photo.src.startsWith('/media/place-cache/'))assert.ok(photo.source&&photo.credit,`${place.id}: cached original attribution remains available`); // User-supplied local images retain their existing metadata.
  }
 }
-console.log(`Place images: ${manifest.length} checked local WebP copies, hashes/credits/licences, and all 88 public place image selections passed.`);
+console.log(`Place images: ${manifest.length} checked local WebP copies, hashes/credits/licences, and all ${places.length} public place image selections passed.`);
