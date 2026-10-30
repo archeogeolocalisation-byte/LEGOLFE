@@ -103,9 +103,9 @@ export default function AgendaClient({ locale, events, initialDay,initialCategor
         </div>
       </section>
 
-      <section className="relative z-30 border-b border-white/20 bg-[var(--lg-blue)] text-white" aria-label={fr ? "Filtrer l’agenda" : "Filter the agenda"}>
+      <section className={styles.filterControls+" relative z-30 border-b border-white/20 bg-[var(--lg-blue)] text-white"} aria-label={fr ? "Filtrer l’agenda" : "Filter the agenda"}>
         <div className="mx-auto max-w-7xl px-6 py-4 md:px-10">
-          <div className="flex max-w-full gap-2 overflow-x-auto pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          <div role="group" aria-label={fr?"Choisir une période":"Choose dates"} className={styles.periodFilters+" flex max-w-full gap-2 overflow-x-auto pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"}>
             {rangeButtons.map((item) => {
               const selected = !month && !day && range === item.key;
               return <button key={item.key} type="button" aria-pressed={selected} onClick={() => { setDay(""); setMonth(""); setRange(item.key); }} className={`inline-flex min-h-11 shrink-0 items-center gap-2 border px-4 py-2 text-[11px] font-black uppercase tracking-[.13em] transition ${selected ? "border-transparent text-[var(--lg-blue)]" : "border-white/30 text-white hover:border-white"}`} style={selected ? { backgroundColor: accent } : undefined}>
@@ -113,7 +113,7 @@ export default function AgendaClient({ locale, events, initialDay,initialCategor
               </button>;
             })}
           </div>
-          <div className="mt-3 flex items-center gap-3">
+          <div className={styles.monthField+" mt-3 flex items-center gap-3"}>
             <label htmlFor="agenda-month" className="text-[10px] font-black uppercase tracking-[.13em]">{fr ? "Choisir un mois" : "Choose a month"}</label>
             <select id="agenda-month" value={month} onChange={event => {setDay("");setMonth(event.target.value);}} className={styles.filterSelect+" max-w-full border border-white/30 bg-[var(--lg-navy-surface)] px-3 py-2 text-xs font-bold text-white"}>
               <option value="">{fr ? "Période rapide" : "Quick dates"}</option>
@@ -157,7 +157,7 @@ export default function AgendaClient({ locale, events, initialDay,initialCategor
       </section>}
 
       <section className="mx-auto max-w-7xl bg-[var(--lg-blue)] px-6 py-10 text-white md:px-10 md:py-14">
-        <div className="mt-12 flex items-end justify-between gap-5">
+        <div className={styles.resultsHeading+" mt-12 flex items-end justify-between gap-5"}>
           <div>
             <p className="text-[10px] font-black uppercase tracking-[.22em]" style={{ color: accent }}>{periodText}</p>
             <h2 aria-live="polite" aria-atomic="true" className="mt-2 text-4xl font-black tracking-[-.035em] md:text-5xl">{filtered.length} {fr ? "rendez-vous" : "events"}</h2>
