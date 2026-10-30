@@ -11,8 +11,8 @@ export const placeSeoCopy: Record<string, Record<Locale, {title:string;descripti
   en:{title:'Visiting Rayol-Canadel-sur-Mer: gardens, beaches and views',description:'What to see in Rayol-Canadel: Domaine du Rayol, Patec pergola, a walking loop and beaches, with route details, timings and practical access advice.'},
  },
  'cavalaire-village': {
-  fr:{title:'Visiter Cavalaire-sur-Mer : port, plages et Bonporteau',description:'Découvrez Cavalaire-sur-Mer autour du port, de la grande plage et de Bonporteau. Repères pour choisir votre secteur et préparer votre journée.'},
-  en:{title:'Visiting Cavalaire-sur-Mer: harbour, beaches and Bonporteau',description:'Explore Cavalaire-sur-Mer around the harbour, main beach and Bonporteau. Choose your part of the coast and plan the rest of your day.'},
+  fr:{title:'Visiter Cavalaire-sur-Mer : port, plages et Bonporteau',description:'Préparez Cavalaire-sur-Mer : port, accès à Bonporteau et balades sur la Corniche des Maures. Repères pour choisir votre plage et votre parcours à pied.'},
+  en:{title:'Visiting Cavalaire-sur-Mer: harbour, beaches and Bonporteau',description:'Plan your Cavalaire-sur-Mer visit: harbour, Bonporteau beach access and Corniche des Maures walks, with tips for choosing your beach and walking route.'},
  },
  'la-mole-village': {
   fr:{title:'Visiter La Môle : village, patrimoine et barrage de la Verne',description:'Que voir à La Môle ? Église, chapelle et barrage de la Verne : accès à pied, patrimoine et conseils pour préparer une visite dans les Maures.'},

@@ -113,7 +113,12 @@ export const villageFeatures:Record<string,VillageFeature> = {
     }
   },
   "cavalaire-village": {
-    "nearby": ["plage-de-bonporteau", "port-heraclea-cavalaire", "plage-centre-ville-cavalaire", "sentiers-corniche-des-maures"],
+    "nearby": [
+      "plage-de-bonporteau",
+      "port-heraclea-cavalaire",
+      "plage-centre-ville-cavalaire",
+      "sentiers-corniche-des-maures"
+    ],
     "name": "Cavalaire-sur-Mer",
     "slug": "cavalaire-sur-mer",
     "source": "https://www.golfe-saint-tropez-information.com/fr/villages-stations/cavalaire-sur-mer",
@@ -168,6 +173,16 @@ export const villageFeatures:Record<string,VillageFeature> = {
         "Bonporteau et le port ne constituent pas une seule promenade plate",
         "Prévoir ses déplacements vers Saint-Tropez",
         "La fréquentation varie fortement avec la saison"
+      ],
+      "visitSections": [
+        [
+          "Bonporteau : préparer la descente vers la crique",
+          "Bonporteau se rejoint par une promenade en pente, à pied ou à vélo selon l’office. La crique associe sable et rochers ; des toilettes, un parking et une aire de pique-nique sont répertoriés. Prévoyez le retour en montée lorsque vous choisissez votre plage."
+        ],
+        [
+          "Marcher sur la Corniche des Maures",
+          "Au départ de Bonporteau, l’office distingue un parcours de 8 km, annoncé à 3 h avec 360 m de dénivelé, et une version raccourcie de 3 km par le Fenouillet. La pente demande de bonnes chaussures. Choisissez le tracé avant de partir et vérifiez l’accès aux sentiers."
+        ]
       ]
     },
     "en": {
@@ -221,8 +236,29 @@ export const villageFeatures:Record<string,VillageFeature> = {
         "Bonporteau and the harbour are not one flat promenade",
         "Plan journeys to Saint-Tropez",
         "Visitor numbers change considerably with the season"
+      ],
+      "visitSections": [
+        [
+          "Bonporteau: plan the descent to the cove",
+          "According to the tourist office, Bonporteau is reached by a sloping approach on foot or by bicycle. The cove combines sand and rocks; toilets, parking and a picnic area are listed. Allow for the uphill return when choosing your beach."
+        ],
+        [
+          "Walking the Corniche des Maures",
+          "Starting at Bonporteau, the tourist office distinguishes an 8 km route, listed as 3 hours with 360 m of elevation gain, from a shorter 3 km option via Le Fenouillet. The gradient calls for suitable shoes. Choose your route first and check path access before setting out."
+        ]
       ]
-    }
+    },
+    "verified": "2026-10-30",
+    "sources": [
+      {
+        "label": "Cavalaire · Bonporteau",
+        "url": "https://www.cavalairesurmer.fr/plage-de-bonporteau-823841/"
+      },
+      {
+        "label": "Cavalaire · Corniche des Maures",
+        "url": "https://www.cavalairesurmer.fr/les-sentiers-de-la-corniche-des-maures-823781/"
+      }
+    ]
   },
   "la-mole-village": {
     "nearby": [

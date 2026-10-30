@@ -152,22 +152,30 @@ export const placeQuestions:Record<string,Record<Locale,[string,string][]>> = {
   "cavalaire-village": {
     "fr": [
       [
-        "Bonporteau ou le front de mer ?",
-        "Bonporteau apporte un autre décor ; le front de mer et le port conviennent à une journée plus centrée sur la station."
+        "Comment accéder à la plage de Bonporteau ?",
+        "L’accès décrit par l’office est une promenade en pente. Anticipez la remontée ; ce n’est pas le même accès que le front de mer central."
       ],
       [
-        "Bonne base pour aller chaque jour à Saint-Tropez ?",
-        "Si Saint-Tropez domine le programme, comparez les déplacements avant de choisir votre hébergement."
+        "Quelle distance choisir sur la Corniche des Maures ?",
+        "L’office propose 8 km ou une version de 3 km par le Fenouillet. Les 3 h et 360 m de dénivelé concernent le parcours long."
+      ],
+      [
+        "Que faire à Cavalaire sans prévoir une randonnée ?",
+        "Notre suggestion : une promenade sur le port et le front de mer, puis une plage choisie selon votre accès. Bonporteau peut rester une étape distincte."
       ]
     ],
     "en": [
       [
-        "Bonporteau or the waterfront?",
-        "Bonporteau offers different scenery; the waterfront and harbour suit a day centred on the resort."
+        "How do I reach Bonporteau beach?",
+        "The tourist office describes a sloping approach. Allow for the climb back; access differs from the central waterfront."
       ],
       [
-        "A base for daily trips to Saint-Tropez?",
-        "If Saint-Tropez dominates your plans, compare the journeys before choosing accommodation."
+        "Which Corniche des Maures distance should I choose?",
+        "The tourist office lists 8 km and a shorter 3 km option via Le Fenouillet. The 3-hour duration and 360 m elevation gain refer to the longer route."
+      ],
+      [
+        "What can I do in Cavalaire without a hike?",
+        "Our suggestion: stroll around the harbour and waterfront, then choose a beach with a suitable approach. Bonporteau can be a separate stop."
       ]
     ]
   },

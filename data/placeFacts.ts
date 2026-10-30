@@ -294,11 +294,11 @@ export const placeFacts:Record<string,PlaceFacts> = {
     ]
   },
   "sainte-maxime-village": {
-    "verified": "2026-10-13",
+    "verified": "2026-10-30",
     "copy": {
       "fr": {
-        "title": "Visiter Sainte-Maxime : vieux centre, port et plages",
-        "description": "Que faire à Sainte-Maxime ? Préparez une visite du vieux centre, du port et du front de mer, avec des conseils pour choisir votre plage et vos déplacements.",
+        "title": "Visiter Sainte-Maxime : vieux centre, Tour Carrée et bateau",
+        "description": "Découvrez Sainte-Maxime : port, vieux centre, visite de la Tour Carrée et bateau vers Saint-Tropez. Repères pour préparer les visites et les trajets.",
         "intro": "Sainte-Maxime permet d’organiser une visite autour du port, du vieux centre et du front de mer. Pour une première découverte, restez dans ce secteur avant de choisir une autre plage de la commune. Vous éviterez de transformer une promenade courte en journée de déplacements.",
         "facts": [
           [
@@ -320,16 +320,16 @@ export const placeFacts:Record<string,PlaceFacts> = {
         ],
         "sections": [
           [
-            "Que voir au centre de Sainte-Maxime ?",
-            "Prenez le port comme point de départ, puis gagnez les rues du centre autour de la Tour Carrée. Alternez la promenade en bord de mer avec une boucle dans les ruelles et une pause. La Tour Carrée est un repère du patrimoine local ; vérifiez les informations de visite du musée avant d’en faire une étape de votre programme."
+            "La Tour Carrée, Maison des Traditions",
+            "Sur la place Mireille de Germond, la Tour Carrée donne un repère au centre ancien. L’office propose des visites guidées de cette ancienne tour, aujourd’hui Maison des Traditions. La réservation est obligatoire et la visite annoncée n’est pas accessible en poussette : consultez les prochaines séances avant de venir."
           ],
           [
             "Quelle plage associer à la visite ?",
             "Distinguez une pause sur le littoral du centre et une sortie vers une autre plage. La Croisette permet de regarder aussi du côté du jardin des Myrtes, situé en face. Pour choisir un autre secteur, comparez l’accès depuis votre hébergement, les services souhaités et les conditions du jour. Une photo de plage ne garantit ni baignade ni surveillance."
           ],
           [
-            "Accès, parking et traversée vers Saint-Tropez",
-            "Choisissez votre point d’arrivée avant la visite et vérifiez le stationnement auprès des informations locales. Pour rejoindre Saint-Tropez par bateau, consultez les horaires et les conditions de l’opérateur, y compris le retour. Gardez une marge entre une traversée et une réservation : les déplacements font partie du programme."
+            "Rejoindre Saint-Tropez en bateau depuis Sainte-Maxime",
+            "Les Bateaux Verts annoncent cette liaison toute l’année. Consultez les horaires pour la date choisie et organisez aussi votre retour. Au départ de Sainte-Maxime, l’opérateur indique que les billets peuvent s’acheter le jour même ou la veille ; les excursions se préparent séparément, avec réservation conseillée."
           ],
           [
             "Notre proposition avec des enfants",
@@ -338,18 +338,22 @@ export const placeFacts:Record<string,PlaceFacts> = {
         ],
         "questions": [
           [
-            "Que faire à Sainte-Maxime en quelques heures ?",
-            "Une promenade entre le port, le vieux centre et le front de mer constitue un bon premier programme. Ajoutez une visite ou une plage selon votre temps disponible."
+            "Faut-il réserver la visite de la Tour Carrée ?",
+            "Oui, la visite guidée présentée par l’office est sur réservation obligatoire. Vérifiez les dates disponibles."
           ],
           [
-            "Peut-on combiner Sainte-Maxime et Saint-Tropez sans voiture ?",
-            "Une liaison maritime peut convenir. Vérifiez les jours, horaires, tarifs et conditions auprès des Bateaux Verts avant de construire la journée."
+            "Les bateaux vers Saint-Tropez circulent-ils toute l’année ?",
+            "Les Bateaux Verts annoncent la liaison Sainte-Maxime–Saint-Tropez toute l’année. Consultez les horaires et conditions pour votre date de voyage."
+          ],
+          [
+            "Peut-on visiter la Tour Carrée avec une poussette ?",
+            "La fiche de la visite guidée indique qu’elle n’est pas accessible en poussette. Contactez l’office pour préparer une autre formule adaptée à votre groupe."
           ]
         ]
       },
       "en": {
-        "title": "Visiting Sainte-Maxime: old town, harbour and beaches",
-        "description": "What to do in Sainte-Maxime: plan an old-town, harbour and waterfront visit, with advice on choosing a beach and arranging your journeys.",
+        "title": "Visiting Sainte-Maxime: old town, Tour Carrée and boats",
+        "description": "Discover Sainte-Maxime: harbour, old town, guided Tour Carrée visits and boats to Saint-Tropez, with practical tips for planning visits and journeys.",
         "intro": "Build your first Sainte-Maxime visit around the harbour, old centre and waterfront. Explore this area before choosing another beach in the commune. A short walk need not become a day spent travelling.",
         "facts": [
           [
@@ -371,16 +375,16 @@ export const placeFacts:Record<string,PlaceFacts> = {
         ],
         "sections": [
           [
-            "What to see in central Sainte-Maxime",
-            "Start by the harbour, then explore the centre around Tour Carrée. Combine the waterfront with a loop through the streets and a break. The tower is a local heritage landmark; check museum visiting information before making it a fixed stop."
+            "Tour Carrée, the Maison des Traditions",
+            "On Place Mireille de Germond, Tour Carrée is a landmark in the old centre. The tourist office offers guided visits to this former tower, now the Maison des Traditions. Booking is compulsory and the advertised visit is unsuitable for pushchairs: check upcoming sessions before travelling."
           ],
           [
             "Choosing a beach for your visit",
             "Distinguish a break by the central waterfront from a trip to another beach. At La Croisette, Myrtes garden is opposite. For other areas, compare access from your accommodation, the facilities you need and conditions on the day. A beach photograph does not guarantee swimming conditions or lifeguards."
           ],
           [
-            "Access, parking and crossing to Saint-Tropez",
-            "Choose an arrival point and check local parking information. For a boat trip to Saint-Tropez, check the operator’s timetable and conditions, including your return. Allow time between a crossing and a booking: travelling is part of the day."
+            "Taking a boat from Sainte-Maxime to Saint-Tropez",
+            "Les Bateaux Verts advertises this connection year-round. Check the timetable for your date and plan the return journey too. For departures from Sainte-Maxime, the operator says tickets can be bought on the day or the previous day; excursions are separate outings for which advance booking is advised."
           ],
           [
             "Our suggestion with children",
@@ -389,12 +393,16 @@ export const placeFacts:Record<string,PlaceFacts> = {
         ],
         "questions": [
           [
-            "What can I do in Sainte-Maxime in a few hours?",
-            "Walk between the harbour, old centre and waterfront, then add a visit or beach if time permits."
+            "Do I need to book a Tour Carrée visit?",
+            "Yes. Booking is compulsory for the guided visit advertised by the tourist office. Check available dates."
           ],
           [
-            "Can I combine Sainte-Maxime and Saint-Tropez without a car?",
-            "A boat shuttle may work. Check dates, times, prices and conditions with Les Bateaux Verts before planning the day."
+            "Do boats to Saint-Tropez operate all year?",
+            "Les Bateaux Verts advertises the Sainte-Maxime–Saint-Tropez route year-round. Check the timetable and conditions for your travel date."
+          ],
+          [
+            "Can I take a pushchair into Tour Carrée?",
+            "The guided-tour listing states that pushchairs are not accommodated. Contact the tourist office to plan another option suited to your group."
           ]
         ]
       }
@@ -411,20 +419,32 @@ export const placeFacts:Record<string,PlaceFacts> = {
       {
         "label": "Navettes maritimes",
         "url": "https://www.bateauxverts.com/"
+      },
+      {
+        "label": "Sainte-Maxime · Tour Carrée",
+        "url": "https://www.sainte-maxime.com/agenda/visite-guidee-de-la-tour-carree-maison-des-traditions-sainte-maxime-fr-6729049/"
+      },
+      {
+        "label": "Les Bateaux Verts · horaires / timetables",
+        "url": "https://www.bateauxverts.com/horaires-tarifs/"
+      },
+      {
+        "label": "Les Bateaux Verts · FAQ",
+        "url": "https://www.bateauxverts.com/faq/"
       }
     ],
     "nearby": [
-      "port-grimaud",
-      "saint-tropez-village",
-      "plan-de-la-tour-village"
+      "tour-carree-sainte-maxime",
+      "bateaux-verts-excursion",
+      "pointe-des-sardinaux"
     ]
   },
   "cogolin-village": {
-    "verified": "2026-10-13",
+    "verified": "2026-10-30",
     "copy": {
       "fr": {
-        "title": "Visiter Cogolin : vieux village, marché et artisanat",
-        "description": "Découvrez Cogolin : ruelles du vieux village, Tour de l’Horloge, marché provençal et savoir-faire locaux. Conseils pour préparer une visite à pied.",
+        "title": "Visiter Cogolin : vieux village, patrimoine et artisanat",
+        "description": "Que voir à Cogolin ? Tour de l’Horloge, fontaines et savoir-faire : parcours du vieux village et conseils pour préparer la découverte des artisans.",
         "intro": "Cogolin se découvre par ses ruelles en pente, son patrimoine et ses savoir-faire. Pour une première visite, choisissez le vieux village. Les Marines de Cogolin, sur le littoral, composent une autre étape : ne les confondez pas avec le centre historique.",
         "facts": [
           [
@@ -446,16 +466,16 @@ export const placeFacts:Record<string,PlaceFacts> = {
         ],
         "sections": [
           [
-            "Que voir dans le vieux Cogolin ?",
-            "Commencez autour de l’église Saint-Sauveur, puis explorez les ruelles vers la Tour de l’Horloge. Les passages et les détails des façades donnent des raisons de ralentir. La place Bellevue est un repère pour le panorama. Choisissez votre montée selon votre forme ; restez sur une boucle courte si le relief vous gêne."
+            "Découvrir le vieux Cogolin à pied",
+            "La Tour de l’Horloge marque une ancienne entrée du village médiéval. Pour prolonger la promenade, repérez les fontaines des places Tôti et Victor Hugo. Un guide du patrimoine est disponible à l’office ; demandez les prochaines balades contées et leurs modalités d’inscription au 04 94 55 01 10."
           ],
           [
             "Le marché provençal de Cogolin",
             "Le marché est annoncé le mercredi matin place Victor-Hugo et le samedi matin place de la République. Pour une visite qui mêle courses et promenade, commencez par les étals puis rejoignez le vieux village. Vérifiez les informations officielles avant le déplacement si le marché est votre objectif principal."
           ],
           [
-            "Artisanat : préparer la rencontre",
-            "Cogolin est associé aux tapis, aux pipes et aux anches. Pour découvrir un atelier ou une manufacture, contactez directement l’établissement : la présence d’un savoir-faire dans la ville ne signifie pas qu’une visite est possible sans rendez-vous. Précisez vos dates, le nombre de personnes et votre intérêt avant de construire le programme."
+            "Tapis, pipes et anches : choisir sa découverte",
+            "Les savoir-faire de Cogolin se distinguent par leurs matières : bruyère pour les pipes Courrieu, canne pour les anches Rigotti, tissage pour la manufacture de tapis. Choisissez le métier qui vous intéresse, puis contactez l’établissement : une activité de production ne garantit pas une visite libre des ateliers."
           ],
           [
             "Notre proposition pour une visite courte",
@@ -464,22 +484,22 @@ export const placeFacts:Record<string,PlaceFacts> = {
         ],
         "questions": [
           [
-            "Quand a lieu le marché de Cogolin ?",
-            "Il est annoncé le mercredi et le samedi matin, sur deux places différentes. Consultez la source officielle pour votre date."
+            "Où trouver un parcours du vieux Cogolin ?",
+            "La mairie signale un guide à l’office de tourisme. Appelez le 04 94 55 01 10 pour connaître les balades accompagnées et les inscriptions."
           ],
           [
-            "Cogolin village et les Marines de Cogolin sont-ils au même endroit ?",
-            "Ce sont deux secteurs de la commune : le vieux village est dans les terres, les Marines sont sur le littoral. Préparez les déplacements entre les deux."
+            "Quels savoir-faire découvrir à Cogolin ?",
+            "La commune met en avant les pipes Courrieu, les anches Rigotti et la manufacture de tapis. Confirmez les possibilités de visite directement avec chaque établissement."
           ],
           [
-            "Les ateliers se visitent-ils librement ?",
-            "Ne le supposez pas. Demandez à chaque établissement s’il reçoit des visiteurs et dans quelles conditions."
+            "Le vieux village est-il aux Marines de Cogolin ?",
+            "Ce sont deux secteurs distincts. Préparez un déplacement entre le centre ancien et les ports plutôt que de les considérer comme une seule promenade."
           ]
         ]
       },
       "en": {
-        "title": "Visiting Cogolin: old village, market and crafts",
-        "description": "Explore Cogolin’s old streets, Tour de l’Horloge, Provençal market and local craftsmanship, with practical advice for planning a village walk.",
+        "title": "Visiting Cogolin: old village, heritage and local crafts",
+        "description": "What to see in Cogolin: Tour de l’Horloge, fountains and local crafts, with old-village walking ideas and tips for planning visits to craft businesses.",
         "intro": "Explore Cogolin through its uphill lanes, heritage and craftsmanship. Start in the old village. The coastal Marines de Cogolin are a separate stop, away from the historic centre.",
         "facts": [
           [
@@ -501,16 +521,16 @@ export const placeFacts:Record<string,PlaceFacts> = {
         ],
         "sections": [
           [
-            "What to see in old Cogolin",
-            "Start around Saint-Sauveur church and follow the lanes towards Tour de l’Horloge. Passages and facade details reward a slower pace. Place Bellevue offers a viewpoint. Adapt the climb to your energy and keep the loop short if hills are difficult for you."
+            "Exploring old Cogolin on foot",
+            "Tour de l’Horloge marks a former entrance to the medieval village. Extend your stroll towards the fountains on Place Tôti and Place Victor Hugo. A heritage guide is available from the tourist office; ask about upcoming storytelling walks and registration on +33 4 94 55 01 10."
           ],
           [
             "Cogolin’s Provençal market",
             "The market is listed on Wednesday mornings at Place Victor-Hugo and Saturday mornings at Place de la République. Start at the stalls, then explore the old village. Check official information before travelling if the market is your main reason for coming."
           ],
           [
-            "Planning a craft visit",
-            "Cogolin is associated with carpets, pipes and reeds. Contact the individual workshop or manufacturer to ask about visits: the existence of a craft does not mean walk-in tours are available. Explain your dates, group size and interests before building the day around it."
+            "Carpets, pipes and reeds: choose your craft",
+            "Cogolin’s crafts use distinctive materials: briar for Courrieu pipes, cane for Rigotti reeds, and weaving at the carpet manufacture. Choose the craft that interests you, then contact the business: an active production workshop does not necessarily offer walk-in visits."
           ],
           [
             "Our suggestion for a short visit",
@@ -519,16 +539,16 @@ export const placeFacts:Record<string,PlaceFacts> = {
         ],
         "questions": [
           [
-            "When is Cogolin’s market?",
-            "It is listed on Wednesday and Saturday mornings, on different squares. Check the official source for your date."
+            "Where can I find an old Cogolin walking route?",
+            "The council points visitors to a guide at the tourist office. Call +33 4 94 55 01 10 for guided walks and registration."
           ],
           [
-            "Are Cogolin village and the Marines in the same place?",
-            "They are different areas of the commune: the old village is inland and the Marines are on the coast. Plan the journey between them."
+            "Which crafts can I discover in Cogolin?",
+            "The council highlights Courrieu pipes, Rigotti reeds and the carpet manufacture. Confirm visiting arrangements directly with each business."
           ],
           [
-            "Can I walk into workshops for a visit?",
-            "Ask each business whether it welcomes visitors and under what conditions."
+            "Is the old village at Les Marines de Cogolin?",
+            "They are separate areas. Plan a journey between the old centre and the ports rather than treating them as one continuous stroll."
           ]
         ]
       }
@@ -541,12 +561,20 @@ export const placeFacts:Record<string,PlaceFacts> = {
       {
         "label": "Marché provençal de Cogolin",
         "url": "https://www.golfe-sainttropez-tourisme.fr/fiche-apidae/marche-provencal-hebdomadaire-3/"
+      },
+      {
+        "label": "Cogolin · village",
+        "url": "https://www.cogolin.fr/pages/le-village-de-cogolin/"
+      },
+      {
+        "label": "Cogolin · artisanat / crafts",
+        "url": "https://www.cogolin.fr/pages/lartisanat/"
       }
     ],
     "nearby": [
-      "grimaud-village",
-      "port-grimaud",
-      "gassin-village"
+      "tour-horloge-cogolin",
+      "eglise-saint-sauveur-cogolin",
+      "chapelles-saint-roch-cogolin"
     ]
   }
 };
