@@ -3,20 +3,20 @@ import type {Locale} from '../lib/i18n';
 // Summaries of the existing page content, kept separate from long editorial intros.
 export const placeSeoCopy: Record<string, Record<Locale, {title:string;description:string}>> = {
  'la-croix-valmer-village': {
-  fr:{title:'Visiter La Croix-Valmer : village, vignobles et plages',description:'Découvrez La Croix-Valmer entre village, vignobles et littoral : Gigaro, plage du Débarquement et conseils pour organiser vos déplacements.'},
-  en:{title:'Visiting La Croix-Valmer: village, vineyards and beaches',description:'Explore La Croix-Valmer between its village, vineyards and coast: Gigaro, Le Débarquement beach and advice for planning your journeys.'},
+  fr:{title:'Visiter La Croix-Valmer : village, vignobles et plages',description:'Préparez La Croix-Valmer : village, Gigaro, Débarquement, navettes estivales et accès aux plages. Repères pratiques pour organiser votre journée.'},
+  en:{title:'Visiting La Croix-Valmer: village, vineyards and beaches',description:'Plan your La Croix-Valmer visit: the village, Gigaro, Le Débarquement, summer shuttles and beach access, with practical tips for your day.'},
  },
  'rayol-canadel-village': {
-  fr:{title:'Visiter Rayol-Canadel-sur-Mer : jardins, plages et panoramas',description:'Préparez votre visite de Rayol-Canadel-sur-Mer : Domaine du Rayol, plages et paysages de la corniche, avec des conseils pour les accès en pente.'},
-  en:{title:'Visiting Rayol-Canadel-sur-Mer: gardens, beaches and views',description:'Plan a visit to Rayol-Canadel-sur-Mer: Domaine du Rayol, beaches and coastal views, with advice for navigating the hillside setting.'},
+  fr:{title:'Visiter Rayol-Canadel-sur-Mer : jardins, plages et panoramas',description:'Que voir au Rayol-Canadel ? Domaine du Rayol, pergola du Patec, boucle à pied et plages : parcours, durée et conseils pour préparer les accès.'},
+  en:{title:'Visiting Rayol-Canadel-sur-Mer: gardens, beaches and views',description:'What to see in Rayol-Canadel: Domaine du Rayol, Patec pergola, a walking loop and beaches, with route details, timings and practical access advice.'},
  },
  'cavalaire-village': {
   fr:{title:'Visiter Cavalaire-sur-Mer : port, plages et Bonporteau',description:'Découvrez Cavalaire-sur-Mer autour du port, de la grande plage et de Bonporteau. Repères pour choisir votre secteur et préparer votre journée.'},
   en:{title:'Visiting Cavalaire-sur-Mer: harbour, beaches and Bonporteau',description:'Explore Cavalaire-sur-Mer around the harbour, main beach and Bonporteau. Choose your part of the coast and plan the rest of your day.'},
  },
  'la-mole-village': {
-  fr:{title:'Visiter La Môle : village et paysages du massif des Maures',description:'Découvrez La Môle dans la vallée des Maures : village, église et paysages boisés. Conseils pour organiser une étape dans les terres du Golfe.'},
-  en:{title:'Visiting La Môle: village and Maures woodland scenery',description:'Discover La Môle in the Maures valley: village, church and wooded landscapes, with advice for planning a stop inland from the Golfe coast.'},
+  fr:{title:'Visiter La Môle : village, patrimoine et barrage de la Verne',description:'Que voir à La Môle ? Église, chapelle et barrage de la Verne : accès à pied, patrimoine et conseils pour préparer une visite dans les Maures.'},
+  en:{title:'Visiting La Môle: village, heritage and Verne reservoir',description:'What to see in La Môle: the village church, hilltop chapel and Verne reservoir, with walking access and tips for planning your visit to the Maures.'},
  },
  'plan-de-la-tour-village': {
   fr:{title:'Visiter Le Plan-de-la-Tour : village, hameaux et collines',description:'Découvrez Le Plan-de-la-Tour entre village, hameaux et collines des Maures. Préparez une promenade au village ou une randonnée vers San Peïre.'},

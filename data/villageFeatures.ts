@@ -1,5 +1,5 @@
-export type VillageCopy = {sub:string;intro:string;quote:string;body:string;moments:string[][];darkTitle:string;darkBody:string;facts:string[][];best:string[];less:string[]};
-export type VillageFeature = {name:string;slug:string;source:string;nearby?:string[];fr:VillageCopy;en:VillageCopy};
+export type VillageCopy = {sub:string;intro:string;quote:string;body:string;moments:string[][];darkTitle:string;darkBody:string;facts:string[][];best:string[];less:string[];visitSections?:[string,string][]};
+export type VillageFeature = {name:string;slug:string;source:string;verified?:string;sources?:{label:string;url:string}[];nearby?:string[];fr:VillageCopy;en:VillageCopy};
 export const villageFeatures:Record<string,VillageFeature> = {
   "sainte-maxime-village": {
     "name": "Sainte-Maxime",
@@ -225,7 +225,10 @@ export const villageFeatures:Record<string,VillageFeature> = {
     }
   },
   "la-mole-village": {
-    "nearby": ["barrage-de-la-verne", "eglise-sainte-magdeleine-la-mole"],
+    "nearby": [
+      "barrage-de-la-verne",
+      "eglise-sainte-magdeleine-la-mole"
+    ],
     "name": "La Môle",
     "slug": "la-mole",
     "source": "https://www.golfe-saint-tropez-information.com/fr/villages-stations/la-mole",
@@ -280,6 +283,16 @@ export const villageFeatures:Record<string,VillageFeature> = {
         "La plage n’est pas au pied du village",
         "La chapelle demande une marche préparée",
         "Chaleur et restrictions peuvent modifier les sorties en forêt"
+      ],
+      "visitSections": [
+        [
+          "Du village au barrage de la Verne",
+          "La mairie indique une approche à pied de 2,5 km sur piste en terre depuis le secteur de l’usine des eaux. Prévoyez aussi le retour : ce repère décrit l’accès au barrage, pas un tour complet du lac. Consultez les conditions d’accès avant de partir."
+        ],
+        [
+          "Quel patrimoine visiter à La Môle ?",
+          "L’église du village date de 1872 ; la chapelle Sainte-Magdeleine se trouve sur les hauteurs. Le château est un domaine privé qui ne se visite pas. Pour une première étape, choisissez le centre, puis préparez séparément votre sortie dans les collines."
+        ]
       ]
     },
     "en": {
@@ -333,8 +346,29 @@ export const villageFeatures:Record<string,VillageFeature> = {
         "The beach is not at the foot of the village",
         "The chapel requires a prepared walk",
         "Heat and restrictions can affect forest outings"
+      ],
+      "visitSections": [
+        [
+          "From the village to the Verne reservoir",
+          "The council describes a 2.5 km approach on foot along a dirt track from the water-treatment plant area. Allow for the return too: this describes access to the dam, rather than a full circuit of the lake. Check access conditions before setting out."
+        ],
+        [
+          "Which heritage sites can you visit in La Môle?",
+          "The village church dates from 1872; Sainte-Magdeleine chapel stands in the hills. The château is a private estate with no visits. Start with the centre, then plan your hill walk as a separate outing."
+        ]
       ]
-    }
+    },
+    "verified": "2026-10-30",
+    "sources": [
+      {
+        "label": "Mairie · accès au barrage",
+        "url": "https://www.lamole.fr/barrage-de-la-verne/"
+      },
+      {
+        "label": "Mairie · patrimoine",
+        "url": "https://www.lamole.fr/culturel/"
+      }
+    ]
   },
   "cogolin-village": {
     "name": "Cogolin",
@@ -449,7 +483,12 @@ export const villageFeatures:Record<string,VillageFeature> = {
     }
   },
   "la-croix-valmer-village": {
-    "nearby": ["plage-debarquement-la-croix-valmer", "plage-de-sylvabelle", "circuit-cap-lardier"],
+    "nearby": [
+      "gigaro-beach",
+      "plage-debarquement-la-croix-valmer",
+      "plage-de-sylvabelle",
+      "circuit-cap-lardier"
+    ],
     "name": "La Croix-Valmer",
     "slug": "la-croix-valmer",
     "source": "https://www.golfe-saint-tropez-information.com/fr/villages-stations/la-croix-valmer",
@@ -504,6 +543,16 @@ export const villageFeatures:Record<string,VillageFeature> = {
         "Un hébergement dans la commune ne garantit pas la plage à pied",
         "Les sorties côtières demandent une préparation",
         "Prévoir les accès et le stationnement en saison"
+      ],
+      "visitSections": [
+        [
+          "Rejoindre les plages depuis La Croix-Valmer",
+          "L’office annonce une navette estivale gratuite reliant le village au Débarquement, à Gigaro, à Sylvabelle et à Héraclée. Ce service est saisonnier : consultez le calendrier et les arrêts de votre séjour avant de laisser la voiture au village."
+        ],
+        [
+          "Choisir une plage avec les bons équipements",
+          "Le Débarquement et Gigaro sont les deux plages signalées par l’office pour leurs postes de secours et leurs accès PMR. Les secours fonctionnent en saison. Pour une aide à la baignade, confirmez les équipements et leur disponibilité auprès de l’office avant votre venue."
+        ]
       ]
     },
     "en": {
@@ -557,13 +606,38 @@ export const villageFeatures:Record<string,VillageFeature> = {
         "Staying in the commune does not guarantee a walkable beach",
         "Coastal outings require preparation",
         "Plan access and parking during the season"
+      ],
+      "visitSections": [
+        [
+          "Getting to the beaches from La Croix-Valmer",
+          "The tourist office advertises a free summer shuttle linking the village with Le Débarquement, Gigaro, Sylvabelle and Héraclée. This is a seasonal service: check the calendar and stops for your stay before leaving your car in the village."
+        ],
+        [
+          "Choosing a beach with suitable facilities",
+          "The tourist office lists Le Débarquement and Gigaro for lifeguard stations and wheelchair access. Lifeguards operate seasonally. If you need bathing assistance, confirm the equipment and its availability with the tourist office before travelling."
+        ]
       ]
-    }
+    },
+    "verified": "2026-10-30",
+    "sources": [
+      {
+        "label": "Office · navette estivale",
+        "url": "https://www.lacroixvalmertourisme.com/fr/venir-transports-stationnement/navette-gratuite-estivale-et-nocturne"
+      },
+      {
+        "label": "Office · plages et accessibilité",
+        "url": "https://www.lacroixvalmertourisme.com/fr/faq"
+      }
+    ]
   },
   "rayol-canadel-village": {
     "name": "Rayol-Canadel-sur-Mer",
     "slug": "rayol-canadel",
-    "nearby": ["pergola-patec-rayol", "plage-du-canadel"],
+    "nearby": [
+      "pergola-patec-rayol",
+      "plage-du-canadel",
+      "domaine-rayol-kids"
+    ],
     "source": "https://www.golfe-saint-tropez-information.com/fr/villages-stations/rayol-canadel-sur-mer",
     "fr": {
       "sub": "LES MAURES RENCONTRENT LA MER.",
@@ -616,6 +690,16 @@ export const villageFeatures:Record<string,VillageFeature> = {
         "Le relief compte pour les poussettes et la mobilité",
         "Toutes les maisons avec vue ne sont pas proches de la plage à pied",
         "Prévoir les déplacements vers Saint-Tropez"
+      ],
+      "visitSections": [
+        [
+          "Une boucle à pied pour découvrir le Rayol",
+          "L’office propose un circuit de 1,8 km, estimé à 45 minutes, au départ de la place Michel Goy. Il passe par l’église, la pergola du Patec, une partie de l’escalier monumental et l’ancienne voie ferrée. Le parcours n’est pas balisé : gardez le descriptif officiel avec vous."
+        ],
+        [
+          "Domaine du Rayol : jardin et bord de mer",
+          "Le Domaine conseille au moins 1 h 30 pour le jardin. Son entrée ne donne pas libre accès à la plage : celle-ci est réservée aux activités pédagogiques encadrées, sur réservation. Certaines allées comportent des marches ; demandez un parcours adapté si nécessaire."
+        ]
       ]
     },
     "en": {
@@ -669,7 +753,28 @@ export const villageFeatures:Record<string,VillageFeature> = {
         "The terrain matters for pushchairs and mobility",
         "Not every sea-view house is a short walk from the beach",
         "Plan journeys to Saint-Tropez"
+      ],
+      "visitSections": [
+        [
+          "A walking loop to discover Le Rayol",
+          "The tourist office suggests a 1.8 km circuit taking about 45 minutes from Place Michel Goy. It passes the church, Patec pergola, part of the monumental staircase and the former railway. The route is not waymarked: carry the official directions."
+        ],
+        [
+          "Domaine du Rayol: garden and seafront",
+          "The Domaine recommends at least 1½ hours for the garden. Admission does not include unrestricted beach access: the beach is reserved for supervised educational activities booked in advance. Some paths have steps; ask for a suitable route if needed."
+        ]
       ]
-    }
+    },
+    "verified": "2026-10-30",
+    "sources": [
+      {
+        "label": "Office · circuit de découverte du Rayol",
+        "url": "https://www.golfe-sainttropez-tourisme.fr/fiche-apidae/circuit-de-decouverte-du-rayol/"
+      },
+      {
+        "label": "Domaine du Rayol · préparer la visite",
+        "url": "https://www.domainedurayol.org/votre-visite/faq/"
+      }
+    ]
   }
 };

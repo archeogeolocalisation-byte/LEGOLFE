@@ -348,7 +348,7 @@ export const places: Place[] = [
   "verified": false,
   "featured": true,
   "source": "https://www.golfe-saint-tropez-information.com/fr/villages-stations/la-croix-valmer",
-  "lastVerifiedAt": "2026-10-04"
+  "lastVerifiedAt": "2026-10-30"
 },{
   "id": "rayol-canadel-village",
   "name": "Rayol-Canadel-sur-Mer",
@@ -380,7 +380,7 @@ export const places: Place[] = [
   "verified": false,
   "featured": true,
   "source": "https://www.golfe-saint-tropez-information.com/fr/villages-stations/rayol-canadel-sur-mer",
-  "lastVerifiedAt": "2026-10-04"
+  "lastVerifiedAt": "2026-10-30"
 },
 {
   "id": "sainte-maxime-village",
@@ -474,7 +474,7 @@ export const places: Place[] = [
   "verified": false,
   "featured": true,
   "source": "https://www.golfe-saint-tropez-information.com/fr/villages-stations/la-mole",
-  "lastVerifiedAt": "2026-10-03"
+  "lastVerifiedAt": "2026-10-30"
 },
   {
     id: "monroes-pub", name: "Monroe's Pub", category: "party", location: "Port Grimaud · Grimaud",

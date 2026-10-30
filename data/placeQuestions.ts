@@ -74,8 +74,12 @@ export const placeQuestions:Record<string,Record<Locale,[string,string][]>> = {
         "Le centre est en retrait de la mer. Vérifiez votre trajet vers Gigaro ou le Débarquement."
       ],
       [
-        "Plage ou randonnée ?",
-        "Commencez par choisir un secteur de plage ; ajoutez une marche adaptée au groupe et aux conditions du jour."
+        "La navette des plages fonctionne-t-elle toute l’année ?",
+        "Non, l’office la présente comme un service estival. Vérifiez les dates et horaires correspondant à votre séjour."
+      ],
+      [
+        "Quelles plages ont un accès PMR à La Croix-Valmer ?",
+        "L’office cite le Débarquement et Gigaro. Contactez-le pour préciser le trajet accessible et les aides à la baignade nécessaires."
       ]
     ],
     "en": [
@@ -84,8 +88,12 @@ export const placeQuestions:Record<string,Record<Locale,[string,string][]>> = {
         "The centre is set back from the sea. Check your journey to Gigaro or Le Débarquement."
       ],
       [
-        "Beach or walk?",
-        "Choose a beach area first, then add a walk suited to your group and the day’s conditions."
+        "Does the beach shuttle run all year?",
+        "No. The tourist office describes it as a summer service. Check dates and timetables for your stay."
+      ],
+      [
+        "Which La Croix-Valmer beaches have wheelchair access?",
+        "The tourist office lists Le Débarquement and Gigaro. Contact it to confirm the accessible route and any bathing assistance you need."
       ]
     ]
   },
@@ -96,8 +104,12 @@ export const placeQuestions:Record<string,Record<Locale,[string,string][]>> = {
         "Le Domaine du Rayol donne une bonne étape de visite ; vérifiez son programme avant de composer la journée."
       ],
       [
-        "Peut-on tout faire à pied ?",
-        "Les pentes et les escaliers comptent. Repérez les accès depuis votre logement, surtout avec une poussette."
+        "Où commence le circuit de découverte du Rayol ?",
+        "Le départ indiqué par l’office est place Michel Goy. La boucle de 1,8 km comporte des escaliers et n’est pas balisée."
+      ],
+      [
+        "Peut-on rejoindre librement la plage depuis le Domaine du Rayol ?",
+        "Non. L’accès est réservé aux activités pédagogiques encadrées du Jardin Marin, sur réservation."
       ]
     ],
     "en": [
@@ -106,8 +118,12 @@ export const placeQuestions:Record<string,Record<Locale,[string,string][]>> = {
         "Domaine du Rayol is a starting point for a visit; check its programme before planning the day."
       ],
       [
-        "Can I do everything on foot?",
-        "Slopes and steps matter. Check access from your accommodation, especially with a pushchair."
+        "Where does the Rayol discovery walk start?",
+        "The tourist office gives Place Michel Goy as the start. The 1.8 km loop includes steps and is not waymarked."
+      ],
+      [
+        "Can you freely access the beach through Domaine du Rayol?",
+        "No. Access is reserved for supervised Jardin Marin educational activities booked in advance."
       ]
     ]
   },
@@ -162,8 +178,12 @@ export const placeQuestions:Record<string,Record<Locale,[string,string][]>> = {
         "L’église se trouve au village ; la chapelle Sainte-Magdeleine correspond à une sortie sur les hauteurs."
       ],
       [
-        "Comment préparer une marche ?",
-        "Choisissez un parcours adapté, prenez de l’eau et vérifiez la météo ainsi que l’accès au massif."
+        "Peut-on se baigner dans le lac de la Verne ?",
+        "Non. La mairie indique que baignade, pêche et navigation sont interdites sur cette réserve d’eau potable."
+      ],
+      [
+        "Le château de La Môle se visite-t-il ?",
+        "Non : la commune le présente comme un domaine privé fermé aux visites."
       ]
     ],
     "en": [
@@ -172,8 +192,12 @@ export const placeQuestions:Record<string,Record<Locale,[string,string][]>> = {
         "The church is in the village; Sainte-Magdeleine chapel belongs to an outing in the hills."
       ],
       [
-        "How do I prepare a walk?",
-        "Choose a suitable route, bring water and check the weather and forest access."
+        "Can you swim in the Verne reservoir?",
+        "No. The council states that swimming, fishing and boating are prohibited in this drinking-water reservoir."
+      ],
+      [
+        "Can you visit Château de La Môle?",
+        "No: the council describes it as a private estate closed to visitors."
       ]
     ]
   },
