@@ -457,6 +457,14 @@ export const placeQuestions:Record<string,Record<Locale,[string,string][]>> = {
       [
         "Comment éviter de trouver porte close ?",
         "Vérifiez les jours et horaires de votre date, notamment lors des changements de saison."
+      ],
+      [
+        "Y a-t-il des papillons vivants ?",
+        "Non : les collections présentent des spécimens conservés, dans des compositions et des vitrines. La visite associe aussi peintures, photographies et atelier de Dany Lartigue."
+      ],
+      [
+        "Le musée est-il accessible en fauteuil ?",
+        "La Ville annonce une rampe amovible pour le rez-de-chaussée et le jardin, à organiser avec le musée. Les étages ne sont pas annoncés accessibles ; appelez le 04 94 55 90 10 avant de venir."
       ]
     ],
     "en": [
@@ -467,6 +475,14 @@ export const placeQuestions:Record<string,Record<Locale,[string,string][]>> = {
       [
         "How do I avoid finding it closed?",
         "Check days and hours for your exact date, especially around seasonal changes."
+      ],
+      [
+        "Are there live butterflies?",
+        "No: the collections display preserved specimens in compositions and cases. The visit also includes paintings, photographs and Dany Lartigue’s studio."
+      ],
+      [
+        "Is the museum wheelchair accessible?",
+        "The town lists a removable ramp for the ground floor and garden, to arrange with the museum. Upper floors are not listed as accessible; call +33 4 94 55 90 10 before visiting."
       ]
     ]
   },
