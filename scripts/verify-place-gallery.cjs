@@ -14,7 +14,9 @@ const props={name:'Village',locale:'fr',photos:[photo('A'),photo('B'),photo('C')
 let tree=h.render(props),opened=0,closed=0,focused=0;
 nodes(tree,n=>n.type==='dialog')[0].props.ref.current={showModal(){opened++;},close(){closed++;}};
 const opener={focus(){focused++;}};
-nodes(tree,n=>n.type==='button'&&n.props['aria-label']?.startsWith('Ouvrir'))[1].props.onClick({currentTarget:opener});
+nodes(tree,n=>n.type==='button'&&n.props['aria-label']==='Photo suivante')[0].props.onClick();
+tree=h.render(props);
+nodes(tree,n=>n.type==='button'&&n.props['aria-label']?.startsWith('Ouvrir'))[0].props.onClick({currentTarget:opener});
 equal(opened,1);tree=h.render(props);assert.ok(text(nodes(tree,n=>n.type==='dialog')[0]).includes('FR B'));checks++;
 function key(value){nodes(tree,n=>n.type==='dialog')[0].props.onKeyDown({key:value,preventDefault(){}});tree=h.render(props);}
 key('ArrowRight');assert.ok(text(nodes(tree,n=>n.type==='dialog')[0]).includes('FR C'));checks++;
@@ -22,7 +24,7 @@ key('ArrowRight');assert.ok(text(nodes(tree,n=>n.type==='dialog')[0]).includes('
 key('ArrowLeft');assert.ok(text(nodes(tree,n=>n.type==='dialog')[0]).includes('FR C'));checks++;
 button(tree,'Fermer').props.onClick();equal(closed,1);equal(focused,1);
 nodes(tree,n=>n.type==='dialog')[0].props.onCancel();nodes(tree,n=>n.type==='dialog')[0].props.onClose();equal(focused,2);
-tree=h.render({...props,locale:'en'});assert.ok(button(tree,'Close'));assert.ok(text(tree).includes('EN A'));checks+=2;
+tree=h.render({...props,locale:'en'});assert.ok(button(tree,'Close'));assert.ok(text(tree).includes('EN C'));checks+=2;
 assert.ok(nodes(tree,n=>n.type==='a'&&n.props.href===props.photos[0].licenseUrl).length>=1);checks++;
 equal(h.render({...props,photos:[]}),null);
 console.log(JSON.stringify({result:'PASS',checks,browser:'component event harness',includes:'open selected image, keyboard wrap, close, focus restoration, Escape close event, translation, credits, empty gallery'}));
