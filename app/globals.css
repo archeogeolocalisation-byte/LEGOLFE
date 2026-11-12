@@ -601,3 +601,22 @@ button,textarea,input { font:inherit; }
 .guides-hub .guide-library-grid>div:nth-child(3n+2) .guide-library-card-copy{background:#fafcfe;}
 .guides-hub .guide-library-grid>div:nth-child(3n) .guide-library-card-copy{background:#f7fbfd;}
 .guides-hub .guide-stay-callout{background:var(--editorial-ice);border-left:3px solid #77abc8;}
+
+/* Discovery pages on phones: readable inputs, flexible cards and clear actions. */
+@media(max-width:767px){
+ :is(.home-hero-copy,.home-section-heading>div,.home-homes>div,.guide-hub-intro,.guide-featured>div,.guide-library-heading>div,.guide-stay-callout>div,.explore-intro>div,.explore-filter-heading>div,.explore-guide-bridge>div){min-width:0;}
+ .explore-hub .explore-search :is(input,select){font-size:16px;min-width:0;width:100%;}
+ .explore-hub .explore-search label{min-width:0;}
+ .explore-map-panel>div:first-child>button{width:100%;}
+ .guide-topic-filters button{max-width:100%;text-align:left;}
+ .guide-topic-filters button span{flex-shrink:0;}
+ :is(.home-place-copy,.guide-library-card-copy,.explore-mood-copy) :is(h2,h3){overflow-wrap:break-word;hyphens:auto;}
+}
+@media(max-width:479px){
+ .home-hero-actions .lg-btn{flex-basis:100%;}
+ .explore-mood-cards article>a{grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);}
+ .explore-mood-copy{padding:16px;min-width:0;}
+ .explore-mood-copy h2{font-size:23px;}
+ .explore-mood-copy>.lg-kicker{line-height:1.5;}
+ .guide-featured{padding:20px;}
+}

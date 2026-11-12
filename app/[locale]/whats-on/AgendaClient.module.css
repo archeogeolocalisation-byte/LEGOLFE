@@ -47,3 +47,20 @@
 /* Safari's native light select can override a dark agenda control. */
 .filterSelect{color-scheme:dark;-webkit-appearance:none;appearance:none;background-color:var(--lg-navy-surface);color:#fff;border-radius:0;padding-right:30px;background-image:linear-gradient(45deg,transparent 50%,var(--lg-sky) 50%),linear-gradient(135deg,var(--lg-sky) 50%,transparent 50%);background-position:calc(100% - 15px) 50%,calc(100% - 10px) 50%;background-size:5px 5px;background-repeat:no-repeat;}
 .filterSelect option{background:var(--lg-navy-surface);color:#fff;}
+
+/* Compact screens: every date is visible and controls stay easy to tap. */
+@media(max-width:767px){
+ .filterControls{padding-bottom:16px;}
+ .filterControls :is(button,select){min-height:44px;}
+ .filterControls select{font-size:16px;max-width:100%;min-width:0;}
+ .periodFilters{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));overflow:visible;}
+ .periodFilters button{justify-content:space-between;min-width:0;white-space:normal;letter-spacing:.06em;}
+ .periodFilters button:last-child{grid-column:1/-1;}
+ .monthField{flex-wrap:wrap;}
+ .monthField label{flex-basis:100%;}
+ .monthField select{width:100%;}
+ .resultsHeading{flex-wrap:wrap;align-items:start;}
+ .resultsHeading>div{min-width:0;}
+ .resultsHeading h2{font-size:clamp(28px,8vw,36px);overflow-wrap:break-word;}
+ .resultsHeading>button{min-height:44px;text-align:left;}
+}

@@ -23,7 +23,7 @@ export default function SiteHeader({locale="en",path=""}:{light?:boolean;locale?
           <Link href={`${base}/ask`} className={`inline-flex min-h-11 items-center border px-2 py-2 text-[10px] font-black uppercase tracking-[.06em] transition-colors sm:px-3 sm:tracking-[.12em] border-[var(--lg-sand)] bg-[var(--lg-sand)] text-[var(--lg-blue)]`}>{labels.ask} ↗</Link>
         </div>
       </div>
-      <div className="flex gap-5 overflow-x-auto border-b border-current py-1 text-[10px] font-black uppercase tracking-[.08em] [scrollbar-width:thin] xl:hidden">
+      <div className="flex gap-5 overflow-x-auto border-b border-current py-1 [&>a]:inline-flex [&>a]:min-h-11 [&>a]:items-center text-[10px] font-black uppercase tracking-[.08em] [scrollbar-width:thin] xl:hidden">
         <Link href={`${base}/explore`} className="lg-link-accent inline-flex min-h-11 shrink-0 items-center">{labels.explore}</Link>
         <Link href={`${base}/guides`} className="lg-link-accent shrink-0">{labels.guides}</Link>
         <Link href={`${base}/whats-on`} className="lg-link-accent shrink-0">{labels.agenda}</Link>
