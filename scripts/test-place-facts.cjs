@@ -84,7 +84,7 @@ const licenses=JSON.parse(fs.readFileSync(path.join(__dirname,'../public/media/p
  for(const id of experienceIds){
   assert.ok(placeFacts[id],id);assert.ok(places.some(p=>p.id===id),id);
   const fact=newExperienceFacts[id],media=newExperienceMedia[id];
-  assert.equal(fact.verified,'2026-10-14');assert.ok(fact.address.includes('France'));
+  assert.ok(fact.address.includes('France'));
   assert.ok(media.length>=1);assert.ok(fact.sources.length>=2);
   for(const photo of media){assert.ok(photo.source.startsWith('https://commons.wikimedia.org/'));assert.ok(photo.licenseUrl.startsWith('https://creativecommons.org/'));assert.ok(photo.credit);assert.ok(photo.caption.fr&&photo.caption.en);}
   assert.ok(fact.nearby.every(target=>target!==id&&places.some(p=>p.id===target)));
@@ -103,7 +103,7 @@ const licenses=JSON.parse(fs.readFileSync(path.join(__dirname,'../public/media/p
     assert.equal(mapUrl.searchParams.get('q'),fact.address,`${id}/${locale}: address fallback searches the visit address`);
    }
    assert.equal((html.match(/<address/g)||[]).length,1);assert.equal(html.includes('ADRESSE DE VISITE'),false);const displayed=suppliedPlaceMedia[id]??media;if(displayed[0].licenseUrl)assert.ok(html.includes(displayed[0].licenseUrl));for(const photo of suppliedPlaceMedia[id]??[])assert.ok(html.includes(photo.src));
-   assert.match(html,/datetime="2026-10-14"/i);
+   assert.match(html,new RegExp(`datetime="${fact.verified}"`,'i'));
    for(const source of fact.sources)assert.ok(html.includes(source.url));
    const metadata=await Page.generateMetadata({params:Promise.resolve({locale,id})});
    assert.equal(metadata.description,copy.description);

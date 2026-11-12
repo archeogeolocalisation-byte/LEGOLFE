@@ -389,9 +389,207 @@ export const editorialFeatures: Record<string, EditorialFeature> = {
   },
 
   "maison-des-papillons": {
-    id:"maison-des-papillons",
-    fr:{kicker:"CULTURE · SAINT-TROPEZ",title:"MAISON DES PAPILLONS",sub:"PETIT MUSÉE. VRAIE PAUSE.",intro:"Six espaces, des collections de papillons, un jardin et l'atelier de Dany Lartigue : une visite courte qui change complètement du port.",quoteLabel:"LE REGARD LE GOLFE",quote:"C'est le genre de lieu que l'on ne vient pas chercher à Saint-Tropez — et que l'on retient.",quoteBody:"La visite fonctionne particulièrement bien quand la ville est chaude ou dense : on entre pour trente minutes et on ressort avec une autre lecture du village.",rhythmLabel:"45 MINUTES",rhythmTitle:"Papillons. Photos. Atelier.",moments:[["01 · COLLECTION","Commencer par les papillons","Les collections françaises et exotiques donnent le ton immédiatement."],["02 · JARDIN","Faire une pause","Le jardin coupe avec l'agitation du centre."],["03 · ATELIER","Finir par Dany Lartigue","Peintures, compositions et photographies replacent le musée dans une histoire familiale et artistique."]],layerLabel:"2026",layerTitle:"Une visite très accessible en temps et en prix.",layerBody:"Le tarif adulte affiché est de 2 € et l'entrée est gratuite pour les moins de 12 ans. Cela en fait une parenthèse facile à intégrer à une balade en ville.",darkLabel:"À SAVOIR",darkTitle:"Ne pas en faire une destination de deux heures.",darkBody:"C'est un petit musée. Sa force est précisément d'être singulier, rapide et central.",closeLabel:"POUR QUI ?",closeTitle:"Pour casser une journée 100 % port / shopping.",closeBody:"Très utile avec des enfants curieux, lors d'une journée chaude ou quand on veut ajouter un vrai contenu culturel sans alourdir le programme.",facts:[["PRIX","2 € adulte en 2026."],["ENFANTS","Gratuit -12 ans."],["ESPACES","6 espaces annoncés."],["SAISON","Ouvert jusqu'au 1er novembre 2026."]],bestLabel:"LE GOLFE LA CHOISIRAIT POUR",bestItems:["Familles","Pause culturelle","Journée chaude","Première visite"],lessLabel:"À SAVOIR",lessItems:["Petit format","Horaires avec coupure déjeuner","Fermeture saisonnière"],practicalLabel:"PRATIQUE",practicalTitle:"VÉRIFIER L'HORAIRE DU JOUR",practical:[["04/04–07/10","10–12 h · 14–18 h certains jours."],["08/10–01/11","10–12 h · 14–17 h certains jours."],["LIEU","Centre de Saint-Tropez."],["DURÉE","Prévoir env. 30–60 min."]],linksLabel:"LIENS UTILES",links:[["Fiche officielle","https://www.sainttropeztourisme.com/fr/fiche/maison-des-papillons-musee-dany-lartigue-4165778/"]],ask:"L'intégrer à ma journée"},
-    en:{kicker:"CULTURE · SAINT-TROPEZ",title:"BUTTERFLY HOUSE",sub:"SMALL MUSEUM. REAL PAUSE.",intro:"Six spaces, butterfly collections, a garden and Dany Lartigue's studio make this a short visit that feels very different from the harbour.",quoteLabel:"LE GOLFE TAKE",quote:"It is the kind of place you do not expect to look for in Saint-Tropez — and then remember.",quoteBody:"It works especially well when town feels hot or crowded: step in for half an hour and come out with a different reading of the village.",rhythmLabel:"45 MINUTES",rhythmTitle:"Butterflies. Photos. Studio.",moments:[["01 · COLLECTION","Start with butterflies","French and exotic collections set the tone immediately."],["02 · GARDEN","Pause","The garden cuts away from the density of the centre."],["03 · STUDIO","Finish with Dany Lartigue","Paintings, compositions and family photographs give the museum its artistic context."]],layerLabel:"2026",layerTitle:"Easy in both time and price.",layerBody:"Listed adult admission is €2 and children under 12 enter free, making it easy to fold into a walk through town.",darkLabel:"GOOD TO KNOW",darkTitle:"Do not treat it as a two-hour destination.",darkBody:"This is a small museum. Its strength is being distinctive, quick and central.",closeLabel:"THE MATCH",closeTitle:"For breaking up a port-and-shopping-only day.",closeBody:"Useful with curious children, on a hot day or when you want real cultural content without making the schedule heavy.",facts:[["PRICE","€2 adult in 2026."],["CHILDREN","Free under 12."],["SPACES","6 announced spaces."],["SEASON","Open through 1 Nov 2026."]],bestLabel:"LE GOLFE WOULD PICK IT FOR",bestItems:["Families","Cultural pause","Hot afternoons","First visit"],lessLabel:"KNOW BEFORE YOU CHOOSE",lessItems:["Small format","Lunch closure","Seasonal closure"],practicalLabel:"PRACTICAL",practicalTitle:"CHECK TODAY'S HOURS",practical:[["04/04–07/10","10–12 and 14–18 on listed days."],["08/10–01/11","10–12 and 14–17 on listed days."],["LOCATION","Central Saint-Tropez."],["TIME","Allow about 30–60 min."]],linksLabel:"USEFUL LINKS",links:[["Official listing","https://www.sainttropeztourisme.com/fr/fiche/maison-des-papillons-musee-dany-lartigue-4165778/"]],ask:"Fit it into my day"}
+    "id": "maison-des-papillons",
+    "fr": {
+      "kicker": "CULTURE · SAINT-TROPEZ",
+      "title": "MAISON DES PAPILLONS",
+      "sub": "PETIT MUSÉE. VRAIE PAUSE.",
+      "intro": "Dans une maison du centre ancien, Dany Lartigue réunit collections de papillons, peinture et souvenirs familiaux. Les spécimens sont conservés et présentés en vitrines : ce n’est pas une serre de papillons vivants. Une autre façon de découvrir Saint-Tropez, à combiner avec une promenade dans les ruelles.",
+      "quoteLabel": "LE REGARD LE GOLFE",
+      "quote": "C'est le genre de lieu que l'on ne vient pas chercher à Saint-Tropez — et que l'on retient.",
+      "quoteBody": "Notre suggestion : regarder les compositions comme des tableaux, puis retrouver l’atelier et les photographies familiales. Avec des enfants, partez à la recherche de motifs et de couleurs plutôt que d’attendre des papillons en vol.",
+      "rhythmLabel": "UNE IDÉE DE VISITE",
+      "rhythmTitle": "Papillons. Photos. Atelier.",
+      "moments": [
+        [
+          "01 · COLLECTION",
+          "Commencer par les papillons",
+          "Les collections françaises et exotiques donnent le ton immédiatement."
+        ],
+        [
+          "02 · JARDIN",
+          "Faire une pause",
+          "Le jardin coupe avec l'agitation du centre."
+        ],
+        [
+          "03 · ATELIER",
+          "Finir par Dany Lartigue",
+          "Peintures, compositions et photographies replacent le musée dans une histoire familiale et artistique."
+        ]
+      ],
+      "layerLabel": "BUDGET & BILLETTERIE",
+      "layerTitle": "Une petite visite, à préparer pour votre date.",
+      "layerBody": "Les sources officielles indiquent 2 € au plein tarif et la gratuité pour les moins de 12 ans, sous conditions de justificatif. Vérifiez le tarif et le calendrier en vigueur avant de vous déplacer.",
+      "darkLabel": "À SAVOIR",
+      "darkTitle": "Une maison-musée, avec des étages.",
+      "darkBody": "La Ville décrit une rampe amovible pour le rez-de-chaussée et le jardin ; les étages ne sont pas annoncés accessibles en fauteuil. Les toilettes sont à l’étage. Appelez le 04 94 55 90 10 pour préparer un accueil adapté.",
+      "closeLabel": "POUR QUI ?",
+      "closeTitle": "Pour casser une journée 100 % port / shopping.",
+      "closeBody": "Très utile avec des enfants curieux, lors d'une journée chaude ou quand on veut ajouter un vrai contenu culturel sans alourdir le programme.",
+      "facts": [
+        [
+          "ADRESSE",
+          "17 rue Étienne Berny"
+        ],
+        [
+          "COLLECTION",
+          "Spécimens conservés, peintures et photographies"
+        ],
+        [
+          "ACCÈS",
+          "Fauteuil : rez-de-chaussée et jardin, contacter le musée"
+        ],
+        [
+          "CALENDRIER",
+          "Ouverture saisonnière, avec fermetures hebdomadaires"
+        ]
+      ],
+      "bestLabel": "LE GOLFE LA CHOISIRAIT POUR",
+      "bestItems": [
+        "Familles",
+        "Pause culturelle",
+        "Journée chaude",
+        "Première visite"
+      ],
+      "lessLabel": "À SAVOIR",
+      "lessItems": [
+        "Petit format",
+        "Horaires avec coupure déjeuner",
+        "Fermeture saisonnière"
+      ],
+      "practicalLabel": "PRATIQUE",
+      "practicalTitle": "LA BONNE ADRESSE. LE BON JOUR.",
+      "practical": [
+        [
+          "VENIR",
+          "17 rue Étienne Berny, dans le centre ancien. Prévoir l’approche finale à pied."
+        ],
+        [
+          "OUVERTURE",
+          "Consulter le calendrier officiel pour votre date : les jours et plages horaires changent selon la saison."
+        ],
+        [
+          "MOBILITÉ",
+          "Rampe amovible à demander au musée ; ne pas présumer l’accès aux étages."
+        ],
+        [
+          "CONTACT",
+          "+33 4 94 55 90 10"
+        ]
+      ],
+      "linksLabel": "LIENS UTILES",
+      "links": [
+        [
+          "Fiche officielle",
+          "https://www.sainttropeztourisme.com/fr/fiche/maison-des-papillons-musee-dany-lartigue-4165778/"
+        ],
+        [
+          "Ville · collections et accessibilité",
+          "https://www.saint-tropez.fr/culture/maison-des-papillons/"
+        ]
+      ],
+      "ask": "L'intégrer à ma journée"
+    },
+    "en": {
+      "kicker": "CULTURE · SAINT-TROPEZ",
+      "title": "BUTTERFLY HOUSE",
+      "sub": "SMALL MUSEUM. REAL PAUSE.",
+      "intro": "In a house in the old town, Dany Lartigue brings together butterfly collections, painting and family memories. Preserved specimens are displayed in cases: this is not a live butterfly house. Combine the visit with a walk through the lanes for a different view of Saint-Tropez.",
+      "quoteLabel": "LE GOLFE TAKE",
+      "quote": "It is the kind of place you do not expect to look for in Saint-Tropez — and then remember.",
+      "quoteBody": "Our suggestion: look at the compositions as paintings, then explore the studio and family photographs. With children, look for patterns and colours rather than expecting butterflies in flight.",
+      "rhythmLabel": "A VISITING IDEA",
+      "rhythmTitle": "Butterflies. Photos. Studio.",
+      "moments": [
+        [
+          "01 · COLLECTION",
+          "Start with butterflies",
+          "French and exotic collections set the tone immediately."
+        ],
+        [
+          "02 · GARDEN",
+          "Pause",
+          "The garden cuts away from the density of the centre."
+        ],
+        [
+          "03 · STUDIO",
+          "Finish with Dany Lartigue",
+          "Paintings, compositions and family photographs give the museum its artistic context."
+        ]
+      ],
+      "layerLabel": "BUDGET & TICKETS",
+      "layerTitle": "A small museum: check your visiting date.",
+      "layerBody": "Official sources list €2 standard admission and free entry for under-12s, subject to proof of eligibility. Check current ticket conditions and the seasonal calendar before travelling.",
+      "darkLabel": "GOOD TO KNOW",
+      "darkTitle": "A house museum with upper floors.",
+      "darkBody": "The town describes a removable ramp for the ground floor and garden; upper floors are not listed as wheelchair accessible. Toilets are upstairs. Call +33 4 94 55 90 10 to arrange suitable access.",
+      "closeLabel": "THE MATCH",
+      "closeTitle": "For breaking up a port-and-shopping-only day.",
+      "closeBody": "Useful with curious children, on a hot day or when you want real cultural content without making the schedule heavy.",
+      "facts": [
+        [
+          "ADDRESS",
+          "17 rue Étienne Berny"
+        ],
+        [
+          "COLLECTION",
+          "Preserved specimens, paintings and photographs"
+        ],
+        [
+          "ACCESS",
+          "Wheelchair access: ground floor and garden; contact the museum"
+        ],
+        [
+          "CALENDAR",
+          "Seasonal opening, with weekly closure days"
+        ]
+      ],
+      "bestLabel": "LE GOLFE WOULD PICK IT FOR",
+      "bestItems": [
+        "Families",
+        "Cultural pause",
+        "Hot afternoons",
+        "First visit"
+      ],
+      "lessLabel": "KNOW BEFORE YOU CHOOSE",
+      "lessItems": [
+        "Small format",
+        "Lunch closure",
+        "Seasonal closure"
+      ],
+      "practicalLabel": "PRACTICAL",
+      "practicalTitle": "THE RIGHT ADDRESS. THE RIGHT DAY.",
+      "practical": [
+        [
+          "GETTING HERE",
+          "17 Rue Étienne Berny in the old town. Plan the final approach on foot."
+        ],
+        [
+          "OPENING",
+          "Check the official calendar for your date: days and hours vary by season."
+        ],
+        [
+          "MOBILITY",
+          "Ask the museum about the removable ramp; do not assume access to upper floors."
+        ],
+        [
+          "CONTACT",
+          "+33 4 94 55 90 10"
+        ]
+      ],
+      "linksLabel": "USEFUL LINKS",
+      "links": [
+        [
+          "Official listing",
+          "https://www.sainttropeztourisme.com/fr/fiche/maison-des-papillons-musee-dany-lartigue-4165778/"
+        ],
+        [
+          "Town · collections and accessibility",
+          "https://www.saint-tropez.fr/culture/maison-des-papillons/"
+        ]
+      ],
+      "ask": "Fit it into my day"
+    }
   },
 
   "les-halles-saint-tropez": {

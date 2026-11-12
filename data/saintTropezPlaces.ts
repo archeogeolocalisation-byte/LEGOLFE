@@ -23,12 +23,15 @@ export const saintTropezPlaces:Place[] = [
       "heritage"
     ],
     "goodToKnow": [
-      "Plan the final approach on foot and check current visiting conditions."
+      "The municipal notice places the current visit upstairs; some works are away for study or restoration.",
+      "Confirm access and any particular painting with the museum before travelling."
     ],
     "verified": false,
     "featured": false,
     "source": "https://www.golfe-saint-tropez-information.com/fr/loisirs/musee/saint-tropez/l-annonciade-musee-d-art-moderne-de-saint-tropez-4169909",
-    "lastVerifiedAt": "2026-10-17"
+    "lastVerifiedAt": "2026-10-30",
+    "phone": "+33 4 94 17 84 10",
+    "website": "https://www.saint-tropez.fr/culture/musee-de-lannonciade/"
   },
   {
     "id": "eglise-notre-dame-assomption-saint-tropez",
@@ -137,7 +140,7 @@ export const saintTropezPlaces:Place[] = [
 
 export const saintTropezFacts:Record<string,PlaceFacts> = {
   "musee-annonciade-saint-tropez": {
-    "verified": "2026-10-17",
+    "verified": "2026-10-30",
     "copy": {
       "fr": {
         "title": "Musée de l’Annonciade à Saint-Tropez : visite et accès",
@@ -145,8 +148,8 @@ export const saintTropezFacts:Record<string,PlaceFacts> = {
         "intro": "À quelques pas des quais, l’Annonciade fait passer du spectacle du port à celui de la couleur. Le musée donne une autre profondeur à Saint-Tropez. Notre idée : lui garder un vrai moment, puis ressortir regarder la lumière sur les façades avec un œil neuf.",
         "facts": [
           [
-            "Lieu",
-            "Place Georges Grammont, près du port"
+            "Adresse",
+            "2 place Georges Grammont, 83990 Saint-Tropez"
           ],
           [
             "Collection",
@@ -157,8 +160,8 @@ export const saintTropezFacts:Record<string,PlaceFacts> = {
             "Paul Signac et l’avant-garde tropézienne"
           ],
           [
-            "Visite",
-            "Billet ; calendrier et tarifs à vérifier"
+            "Avant de venir",
+            "Parcours à l’étage ; œuvres exposées et calendrier à confirmer"
           ]
         ],
         "sections": [
@@ -171,8 +174,8 @@ export const saintTropezFacts:Record<string,PlaceFacts> = {
             "L’entrée se trouve place Georges Grammont, dans l’ancienne chapelle de l’Annonciade. Après avoir stationné sur un emplacement autorisé en ville, terminez à pied. Le point cartographique situe le musée, pas une place de parking. L’été, prévoyez du temps pour rejoindre le centre."
           ],
           [
-            "Préparer sa visite intérieure",
-            "Consultez le site municipal pour les horaires, fermetures, expositions et tarifs à votre date. Un billet de musée reste distinct de la promenade gratuite sur les quais. Pour une visite avec poussette ou un besoin d’accessibilité, demandez les modalités au musée avant le déplacement."
+            "Vérifier les salles ouvertes avant la visite",
+            "La Ville signale un parcours concentré à l’étage et plusieurs œuvres confiées à des centres de restauration dans le cadre du projet de réhabilitation. Si vous venez pour un tableau précis, demandez s’il est présenté. Pour une poussette ou un besoin d’accès sans marches, contactez le musée au 04 94 17 84 10. Consultez aussi les fermetures et la billetterie pour votre date."
           ],
           [
             "Prolonger la couleur dans le village",
@@ -187,6 +190,10 @@ export const saintTropezFacts:Record<string,PlaceFacts> = {
           [
             "La visite est-elle gratuite ?",
             "Il s’agit d’un musée avec billetterie et des conditions de réduction ou de gratuité. Consultez les tarifs municipaux actualisés pour votre situation et votre date."
+          ],
+          [
+            "Peut-on voir toutes les œuvres de la collection ?",
+            "Pas nécessairement : certaines œuvres sont étudiées ou restaurées hors du musée. Vérifiez auprès de l’équipe si votre visite dépend d’un artiste ou d’un tableau particulier."
           ]
         ]
       },
@@ -196,8 +203,8 @@ export const saintTropezFacts:Record<string,PlaceFacts> = {
         "intro": "A short walk from the quays, the Annonciade shifts attention from harbour life to colour. The museum gives Saint-Tropez another dimension. Our idea: make room for a proper visit, then return outside to look at the light on the façades with fresh eyes.",
         "facts": [
           [
-            "Location",
-            "Place Georges Grammont, beside the harbour"
+            "Address",
+            "2 place Georges Grammont, 83990 Saint-Tropez"
           ],
           [
             "Collection",
@@ -208,8 +215,8 @@ export const saintTropezFacts:Record<string,PlaceFacts> = {
             "Paul Signac and the local avant-garde"
           ],
           [
-            "Visits",
-            "Ticketed; check current dates and prices"
+            "Before visiting",
+            "Upstairs visit; confirm displays and opening dates"
           ]
         ],
         "sections": [
@@ -222,8 +229,8 @@ export const saintTropezFacts:Record<string,PlaceFacts> = {
             "The entrance is on Place Georges Grammont, in the former Annonciade chapel. Use authorised town parking and finish on foot. The map marks the museum, not a parking space. In summer, allow time to reach the town centre."
           ],
           [
-            "Plan the indoor visit",
-            "Check the municipal website for opening, closures, exhibitions and current prices. A museum ticket is separate from a free walk beside the harbour. For a pushchair or a specific accessibility requirement, ask the museum about arrangements before travelling."
+            "Check the current displays before visiting",
+            "The town reports that the visit is concentrated upstairs, with some works away for study or restoration ahead of refurbishment. If you are coming for a particular painting, ask whether it is on display. For a pushchair or step-free access, contact the museum on +33 4 94 17 84 10. Check closures and ticket conditions for your date."
           ],
           [
             "Continue through the village",
@@ -238,6 +245,10 @@ export const saintTropezFacts:Record<string,PlaceFacts> = {
           [
             "Is admission free?",
             "The museum has ticketed admission with concession and free-entry conditions. Check current municipal prices for your situation and visit date."
+          ],
+          [
+            "Are all collection works on display?",
+            "Not necessarily: some works are away for study or restoration. Contact the team if your visit depends on seeing a particular artist or painting."
           ]
         ]
       }
@@ -858,10 +869,10 @@ export const saintTropezMapPoints:Record<string,MapPoint[]> = {
       "source": "https://www.golfe-saint-tropez-information.com/fr/loisirs/musee/saint-tropez/l-annonciade-musee-d-art-moderne-de-saint-tropez-4169909",
       "checked": "2026-10-17",
       "kind": "venue",
-      "directionsQuery": "Place Georges Grammont, 83990 Saint-Tropez, France",
+      "directionsQuery": "2 place Georges Grammont, 83990 Saint-Tropez, France",
       "note": {
-        "fr": "Repère touristique publié pour le secteur. Le bouton itinéraire recherche l’adresse de visite ; ce point ne garantit ni un parking ni un accès sans marche.",
-        "en": "Published tourism reference for the area. Directions search the visit address; this marker does not guarantee parking or step-free access."
+        "fr": "Le musée indique le 2 place Georges Grammont. Le point situe le bâtiment ; la visite est actuellement concentrée à l’étage. Demandez les modalités d’accès au musée avant de venir avec une poussette ou en fauteuil.",
+        "en": "The museum lists 2 Place Georges Grammont. The marker locates the building; the current visit is concentrated upstairs. Ask the museum about access before coming with a pushchair or wheelchair."
       }
     }
   ],

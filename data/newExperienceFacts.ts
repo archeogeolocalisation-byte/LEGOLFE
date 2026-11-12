@@ -402,12 +402,12 @@ export const newExperienceFacts:Record<string,PlaceFacts & {address:string}> = {
     ]
   },
   "musee-gendarmerie-cinema": {
-    "verified": "2026-10-14",
+    "verified": "2026-10-30",
     "address": "2 place Blanqui, 83990 Saint-Tropez, France",
     "copy": {
       "fr": {
         "title": "Musée de la Gendarmerie et du Cinéma à Saint-Tropez : visite et tarifs",
-        "description": "Visitez le Musée de la Gendarmerie et du Cinéma de Saint-Tropez : Louis de Funès, films tournés sur la presqu'île, horaires 2026, tarifs et adresse.",
+        "description": "Visitez le Musée de la Gendarmerie et du Cinéma à Saint-Tropez : films, collections, adresse, dernière entrée et informations d’accessibilité.",
         "intro": "Installé dans l'ancienne gendarmerie de Saint-Tropez, devenue célèbre grâce aux films avec Louis de Funès, ce musée raconte deux histoires liées : celle d'une brigade de village et celle du cinéma qui a fabriqué l'image de Saint-Tropez. L'exposition mêle archives, décors reconstitués, costumes et scènes de films. C'est une sortie culturelle facile à intégrer à une journée au centre, notamment lorsque la météo éloigne de la plage.",
         "facts": [
           [
@@ -419,8 +419,8 @@ export const newExperienceFacts:Record<string,PlaceFacts & {address:string}> = {
             "5 € plein tarif, 3 € tarif réduit ; gratuit moins de 12 ans"
           ],
           [
-            "Horaires d'octobre",
-            "Tous les jours 10h–18h d'après l'office de tourisme"
+            "Dernière entrée",
+            "30 minutes avant la fermeture ; horaires saisonniers à vérifier"
           ],
           [
             "Contact",
@@ -437,12 +437,12 @@ export const newExperienceFacts:Record<string,PlaceFacts & {address:string}> = {
             "Le parcours met en scène des objets de cinéma, des espaces reconstitués et des témoignages sur les films tournés autour de Saint-Tropez. On traverse l'histoire du cinéma local, les représentations de la Nationale 7 et certains codes de la Côte d'Azur à l'écran. Une partie de la visite évoque également Brigitte Bardot et Romy Schneider. Les expositions temporaires changent : consultez la programmation du musée si vous venez pour un thème précis."
           ],
           [
-            "Tarifs, famille et accessibilité",
-            "L'office de tourisme publie pour 2026 un tarif adulte à 5 euros, un tarif réduit à 3 euros pour certains publics et la gratuité pour les enfants de moins de 12 ans. Le musée dispose d'un ascenseur et de dispositifs d'accueil dédiés à différentes situations de handicap. Pour un besoin précis, demandez les modalités d'accès et les parcours adaptés avant votre visite. Les tarifs et horaires restent sujets à modification."
+            "Préparer une visite adaptée",
+            "Le registre municipal 2026 décrit une entrée de plain-pied place Blanqui, un ascenseur vers les deux étages et des sanitaires adaptés au rez-de-chaussée. Il mentionne aussi des maquettes tactiles et des aides audio ou en langue des signes. Pour vérifier un équipement ou préparer un accueil spécifique, appelez le 04 94 55 90 20. Les conditions de réduction et de gratuité se consultent dans la billetterie officielle."
           ],
           [
-            "Accès depuis le centre et conseil de visite",
-            "L'entrée se trouve au 2 place Blanqui, dans Saint-Tropez. L'adresse est facile à combiner avec une promenade autour du port, du quartier historique ou de la place des Lices une fois stationné. En octobre, l'office annonce une ouverture quotidienne de 10h à 18h. Privilégiez un créneau où vous pourrez lire les contenus à votre rythme plutôt qu'un passage entre deux rendez-vous."
+            "Arriver à temps et prolonger à pied",
+            "Le musée se trouve au 2 place Blanqui, sur une place piétonne. La dernière admission est annoncée 30 minutes avant la fermeture : gardez une marge pour la visite, pas seulement pour entrer. Les horaires changent selon la saison et des fermetures sont publiées par le musée. Notre suggestion : poursuivre vers le port ou les ruelles, plutôt que prévoir plusieurs musées à la suite."
           ]
         ],
         "questions": [
@@ -457,6 +457,10 @@ export const newExperienceFacts:Record<string,PlaceFacts & {address:string}> = {
           [
             "Le musée parle-t-il seulement de Louis de Funès ?",
             "Non. Il présente l'histoire de la gendarmerie, les films tournés à Saint-Tropez, les décors et plusieurs personnalités du cinéma."
+          ],
+          [
+            "Peut-on entrer juste avant la fermeture ?",
+            "La dernière entrée est prévue 30 minutes avant la fermeture. Consultez l’horaire du jour et prévoyez davantage de temps pour parcourir les salles."
           ]
         ]
       },
@@ -474,8 +478,8 @@ export const newExperienceFacts:Record<string,PlaceFacts & {address:string}> = {
             "€5 standard, €3 reduced; free for children under 12"
           ],
           [
-            "October opening",
-            "Daily 10am–6pm according to Saint-Tropez Tourism"
+            "Last admission",
+            "30 minutes before closing; check seasonal opening times"
           ],
           [
             "Contact",
@@ -492,12 +496,12 @@ export const newExperienceFacts:Record<string,PlaceFacts & {address:string}> = {
             "Exhibits include cinematic objects, reconstructed spaces and material relating to productions filmed on the Saint-Tropez peninsula. The displays range from the Gendarme films to the Route Nationale 7 holiday mythology and the wider history of the Riviera on screen. Brigitte Bardot and Romy Schneider also feature in the narrative. Temporary exhibitions vary, so check the current programme if one aspect of cinema particularly interests you."
           ],
           [
-            "Tickets, families and accessibility",
-            "For 2026 Saint-Tropez Tourism lists €5 general admission and €3 concessions for eligible visitors, with free entry for under-12s. The museum has a lift and services for several accessibility needs. Contact the museum for details if a specific route or adaptation is important. Admission conditions can change, particularly around events or special museum days, so consult the official notice before setting out."
+            "Plan an accessible visit",
+            "The 2026 municipal register describes a level entrance from Place Blanqui, a lift to both upper floors and accessible toilets on the ground floor. It also lists tactile models and audio or sign-language visiting aids. Call +33 4 94 55 90 20 to check equipment or arrange specific support. Consult official ticket information for concession and free-entry conditions."
           ],
           [
-            "Location and a simple town-centre itinerary",
-            "Find the museum at 2 place Blanqui in central Saint-Tropez. It fits easily into a walk around the harbour, the old town and Place des Lices once you have arranged parking. For October the official listing gives daily opening from 10am to 6pm. Allow enough time to explore the galleries rather than treating the visit as a quick photograph outside the famous building."
+            "Arrive in time and continue on foot",
+            "The museum is at 2 Place Blanqui, on a pedestrian square. Last admission is listed 30 minutes before closing: leave time for the visit, not just entry. Opening times vary by season and the museum publishes closure dates. Our suggestion: continue towards the harbour or the lanes rather than fitting several museums back to back."
           ]
         ],
         "questions": [
@@ -512,18 +516,26 @@ export const newExperienceFacts:Record<string,PlaceFacts & {address:string}> = {
           [
             "Is it only about the Louis de Funès films?",
             "No. The displays also cover local police history, cinema in Saint-Tropez and other stars and productions connected to the peninsula."
+          ],
+          [
+            "Can I enter just before closing?",
+            "Last admission is scheduled 30 minutes before closing. Check that day’s hours and allow extra time to explore the galleries."
           ]
         ]
       }
     },
     "sources": [
       {
-        "label": "Saint-Tropez Tourisme — horaires, tarifs et musée",
-        "url": "https://www.sainttropeztourisme.com/fr/fiche/musee-de-la-gendarmerie-et-du-cinema-4082975/"
+        "label": "Ville de Saint-Tropez · musée et billetterie",
+        "url": "https://www.saint-tropez.fr/culture/mgc/"
       },
       {
-        "label": "Saint-Tropez Tourisme — exposition anniversaire 2026",
-        "url": "https://www.sainttropeztourisme.com/fr/fiche/exposition-de-la-caserne-au-musee-10-ans-deja-7883369/"
+        "label": "Ville de Saint-Tropez · registre d’accessibilité 2026",
+        "url": "https://www.saint-tropez.fr/wp-content/uploads/2026/04/Registre-public-daccessibilite-2026.pdf"
+      },
+      {
+        "label": "Saint-Tropez Tourisme — horaires, tarifs et musée",
+        "url": "https://www.sainttropeztourisme.com/fr/fiche/musee-de-la-gendarmerie-et-du-cinema-4082975/"
       }
     ],
     "nearby": [
