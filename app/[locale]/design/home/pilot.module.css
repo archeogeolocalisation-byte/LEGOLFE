@@ -1,14 +1,58 @@
-/* Keep the existing homepage layout, sizes, colours and responsive rules.
-   Only the headings inside this preview use the condensed display face. */
-.pilot :global(.home-journal.home-page) :is(h1, h2, h3) {
- font-family: var(--pilot-display), Impact, sans-serif;
+/* The original homepage still owns the content, layout and breakpoints. */
+.pilot,
+.pilot ~ :global(footer) {
+ --lg-blue: #111;
+ --lg-sky: #ddd;
+ --lg-navy-surface: #191919;
+ --lg-navy-deep: #080808;
+ --lg-navy-border: #555;
+ --lg-ivory: #fff;
+ --lg-sand: #fff;
+ --lg-dark-copy: #ddd;
+ /* Includes existing hard-coded tints, illustrations and photography. */
+ filter: grayscale(1);
+}
+
+.pilot :global(.home-journal.home-page) {
+ --editorial-ink: #111;
+ --editorial-azure: #111;
+ --editorial-ice: #f5f5f5;
+ --editorial-line: rgb(0 0 0 / .15);
+}
+
+.pilot :global(.home-journal.home-page) :is(h1, h2) {
+ font-family: var(--pilot-display), cursive;
  font-weight: 400;
  font-synthesis: none;
- letter-spacing: -.015em;
+ letter-spacing: 0;
+ line-height: 1.18;
+}
+
+.pilot :global(.home-journal.home-page) h1 {
+ line-height: 1.12;
 }
 
 .pilot :global(.home-journal.home-page) h1 em {
  font-family: inherit;
  font-weight: inherit;
  letter-spacing: inherit;
+}
+
+.pilot :global(.home-journal.home-page) h3 {
+ font-family: var(--pilot-support), Impact, sans-serif;
+ font-weight: 400;
+ font-synthesis: none;
+ letter-spacing: 0;
+}
+
+.pilot :global(.home-hero-photo) a > span {
+ background: rgb(0 0 0 / .85);
+}
+
+.pilot :global(.home-stay-planning) {
+ background: #111;
+}
+
+.pilot :global(.site-header--navy) a:focus-visible {
+ outline-color: #fff;
 }
