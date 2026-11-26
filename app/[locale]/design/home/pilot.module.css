@@ -55,6 +55,12 @@
  outline-color: #fff;
 }
 
+.pilot :global(.site-header--navy) :global(.lg-link-accent):hover {
+ color: #fff;
+ text-decoration: underline;
+ text-underline-offset: 5px;
+}
+
 /* Neutralise interface colours directly, leaving images in full colour. */
 .pilot :global(.site-header--navy),
 .pilot ~ :global(footer),
