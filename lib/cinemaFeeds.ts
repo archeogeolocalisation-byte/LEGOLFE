@@ -16,7 +16,9 @@ async function read(url:string,signal:AbortSignal){
 export function freshCinemaEvents(events:GolfeEvent[],today=parisIsoDay(),fallback=false){return events.filter(e=>!fallback||!!e.sourceCheckedAt&&e.sourceCheckedAt>=addDays(today,-2)&&e.sourceCheckedAt<=today).flatMap(e=>{const sessions=e.sessions?.filter(s=>s.start>=today);return sessions?.length?[{...e,start:sessions[0].start,time:sessions[0].time,sessions}]:[];});}
 function mergeFilms(events:GolfeEvent[]){const records=new Map<string,GolfeEvent>();for(const e of events){const old=records.get(e.id);records.set(e.id,old?{...e,sessions:[...new Map([...(old.sessions??[]),...(e.sessions??[])].map(s=>[`${s.start}|${s.time}|${s.version??''}`,s])).values()].sort((a,b)=>a.start.localeCompare(b.start)||(a.time??'').localeCompare(b.time??'')),start:old.start,time:old.time}:e);}return [...records.values()];}
 export async function getCinemaFeed(id:'pagnol'|'raimu'|'miramar'){
- const signal=AbortSignal.timeout(8000),today=parisIsoDay();
+ // Miramar's public timetable needs a home-page lookup followed by three API
+ // requests (observed above nine seconds); keep a bounded budget for that chain.
+ const signal=AbortSignal.timeout(id==='miramar'?15000:8000),today=parisIsoDay();
  try{
   if(id==='pagnol'){
    const page=await read(cinemas[0].url,signal),first=parsePagnol(page.text,page.checked);
