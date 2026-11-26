@@ -13,6 +13,10 @@ const {qualityAgendaEvents}=require('../lib/agendaQuality.ts');
 const pagnol=fixture('pagnol.html'),raimu=fixture('raimu.html'),day='2026-10-19';
 const a=parsePagnol(pagnol,day),b=parseRaimu(raimu,day);
 assert.equal(a.length,2);assert.equal(b.length,2);
+// Pagnol also publishes special screenings with keys such as MSB_9.
+const special=parsePagnol(pagnol.replaceAll('/M4QY3X/','/MSB_9/'),day);
+assert.ok(special.some(e=>e.id==='cinema-pagnol-msb-9'));
+assert.equal(qualityAgendaEvents(special).length,special.length,'special screenings survive the public agenda ID validation');
 assert.equal(a[0].title,'LES MISÉRABLES');assert.equal(a[0].filmDurationMinutes,176);
 assert.deepEqual(a[0].sessions,[{start:day,time:'14:00',version:'VF'},{start:day,time:'20:15',version:'VF'},{start:'2026-10-20',time:'14:00',version:'VF'},{start:'2026-10-20',time:'20:15',version:'VF'}]);
 assert.equal(b[0].title,'Le Corset');assert.equal(b[0].sessions[0].start,day);assert.equal(b[0].sessions[0].time,'16:00');assert.equal(b[0].filmDurationMinutes,90);
@@ -61,11 +65,14 @@ for(const locale of ['fr','en']){values=[];index=0;const tree=Agenda({locale,eve
  global.fetch=async()=>new Response('Unavailable',{status:503});assert.deepEqual(await getCinemaFeed('raimu'),freshCinemaEvents(cinemaSnapshot.filter(e=>e.id.startsWith('cinema-raimu-')),day,true));
  global.fetch=async()=>new Response('Changed timetable');assert.deepEqual(await getCinemaFeed('pagnol'),freshCinemaEvents(cinemaSnapshot.filter(e=>e.id.startsWith('cinema-pagnol-')),day,true));
  global.fetch=async url=>{const u=String(url);if(u==='https://cinema-cavalaire.fr/')return new Response('<meta name="api_token" content="00000000-0000-0000-0000-000000000000">');const route=new URL(u).pathname.split('/').pop();return new Response(fixture('miramar-'+route+'.json'),{headers:{date:'Mon, 19 Oct 2026 10:00:00 GMT'}});};assert.deepEqual(await getCinemaFeed('miramar'),c);
- global.Date=class extends RealDate{constructor(...args){super(...(args.length?args:['2026-10-23T10:00:00Z']));}static now(){return new RealDate('2026-10-23T10:00:00Z').getTime();}};
+ const checked=cinemaSnapshot[0].sourceCheckedAt;
+ assert.ok(cinemaSnapshot.every(e=>e.sourceCheckedAt===checked),'snapshot represents one verified edition');
+ global.Date=class extends RealDate{constructor(...args){super(...(args.length?args:[checked+'T10:00:00Z']));}static now(){return new RealDate(checked+'T10:00:00Z').getTime();}};
  global.fetch=async()=>{throw new Error('Offline');};
- assert.ok((await getCinemaFeed('raimu')).length>0,'recent checked snapshot survives an offline source');
- assert.ok((await getCinemaFeed('pagnol')).length>0);
- assert.equal(freshCinemaEvents(cinemaSnapshot,'2026-10-26',true).length,0,'checked fallback expires after two days');
+ for(const id of ['raimu','pagnol','miramar'])assert.ok((await getCinemaFeed(id)).length>0,'recent checked snapshot survives an offline source: '+id);
+ const {addDays}=require('../lib/agendaCalendar.ts');
+ assert.ok(freshCinemaEvents(cinemaSnapshot,addDays(checked,2),true).length>0,'two-day fallback boundary is inclusive');
+ assert.equal(freshCinemaEvents(cinemaSnapshot,addDays(checked,3),true).length,0,'checked fallback expires after two days');
  }finally{global.fetch=realFetch;global.Date=RealDate;}
  console.log('Cinema: three official formats, dated/VF/VO sessions, DST, cancellations, secure posters, freshness, failed imports, FR/EN and town/category filters passed.');
 })().catch(e=>{console.error(e);process.exitCode=1;});
