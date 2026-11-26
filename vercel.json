@@ -2,38 +2,9 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "git": {
     "deploymentEnabled": {
-      "security/phase-1-hardening": false,
-      "feature/password-accounts": false,
-      "content/local-guides": false,
-      "content/hiking-guides": false,
-      "design/home-updates": false,
-      "content/guide-covers": false,
-      "seo/pre-search-console": false,
-      "content/french-translations": false,
-      "design/explore-filters": false,
-      "feature/profile-agenda": false,
-      "fix/villa-languages-explore": false,
-      "design/explore-gallery": false,
-      "fix/admin-contrast": false,
-      "fix/direct-contact-pilot": false,
-      "content/four-guides-seo": false,
-      "content/place-facts-seo": false,
-      "feature/place-maps": false,
-      "feature/tourist-map": false,
-      "feature/village-visuals": false,
-      "design/commune-grid": false,
-      "design/home-guide-art": false,
-      "design/place-layout": false,
-      "design/place-slider-overlay": false,
-      "design/pampelonne-sheet": false,
-      "design/citadelle-sheet": false,
-      "design/agenda-layout": false,
-      "design/agenda-final": false,
-      "feature/menu-agenda-sources": false,
-      "feature/agenda-show-images": false,
-      "feature/local-news-journal": false,
-      "feature/local-extra-feeds": false,
-      "design/agenda-category-art": false
+      "**": false,
+      "main": true,
+      "preview/**": true
     }
   }
 }

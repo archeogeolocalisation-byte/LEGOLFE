@@ -29,9 +29,12 @@ export async function POST(req:NextRequest){
     try{
       const candidates=await fetchSourceCandidates(source);
       let added=0;
-      for(const candidate of candidates){
-        const {error}=await supabase.from("editorial_inbox").upsert(candidate,{onConflict:"fingerprint",ignoreDuplicates:true});
-        if(!error){added++; inserted++;}
+      // One bounded request per batch instead of one write request per headline.
+      for(let offset=0;offset<candidates.length;offset+=50){
+        const batch=candidates.slice(offset,offset+50);
+        const {error}=await supabase.from("editorial_inbox").upsert(batch,{onConflict:"fingerprint",ignoreDuplicates:true}).abortSignal(AbortSignal.timeout(10000));
+        if(error)throw new Error("Editorial batch could not be saved");
+        added+=batch.length;inserted+=batch.length;
       }
       reports.push({key:source.key,label:source.label,found:candidates.length,processed:added});
     }catch(error:any){
