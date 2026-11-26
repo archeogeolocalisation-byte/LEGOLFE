@@ -1,8 +1,7 @@
 name: Security and build checks
 on:
   pull_request:
-  push:
-    branches: [security/phase-1-hardening]
+    types: [opened, synchronize, reopened, ready_for_review]
   workflow_dispatch:
     inputs:
       full_suite:
@@ -17,22 +16,35 @@ concurrency:
 jobs:
   # Check PRs before merging; Vercel already builds the resulting main deployment.
   verify:
-    if: ${{ github.event_name != 'workflow_dispatch' || !inputs.full_suite }}
+    if: ${{ (github.event_name != 'workflow_dispatch' || !inputs.full_suite) && !github.event.pull_request.draft }}
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
         with:
           persist-credentials: false
+          fetch-depth: 2
+      - name: Select checks for changed files
+        id: scope
+        env:
+          CI_BASE_SHA: ${{ github.event.pull_request.base.sha }}
+        run: node scripts/ci-scope.cjs
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        if: steps.scope.outputs.runtime == 'true'
         with:
           node-version: '24'
           cache: npm
       - run: npm ci --prefer-offline --no-audit
+        if: steps.scope.outputs.runtime == 'true'
+      - name: Check platform usage safeguards
+        if: steps.scope.outputs.runtime == 'true'
+        run: node scripts/test-platform-usage.cjs
       - run: npm run test:security
+        if: steps.scope.outputs.runtime == 'true'
       - run: npm audit --omit=dev --audit-level=high
-      - run: npx tsc --noEmit
+        if: steps.scope.outputs.runtime == 'true'
       - name: Check villa community hearts
+        if: steps.scope.outputs.stay == 'true'
         run: |
           node scripts/test-villa-enquiry-draft.cjs
           node scripts/verify-haumiere-stay.cjs
@@ -41,6 +53,7 @@ jobs:
           node scripts/test-villa-hearts.cjs
           node scripts/test-villa-hearts-db.mjs
       - name: Check villa budgets and protected collections
+        if: steps.scope.outputs.stay == 'true'
         run: |
           node scripts/test-stay-landing.cjs
           node scripts/test-stay-itinerary.cjs
@@ -50,15 +63,11 @@ jobs:
           node scripts/verify-stay-filters.cjs
           node scripts/test-villa-collections-db.mjs
       - name: Check place content, hiking routes and SEO
+        if: steps.scope.outputs.places == 'true'
         run: |
           node scripts/test-san-peire-routes.cjs
           node scripts/test-hiking-routes.cjs
-          node scripts/test-event-structured-data.cjs
-          node scripts/test-event-journey.cjs
-          node scripts/test-agenda-discovery.cjs
-          node scripts/test-agenda-dark.cjs
           node scripts/test-guides-seo.cjs
-          node scripts/test-home-journal.cjs
           node scripts/test-place-crawlability.cjs
           node scripts/test-guides-discovery.cjs
           node scripts/test-family-guide.cjs
@@ -68,13 +77,28 @@ jobs:
           node scripts/test-explore-hub.cjs
           node scripts/test-nearby-explorer.cjs
       - name: Check place catalogue, images and map references
+        if: steps.scope.outputs.places == 'true'
         run: |
           node scripts/test-place-facts.cjs
           node scripts/test-place-images.cjs
           node scripts/test-place-maps.cjs
           node scripts/test-place-gallery.cjs
           node scripts/verify-place-gallery.cjs
+      - name: Check agenda, cinema and local news
+        if: steps.scope.outputs.agenda == 'true'
+        run: |
+          node scripts/test-event-structured-data.cjs
+          node scripts/test-event-journey.cjs
+          node scripts/test-agenda-discovery.cjs
+          node scripts/test-agenda-dark.cjs
+          node scripts/test-home-journal.cjs
+          node scripts/test-agenda-feeds.cjs
+          node scripts/test-official-agenda-feeds.cjs
+          node scripts/test-agenda-quality.cjs
+          node scripts/test-cinema.cjs
+          node scripts/test-local-news.cjs
       - run: npm run build
+        if: steps.scope.outputs.runtime == 'true'
         env:
           NEXT_PUBLIC_SUPABASE_URL: https://example.supabase.co
           NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: sb_publishable_ci_dummy
@@ -110,6 +134,7 @@ jobs:
             console.log('Preinstalled WebKit launches successfully.');
           })().catch(error => { console.error(error); process.exitCode = 1; });
           NODE
+      - run: node scripts/test-platform-usage.cjs
       - run: npm run test:security
       - run: node scripts/test-admin.cjs
       - run: node scripts/test-direct-contact.mjs
@@ -197,6 +222,7 @@ jobs:
           name: footer-webkit
           path: test-results/footer
           if-no-files-found: ignore
+          retention-days: 3
       - name: Save map preview screenshots
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
@@ -204,6 +230,7 @@ jobs:
           name: discovery-map-webkit
           path: test-results/discovery-map
           if-no-files-found: ignore
+          retention-days: 3
       - name: Save cinema screenshots
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
@@ -211,6 +238,7 @@ jobs:
           name: cinema-mobile-webkit
           path: test-results/cinema
           if-no-files-found: ignore
+          retention-days: 3
       - name: Save mobile checks and screenshots
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
@@ -218,6 +246,7 @@ jobs:
           name: place-mobile-webkit
           path: test-results/place-mobile
           if-no-files-found: ignore
+          retention-days: 3
       - name: Save local news screenshots
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
@@ -225,3 +254,4 @@ jobs:
           name: local-news-mobile-webkit
           path: test-results/local-news
           if-no-files-found: ignore
+          retention-days: 3

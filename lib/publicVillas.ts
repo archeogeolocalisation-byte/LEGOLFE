@@ -1,5 +1,6 @@
 import {withReviewedCollections} from './publicVillaCollections';
 import 'server-only';
+import {unstable_cache} from 'next/cache';
 import {createClient} from '@supabase/supabase-js';
 import {villas} from '../data/villas';
 import {parsePublicVilla,type VillaListing} from './villaListing';
@@ -13,6 +14,13 @@ export async function getPublicVilla(id:string):Promise<VillaListing|null>{
  return villa?(await withReviewedCollections(db,[villa]))[0]:null;
 }
 
+// Briefly share only the public catalogue. Detail pages recheck visibility directly.
+const cachedPublishedVillas=unstable_cache(async():Promise<VillaListing[]>=>{
+ const db=createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!,process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY!,{auth:{persistSession:false,autoRefreshToken:false}});
+ const {data,error}=await db.from('villa_listings').select('id,payload').eq('status','published').eq('visibility','public').order('created_at',{ascending:false}).limit(200).abortSignal(AbortSignal.timeout(5000));
+ if(error)throw error;
+ return withReviewedCollections(db,(data||[]).flatMap(row=>{const villa=parsePublicVilla(row.id,row.payload);return villa?[villa]:[];}));
+},['public-villa-catalogue-v1',process.env.NEXT_PUBLIC_SUPABASE_URL??'unconfigured'],{revalidate:60});
 export async function getPublishedVillas():Promise<VillaListing[]>{
- try{const db=createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!,process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY!,{auth:{persistSession:false,autoRefreshToken:false}});const {data,error}=await db.from('villa_listings').select('id,payload').eq('status','published').eq('visibility','public').order('created_at',{ascending:false}).limit(200).abortSignal(AbortSignal.timeout(5000));if(error)return [];return withReviewedCollections(db,(data||[]).flatMap(row=>{const villa=parsePublicVilla(row.id,row.payload);return villa?[villa]:[];}));}catch{return [];}
+ try{return await cachedPublishedVillas();}catch{return [];}
 }
