@@ -9,8 +9,6 @@
  --lg-ivory: #fff;
  --lg-sand: #fff;
  --lg-dark-copy: #ddd;
- /* Includes existing hard-coded tints, illustrations and photography. */
- filter: grayscale(1);
 }
 
 .pilot :global(.home-journal.home-page) {
@@ -21,7 +19,7 @@
 }
 
 .pilot :global(.home-journal.home-page) :is(h1, h2) {
- font-family: var(--pilot-display), cursive;
+ font-family: var(--pilot-display), Impact, sans-serif;
  font-weight: 400;
  font-synthesis: none;
  letter-spacing: 0;
@@ -54,5 +52,61 @@
 }
 
 .pilot :global(.site-header--navy) a:focus-visible {
+ outline-color: #fff;
+}
+
+/* Neutralise interface colours directly, leaving images in full colour. */
+.pilot :global(.site-header--navy),
+.pilot ~ :global(footer),
+.pilot ~ :global(footer) :is(div, nav) {
+ border-color: #444;
+}
+
+.pilot :global(.home-journal.home-page) :global(:is(.lg-btn, .home-intents a, .home-place-copy > span, .guide-library-card-copy > span, .home-town-grid article, .home-homes, .home-update-panel, .home-update-panel > ul, .home-update-panel li, .home-update-panel > nav a, .home-updates)) {
+ border-color: rgb(0 0 0 / .15);
+}
+
+.pilot :global(.home-journal.home-page) :global(:is(.home-place-grid article, .guide-library-card)) {
+ box-shadow: 0 8px 26px rgb(0 0 0 / .035);
+}
+
+.pilot :global(.home-journal.home-page) :global(:is(.home-place-grid article, .guide-library-card)):hover {
+ border-color: #777;
+}
+
+.pilot :global(.home-journal.home-page) :global(:is(.home-place-copy, .home-town-grid article)) {
+ background: linear-gradient(145deg, #fff, #fafafa);
+}
+
+.pilot :global(.home-journal.home-page) :global(:is(.home-hero-photo > a, .home-place-image, .lg-image, .home-intents a:hover)) {
+ background: #eee;
+}
+
+.pilot :global(.home-journal.home-page) :global(:is(.home-hero-copy > p:not(.lg-kicker), .home-hero-note, .home-section-intro, .home-place-copy > p:not(.lg-kicker), .guide-library-card-copy > p:not(.lg-kicker), .home-homes p:not(.lg-kicker), .home-place-credit, .home-hero-photo figcaption, .home-homes figcaption, .home-illustration-credit)) {
+ color: #555;
+}
+
+.pilot :global(.home-journal.home-page) :global(:is(.home-update-panel, .home-update-panel:nth-child(2), .home-homes)) {
+ border-top-color: #222;
+}
+
+.pilot :global(.home-journal.home-page) :global(.home-primary) {
+ border-color: #111;
+}
+
+.pilot :global(.home-ask) :global(.home-ask-button) {
+ background: #fff;
+ border-color: #ccc;
+}
+
+.pilot ~ :global(footer) :is(p, h2, nav [aria-current]) {
+ color: #ddd;
+}
+
+.pilot ~ :global(footer) a:hover {
+ color: #fff;
+}
+
+.pilot ~ :global(footer) a:focus-visible {
  outline-color: #fff;
 }

@@ -4,7 +4,7 @@ import Home from '../../page';
 import styles from './pilot.module.css';
 
 const display=localFont({
- src:'../../../../public/fonts/sedgwick-ave-display/latin-400.woff2',
+ src:'../../../../public/fonts/rubik-dirt/latin-400.woff2',
  weight:'400',
  display:'swap',
  variable:'--pilot-display',
@@ -18,8 +18,8 @@ const support=localFont({
 
 export const dynamic='force-dynamic';
 export const metadata:Metadata={
- title:'LE GOLFE — Homepage pilote : freestyle noir et blanc',
- description:'La homepage LE GOLFE : titres freestyle et direction graphique en noir et blanc.',
+ title:'LE GOLFE — Homepage pilote : Rubik Dirt et images en couleurs',
+ description:'La homepage LE GOLFE : titres Rubik Dirt, interface noire et blanche, images en couleurs.',
  robots:{index:false,follow:false},
 };
 
